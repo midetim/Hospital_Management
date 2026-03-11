@@ -1,0 +1,4 @@
+dependencies: \
+  /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/services/ResourceManagement/src/Resource.cpp \
+  /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/services/ResourceManagement/src/Resource.hpp \
+  /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/common/include/utils.hpp

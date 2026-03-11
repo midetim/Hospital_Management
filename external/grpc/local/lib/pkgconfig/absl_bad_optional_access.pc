@@ -1,0 +1,12 @@
+prefix=/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/external/grpc/local
+exec_prefix=${prefix}
+libdir=/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/external/grpc/local/lib
+includedir=/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/external/grpc/local/include
+
+Name: absl_bad_optional_access
+Description: Abseil bad_optional_access library
+URL: https://abseil.io/
+Version: 20250512
+Requires:
+Libs: -L${libdir}  
+Cflags: -I${includedir}

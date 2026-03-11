@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+import "common.proto";
+
+service ResourceManagement {
+    // Ping -- Connection check
+    rpc ResourcePing(ResourcePingRequest) returns (ResourceSuccess);
+    
+    // Front end to resource -- find an available resource
+    rpc FindResources(ResourceAvailabilityRequest) returns (ResourceAvailabilityResponse);
+    rpc ShowResources(Nothing) returns (Resources);
+    
+    // Front end to resource -- moving resources to specific rooms
+    rpc SendResource(ResourceSendRequest) returns (ResourceSuccess);
+    rpc RetrieveResource(ResourceRetrievalRequest) returns (ResourceSuccess);
+    rpc TransferResource(ResourceSendRequest) returns (ResourceSuccess);
+    
+    // Front end to resource -- changing stock values
+    rpc AddStock(StockIncreaseRequest) returns (StockAmount);
+    rpc RemoveStock(StockDecreaseRequest) returns (StockAmount);
+    
+    // Front end to resource -- De/Registering resources
+    rpc RegisterResource(ResourceRegistrationRequest) returns (RegistrationSuccess);
+    rpc DeregisterResource(ResourceDeregistrationRequest) returns (ResourceSuccess);
+    
+    // Globals
+    rpc Print(Nothing) returns (Nothing);
+}
+
+// Data Transfer Object -- Resource
+message ResourceDTO {
+    uint64 resource_id = 1;
+    uint32 room_id = 2;
+    string resource_type = 3;
+}
+
+message ResourcePingRequest {
+    bool ping = 1;
+}
+
+message ResourceAvailabilityRequest {
+    uint64 resource_id = 1; // Find a resource through its id
+    string resource_type = 2; // Or its type
+}
+
+message ResourceAvailabilityResponse {
+    bool available = 1; // Whether said resource is available
+    bool resource_id = 2; // Resource id
+    uint32 stock = 3; // Or how much stock it has left
+}
+
+message Resources { // For displaying resources in the front end
+    repeated ResourceDTO resource = 1;
+}
+
+message ResourceSendRequest {
+    uint64 resource_id = 1; // Desired resource id
+    string resource_type = 2; // Or resource type
+    uint32 room_id = 3; // Room to send that resource to
+}
+
+message ResourceRetrievalRequest {
+    uint64 resource_id = 1; // Desired resource id
+}
+
+message ResourceSuccess {
+    bool success = 1; // Successful execution
+    uint64 resource_id = 2;
+    string success_message = 3; // Status message
+}
+
+message StockIncreaseRequest {
+    uint64 resource_id = 1; // Id of resource to increase stock amount for
+    string resource_type = 2; // Resource type to increase stock for
+    uint32 increase_amount = 3; // Amount to increase the stock by
+}
+
+message StockDecreaseRequest {
+    uint64 resource_id = 1; // Id of the resource to decrease the stock amount for
+    string resource_type = 2; // Resource type to decrease stock for
+    uint32 decrease_amount = 3; // Amount to decrease the stock by
+}
+
+message StockAmount {
+    uint64 resource_id = 1; // Id of the resource to get the quantity of
+    string resource_type = 2; // Type of resource to get the quantity of
+    uint32 current_stock = 3; // The amount of said resource in stock
+}
+
+message ResourceRegistrationRequest {
+    string resource_type = 1; // Type of resource to register
+}
+
+
+message ResourceDeregistrationRequest {
+    uint64 resource_id = 1; // Resource id to deregister
+    
+}
+
+message RegistrationSuccess {
+    ResourceDTO resource = 1; // Returns the resource once registered
+}
+ 

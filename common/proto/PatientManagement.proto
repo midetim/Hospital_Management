@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+import "common.proto";
+
+service PatientManagement {
+    rpc PatientPing(PatientPingRequest) returns (PatientSuccess);
+    rpc PatientAdmission(PatientAdmissionRequest) returns (PatientSuccess);
+    rpc PatientDischarge(PatientDischargeRequest) returns (PatientSuccess);
+    rpc PatientTransfer(PatientTransferRequest) returns (PatientSuccess);
+    rpc GetPatientInformation(PatientInfoRequest) returns (PatientInformation);
+
+    // Globals
+    rpc Print(Nothing) returns (Nothing);
+}
+
+message PatientPingRequest {
+    bool ping = 1;
+}
+
+message PatientAdmissionRequest { // Patient service must auto generate the patient id
+    PatientInformation patient_info = 1;
+    string room_type = 2;
+    bool quarantined = 3;
+}
+
+message PatientDischargeRequest {
+    uint64 patient_id = 1;
+}
+
+message PatientTransferRequest {
+    uint64 patient_id = 1;
+    uint32 desired_room = 2;
+    string room_type = 3;
+    bool quarantined = 4;
+}
+
+message PatientSuccess {
+    bool success = 1;
+    uint64 patient_id = 2;
+}
+
+message PatientInfoRequest {
+    uint64 patient_id = 1;
+}
+
+message PatientName {
+    string first_name = 1;
+    string middle_name = 2;
+    string last_name = 3;
+}
+
+message PatientInformation {
+    PatientName patient_name = 1;
+    string patient_sex = 2;
+    string patient_condition = 3;
+    uint32 patient_room = 4;
+}
+

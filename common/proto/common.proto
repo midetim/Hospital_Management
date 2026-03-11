@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+
+// May want to do differently
+service common {
+    rpc update(Nothing) returns (Nothing);
+}
+
+message Nothing {
+    bool error = 1;
+}

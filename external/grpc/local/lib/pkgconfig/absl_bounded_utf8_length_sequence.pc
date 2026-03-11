@@ -1,0 +1,12 @@
+prefix=/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/external/grpc/local
+exec_prefix=${prefix}
+libdir=/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/external/grpc/local/lib
+includedir=/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/external/grpc/local/include
+
+Name: absl_bounded_utf8_length_sequence
+Description: Abseil bounded_utf8_length_sequence library
+URL: https://abseil.io/
+Version: 20250512
+Requires: absl_bits = 20250512, absl_config = 20250512
+Libs: -L${libdir}  
+Cflags: -I${includedir} -Wno-float-conversion -Wno-implicit-float-conversion -Wno-implicit-int-float-conversion -Wno-unknown-warning-option -DNOMINMAX

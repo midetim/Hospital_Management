@@ -1,0 +1,14 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/cmake_install.cmake",
+		"/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/common/cmake_install.cmake",
+		"/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/services/FrontEnd/cmake_install.cmake",
+		"/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/services/PatientManagement/cmake_install.cmake",
+		"/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/services/ResourceManagement/cmake_install.cmake",
+		"/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/services/RoomManagement/cmake_install.cmake",
+		"/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/services/StaffManagement/cmake_install.cmake",
+		"/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/services/Scheduler/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
