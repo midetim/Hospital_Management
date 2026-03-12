@@ -191,20 +191,22 @@ const char descriptor_table_protodef_RoomManagement_2eproto[] ABSL_ATTRIBUTE_SEC
     ")\n\023patient_information\030\002 \001(\0132\014.PatientLi"
     "st\022+\n\024resource_information\030\003 \001(\0132\r.Resou"
     "rceList\022%\n\021staff_information\030\004 \001(\0132\n.Sta"
-    "ffList2\222\004\n\016RoomManagement\022%\n\014AdmitPatien"
+    "ffList2\316\004\n\016RoomManagement\022%\n\014AdmitPatien"
     "t\022\013.PatientDTO\032\010.Success\022)\n\020DischargePat"
-    "ient\022\013.PatientDTO\032\010.Success\022(\n\017TransferP"
-    "atient\022\013.PatientDTO\032\010.Success\0221\n\021Quarant"
-    "inePatient\022\022.PatientQuarantine\032\010.Success"
-    "\022*\n\020RetrieveResource\022\014.ResourceDTO\032\010.Suc"
-    "cess\022)\n\017ReleaseResource\022\014.ResourceDTO\032\010."
-    "Success\022*\n\020TransferResource\022\014.ResourceDT"
-    "O\032\010.Success\022$\n\rRetrieveStaff\022\t.StaffDTO\032"
-    "\010.Success\022#\n\014ReleaseStaff\022\t.StaffDTO\032\010.S"
-    "uccess\022$\n\rTransferStaff\022\t.StaffDTO\032\010.Suc"
-    "cess\022+\n\016QuarantineRoom\022\017.RoomQuarantine\032"
-    "\010.Success\0220\n\022GetRoomInformation\022\010.RoomDT"
-    "O\032\020.RoomInformationb\006proto3"
+    "ient\022\013.PatientDTO\032\010.Success\022-\n\017TransferP"
+    "atient\022\020.PatientTransfer\032\010.Success\0221\n\021Qu"
+    "arantinePatient\022\022.PatientQuarantine\032\010.Su"
+    "ccess\0225\n\025LiftPatientQuarantine\022\022.Patient"
+    "Quarantine\032\010.Success\022*\n\020RetrieveResource"
+    "\022\014.ResourceDTO\032\010.Success\022)\n\017ReleaseResou"
+    "rce\022\014.ResourceDTO\032\010.Success\022*\n\020TransferR"
+    "esource\022\014.ResourceDTO\032\010.Success\022$\n\rRetri"
+    "eveStaff\022\t.StaffDTO\032\010.Success\022#\n\014Release"
+    "Staff\022\t.StaffDTO\032\010.Success\022$\n\rTransferSt"
+    "aff\022\t.StaffDTO\032\010.Success\022+\n\016QuarantineRo"
+    "om\022\017.RoomQuarantine\032\010.Success\0220\n\022GetRoom"
+    "Information\022\010.RoomDTO\032\020.RoomInformationb"
+    "\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_RoomManagement_2eproto_deps[4] = {
@@ -217,7 +219,7 @@ static ::absl::once_flag descriptor_table_RoomManagement_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_RoomManagement_2eproto = {
     false,
     false,
-    1107,
+    1167,
     descriptor_table_protodef_RoomManagement_2eproto,
     "RoomManagement.proto",
     &descriptor_table_RoomManagement_2eproto_once,

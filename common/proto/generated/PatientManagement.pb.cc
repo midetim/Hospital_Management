@@ -32,6 +32,7 @@ inline constexpr PatientTransfer::Impl_::Impl_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         patient_id_{::uint64_t{0u}},
+        old_room_id_{0u},
         new_room_id_{0u},
         is_quarantined_{false} {}
 
@@ -168,15 +169,17 @@ const ::uint32_t
         6,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_._has_bits_),
-        7, // hasbit index offset
+        8, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_.patient_id_),
+        PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_.old_room_id_),
         PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_.new_room_id_),
         PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_.room_type_),
         PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_.is_quarantined_),
         1,
         2,
-        0,
         3,
+        0,
+        4,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::PatientQuarantine, _impl_._has_bits_),
         5, // hasbit index offset
@@ -192,8 +195,8 @@ static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, sizeof(::PatientDTO)},
         {17, sizeof(::PatientTransfer)},
-        {28, sizeof(::PatientQuarantine)},
-        {35, sizeof(::PatientList)},
+        {30, sizeof(::PatientQuarantine)},
+        {37, sizeof(::PatientList)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::_PatientDTO_default_instance_._instance,
@@ -208,23 +211,23 @@ const char descriptor_table_protodef_PatientManagement_2eproto[] ABSL_ATTRIBUTE_
     "ameDTO\022\022\n\npatient_id\030\002 \001(\004\022\023\n\013patient_se"
     "x\030\003 \001(\t\022\024\n\014patient_cond\030\004 \001(\t\022\024\n\014patient"
     "_room\030\005 \001(\r\022\021\n\troom_type\030\006 \001(\t\022\026\n\016is_qua"
-    "rantined\030\007 \001(\010\"e\n\017PatientTransfer\022\022\n\npat"
-    "ient_id\030\001 \001(\004\022\023\n\013new_room_id\030\002 \001(\r\022\021\n\tro"
-    "om_type\030\003 \001(\t\022\026\n\016is_quarantined\030\004 \001(\010\"@\n"
-    "\021PatientQuarantine\022\022\n\npatient_id\030\001 \001(\004\022\027"
-    "\n\017quarantine_room\030\002 \001(\010\",\n\013PatientList\022\035"
-    "\n\010patients\030\001 \003(\0132\013.PatientDTO2\225\003\n\021Patien"
-    "tManagement\022%\n\014AdmitPatient\022\013.PatientDTO"
-    "\032\010.Success\022)\n\020DischargePatient\022\013.Patient"
-    "DTO\032\010.Success\022-\n\017TransferPatient\022\020.Patie"
-    "ntTransfer\032\010.Success\0221\n\021QuarantinePatien"
-    "t\022\022.PatientQuarantine\032\010.Success\0225\n\025LiftP"
-    "atientQuarantine\022\022.PatientQuarantine\032\010.S"
-    "uccess\0221\n\025GetPatientInformation\022\013.Patien"
-    "tDTO\032\013.PatientDTO\0221\n\030UpdatePatientInform"
-    "ation\022\013.PatientDTO\032\010.Success\022/\n\021GetPatie"
-    "ntsInRoom\022\014.RoomRequest\032\014.PatientListb\006p"
-    "roto3"
+    "rantined\030\007 \001(\010\"z\n\017PatientTransfer\022\022\n\npat"
+    "ient_id\030\001 \001(\004\022\023\n\013old_room_id\030\002 \001(\r\022\023\n\013ne"
+    "w_room_id\030\003 \001(\r\022\021\n\troom_type\030\004 \001(\t\022\026\n\016is"
+    "_quarantined\030\005 \001(\010\"@\n\021PatientQuarantine\022"
+    "\022\n\npatient_id\030\001 \001(\004\022\027\n\017quarantine_room\030\002"
+    " \001(\010\",\n\013PatientList\022\035\n\010patients\030\001 \003(\0132\013."
+    "PatientDTO2\225\003\n\021PatientManagement\022%\n\014Admi"
+    "tPatient\022\013.PatientDTO\032\010.Success\022)\n\020Disch"
+    "argePatient\022\013.PatientDTO\032\010.Success\022-\n\017Tr"
+    "ansferPatient\022\020.PatientTransfer\032\010.Succes"
+    "s\0221\n\021QuarantinePatient\022\022.PatientQuaranti"
+    "ne\032\010.Success\0225\n\025LiftPatientQuarantine\022\022."
+    "PatientQuarantine\032\010.Success\0221\n\025GetPatien"
+    "tInformation\022\013.PatientDTO\032\013.PatientDTO\0221"
+    "\n\030UpdatePatientInformation\022\013.PatientDTO\032"
+    "\010.Success\022/\n\021GetPatientsInRoom\022\014.RoomReq"
+    "uest\032\014.PatientListb\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_PatientManagement_2eproto_deps[1] = {
@@ -234,7 +237,7 @@ static ::absl::once_flag descriptor_table_PatientManagement_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_PatientManagement_2eproto = {
     false,
     false,
-    845,
+    866,
     descriptor_table_protodef_PatientManagement_2eproto,
     "PatientManagement.proto",
     &descriptor_table_PatientManagement_2eproto_once,
@@ -863,16 +866,16 @@ PatientTransfer::GetClassData() const {
   return PatientTransfer_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 0, 33, 2>
+const ::_pbi::TcParseTable<3, 5, 0, 33, 2>
 PatientTransfer::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_._has_bits_),
     0, // no _extensions_
-    4, 24,  // max_field_number, fast_idx_mask
+    5, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967280,  // skipmap
+    4294967264,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    4,  // num_field_entries
+    5,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     PatientTransfer_class_data_.base(),
@@ -882,37 +885,46 @@ PatientTransfer::_table_ = {
     ::_pbi::TcParser::GetTable<::PatientTransfer>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // bool is_quarantined = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(PatientTransfer, _impl_.is_quarantined_), 3>(),
-     {32, 3, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.is_quarantined_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // uint64 patient_id = 1;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(PatientTransfer, _impl_.patient_id_), 1>(),
      {8, 1, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.patient_id_)}},
-    // uint32 new_room_id = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(PatientTransfer, _impl_.new_room_id_), 2>(),
-     {16, 2, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.new_room_id_)}},
-    // string room_type = 3;
+    // uint32 old_room_id = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(PatientTransfer, _impl_.old_room_id_), 2>(),
+     {16, 2, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.old_room_id_)}},
+    // uint32 new_room_id = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(PatientTransfer, _impl_.new_room_id_), 3>(),
+     {24, 3, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.new_room_id_)}},
+    // string room_type = 4;
     {::_pbi::TcParser::FastUS1,
-     {26, 0, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.room_type_)}},
+     {34, 0, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.room_type_)}},
+    // bool is_quarantined = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(PatientTransfer, _impl_.is_quarantined_), 4>(),
+     {40, 4, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.is_quarantined_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
     // uint64 patient_id = 1;
     {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.patient_id_), _Internal::kHasBitsOffset + 1, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint32 new_room_id = 2;
-    {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.new_room_id_), _Internal::kHasBitsOffset + 2, 0,
+    // uint32 old_room_id = 2;
+    {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.old_room_id_), _Internal::kHasBitsOffset + 2, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // string room_type = 3;
+    // uint32 new_room_id = 3;
+    {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.new_room_id_), _Internal::kHasBitsOffset + 3, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // string room_type = 4;
     {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.room_type_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // bool is_quarantined = 4;
-    {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.is_quarantined_), _Internal::kHasBitsOffset + 3, 0,
+    // bool is_quarantined = 5;
+    {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.is_quarantined_), _Internal::kHasBitsOffset + 4, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kBool)},
   }},
   // no aux_entries
   {{
-    "\17\0\0\11\0\0\0\0"
+    "\17\0\0\0\11\0\0\0"
     "PatientTransfer"
     "room_type"
   }},
@@ -928,7 +940,7 @@ PROTOBUF_NOINLINE void PatientTransfer::Clear() {
   if ((cached_has_bits & 0x00000001u) != 0) {
     _impl_.room_type_.ClearNonDefaultToEmpty();
   }
-  if ((cached_has_bits & 0x0000000eu) != 0) {
+  if ((cached_has_bits & 0x0000001eu) != 0) {
     ::memset(&_impl_.patient_id_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.is_quarantined_) -
         reinterpret_cast<char*>(&_impl_.patient_id_)) + sizeof(_impl_.is_quarantined_));
@@ -961,31 +973,40 @@ PROTOBUF_NOINLINE void PatientTransfer::Clear() {
     }
   }
 
-  // uint32 new_room_id = 2;
+  // uint32 old_room_id = 2;
   if ((this_._impl_._has_bits_[0] & 0x00000004u) != 0) {
-    if (this_._internal_new_room_id() != 0) {
+    if (this_._internal_old_room_id() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          2, this_._internal_new_room_id(), target);
+          2, this_._internal_old_room_id(), target);
     }
   }
 
-  // string room_type = 3;
+  // uint32 new_room_id = 3;
+  if ((this_._impl_._has_bits_[0] & 0x00000008u) != 0) {
+    if (this_._internal_new_room_id() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+          3, this_._internal_new_room_id(), target);
+    }
+  }
+
+  // string room_type = 4;
   if ((this_._impl_._has_bits_[0] & 0x00000001u) != 0) {
     if (!this_._internal_room_type().empty()) {
       const ::std::string& _s = this_._internal_room_type();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
           _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientTransfer.room_type");
-      target = stream->WriteStringMaybeAliased(3, _s, target);
+      target = stream->WriteStringMaybeAliased(4, _s, target);
     }
   }
 
-  // bool is_quarantined = 4;
-  if ((this_._impl_._has_bits_[0] & 0x00000008u) != 0) {
+  // bool is_quarantined = 5;
+  if ((this_._impl_._has_bits_[0] & 0x00000010u) != 0) {
     if (this_._internal_is_quarantined() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
-          4, this_._internal_is_quarantined(), target);
+          5, this_._internal_is_quarantined(), target);
     }
   }
 
@@ -1014,8 +1035,8 @@ PROTOBUF_NOINLINE void PatientTransfer::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000000fu) != 0) {
-    // string room_type = 3;
+  if ((cached_has_bits & 0x0000001fu) != 0) {
+    // string room_type = 4;
     if ((cached_has_bits & 0x00000001u) != 0) {
       if (!this_._internal_room_type().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -1029,15 +1050,22 @@ PROTOBUF_NOINLINE void PatientTransfer::Clear() {
             this_._internal_patient_id());
       }
     }
-    // uint32 new_room_id = 2;
+    // uint32 old_room_id = 2;
     if ((cached_has_bits & 0x00000004u) != 0) {
+      if (this_._internal_old_room_id() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+            this_._internal_old_room_id());
+      }
+    }
+    // uint32 new_room_id = 3;
+    if ((cached_has_bits & 0x00000008u) != 0) {
       if (this_._internal_new_room_id() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_new_room_id());
       }
     }
-    // bool is_quarantined = 4;
-    if ((cached_has_bits & 0x00000008u) != 0) {
+    // bool is_quarantined = 5;
+    if ((cached_has_bits & 0x00000010u) != 0) {
       if (this_._internal_is_quarantined() != 0) {
         total_size += 2;
       }
@@ -1056,7 +1084,7 @@ void PatientTransfer::MergeImpl(::google::protobuf::MessageLite& to_msg, const :
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000000fu) != 0) {
+  if ((cached_has_bits & 0x0000001fu) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
       if (!from._internal_room_type().empty()) {
         _this->_internal_set_room_type(from._internal_room_type());
@@ -1072,11 +1100,16 @@ void PatientTransfer::MergeImpl(::google::protobuf::MessageLite& to_msg, const :
       }
     }
     if ((cached_has_bits & 0x00000004u) != 0) {
+      if (from._internal_old_room_id() != 0) {
+        _this->_impl_.old_room_id_ = from._impl_.old_room_id_;
+      }
+    }
+    if ((cached_has_bits & 0x00000008u) != 0) {
       if (from._internal_new_room_id() != 0) {
         _this->_impl_.new_room_id_ = from._impl_.new_room_id_;
       }
     }
-    if ((cached_has_bits & 0x00000008u) != 0) {
+    if ((cached_has_bits & 0x00000010u) != 0) {
       if (from._internal_is_quarantined() != 0) {
         _this->_impl_.is_quarantined_ = from._impl_.is_quarantined_;
       }

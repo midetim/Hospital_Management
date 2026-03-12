@@ -6,6 +6,10 @@
 #include <csignal>
 
 class IService {
+protected:
+    std::string_view name;
+    std::string_view database_name;
+    
 public:
     virtual ~IService() = default;
     
@@ -13,7 +17,9 @@ public:
      * @brief Gets the name of the current service
      * @return Returns the name of the service
      */
-    virtual std::string_view service_name() const = 0;
+    std::string_view service_name() { return this->name; }
+    
+    std::string_view db_name() { return this->database_name; }
     
     /**
      * @brief Connects the microservice to the database
@@ -21,7 +27,7 @@ public:
      * @return Returns a return code depending on if it was successful or not
      * @warning **NO DATABASES EXIST YET**
      */
-    virtual ReturnCode connectToDB(std::string_view database_name);
+    virtual ReturnCode connectToDB();
     
     /**
      * @brief Load all data from the database into the service
@@ -29,7 +35,7 @@ public:
      * @return Returns a return code depending on if it was successful or not
      * @warning **NO DATABASES EXIST YET**
      */
-    virtual ReturnCode loadFromDB(std::string_view database_name) = 0;
+    virtual ReturnCode loadFromDB() = 0;
     
     /**
      * @brief Upload all data from the service into the database
@@ -37,7 +43,7 @@ public:
      * @return Returns a return code depending on if it was successful or not
      * @warning **NO DATABASES EXIST YET**
      */
-    virtual ReturnCode uploadToDB(std::string_view database_name) = 0;
+    virtual ReturnCode uploadToDB() = 0;
     
     /**
      * @brief Service initialization function

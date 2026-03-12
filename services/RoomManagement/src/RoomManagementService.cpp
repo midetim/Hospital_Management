@@ -2,6 +2,10 @@
 #include "grpc_utils.hpp"
 
 
+/* ******************************************************************** */
+/* ********************** Private Functions *************************** */
+/* ******************************************************************** */
+
 uint32_t RoomManagementService::findAvailableRoom(const RoomType type, bool quarantined) const {
     uint32_t best_room_id = 0;
     uint32_t max_available = 0;
@@ -30,144 +34,166 @@ uint32_t RoomManagementService::findAvailableRoom(const std::string type, bool q
     return findAvailableRoom(stringToRoomType(type), quarantined);
 }
 
-grpc::Status RoomManagementService::RoomPing(grpc::ServerContext * context, const RoomPingRequest * request, RoomSuccess * response) {
-    readMetadata(* context); // Read where the request came from
-    response->set_success(true); // Respond with a true
+
+/* ******************************************************************** */
+/* ************************** Constructor ***************************** */
+/* ******************************************************************** */
+
+RoomManagementService::RoomManagementService() {
+    this->name = service::room;
+    this->database_name = service::room_db;
+}
+
+/* ******************************************************************** */
+/* ************************** Common gRPC ***************************** */
+/* ******************************************************************** */
+
+grpc::Status RoomManagementService::ping(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
+    readMetadata(* context);
+    response->set_error(false);
     return grpc::Status::OK;
 }
 
-grpc::Status RoomManagementService::AdmitPatient(grpc::ServerContext * context, const RoomAdmissionRequest * request, RoomSuccess * response) {
-    
-    /* Mutex */
+grpc::Status RoomManagementService::print(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
     readMetadata(* context);
+    print_internal();
+    response->set_error(false);
+    return grpc::Status::OK;
+}
+
+grpc::Status RoomManagementService::update(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
+    readMetadata(* context);
+    loadFromDB(service::room_db);
+    std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
+    response->set_error(false);
+    return grpc::Status::OK;
+}
+
+/* ******************************************************************** */
+/* ********************** PatientManagement gRPC ********************** */
+/* ******************************************************************** */
+
+grpc::Status RoomManagementService::AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
     
     // Get all the info from the request
-    uint64_t pid = request->patient_id();
-    std::string rtype = request->room_type();
-    bool quarantined = request->quarantined();
+    uint64_t patient_id = patient->patient_id();
+    std::string room_type = patient->room_type();
+    bool quarantined = patient->is_quarantined();
     
     // Both quarantined_rooms and hospital_rooms are unordered_map<uint32_t, Room>s
     std::unordered_map<uint32_t, Room> & room_map = quarantined ? quarantined_rooms : hospital_rooms; // Sets map reference depending on quarantine status
     
     // Find the most available room with matching room type
-    uint32_t room_id = findAvailableRoom(rtype, quarantined);
+    uint32_t room_id = findAvailableRoom(room_type, quarantined);
     
     auto it = room_map.find(room_id); // Find the available room
     if (it == room_map.end()) { // Check that the room exists
         // Admission failure
-        response->set_success(false);
-        response->set_room_id(UNKNOWN_ROOM_ERROR);
+        success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "No Available room found");
     }
     
-    it->second.addPatient(pid); // Add the new patient to the room
+    it->second.addPatient(patient_id); // Add the new patient to the room
     it->second.updateCurrentCapacity(); // Update capacity
     
     // Admission success
-    response->set_success(true);
-    response->set_room_id(room_id);
-    
-    /* Mutex end */
+    success->set_successful(true);
     return grpc::Status::OK;
 }
 
-grpc::Status RoomManagementService::DischargePatient(grpc::ServerContext * context, const RoomDischargeRequest * request, RoomSuccess * response) {
+grpc::Status RoomManagementService::DischargePatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) {
     
-    /* Mutex */
-    readMetadata(* context);
+    readMetadata(* context); // Read request metadata
     
-    // Get all the info from the request
-    uint64_t pid = request->patient_id();
-    uint32_t rid = request->room_id();
+    uint64_t patient_id = patient->patient_id();
+    uint32_t room_id = patient->patient_room();
     
-    auto it = hospital_rooms.find(rid); // Search for the patient in the normal map
+    auto it = hospital_rooms.find(room_id); // Search for the patient in the normal map
     if (it == hospital_rooms.end()) { // If patient was not found
-        it = quarantined_rooms.find(rid); // Search in the quarantined map
+        it = quarantined_rooms.find(room_id); // Search in the quarantined map
         if (it == quarantined_rooms.end()) { // Patient was still not found
             // Discharge failure
-            response->set_success(false);
-            response->set_room_id(UNKNOWN_ROOM_ERROR);
+            success->set_successful(false);
             return grpc::Status(grpc::StatusCode::NOT_FOUND, "Error finding room");
         }
         
         // Does not allow the discharge of quarantined patients
-        response->set_success(false);
-        response->set_room_id(UNKNOWN_ROOM_ERROR);
+        success->set_successful(false);
         return grpc::Status(grpc::StatusCode::ABORTED, "Cannot discharge a quarantined patient");
     }
     
     // Remove the patient from the room
-    it->second.removePatient(pid);
+    it->second.removePatient(patient_id);
     it->second.updateCurrentCapacity();
     
     // Discharge success
-    response->set_success(true);
-    response->set_room_id(rid);
-    
-    /* Mutex end */
-    
+    success->set_successful(true);
     return grpc::Status::OK;
 }
 
-grpc::Status RoomManagementService::TransferPatient(grpc::ServerContext * context, const RoomTransferRequest * request, RoomSuccess * response) {
+grpc::Status RoomManagementService::TransferPatient(grpc::ServerContext * context, const PatientTransfer * transfer_request, Success * success) {
     
-    /* Mutex */
-    readMetadata(* context);
+    readMetadata(* context); // Read request metadata
     
     // Get all the info from the request
-    uint64_t pid = request->patient_id();
-    uint32_t old_rid = request->old_room_id();
-    std::string rtype = request->room_type();
-    uint32_t new_rid = request->room_id();
-    bool to_quarantine = request->to_quarantine();
+    uint64_t patient_id = transfer_request->patient_id();
+    uint32_t old_room_id = transfer_request->old_room_id();
+    uint32_t new_room_id = transfer_request->new_room_id();
+    std::string room_type = transfer_request->room_type();
+    bool to_quarantine = transfer_request->is_quarantined();
     
     // Checks if the rid is in hospital_rooms
-    std::unordered_map<uint32_t, Room> & old_room = (hospital_rooms.count(old_rid) ? hospital_rooms : quarantined_rooms); // If old rid exists in hospital rooms, set reference to that map
-    auto old_it = old_room.find(old_rid);
+    std::unordered_map<uint32_t, Room> & old_room = (hospital_rooms.count(old_room_id) ? hospital_rooms : quarantined_rooms); // If old rid exists in hospital rooms, set reference to that map
+    auto old_it = old_room.find(old_room_id);
     
     if (old_it == old_room.end()) { // If the room wasnt found in either map
         // Transfer failure
-        response->set_success(false);
-        response->set_room_id(UNKNOWN_ROOM_ERROR);
+        success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Old room not found");
     }
-    
-    /*
-     TODO: Make it so that if new_rid != ROOM_ID_NOT_PROVIDED, it puts patient into that room then return success
-     */
-    
     
     // Select the new room
     std::unordered_map<uint32_t, Room> & new_room = to_quarantine ? quarantined_rooms : hospital_rooms; // Sets reference to map depending on quarantine status
     
-    auto new_it = new_room.find(new_rid); // Search for the provided new room id in the selected map
+    auto new_it = new_room.find(new_room_id); // Search for the provided new room id in the selected map
     
-    if (new_rid == ROOM_ID_NOT_PROVIDED) {// If no room selected
-        new_rid = findAvailableRoom(stringToRoomType(rtype), to_quarantine); // Find an available room
-        new_it = new_room.find(new_rid); // Set the iterator to the new room
+    if (new_room_id == ROOM_ID_NOT_PROVIDED) {// If no room selected
+        new_room_id = findAvailableRoom(stringToRoomType(room_type), to_quarantine); // Find an available room
+        new_it = new_room.find(new_room_id); // Set the iterator to the new room
     }
 
     // If room not found in map --> Should not be possible, but just in case
     if (new_it == new_room.end()) {
         // Transfer failure
-        response->set_success(false);
-        response->set_room_id(UNKNOWN_ROOM_ERROR);
+        success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "New room not found");
     }
     
     // Remove the patient
-    old_it->second.removePatient(pid);
+    old_it->second.removePatient(patient_id);
     old_it->second.updateCurrentCapacity();
     
     // Add patient to new room
-    new_it->second.addPatient(pid);
+    new_it->second.addPatient(patient_id);
     new_it->second.updateCurrentCapacity();
     
     // Transfer success
-    response->set_success(true);
-    response->set_room_id(new_rid);
+    success->set_successful(true);
+    return grpc::Status::OK;
     
-    /* Mutex end */
+}
+
+grpc::Status RoomManagementService::QuarantinePatient(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    uint64_t patient_id = quarantine_request->patient_id();
+    bool quarantine_entire_room = quarantine_request->quarantine_room();
+    
+    
+    
     
     return grpc::Status::OK;
 }

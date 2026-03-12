@@ -123,10 +123,9 @@ public:
     /* ****************************** IServer ***************************** */
     /* ******************************************************************** */
 
-    std::string_view service_name() const override { return service::patient; };
-    ReturnCode connectToDB(std::string_view database_name) override;
-    ReturnCode loadFromDB(std::string_view database_name) override;
-    ReturnCode uploadToDB(std::string_view database_name) override;
+    ReturnCode connectToDB() override;
+    ReturnCode loadFromDB() override;
+    ReturnCode uploadToDB() override;
     ReturnCode init() override;
     void print_internal() override;
     

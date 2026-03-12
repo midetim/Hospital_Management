@@ -32,9 +32,10 @@ message PatientDTO { // Basic Patient DTO
 
 message PatientTransfer { // Transfer patient to a new room
     uint64 patient_id     = 1;
-    uint32 new_room_id    = 2;
-    string room_type      = 3;
-    bool   is_quarantined = 4;
+    uint32 old_room_id    = 2;
+    uint32 new_room_id    = 3;
+    string room_type      = 4;
+    bool   is_quarantined = 5;
 }
 
 message PatientQuarantine { // Quarantine a patient

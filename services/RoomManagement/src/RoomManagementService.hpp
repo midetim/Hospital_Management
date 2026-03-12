@@ -1,7 +1,6 @@
 #ifndef ROOMMANAGEMENTSERVICE_HPP
 #define ROOMMANAGEMENTSERVICE_HPP
 
-
 #include "Room.hpp"
 #include "Service.hpp"
 
@@ -10,7 +9,8 @@
 
 #include "RoomManagement.pb.h"
 #include "RoomManagement.grpc.pb.h"
-//#include "common.grpc.pb.h"
+#include "Common.pb.h"
+#include "Common.grpc.pb.h"
 
 #define UNKNOWN_ROOM_ERROR 0
 #define NO_AVAILABLE_ROOM_FOUND 0
@@ -18,12 +18,20 @@
 
 
 
-class RoomManagementService final : public RoomManagement::Service, public IService {
+class RoomManagementService final : public IService, public RoomManagement::Service, public Common::Service {
 private:
     std::unordered_map<uint32_t, Room> hospital_rooms;
     std::unordered_map<uint32_t, Room> quarantined_rooms;
+    //std::unique_ptr<PatientManagementClient> patient_client;
+    //std::unique_ptr<ResourceManagementClient> resource_client;
+    //std::unique_ptr<StaffManagementClient> staff_client;
     
     /* Will need a mutex (or a few) */
+    
+    
+    /* ******************************************************************** */
+    /* ********************** Private Functions *************************** */
+    /* ******************************************************************** */
     
     /**
      * @brief Finds the room with the largest number of available beds
@@ -40,111 +48,91 @@ private:
      * @return Returns the room id of type ``Type``
      */
     uint32_t findAvailableRoom(const std::string type, bool quarantined) const;
+    
 public:
     
+    /* ******************************************************************** */
+    /* ************************** Constructor ***************************** */
+    /* ******************************************************************** */
+    
+    explicit RoomManagementService();
+    
+    /* ******************************************************************** */
+    /* ************************** Common gRPC ***************************** */
+    /* ******************************************************************** */
     
     /**
-     * @brief Responds to a ping request from a client
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
+     * @brief The ping to tell the client it has successfully reached the service
      */
-    grpc::Status RoomPing(grpc::ServerContext * context, const RoomPingRequest * request, RoomSuccess * response) override;
+    grpc::Status ping(grpc::ServerContext * context, const Nothing * request, Nothing * response) override;
     
     /**
-     * @brief Adds a patient to the map of either normal rooms, or quarantined rooms
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
-     * @note Automatically places patient into a specific room
+     * @brief The ping to tell the service to print out all their data to the terminal
      */
-    grpc::Status AdmitPatient(grpc::ServerContext * context, const RoomAdmissionRequest * request, RoomSuccess * response) override;
+    grpc::Status print(grpc::ServerContext * context, const Nothing * request, Nothing * response) override;
     
     /**
-     * @brief Removes a patient from the map that they are in
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
-     * @note Do not need to specifiy which map they are in. Automatically searches both maps
+     * @brief The update ping to tell the service to backup their contents to the database
+     */
+    grpc::Status update(grpc::ServerContext * context, const Nothing * request, Nothing * response) override;
+    
+    /* ******************************************************************** */
+    /* ********************** PatientManagement gRPC ********************** */
+    /* ******************************************************************** */
+    
+    /**
+     * @brief Admits a patient to the desired room type with the most availability
+     */
+    grpc::Status AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) override;
+    
+    /**
+     * @brief Attempts to discharge a patient from the hospital
      * @warning Cannot discharge quarantined patients
      */
-    grpc::Status DischargePatient(grpc::ServerContext * context, const RoomDischargeRequest * request, RoomSuccess * response) override;
+    grpc::Status DischargePatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) override;
     
     /**
-     * @brief Moves a patient from one room to another
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
-     * @note Can move patients between normal and quarantined rooms
+     * @brief Transfers a patient from one room to another
+     * @note Will either put the patient into the most available room, or the room with the provided id
      */
-    grpc::Status TransferPatient(grpc::ServerContext * context, const RoomTransferRequest * request, RoomSuccess * response) override;
+    grpc::Status TransferPatient(grpc::ServerContext * context, const PatientTransfer * transfer_request, Success * success) override;
     
-    /**
-     * @brief Gets the room with the most availability of the specified type
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
-     * @note Room id is contained within the response
-     */
-    grpc::Status GetAvailableRoom(grpc::ServerContext * context, const RoomAvailabilityRequest * request, AvailableRoom * response) override;
+    grpc::Status QuarantinePatient(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) override;
     
-    /**
-     * @brief Moves a room from the `hospital_rooms` map to the `quarantined_rooms` map
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
-     * @note Can either quarantine all patients within the room, or move them to other unquarantined rooms
-     */
-    grpc::Status QuarantineRoom(grpc::ServerContext * context, const RoomQuarantineRequest * request, RoomSuccess * response) override;
+    grpc::Status LiftPatientQuarantine(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) override;
     
-    /**
-     * @brief Moves a room from the `quarantined_rooms` map to the `hospital_rooms` map
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
-     * @note Can either lift the quarantine on all patients within the room, or move them to other quarantined rooms
-     */
-    grpc::Status LiftQuarantine(grpc::ServerContext * context, const RoomQuarantineRequest * request, RoomSuccess * response) override;
+    grpc::Status RetrieveResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
     
-    /**
-     * @brief Gets a description of a selected room
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
-     * @warning **NOT YET IMPLEMENTED**
-     */
-    grpc::Status GetRoomInformation(grpc::ServerContext * context, const RoomInfoRequest * request, RoomInformation * response) override;
+    grpc::Status ReleaseResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
     
-    grpc::Status GetResource(grpc::ServerContext * context, const ResourceInfo * request, RoomSuccess * response) override;
+    grpc::Status TransferResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
     
-    grpc::Status ReleaseResource(grpc::ServerContext * context, const ResourceInfo * request, RoomSuccess * response) override;
+    grpc::Status RetrieveStaff(grpc::ServerContext * context, const StaffDTO * resource, Success * success) override;
     
-    grpc::Status TransferResource(grpc::ServerContext * context, const ResourceInfo * request, RoomSuccess * response) override;
-//    
-//    grpc::Status update(grpc::ServerContext * context, const Nothing * request, Nothing * response) override;
+    grpc::Status ReleaseStaff(grpc::ServerContext * context, const StaffDTO * resource, Success * success) override;
     
-    /**
-     * @brief Debug setup function that initializes a few rooms
-     * @note **DEBUG FUNCTION ONLY**
-     */
-    void debug_setup();
+    grpc::Status TransferStaff(grpc::ServerContext * context, const StaffDTO * resource, Success * success) override;
     
-    std::string_view service_name() const override { return service::room; };
-    ReturnCode loadFromDB(std::string_view database_name) override;
-    ReturnCode uploadToDB(std::string_view database_name) override;
+    grpc::Status QuarantineRoom(grpc::ServerContext * context, const RoomQuarantine * quarantine_request, Success * success) override;
+    
+    grpc::Status GetRoomInformation(grpc::ServerContext * context, const RoomDTO * room, RoomInformation * room_information) override;
+    
+    /* ******************************************************************** */
+    /* *************************** IServer ******************************** */
+    /* ******************************************************************** */
+    
+    ReturnCode connectToDB() override;
+    ReturnCode loadFromDB() override;
+    ReturnCode uploadToDB() override;
     ReturnCode init() override;
-    void HandleShutdown(int signal) override;
     void print_internal() override;
     
-    grpc::Status Print(grpc::ServerContext * context, const Nothing * request, Nothing * response) override;
+    
+    /* ******************************************************************** */
+    /* ****************************** Other ******************************* */
+    /* ******************************************************************** */
+    
+    
 };
 
 #endif

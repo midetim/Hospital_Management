@@ -26,6 +26,7 @@ static const char* RoomManagement_method_names[] = {
   "/RoomManagement/DischargePatient",
   "/RoomManagement/TransferPatient",
   "/RoomManagement/QuarantinePatient",
+  "/RoomManagement/LiftPatientQuarantine",
   "/RoomManagement/RetrieveResource",
   "/RoomManagement/ReleaseResource",
   "/RoomManagement/TransferResource",
@@ -47,14 +48,15 @@ RoomManagement::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& cha
   , rpcmethod_DischargePatient_(RoomManagement_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_TransferPatient_(RoomManagement_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_QuarantinePatient_(RoomManagement_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RetrieveResource_(RoomManagement_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ReleaseResource_(RoomManagement_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_TransferResource_(RoomManagement_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RetrieveStaff_(RoomManagement_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ReleaseStaff_(RoomManagement_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_TransferStaff_(RoomManagement_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QuarantineRoom_(RoomManagement_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetRoomInformation_(RoomManagement_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_LiftPatientQuarantine_(RoomManagement_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RetrieveResource_(RoomManagement_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ReleaseResource_(RoomManagement_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_TransferResource_(RoomManagement_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RetrieveStaff_(RoomManagement_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ReleaseStaff_(RoomManagement_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_TransferStaff_(RoomManagement_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QuarantineRoom_(RoomManagement_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetRoomInformation_(RoomManagement_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status RoomManagement::Stub::AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) {
@@ -103,23 +105,23 @@ void RoomManagement::Stub::async::DischargePatient(::grpc::ClientContext* contex
   return result;
 }
 
-::grpc::Status RoomManagement::Stub::TransferPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferPatient_, context, request, response);
+::grpc::Status RoomManagement::Stub::TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientTransfer, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferPatient_, context, request, response);
 }
 
-void RoomManagement::Stub::async::TransferPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferPatient_, context, request, response, std::move(f));
+void RoomManagement::Stub::async::TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientTransfer, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferPatient_, context, request, response, std::move(f));
 }
 
-void RoomManagement::Stub::async::TransferPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+void RoomManagement::Stub::async::TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferPatient_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferPatient_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientTransfer, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferPatient_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncTransferPatientRaw(context, request, cq);
   result->StartCall();
@@ -145,6 +147,29 @@ void RoomManagement::Stub::async::QuarantinePatient(::grpc::ClientContext* conte
 ::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncQuarantinePatientRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status RoomManagement::Stub::LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_LiftPatientQuarantine_, context, request, response);
+}
+
+void RoomManagement::Stub::async::LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_LiftPatientQuarantine_, context, request, response, std::move(f));
+}
+
+void RoomManagement::Stub::async::LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_LiftPatientQuarantine_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncLiftPatientQuarantineRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientQuarantine, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_LiftPatientQuarantine_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncLiftPatientQuarantineRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncLiftPatientQuarantineRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -357,10 +382,10 @@ RoomManagement::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::PatientTransfer, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::PatientDTO* req,
+             const ::PatientTransfer* req,
              ::Success* resp) {
                return service->TransferPatient(ctx, req, resp);
              }, this)));
@@ -377,12 +402,12 @@ RoomManagement::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourceDTO* req,
+             const ::PatientQuarantine* req,
              ::Success* resp) {
-               return service->RetrieveResource(ctx, req, resp);
+               return service->LiftPatientQuarantine(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[5],
@@ -392,7 +417,7 @@ RoomManagement::Service::Service() {
              ::grpc::ServerContext* ctx,
              const ::ResourceDTO* req,
              ::Success* resp) {
-               return service->ReleaseResource(ctx, req, resp);
+               return service->RetrieveResource(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[6],
@@ -402,17 +427,17 @@ RoomManagement::Service::Service() {
              ::grpc::ServerContext* ctx,
              const ::ResourceDTO* req,
              ::Success* resp) {
-               return service->TransferResource(ctx, req, resp);
+               return service->ReleaseResource(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::StaffDTO* req,
+             const ::ResourceDTO* req,
              ::Success* resp) {
-               return service->RetrieveStaff(ctx, req, resp);
+               return service->TransferResource(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[8],
@@ -422,7 +447,7 @@ RoomManagement::Service::Service() {
              ::grpc::ServerContext* ctx,
              const ::StaffDTO* req,
              ::Success* resp) {
-               return service->ReleaseStaff(ctx, req, resp);
+               return service->RetrieveStaff(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[9],
@@ -432,10 +457,20 @@ RoomManagement::Service::Service() {
              ::grpc::ServerContext* ctx,
              const ::StaffDTO* req,
              ::Success* resp) {
-               return service->TransferStaff(ctx, req, resp);
+               return service->ReleaseStaff(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[10],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](RoomManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::StaffDTO* req,
+             ::Success* resp) {
+               return service->TransferStaff(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      RoomManagement_method_names[11],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
@@ -445,7 +480,7 @@ RoomManagement::Service::Service() {
                return service->QuarantineRoom(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      RoomManagement_method_names[11],
+      RoomManagement_method_names[12],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomDTO, ::RoomInformation, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
@@ -473,7 +508,7 @@ RoomManagement::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::TransferPatient(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response) {
+::grpc::Status RoomManagement::Service::TransferPatient(::grpc::ServerContext* context, const ::PatientTransfer* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -481,6 +516,13 @@ RoomManagement::Service::~Service() {
 }
 
 ::grpc::Status RoomManagement::Service::QuarantinePatient(::grpc::ServerContext* context, const ::PatientQuarantine* request, ::Success* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status RoomManagement::Service::LiftPatientQuarantine(::grpc::ServerContext* context, const ::PatientQuarantine* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;

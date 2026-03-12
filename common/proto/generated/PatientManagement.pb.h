@@ -223,12 +223,13 @@ class PatientTransfer final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kRoomTypeFieldNumber = 3,
+    kRoomTypeFieldNumber = 4,
     kPatientIdFieldNumber = 1,
-    kNewRoomIdFieldNumber = 2,
-    kIsQuarantinedFieldNumber = 4,
+    kOldRoomIdFieldNumber = 2,
+    kNewRoomIdFieldNumber = 3,
+    kIsQuarantinedFieldNumber = 5,
   };
-  // string room_type = 3;
+  // string room_type = 4;
   void clear_room_type() ;
   const ::std::string& room_type() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
@@ -253,7 +254,17 @@ class PatientTransfer final : public ::google::protobuf::Message
   void _internal_set_patient_id(::uint64_t value);
 
   public:
-  // uint32 new_room_id = 2;
+  // uint32 old_room_id = 2;
+  void clear_old_room_id() ;
+  ::uint32_t old_room_id() const;
+  void set_old_room_id(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_old_room_id() const;
+  void _internal_set_old_room_id(::uint32_t value);
+
+  public:
+  // uint32 new_room_id = 3;
   void clear_new_room_id() ;
   ::uint32_t new_room_id() const;
   void set_new_room_id(::uint32_t value);
@@ -263,7 +274,7 @@ class PatientTransfer final : public ::google::protobuf::Message
   void _internal_set_new_room_id(::uint32_t value);
 
   public:
-  // bool is_quarantined = 4;
+  // bool is_quarantined = 5;
   void clear_is_quarantined() ;
   bool is_quarantined() const;
   void set_is_quarantined(bool value);
@@ -277,7 +288,7 @@ class PatientTransfer final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 4,
+  static const ::google::protobuf::internal::TcParseTable<3, 5,
                                    0, 33,
                                    2>
       _table_;
@@ -301,6 +312,7 @@ class PatientTransfer final : public ::google::protobuf::Message
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr room_type_;
     ::uint64_t patient_id_;
+    ::uint32_t old_room_id_;
     ::uint32_t new_room_id_;
     bool is_quarantined_;
     PROTOBUF_TSAN_DECLARE_MEMBER
@@ -1398,11 +1410,35 @@ inline void PatientTransfer::_internal_set_patient_id(::uint64_t value) {
   _impl_.patient_id_ = value;
 }
 
-// uint32 new_room_id = 2;
+// uint32 old_room_id = 2;
+inline void PatientTransfer::clear_old_room_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.old_room_id_ = 0u;
+  _impl_._has_bits_[0] &= ~0x00000004u;
+}
+inline ::uint32_t PatientTransfer::old_room_id() const {
+  // @@protoc_insertion_point(field_get:PatientTransfer.old_room_id)
+  return _internal_old_room_id();
+}
+inline void PatientTransfer::set_old_room_id(::uint32_t value) {
+  _internal_set_old_room_id(value);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  // @@protoc_insertion_point(field_set:PatientTransfer.old_room_id)
+}
+inline ::uint32_t PatientTransfer::_internal_old_room_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.old_room_id_;
+}
+inline void PatientTransfer::_internal_set_old_room_id(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.old_room_id_ = value;
+}
+
+// uint32 new_room_id = 3;
 inline void PatientTransfer::clear_new_room_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.new_room_id_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000004u;
+  _impl_._has_bits_[0] &= ~0x00000008u;
 }
 inline ::uint32_t PatientTransfer::new_room_id() const {
   // @@protoc_insertion_point(field_get:PatientTransfer.new_room_id)
@@ -1410,7 +1446,7 @@ inline ::uint32_t PatientTransfer::new_room_id() const {
 }
 inline void PatientTransfer::set_new_room_id(::uint32_t value) {
   _internal_set_new_room_id(value);
-  _impl_._has_bits_[0] |= 0x00000004u;
+  _impl_._has_bits_[0] |= 0x00000008u;
   // @@protoc_insertion_point(field_set:PatientTransfer.new_room_id)
 }
 inline ::uint32_t PatientTransfer::_internal_new_room_id() const {
@@ -1422,7 +1458,7 @@ inline void PatientTransfer::_internal_set_new_room_id(::uint32_t value) {
   _impl_.new_room_id_ = value;
 }
 
-// string room_type = 3;
+// string room_type = 4;
 inline void PatientTransfer::clear_room_type() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.room_type_.ClearToEmpty();
@@ -1487,11 +1523,11 @@ inline void PatientTransfer::set_allocated_room_type(::std::string* PROTOBUF_NUL
   // @@protoc_insertion_point(field_set_allocated:PatientTransfer.room_type)
 }
 
-// bool is_quarantined = 4;
+// bool is_quarantined = 5;
 inline void PatientTransfer::clear_is_quarantined() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.is_quarantined_ = false;
-  _impl_._has_bits_[0] &= ~0x00000008u;
+  _impl_._has_bits_[0] &= ~0x00000010u;
 }
 inline bool PatientTransfer::is_quarantined() const {
   // @@protoc_insertion_point(field_get:PatientTransfer.is_quarantined)
@@ -1499,7 +1535,7 @@ inline bool PatientTransfer::is_quarantined() const {
 }
 inline void PatientTransfer::set_is_quarantined(bool value) {
   _internal_set_is_quarantined(value);
-  _impl_._has_bits_[0] |= 0x00000008u;
+  _impl_._has_bits_[0] |= 0x00000010u;
   // @@protoc_insertion_point(field_set:PatientTransfer.is_quarantined)
 }
 inline bool PatientTransfer::_internal_is_quarantined() const {

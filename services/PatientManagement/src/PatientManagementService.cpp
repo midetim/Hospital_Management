@@ -35,7 +35,10 @@ uint64_t PatientManagementService::find_patient(const Patient & p) {
 /* ******************************************************************** */
 
 PatientManagementService::PatientManagementService()
-: room_client(std::make_unique<RoomManagementClient>(service::room_host)) {}
+: room_client(std::make_unique<RoomManagementClient>(service::room_host)) {
+    this->name = service::patient;
+    this->database_name = service::patient_db;
+}
 
 /* ******************************************************************** */
 /* ************************** Common gRPC ***************************** */
@@ -56,7 +59,7 @@ grpc::Status PatientManagementService::print(grpc::ServerContext * context, cons
 
 grpc::Status PatientManagementService::update(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
     readMetadata(* context);
-    loadFromDB(service::patient_db);
+    loadFromDB();
     std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
     response->set_error(false);
     return grpc::Status::OK;
@@ -100,7 +103,7 @@ grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * contex
     new_patient.setPatientId(patient_id);
     
     // Attempt to admit patient to the room service
-    uint32_t success_code = room_client->admitPatient(patient_id, room_type, is_quarantined, service::patient);
+    uint32_t success_code = room_client->admitPatient(patient_id, room_type, is_quarantined, this->name);
     
     // If the admission failed
     if (success_code == ROOM_NOT_FOUND) {
@@ -144,7 +147,7 @@ grpc::Status PatientManagementService::DischargePatient(grpc::ServerContext * co
     
     uint32_t room_id = it->second.getRoomId(); // Get the room id of the room the patient is currently in
     
-    ReturnCode room_discharge = room_client->dischargePatient(patient_id, room_id, service::patient); // Discharge them from that room
+    ReturnCode room_discharge = room_client->dischargePatient(patient_id, room_id, this->name); // Discharge them from that room
     
     switch (room_discharge) { // Check room discharge return code
         case ReturnCode::SUCCESS: // Successful discharge
@@ -182,7 +185,7 @@ grpc::Status PatientManagementService::TransferPatient(grpc::ServerContext * con
     uint32_t old_room_id = it->second.getRoomId();
     
     // Get the new room id of the patient
-    uint32_t room_transfer = room_client->transferPatient(patient_id, old_room_id, room_type, new_room_id, is_quarantined, service::patient);
+    uint32_t room_transfer = room_client->transferPatient(patient_id, old_room_id, room_type, new_room_id, is_quarantined, this->name);
     
     if (room_transfer == ROOM_NOT_FOUND) { // If the room service could not put the patient into a new room
         success->set_successful(false);
@@ -213,7 +216,7 @@ grpc::Status PatientManagementService::QuarantinePatient(grpc::ServerContext * c
     }
     
     // Attempt to quarantine the patient
-    uint32_t quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, service::patient);
+    uint32_t quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, this->name);
     if (quarantined == ROOM_NOT_FOUND) { // Patient could not be quarantined
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
@@ -243,7 +246,7 @@ grpc::Status PatientManagementService::LiftPatientQuarantine(grpc::ServerContext
     // TODO: WILL NEED TO MODIFY THIS PART IN ROOM CLIENT TO MATCH
     
     // Attempt to quarantine the patient
-    uint32_t quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, service::patient);
+    uint32_t quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, this->name);
     if (quarantined == ROOM_NOT_FOUND) { // Patient could not be quarantined
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
@@ -392,17 +395,17 @@ grpc::Status PatientManagementService::GetPatientsInRoom(grpc::ServerContext * c
 /* ****************************** IServer ***************************** */
 /* ******************************************************************** */
 
-ReturnCode PatientManagementService::connectToDB(std::string_view database_name) {
+ReturnCode PatientManagementService::connectToDB() {
     
     return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
-ReturnCode PatientManagementService::loadFromDB(std::string_view database_name) {
+ReturnCode PatientManagementService::loadFromDB() {
     
     return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
-ReturnCode PatientManagementService::uploadToDB(std::string_view database_name) {
+ReturnCode PatientManagementService::uploadToDB() {
     
     return ReturnCode::NOT_YET_IMPLEMENTED;
 }
@@ -415,7 +418,7 @@ ReturnCode PatientManagementService::init() {
 
 void PatientManagementService::print_internal() {
     std::cout << ansi::bgreen
-              << "==== " << service::patient << " STATE ===="
+              << "==== " << this->name << " STATE ===="
               << ansi::reset << '\n';
 
     std::cout << "Total patients: "
