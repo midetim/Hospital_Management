@@ -40,8 +40,6 @@ private:
 public:
     explicit ResourceManagementService();
     
-    static constexpr std::string_view SERVICE_NAME =    "Resource Management Service";
-    static constexpr std::string_view DATABASE_NAME =   "No database yet";
     
     grpc::Status ResourcePing(grpc::ServerContext * context, const ResourcePingRequest * request, ResourceSuccess * response) override;
     
@@ -66,7 +64,7 @@ public:
     grpc::Status Print(grpc::ServerContext * context, const Nothing * request, Nothing* response) override;
     
     // Inherited from IService
-    std::string_view service_name() const override { return SERVICE_NAME; }
+    std::string_view service_name() const override { return service::resource; }
     ReturnCode loadFromDB(std::string_view database_name) override;
     ReturnCode uploadToDB(std::string_view database_name) override;
     ReturnCode init() override;

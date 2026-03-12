@@ -16,6 +16,7 @@ target_link_libraries(common
     PUBLIC
         gRPC::grpc++
         protobuf::libprotobuf
+        Threads::Threads
 )
 
 set(PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/proto)

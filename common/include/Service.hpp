@@ -16,6 +16,14 @@ public:
     virtual std::string_view service_name() const = 0;
     
     /**
+     * @brief Connects the microservice to the database
+     * @param database_name The name of the database to connect to
+     * @return Returns a return code depending on if it was successful or not
+     * @warning **NO DATABASES EXIST YET**
+     */
+    virtual ReturnCode connectToDB(std::string_view database_name);
+    
+    /**
      * @brief Load all data from the database into the service
      * @param database_name The name of the database to pull data from
      * @return Returns a return code depending on if it was successful or not
@@ -38,16 +46,6 @@ public:
      * @warning Will be called before running the service
      */
     virtual ReturnCode init() = 0;
-    
-    
-    /**
-     * @brief Handles when the process is terminated throught either CTRL + C or docker shutdown
-     * @param signal No clue tbh
-     * @note Should make a final database backup before shutting down
-     * @note Should handle SIGINT and SIGTERM
-     * @warning **NOT YET IMPLEMENTED**
-     */
-    virtual void HandleShutdown(int signal) = 0;
     
     /**
      * @brief Prints all stored information to terminal

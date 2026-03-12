@@ -1,58 +1,57 @@
 syntax = "proto3";
 
-import "common.proto";
+import "Common.proto";
 
+// Each one of these must be accessible by the front end
 service PatientManagement {
-    rpc PatientPing(PatientPingRequest) returns (PatientSuccess);
-    rpc PatientAdmission(PatientAdmissionRequest) returns (PatientSuccess);
-    rpc PatientDischarge(PatientDischargeRequest) returns (PatientSuccess);
-    rpc PatientTransfer(PatientTransferRequest) returns (PatientSuccess);
-    rpc GetPatientInformation(PatientInfoRequest) returns (PatientInformation);
-
-    // Globals
-    rpc Print(Nothing) returns (Nothing);
+    
+    // Patient movement
+    rpc AdmitPatient(PatientDTO)                 returns (Success);
+    rpc DischargePatient(PatientDTO)             returns (Success);
+    rpc TransferPatient(PatientTransfer)         returns (Success);
+    rpc QuarantinePatient(PatientQuarantine)     returns (Success);
+    rpc LiftPatientQuarantine(PatientQuarantine) returns (Success);
+    
+    // Patient information
+    rpc GetPatientInformation(PatientDTO)        returns (PatientDTO);
+    rpc UpdatePatientInformation(PatientDTO)     returns (Success);
+    
+    /* This call is not accessible to the front end */
+    rpc GetPatientsInRoom(RoomRequest)           returns (PatientList);
 }
 
-message PatientPingRequest {
-    bool ping = 1;
+message PatientDTO { // Basic Patient DTO
+    NameDTO patient_name   = 1;
+    uint64  patient_id     = 2;
+    string  patient_sex    = 3;
+    string  patient_cond   = 4;
+    uint32  patient_room   = 5;
+    string  room_type      = 6;
+    bool    is_quarantined = 7;
 }
 
-message PatientAdmissionRequest { // Patient service must auto generate the patient id
-    PatientInformation patient_info = 1;
-    string room_type = 2;
-    bool quarantined = 3;
+message PatientTransfer { // Transfer patient to a new room
+    uint64 patient_id     = 1;
+    uint32 new_room_id    = 2;
+    string room_type      = 3;
+    bool   is_quarantined = 4;
 }
 
-message PatientDischargeRequest {
-    uint64 patient_id = 1;
+message PatientQuarantine { // Quarantine a patient
+    uint64 patient_id      = 1;
+    bool   quarantine_room = 2;
+    /*
+    Quarantine patient:
+     True -> Quarantine all other patients in the room
+     False -> Move all other patients to non-quarantined rooms
+     
+    Lift Quarantine:
+     True -> Lift quarantine on entire room
+     False -> move this patient to a non-quarantined room
+     */
 }
 
-message PatientTransferRequest {
-    uint64 patient_id = 1;
-    uint32 desired_room = 2;
-    string room_type = 3;
-    bool quarantined = 4;
-}
-
-message PatientSuccess {
-    bool success = 1;
-    uint64 patient_id = 2;
-}
-
-message PatientInfoRequest {
-    uint64 patient_id = 1;
-}
-
-message PatientName {
-    string first_name = 1;
-    string middle_name = 2;
-    string last_name = 3;
-}
-
-message PatientInformation {
-    PatientName patient_name = 1;
-    string patient_sex = 2;
-    string patient_condition = 3;
-    uint32 patient_room = 4;
+message PatientList {
+    repeated PatientDTO patients = 1;
 }
 

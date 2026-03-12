@@ -17,27 +17,37 @@ namespace service {
     inline constexpr std::string_view patient_host =    "127.0.0.1:8922";
     inline constexpr std::string_view resource_host =   "127.0.0.1:8923";
     inline constexpr std::string_view staff_host =      "127.0.0.1:8924";
+    inline constexpr std::string_view scheduler_host =  "127.0.0.1:8925";
+
     // PORT NAMES
     inline constexpr uint32_t front_port =      8920;
     inline constexpr uint32_t room_port =       8921;
     inline constexpr uint32_t patient_port =    8922;
     inline constexpr uint32_t resource_port =   8923;
     inline constexpr uint32_t staff_port =      8924;
+    inline constexpr uint32_t scheduler_port =  8925;
+
+    // SERVICE NAMES
+    inline constexpr std::string_view room =        "Room Management Service";
+    inline constexpr std::string_view resource =    "Resource Management Service";
+    inline constexpr std::string_view patient =     "Patient Management Service";
+    inline constexpr std::string_view staff =       "Staff Management Service";
+    inline constexpr std::string_view scheduler =   "Scheduler Management Service";
+    inline constexpr std::string_view front =       "Front End Service";
+
+    // CLIENT NAMES
+    inline constexpr std::string_view room_client = "Room Management Client";
+    inline constexpr std::string_view resource_client = "Resource Management Client";
+    inline constexpr std::string_view patient_client = "Patient Management Client";
+    inline constexpr std::string_view staff_client = "Staff Management Client";
+    
+    // DATABASE NAMES
+    inline constexpr std::string_view room_db =     "No db yet";
+    inline constexpr std::string_view resource_db = "No db yet";
+    inline constexpr std::string_view patient_db =  "No db yet";
+    inline constexpr std::string_view staff_db =    "No db yet";
 
 }
-
-#define FRONT_END_HOST              "127.0.0.1:8920"
-#define ROOM_MANAGEMENT_HOST        "127.0.0.1:8921"
-#define PATIENT_MANAGEMENT_HOST     "127.0.0.1:8922"
-#define RESOURCE_MANAGEMENT_HOST    "127.0.0.1:8923"
-#define STAFF_MANAGEMENT_HOST       "127.0.0.1:8924"
-
-/* Ports for each microservice */
-#define FRONT_END_PORT              8920
-#define ROOM_MANAGEMENT_PORT        8921
-#define PATIENT_MANAGEMENT_PORT     8922
-#define RESOURCE_MANAGEMENT_PORT    8923
-#define STAFF_MANAGEMENT_PORT       8924
 
 /**
  * @brief ANSI Colour codes for flavourful text
@@ -172,7 +182,8 @@ inline Condition stringToCondition(const std::string & s) {
 enum class ReturnCode : int32_t {
     SUCCESS = 0,
     WARNING = 1,
-    FAILURE = -1
+    FAILURE = -1,
+    NOT_YET_IMPLEMENTED = -2
 };
 
 /**

@@ -22,17 +22,18 @@
 #include <grpcpp/ports_def.inc>
 
 static const char* ResourceManagement_method_names[] = {
-  "/ResourceManagement/ResourcePing",
-  "/ResourceManagement/FindResources",
-  "/ResourceManagement/ShowResources",
-  "/ResourceManagement/SendResource",
-  "/ResourceManagement/RetrieveResource",
-  "/ResourceManagement/TransferResource",
-  "/ResourceManagement/AddStock",
-  "/ResourceManagement/RemoveStock",
   "/ResourceManagement/RegisterResource",
   "/ResourceManagement/DeregisterResource",
-  "/ResourceManagement/Print",
+  "/ResourceManagement/SendForMaintenance",
+  "/ResourceManagement/AddToSchedule",
+  "/ResourceManagement/RemoveFromSchedule",
+  "/ResourceManagement/ChangeSchedule",
+  "/ResourceManagement/AddStock",
+  "/ResourceManagement/RemoveStock",
+  "/ResourceManagement/UseStock",
+  "/ResourceManagement/EmptyStock",
+  "/ResourceManagement/GetResourceInformation",
+  "/ResourceManagement/GetResourcesInRoom",
 };
 
 std::unique_ptr< ResourceManagement::Stub> ResourceManagement::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -42,268 +43,292 @@ std::unique_ptr< ResourceManagement::Stub> ResourceManagement::NewStub(const std
 }
 
 ResourceManagement::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
-  : channel_(channel), rpcmethod_ResourcePing_(ResourceManagement_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_FindResources_(ResourceManagement_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ShowResources_(ResourceManagement_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_SendResource_(ResourceManagement_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RetrieveResource_(ResourceManagement_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_TransferResource_(ResourceManagement_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  : channel_(channel), rpcmethod_RegisterResource_(ResourceManagement_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DeregisterResource_(ResourceManagement_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SendForMaintenance_(ResourceManagement_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddToSchedule_(ResourceManagement_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RemoveFromSchedule_(ResourceManagement_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ChangeSchedule_(ResourceManagement_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_AddStock_(ResourceManagement_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RemoveStock_(ResourceManagement_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RegisterResource_(ResourceManagement_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_DeregisterResource_(ResourceManagement_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_Print_(ResourceManagement_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_UseStock_(ResourceManagement_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_EmptyStock_(ResourceManagement_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetResourceInformation_(ResourceManagement_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetResourcesInRoom_(ResourceManagement_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status ResourceManagement::Stub::ResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::ResourceSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::ResourcePingRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ResourcePing_, context, request, response);
+::grpc::Status ResourceManagement::Stub::RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RegisterResource_, context, request, response);
 }
 
-void ResourceManagement::Stub::async::ResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::ResourcePingRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ResourcePing_, context, request, response, std::move(f));
+void ResourceManagement::Stub::async::RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RegisterResource_, context, request, response, std::move(f));
 }
 
-void ResourceManagement::Stub::async::ResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ResourcePing_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* ResourceManagement::Stub::PrepareAsyncResourcePingRaw(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceSuccess, ::ResourcePingRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ResourcePing_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* ResourceManagement::Stub::AsyncResourcePingRaw(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncResourcePingRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status ResourceManagement::Stub::FindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::ResourceAvailabilityResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::ResourceAvailabilityRequest, ::ResourceAvailabilityResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_FindResources_, context, request, response);
-}
-
-void ResourceManagement::Stub::async::FindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest* request, ::ResourceAvailabilityResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::ResourceAvailabilityRequest, ::ResourceAvailabilityResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_FindResources_, context, request, response, std::move(f));
-}
-
-void ResourceManagement::Stub::async::FindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest* request, ::ResourceAvailabilityResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_FindResources_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::ResourceAvailabilityResponse>* ResourceManagement::Stub::PrepareAsyncFindResourcesRaw(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceAvailabilityResponse, ::ResourceAvailabilityRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_FindResources_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::ResourceAvailabilityResponse>* ResourceManagement::Stub::AsyncFindResourcesRaw(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncFindResourcesRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status ResourceManagement::Stub::ShowResources(::grpc::ClientContext* context, const ::Nothing& request, ::Resources* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::Nothing, ::Resources, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ShowResources_, context, request, response);
-}
-
-void ResourceManagement::Stub::async::ShowResources(::grpc::ClientContext* context, const ::Nothing* request, ::Resources* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::Nothing, ::Resources, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ShowResources_, context, request, response, std::move(f));
-}
-
-void ResourceManagement::Stub::async::ShowResources(::grpc::ClientContext* context, const ::Nothing* request, ::Resources* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ShowResources_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::Resources>* ResourceManagement::Stub::PrepareAsyncShowResourcesRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Resources, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ShowResources_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::Resources>* ResourceManagement::Stub::AsyncShowResourcesRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncShowResourcesRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status ResourceManagement::Stub::SendResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::ResourceSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::ResourceSendRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SendResource_, context, request, response);
-}
-
-void ResourceManagement::Stub::async::SendResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::ResourceSendRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SendResource_, context, request, response, std::move(f));
-}
-
-void ResourceManagement::Stub::async::SendResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SendResource_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* ResourceManagement::Stub::PrepareAsyncSendResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceSuccess, ::ResourceSendRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SendResource_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* ResourceManagement::Stub::AsyncSendResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncSendResourceRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status ResourceManagement::Stub::RetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::ResourceSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::ResourceRetrievalRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RetrieveResource_, context, request, response);
-}
-
-void ResourceManagement::Stub::async::RetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::ResourceRetrievalRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RetrieveResource_, context, request, response, std::move(f));
-}
-
-void ResourceManagement::Stub::async::RetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RetrieveResource_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* ResourceManagement::Stub::PrepareAsyncRetrieveResourceRaw(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceSuccess, ::ResourceRetrievalRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RetrieveResource_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* ResourceManagement::Stub::AsyncRetrieveResourceRaw(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncRetrieveResourceRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status ResourceManagement::Stub::TransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::ResourceSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::ResourceSendRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferResource_, context, request, response);
-}
-
-void ResourceManagement::Stub::async::TransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::ResourceSendRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferResource_, context, request, response, std::move(f));
-}
-
-void ResourceManagement::Stub::async::TransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferResource_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* ResourceManagement::Stub::PrepareAsyncTransferResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceSuccess, ::ResourceSendRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferResource_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* ResourceManagement::Stub::AsyncTransferResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncTransferResourceRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status ResourceManagement::Stub::AddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::StockAmount* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::StockIncreaseRequest, ::StockAmount, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AddStock_, context, request, response);
-}
-
-void ResourceManagement::Stub::async::AddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest* request, ::StockAmount* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::StockIncreaseRequest, ::StockAmount, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddStock_, context, request, response, std::move(f));
-}
-
-void ResourceManagement::Stub::async::AddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest* request, ::StockAmount* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddStock_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::StockAmount>* ResourceManagement::Stub::PrepareAsyncAddStockRaw(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::StockAmount, ::StockIncreaseRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_AddStock_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::StockAmount>* ResourceManagement::Stub::AsyncAddStockRaw(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncAddStockRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status ResourceManagement::Stub::RemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::StockAmount* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::StockDecreaseRequest, ::StockAmount, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RemoveStock_, context, request, response);
-}
-
-void ResourceManagement::Stub::async::RemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest* request, ::StockAmount* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::StockDecreaseRequest, ::StockAmount, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveStock_, context, request, response, std::move(f));
-}
-
-void ResourceManagement::Stub::async::RemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest* request, ::StockAmount* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveStock_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::StockAmount>* ResourceManagement::Stub::PrepareAsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::StockAmount, ::StockDecreaseRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RemoveStock_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::StockAmount>* ResourceManagement::Stub::AsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncRemoveStockRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status ResourceManagement::Stub::RegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::RegistrationSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::ResourceRegistrationRequest, ::RegistrationSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RegisterResource_, context, request, response);
-}
-
-void ResourceManagement::Stub::async::RegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest* request, ::RegistrationSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::ResourceRegistrationRequest, ::RegistrationSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RegisterResource_, context, request, response, std::move(f));
-}
-
-void ResourceManagement::Stub::async::RegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest* request, ::RegistrationSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
+void ResourceManagement::Stub::async::RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RegisterResource_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::RegistrationSuccess>* ResourceManagement::Stub::PrepareAsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RegistrationSuccess, ::ResourceRegistrationRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RegisterResource_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RegisterResource_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::RegistrationSuccess>* ResourceManagement::Stub::AsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncRegisterResourceRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status ResourceManagement::Stub::DeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::ResourceSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::ResourceDeregistrationRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DeregisterResource_, context, request, response);
+::grpc::Status ResourceManagement::Stub::DeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DeregisterResource_, context, request, response);
 }
 
-void ResourceManagement::Stub::async::DeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::ResourceDeregistrationRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DeregisterResource_, context, request, response, std::move(f));
+void ResourceManagement::Stub::async::DeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DeregisterResource_, context, request, response, std::move(f));
 }
 
-void ResourceManagement::Stub::async::DeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
+void ResourceManagement::Stub::async::DeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DeregisterResource_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* ResourceManagement::Stub::PrepareAsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceSuccess, ::ResourceDeregistrationRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DeregisterResource_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DeregisterResource_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* ResourceManagement::Stub::AsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncDeregisterResourceRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status ResourceManagement::Stub::Print(::grpc::ClientContext* context, const ::Nothing& request, ::Nothing* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Print_, context, request, response);
+::grpc::Status ResourceManagement::Stub::SendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SendForMaintenance_, context, request, response);
 }
 
-void ResourceManagement::Stub::async::Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Print_, context, request, response, std::move(f));
+void ResourceManagement::Stub::async::SendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SendForMaintenance_, context, request, response, std::move(f));
 }
 
-void ResourceManagement::Stub::async::Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Print_, context, request, response, reactor);
+void ResourceManagement::Stub::async::SendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SendForMaintenance_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::Nothing>* ResourceManagement::Stub::PrepareAsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_Print_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncSendForMaintenanceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SendForMaintenance_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::Nothing>* ResourceManagement::Stub::AsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncSendForMaintenanceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncPrintRaw(context, request, cq);
+    this->PrepareAsyncSendForMaintenanceRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::AddToSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AddToSchedule_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::AddToSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddToSchedule_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::AddToSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddToSchedule_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncAddToScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceShift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_AddToSchedule_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncAddToScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncAddToScheduleRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::RemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RemoveFromSchedule_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::RemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveFromSchedule_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::RemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveFromSchedule_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncRemoveFromScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceShift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RemoveFromSchedule_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncRemoveFromScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncRemoveFromScheduleRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::ChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ChangeSchedule_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::ChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ChangeSchedule_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::ChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ChangeSchedule_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncChangeScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceShift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ChangeSchedule_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncChangeScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncChangeScheduleRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::AddStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AddStock_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::AddStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddStock_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::AddStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddStock_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncAddStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::StockUpdate, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_AddStock_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncAddStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncAddStockRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::RemoveStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RemoveStock_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::RemoveStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveStock_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::RemoveStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveStock_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::StockUpdate, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RemoveStock_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncRemoveStockRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::UseStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_UseStock_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::UseStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_UseStock_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::UseStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_UseStock_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncUseStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::StockUpdate, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_UseStock_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncUseStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncUseStockRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::EmptyStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_EmptyStock_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::EmptyStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_EmptyStock_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::EmptyStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_EmptyStock_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncEmptyStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::StockUpdate, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_EmptyStock_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncEmptyStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncEmptyStockRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::GetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO& request, ::ResourceDTO* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetResourceInformation_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::GetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO* request, ::ResourceDTO* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetResourceInformation_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::GetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO* request, ::ResourceDTO* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetResourceInformation_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::ResourceDTO>* ResourceManagement::Stub::PrepareAsyncGetResourceInformationRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceDTO, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetResourceInformation_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::ResourceDTO>* ResourceManagement::Stub::AsyncGetResourceInformationRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetResourceInformationRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::GetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::ResourceList* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::RoomRequest, ::ResourceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetResourcesInRoom_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::GetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::ResourceList* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::RoomRequest, ::ResourceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetResourcesInRoom_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::GetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::ResourceList* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetResourcesInRoom_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::ResourceList>* ResourceManagement::Stub::PrepareAsyncGetResourcesInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceList, ::RoomRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetResourcesInRoom_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::ResourceList>* ResourceManagement::Stub::AsyncGetResourcesInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetResourcesInRoomRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -312,189 +337,206 @@ ResourceManagement::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourcePingRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourcePingRequest* req,
-             ::ResourceSuccess* resp) {
-               return service->ResourcePing(ctx, req, resp);
+             const ::ResourceDTO* req,
+             ::Success* resp) {
+               return service->RegisterResource(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceAvailabilityRequest, ::ResourceAvailabilityResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourceAvailabilityRequest* req,
-             ::ResourceAvailabilityResponse* resp) {
-               return service->FindResources(ctx, req, resp);
+             const ::ResourceDTO* req,
+             ::Success* resp) {
+               return service->DeregisterResource(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::Nothing, ::Resources, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::Nothing* req,
-             ::Resources* resp) {
-               return service->ShowResources(ctx, req, resp);
+             const ::ResourceDTO* req,
+             ::Success* resp) {
+               return service->SendForMaintenance(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceSendRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourceSendRequest* req,
-             ::ResourceSuccess* resp) {
-               return service->SendResource(ctx, req, resp);
+             const ::ResourceShift* req,
+             ::Success* resp) {
+               return service->AddToSchedule(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceRetrievalRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourceRetrievalRequest* req,
-             ::ResourceSuccess* resp) {
-               return service->RetrieveResource(ctx, req, resp);
+             const ::ResourceShift* req,
+             ::Success* resp) {
+               return service->RemoveFromSchedule(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceSendRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourceSendRequest* req,
-             ::ResourceSuccess* resp) {
-               return service->TransferResource(ctx, req, resp);
+             const ::ResourceShift* req,
+             ::Success* resp) {
+               return service->ChangeSchedule(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::StockIncreaseRequest, ::StockAmount, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::StockIncreaseRequest* req,
-             ::StockAmount* resp) {
+             const ::StockUpdate* req,
+             ::Success* resp) {
                return service->AddStock(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::StockDecreaseRequest, ::StockAmount, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::StockDecreaseRequest* req,
-             ::StockAmount* resp) {
+             const ::StockUpdate* req,
+             ::Success* resp) {
                return service->RemoveStock(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[8],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceRegistrationRequest, ::RegistrationSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourceRegistrationRequest* req,
-             ::RegistrationSuccess* resp) {
-               return service->RegisterResource(ctx, req, resp);
+             const ::StockUpdate* req,
+             ::Success* resp) {
+               return service->UseStock(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[9],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceDeregistrationRequest, ::ResourceSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourceDeregistrationRequest* req,
-             ::ResourceSuccess* resp) {
-               return service->DeregisterResource(ctx, req, resp);
+             const ::StockUpdate* req,
+             ::Success* resp) {
+               return service->EmptyStock(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceDTO, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::Nothing* req,
-             ::Nothing* resp) {
-               return service->Print(ctx, req, resp);
+             const ::ResourceDTO* req,
+             ::ResourceDTO* resp) {
+               return service->GetResourceInformation(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ResourceManagement_method_names[11],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::RoomRequest, ::ResourceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ResourceManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::RoomRequest* req,
+             ::ResourceList* resp) {
+               return service->GetResourcesInRoom(ctx, req, resp);
              }, this)));
 }
 
 ResourceManagement::Service::~Service() {
 }
 
-::grpc::Status ResourceManagement::Service::ResourcePing(::grpc::ServerContext* context, const ::ResourcePingRequest* request, ::ResourceSuccess* response) {
+::grpc::Status ResourceManagement::Service::RegisterResource(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ResourceManagement::Service::FindResources(::grpc::ServerContext* context, const ::ResourceAvailabilityRequest* request, ::ResourceAvailabilityResponse* response) {
+::grpc::Status ResourceManagement::Service::DeregisterResource(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ResourceManagement::Service::ShowResources(::grpc::ServerContext* context, const ::Nothing* request, ::Resources* response) {
+::grpc::Status ResourceManagement::Service::SendForMaintenance(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ResourceManagement::Service::SendResource(::grpc::ServerContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response) {
+::grpc::Status ResourceManagement::Service::AddToSchedule(::grpc::ServerContext* context, const ::ResourceShift* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ResourceManagement::Service::RetrieveResource(::grpc::ServerContext* context, const ::ResourceRetrievalRequest* request, ::ResourceSuccess* response) {
+::grpc::Status ResourceManagement::Service::RemoveFromSchedule(::grpc::ServerContext* context, const ::ResourceShift* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ResourceManagement::Service::TransferResource(::grpc::ServerContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response) {
+::grpc::Status ResourceManagement::Service::ChangeSchedule(::grpc::ServerContext* context, const ::ResourceShift* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ResourceManagement::Service::AddStock(::grpc::ServerContext* context, const ::StockIncreaseRequest* request, ::StockAmount* response) {
+::grpc::Status ResourceManagement::Service::AddStock(::grpc::ServerContext* context, const ::StockUpdate* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ResourceManagement::Service::RemoveStock(::grpc::ServerContext* context, const ::StockDecreaseRequest* request, ::StockAmount* response) {
+::grpc::Status ResourceManagement::Service::RemoveStock(::grpc::ServerContext* context, const ::StockUpdate* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ResourceManagement::Service::RegisterResource(::grpc::ServerContext* context, const ::ResourceRegistrationRequest* request, ::RegistrationSuccess* response) {
+::grpc::Status ResourceManagement::Service::UseStock(::grpc::ServerContext* context, const ::StockUpdate* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ResourceManagement::Service::DeregisterResource(::grpc::ServerContext* context, const ::ResourceDeregistrationRequest* request, ::ResourceSuccess* response) {
+::grpc::Status ResourceManagement::Service::EmptyStock(::grpc::ServerContext* context, const ::StockUpdate* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ResourceManagement::Service::Print(::grpc::ServerContext* context, const ::Nothing* request, ::Nothing* response) {
+::grpc::Status ResourceManagement::Service::GetResourceInformation(::grpc::ServerContext* context, const ::ResourceDTO* request, ::ResourceDTO* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ResourceManagement::Service::GetResourcesInRoom(::grpc::ServerContext* context, const ::RoomRequest* request, ::ResourceList* response) {
   (void) context;
   (void) request;
   (void) response;

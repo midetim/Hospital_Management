@@ -29,7 +29,7 @@ public:
     // Inherited from IClient
     bool ping(std::string_view service_name) override;       // Connection ping test
     std::string_view name() override { return CLIENT_NAME; }         // Service name function
-    bool Print() override;
+    void print(std::string_view service_name) override;
     
     /**
      * @brief Takes a patient to admit along with a requested room type, and whether the patient needs to be quarantined
@@ -86,7 +86,9 @@ public:
     bool quarantineRoom(uint32_t room_id, bool quarantine_room, bool quarantine_patients, std::string_view service_name);
     
     
-    void update();
+    uint32_t quarantinePatient(uint64_t patient_id, uint32_t room_id, bool quarantine_entire_room, std::string_view service_name);
+    
+    void update(std::string_view service_name) override;
 };
  
 #endif 

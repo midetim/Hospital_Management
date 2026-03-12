@@ -437,13 +437,13 @@ ReturnCode RoomManagementService::init() {
 } 
 
 void RoomManagementService::HandleShutdown(int signal) {
-    uploadToDB(DATABASE_NAME);
-    std::cout << Utils::timestamp() << "[ Backup ] Successfully backed up " << service_name() << " to database " << DATABASE_NAME << std::endl;
+    uploadToDB(service::room_db);
+    std::cout << Utils::timestamp() << "[ Backup ] Successfully backed up " << service_name() << " to database " << service::room_db << std::endl;
 }
 
 void RoomManagementService::print_internal() {
     std::cout << ansi::bgreen
-              << "==== " << SERVICE_NAME << " STATE ===="
+              << "==== " << service::room << " STATE ===="
               << ansi::reset << '\n';
 
     auto print_map = [&](const auto& map, std::string_view name) {

@@ -6,6 +6,10 @@
 #include <ctime>
 #include <random>
 
+/* ******************************************************************** */
+/* ********************** Private Functions *************************** */
+/* ******************************************************************** */
+
 uint64_t PatientManagementService::generate_unique_patient_id() {
     /* Patient ID format
      0x0000000000000000 ->
@@ -26,191 +30,392 @@ uint64_t PatientManagementService::find_patient(const Patient & p) {
     return 0; // Not found
 }
 
+/* ******************************************************************** */
+/* ************************** Constructor ***************************** */
+/* ******************************************************************** */
+
 PatientManagementService::PatientManagementService()
 : room_client(std::make_unique<RoomManagementClient>(service::room_host)) {}
 
+/* ******************************************************************** */
+/* ************************** Common gRPC ***************************** */
+/* ******************************************************************** */
 
-grpc::Status PatientManagementService::PatientPing(grpc::ServerContext * context, const PatientPingRequest * request, PatientSuccess * response) {
+grpc::Status PatientManagementService::ping(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
     readMetadata(* context);
-    response->set_success(true);
+    response->set_error(false);
     return grpc::Status::OK;
 }
 
-grpc::Status PatientManagementService::PatientAdmission(grpc::ServerContext * context, const PatientAdmissionRequest * request, PatientSuccess * response) {
+grpc::Status PatientManagementService::print(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
     readMetadata(* context);
+    print_internal();
+    response->set_error(false);
+    return grpc::Status::OK;
+}
+
+grpc::Status PatientManagementService::update(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
+    readMetadata(* context);
+    loadFromDB(service::patient_db);
+    std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
+    response->set_error(false);
+    return grpc::Status::OK;
+}
+
+/* ******************************************************************** */
+/* ********************** PatientManagement gRPC ********************** */
+/* ******************************************************************** */
+
+grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) {
     
-    // Extract Patient Info
-    Name n = {
-        .first = request->patient_info().patient_name().first_name(),
-        .middle = request->patient_info().patient_name().middle_name(),
-        .last = request->patient_info().patient_name().last_name()
+    readMetadata(* context); // Read the request metadata
+    
+    // Extract the patient information from the patient DTO
+    Name patient_name = {
+        .first  = patient->patient_name().first(),
+        .middle = patient->patient_name().middle(),
+        .last   = patient->patient_name().last()
     };
-    Sex s = stringToSex(request->patient_info().patient_sex());
-    Condition c = stringToCondition(request->patient_info().patient_condition());
-    uint32_t rid = request->patient_info().patient_room();  // UNUSED
+    Sex patient_sex = stringToSex(patient->patient_sex());
+    Condition patient_condition = stringToCondition(patient->patient_cond());
     
     // Create a new patient
-    Patient p(n, s);
-    p.setPatientCondition(c);
+    Patient new_patient(patient_name, patient_sex);
+    new_patient.setPatientCondition(patient_condition);
     
-    uint64_t patient_id = find_patient(p); // Attempt to find the patient using their information
+    // Attempt to find that patient
+    uint64_t patient_id = find_patient(new_patient);
     auto it = hospital_patients.find(patient_id);
-    if (patient_id != 0 && it != hospital_patients.end()) { // Check if patient has already been admitted
-        // Patient admission failure
-        response->set_success(false);
-        response->set_patient_id(UNKNOWN_PATIENT_ERROR);
+    if (patient_id != 0 && it != hospital_patients.end()) {
+        success->set_successful(false);
         return grpc::Status(grpc::StatusCode::ALREADY_EXISTS, "Patient has already been admitted");
     }
     
-    // Get the room info
-    std::string rtype = request->room_type();
-    bool is_q = request->quarantined();
+    // Extract room information
+    std::string room_type = patient->room_type();
+    bool is_quarantined = patient->is_quarantined();
     
-    // Create a unique patient id for the patient
+    // Generate a patient id
     patient_id = generate_unique_patient_id();
-    p.setPatientId(patient_id);
+    new_patient.setPatientId(patient_id);
     
-    uint32_t success_code = room_client->admitPatient(patient_id, rtype, is_q, SERVICE_NAME); // Admit patient to room
+    // Attempt to admit patient to the room service
+    uint32_t success_code = room_client->admitPatient(patient_id, room_type, is_quarantined, service::patient);
     
+    // If the admission failed
     if (success_code == ROOM_NOT_FOUND) {
-        response->set_success(false);
+        success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not admit patient");
     }
     
-    // On success put patient into map
-    p.setRoomId(success_code);
-    hospital_patients.emplace(patient_id, std::move(p));
+    // If admission succeeded does it add the patient to the hospital system
+    new_patient.setRoomId(success_code);
+    hospital_patients.emplace(patient_id, std::move(new_patient));
     
-    // Patient admission success
-    response->set_success(true);
-    response->set_patient_id(patient_id);
-    
+    // Returns succesful
+    success->set_successful(true);
     return grpc::Status::OK;
 }
 
-grpc::Status PatientManagementService::PatientDischarge(grpc::ServerContext * context, const PatientDischargeRequest * request, PatientSuccess * response) {
+
+grpc::Status PatientManagementService::DischargePatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) {
     
+    readMetadata(* context); // Read the request metadata
     
-    readMetadata(* context);
-    uint64_t pid = request->patient_id();
+    uint64_t patient_id = patient->patient_id(); // Get the patients id
     
-    auto it = hospital_patients.find(pid);
-    if (it == hospital_patients.end()) { // Check if patient does not exist
-        response->set_success(false);
+    if (patient_id == 0) { // If the patient id was not provided
+        // Extract the patient information from the patient DTO
+        Name patient_name = {
+            .first  = patient->patient_name().first(),
+            .middle = patient->patient_name().middle(),
+            .last   = patient->patient_name().last()
+        };
+        Sex patient_sex = stringToSex(patient->patient_sex());
+        Patient new_patient(patient_name, patient_sex);
+        patient_id = find_patient(new_patient); // Find the person using their name / sex
+    }
+    
+    auto it = hospital_patients.find(patient_id); // Find the patient in the hospital
+    if (it == hospital_patients.end()) { // If the patient could not be found
+        success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find patient");
     }
     
-    uint32_t rid = it->second.getRoomId(); // Ge the id of the room the patient is in
+    uint32_t room_id = it->second.getRoomId(); // Get the room id of the room the patient is currently in
     
-    ReturnCode success = room_client->dischargePatient(pid, rid, SERVICE_NAME); // Attempt to discharge the patient from said room
+    ReturnCode room_discharge = room_client->dischargePatient(patient_id, room_id, service::patient); // Discharge them from that room
     
-    switch (success) { // Check success return code
-        case ReturnCode::SUCCESS: // On successful discharge
-            response->set_success(true);
-            hospital_patients.erase(it); // Erase the patient from the system
+    switch (room_discharge) { // Check room discharge return code
+        case ReturnCode::SUCCESS: // Successful discharge
+            success->set_successful(true);
+            hospital_patients.erase(it);
             return grpc::Status::OK;
-            
-        case ReturnCode::WARNING: // When discharge returns in a warning
-            response->set_success(false);
-            return grpc::Status(grpc::StatusCode::ABORTED, "Cannot discharge a quarantined patient"); // StatusCode ABORTED
-        
+        case ReturnCode::WARNING: // Discharge warning
+            success->set_successful(false);
+            return grpc::Status(grpc::StatusCode::ABORTED, "Cannot discharge a quarantined patient");
+        case ReturnCode::FAILURE: // Discharge failure
         default:
-        case ReturnCode::FAILURE: // On default or failure
-            response->set_success(false);
-            return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Unable to successfully discharge patient"); // StatusCode UNAVAILABLE
+            success->set_successful(false);
+            return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Unable to successfully discharge patient");
     }
 }
 
-grpc::Status PatientManagementService::PatientTransfer(grpc::ServerContext * context, const PatientTransferRequest * request, PatientSuccess * response) {
+grpc::Status PatientManagementService::TransferPatient(grpc::ServerContext * context, const PatientTransfer * transfer_request, Success * success) {
     
+    readMetadata(* context); // Read request metadata
+    
+    // Extract information from request
+    uint64_t patient_id   = transfer_request->patient_id();
+    uint32_t new_room_id  = transfer_request->new_room_id();
+    std::string room_type = transfer_request->room_type();
+    bool is_quarantined   = transfer_request->is_quarantined();
+    
+    // Find patient in the hospital
+    auto it = hospital_patients.find(patient_id);
+    if (it == hospital_patients.end()) { // If the patient was not found
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the patient");
+    }
+    
+    // Get the current room id of the patient
+    uint32_t old_room_id = it->second.getRoomId();
+    
+    // Get the new room id of the patient
+    uint32_t room_transfer = room_client->transferPatient(patient_id, old_room_id, room_type, new_room_id, is_quarantined, service::patient);
+    
+    if (room_transfer == ROOM_NOT_FOUND) { // If the room service could not put the patient into a new room
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not admit patient to new room");
+    }
+    
+    // Change the patients room id to their new room id
+    it->second.setRoomId(room_transfer);
+    
+    // Report success
+    success->set_successful(true);
+    return grpc::Status::OK;
+}
+
+grpc::Status PatientManagementService::QuarantinePatient(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) {
+    
+    readMetadata(* context); // Read the request metadata
+    
+    // Extract information from request
+    uint64_t patient_id = quarantine_request->patient_id();
+    bool quarantine_entire_room = quarantine_request->quarantine_room();
+    
+    // Find the patient in the hospital
+    auto it = hospital_patients.find(patient_id);
+    if (it == hospital_patients.end()) { // If patient is not found
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the patient to quarantine");
+    }
+    
+    // Attempt to quarantine the patient
+    uint32_t quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, service::patient);
+    if (quarantined == ROOM_NOT_FOUND) { // Patient could not be quarantined
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
+    }
+    
+    // Set the patients room to the quarantined room
+    it->second.setRoomId(quarantined);
+    
+    // Report success
+    success->set_successful(true);
+    return grpc::Status::OK;
+}
+
+grpc::Status PatientManagementService::LiftPatientQuarantine(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) {
     
     readMetadata(* context);
-    uint64_t pid = request->patient_id();
-    uint32_t rid = request->desired_room();
-    std::string rtype = request->room_type();
-    bool is_q = request->quarantined();
+    // Extract information from request
+    uint64_t patient_id = quarantine_request->patient_id();
+    bool quarantine_entire_room = quarantine_request->quarantine_room();
     
-    auto it = hospital_patients.find(pid);
-    if (it == hospital_patients.end()) {
-        response->set_success(false);
-        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find patient");
+    // Find the patient in the hospital
+    auto it = hospital_patients.find(patient_id);
+    if (it == hospital_patients.end()) { // If patient is not found
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the patient to quarantine");
     }
     
-    uint32_t old_rid = it->second.getRoomId();
+    // TODO: WILL NEED TO MODIFY THIS PART IN ROOM CLIENT TO MATCH
     
-    uint32_t success_code = room_client->transferPatient(pid, old_rid, rtype, rid, is_q, SERVICE_NAME);
-    
-    if (success_code == ROOM_NOT_FOUND) {
-        response->set_success(false);
-        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not admit patient");
+    // Attempt to quarantine the patient
+    uint32_t quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, service::patient);
+    if (quarantined == ROOM_NOT_FOUND) { // Patient could not be quarantined
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
     
-    it->second.setRoomId(success_code); // Set the patients room to the new room
-    response->set_success(true);
+    // Set the patients room to the quarantined room
+    it->second.setRoomId(quarantined);
+    
+    // Report success
+    success->set_successful(true);
+    return grpc::Status::OK;
+    
+}
+
+grpc::Status PatientManagementService::GetPatientInformation(grpc::ServerContext * context, const PatientDTO * patient_request, PatientDTO * patient_response) {
+    
+    readMetadata(* context); // Read the request metadata
+    
+    // Extract patient information from the request
+    uint64_t patient_id = patient_request->patient_id();
+    Name patient_name = {
+        .first  = patient_request->patient_name().first(),
+        .middle = patient_request->patient_name().middle(),
+        .last   = patient_request->patient_name().last()
+    };
+    Sex patient_sex = stringToSex(patient_request->patient_sex());
+    
+    // Create a temporary patient
+    Patient patient_data(patient_name, patient_sex);
+    
+    if (patient_id == 0) { // If no patient id was provided
+        patient_id = find_patient(patient_data); // Try and find the patient with other ways
+    }
+    
+    // Find the patient in the hospital system
+    auto it = hospital_patients.find(patient_id);
+    if (it == hospital_patients.end()) { // Patient was not found
+        // Will respond with a default PatientDTO -> id = 0
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the patient in the hospital");
+    }
+    
+    // Extract the name from the system and format it into the response
+    NameDTO * name = patient_response->mutable_patient_name();
+    name->set_first (it->second.getPatientName().first);
+    name->set_middle(it->second.getPatientName().middle);
+    name->set_last  (it->second.getPatientName().last);
+    
+    // Fill out the rest of teh response
+    patient_response->set_patient_id(it->second.getPatientId());
+    patient_response->set_patient_sex(sexToString(it->second.getPatientSex()));
+    patient_response->set_patient_cond(conditionToString(it->second.getPatientCondition()));
+    patient_response->set_patient_room(it->second.getRoomId());
     
     return grpc::Status::OK;
 }
 
-
-grpc::Status PatientManagementService::GetPatientInformation(grpc::ServerContext * context, const PatientInfoRequest * request, PatientInformation * response) {
+grpc::Status PatientManagementService::UpdatePatientInformation(grpc::ServerContext * context, const PatientDTO * patient, Success * success) {
     
+    readMetadata(* context); // Read request metadata
     
-    readMetadata(* context);
-    uint64_t pid = request->patient_id();
+    // Extract patient information from the request
+    uint64_t patient_id = patient->patient_id();
     
-    auto it = hospital_patients.find(pid);
-    if (it == hospital_patients.end()) {
-        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Patient not found");
+    if (patient_id == 0) { // If no patient id was provided
+        
+        // Extract patient name & sex
+        Name patient_name = {
+            .first  = patient->patient_name().first(),
+            .middle = patient->patient_name().middle(),
+            .last   = patient->patient_name().middle()
+        };
+        Sex patient_sex = stringToSex(patient->patient_sex());
+        
+        // Create a new patient and search for them
+        Patient new_patient(patient_name, patient_sex);
+        patient_id = find_patient(new_patient);
+        
+        if (patient_id == 0) { // If patient still was not found
+            success->set_successful(false); // Abort
+            return grpc::Status(grpc::StatusCode::NOT_FOUND, "No patient id was provided");
+        }
     }
     
-    // Get patient details
-    Patient & p = it->second;
-    const Name & n = p.getPatientName();
-    Sex s = p.getPatientSex();
-    Condition c = p.getPatientCondition();
-    uint32_t rid = p.getRoomId();
+    // Search for patient in the system
+    auto it = hospital_patients.find(patient_id);
+    if (it == hospital_patients.end()) { // Patient was not found
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Patient was not found");
+    }
     
-    // Put details in response
-    PatientName * pn = response->mutable_patient_name();
-    pn->set_first_name(n.first);
-    pn->set_middle_name(n.middle);
-    pn->set_last_name(n.last);
+    // Update patients information to be consistent with what was just received
+    it->second.setRoomId(patient->patient_room());
+    it->second.setPatientSex(stringToSex(patient->patient_sex()));
+    it->second.setPatientCondition(stringToCondition(patient->patient_cond()));
     
-    response->set_patient_sex(sexToString(s));
-    response->set_patient_condition(conditionToString(c));
-    response->set_patient_room(rid);
-     
+    Name name = {
+        .first  = patient->patient_name().first(),
+        .middle = patient->patient_name().middle(),
+        .last   = patient->patient_name().last()
+    };
+    
+    it->second.updateName(name);
+    
+    // Report success
+    success->set_successful(true);
     return grpc::Status::OK;
 }
 
-void PatientManagementService::debug_setup() {
+grpc::Status PatientManagementService::GetPatientsInRoom(grpc::ServerContext * context, const RoomRequest * room, PatientList * patients) {
     
+    readMetadata(* context); // Read request metadata
     
+    uint32_t room_id = room->room_id(); // Get the room id
+    
+    for (const auto & [patient_id, patient] : hospital_patients) {
+        if (patient.getRoomId() != room_id) {
+            continue; // If the room ids do not match, jump to the next patient
+        }
+        
+        // Create new PatientDTO in the repeated field
+        PatientDTO * current_patient = patients->add_patients();
+
+        current_patient->set_patient_id(patient_id);
+        current_patient->set_patient_room(room_id);
+        current_patient->set_patient_sex(sexToString(patient.getPatientSex()));
+        current_patient->set_patient_cond(conditionToString(patient.getPatientCondition()));
+
+        // Fill name
+        const Name & patient_name = patient.getPatientName();
+
+        NameDTO* name = current_patient->mutable_patient_name();
+        name->set_first(patient_name.first);
+        name->set_middle(patient_name.middle);
+        name->set_last(patient_name.last);
+
+    }
+    
+    if (patients->patients_size() == 0) { // If there are no patients in the room
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "There are no patients in the specified room");
+    }
+    
+    // Return with an OK
+    return grpc::Status::OK;
 }
 
+/* ******************************************************************** */
+/* ****************************** IServer ***************************** */
+/* ******************************************************************** */
+
+ReturnCode PatientManagementService::connectToDB(std::string_view database_name) {
+    
+    return ReturnCode::NOT_YET_IMPLEMENTED;
+}
 
 ReturnCode PatientManagementService::loadFromDB(std::string_view database_name) {
     
-    return ReturnCode::SUCCESS;
+    return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
 ReturnCode PatientManagementService::uploadToDB(std::string_view database_name) {
     
-    return ReturnCode::SUCCESS;
+    return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
 ReturnCode PatientManagementService::init() {
     
-    return ReturnCode::SUCCESS;
+    return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
-void PatientManagementService::HandleShutdown(int signal) {
-    
-}
 
 void PatientManagementService::print_internal() {
     std::cout << ansi::bgreen
-              << "==== " << SERVICE_NAME << " STATE ===="
+              << "==== " << service::patient << " STATE ===="
               << ansi::reset << '\n';
 
     std::cout << "Total patients: "
@@ -237,8 +442,6 @@ void PatientManagementService::print_internal() {
 
 }
 
-grpc::Status PatientManagementService::Print(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
-    print_internal();
-    return grpc::Status::OK;
-}
-
+/* ******************************************************************** */
+/* ****************************** Other ******************************* */
+/* ******************************************************************** */

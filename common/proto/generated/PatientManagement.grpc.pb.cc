@@ -22,12 +22,14 @@
 #include <grpcpp/ports_def.inc>
 
 static const char* PatientManagement_method_names[] = {
-  "/PatientManagement/PatientPing",
-  "/PatientManagement/PatientAdmission",
-  "/PatientManagement/PatientDischarge",
-  "/PatientManagement/PatientTransfer",
+  "/PatientManagement/AdmitPatient",
+  "/PatientManagement/DischargePatient",
+  "/PatientManagement/TransferPatient",
+  "/PatientManagement/QuarantinePatient",
+  "/PatientManagement/LiftPatientQuarantine",
   "/PatientManagement/GetPatientInformation",
-  "/PatientManagement/Print",
+  "/PatientManagement/UpdatePatientInformation",
+  "/PatientManagement/GetPatientsInRoom",
 };
 
 std::unique_ptr< PatientManagement::Stub> PatientManagement::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -37,148 +39,196 @@ std::unique_ptr< PatientManagement::Stub> PatientManagement::NewStub(const std::
 }
 
 PatientManagement::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
-  : channel_(channel), rpcmethod_PatientPing_(PatientManagement_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_PatientAdmission_(PatientManagement_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_PatientDischarge_(PatientManagement_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_PatientTransfer_(PatientManagement_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetPatientInformation_(PatientManagement_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_Print_(PatientManagement_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  : channel_(channel), rpcmethod_AdmitPatient_(PatientManagement_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DischargePatient_(PatientManagement_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_TransferPatient_(PatientManagement_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QuarantinePatient_(PatientManagement_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_LiftPatientQuarantine_(PatientManagement_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetPatientInformation_(PatientManagement_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_UpdatePatientInformation_(PatientManagement_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetPatientsInRoom_(PatientManagement_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status PatientManagement::Stub::PatientPing(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::PatientSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::PatientPingRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PatientPing_, context, request, response);
+::grpc::Status PatientManagement::Stub::AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AdmitPatient_, context, request, response);
 }
 
-void PatientManagement::Stub::async::PatientPing(::grpc::ClientContext* context, const ::PatientPingRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::PatientPingRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PatientPing_, context, request, response, std::move(f));
+void PatientManagement::Stub::async::AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AdmitPatient_, context, request, response, std::move(f));
 }
 
-void PatientManagement::Stub::async::PatientPing(::grpc::ClientContext* context, const ::PatientPingRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PatientPing_, context, request, response, reactor);
+void PatientManagement::Stub::async::AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AdmitPatient_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PatientManagement::Stub::PrepareAsyncPatientPingRaw(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::PatientSuccess, ::PatientPingRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PatientPing_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::PrepareAsyncAdmitPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_AdmitPatient_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PatientManagement::Stub::AsyncPatientPingRaw(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::AsyncAdmitPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncPatientPingRaw(context, request, cq);
+    this->PrepareAsyncAdmitPatientRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status PatientManagement::Stub::PatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::PatientSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::PatientAdmissionRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PatientAdmission_, context, request, response);
+::grpc::Status PatientManagement::Stub::DischargePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DischargePatient_, context, request, response);
 }
 
-void PatientManagement::Stub::async::PatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::PatientAdmissionRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PatientAdmission_, context, request, response, std::move(f));
+void PatientManagement::Stub::async::DischargePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DischargePatient_, context, request, response, std::move(f));
 }
 
-void PatientManagement::Stub::async::PatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PatientAdmission_, context, request, response, reactor);
+void PatientManagement::Stub::async::DischargePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DischargePatient_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PatientManagement::Stub::PrepareAsyncPatientAdmissionRaw(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::PatientSuccess, ::PatientAdmissionRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PatientAdmission_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::PrepareAsyncDischargePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DischargePatient_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PatientManagement::Stub::AsyncPatientAdmissionRaw(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::AsyncDischargePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncPatientAdmissionRaw(context, request, cq);
+    this->PrepareAsyncDischargePatientRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status PatientManagement::Stub::PatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::PatientSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::PatientDischargeRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PatientDischarge_, context, request, response);
+::grpc::Status PatientManagement::Stub::TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientTransfer, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferPatient_, context, request, response);
 }
 
-void PatientManagement::Stub::async::PatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::PatientDischargeRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PatientDischarge_, context, request, response, std::move(f));
+void PatientManagement::Stub::async::TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientTransfer, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferPatient_, context, request, response, std::move(f));
 }
 
-void PatientManagement::Stub::async::PatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PatientDischarge_, context, request, response, reactor);
+void PatientManagement::Stub::async::TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferPatient_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PatientManagement::Stub::PrepareAsyncPatientDischargeRaw(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::PatientSuccess, ::PatientDischargeRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PatientDischarge_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::PrepareAsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientTransfer, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferPatient_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PatientManagement::Stub::AsyncPatientDischargeRaw(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::AsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncPatientDischargeRaw(context, request, cq);
+    this->PrepareAsyncTransferPatientRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status PatientManagement::Stub::PatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::PatientSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::PatientTransferRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PatientTransfer_, context, request, response);
+::grpc::Status PatientManagement::Stub::QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QuarantinePatient_, context, request, response);
 }
 
-void PatientManagement::Stub::async::PatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::PatientTransferRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PatientTransfer_, context, request, response, std::move(f));
+void PatientManagement::Stub::async::QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuarantinePatient_, context, request, response, std::move(f));
 }
 
-void PatientManagement::Stub::async::PatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PatientTransfer_, context, request, response, reactor);
+void PatientManagement::Stub::async::QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuarantinePatient_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PatientManagement::Stub::PrepareAsyncPatientTransferRaw(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::PatientSuccess, ::PatientTransferRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PatientTransfer_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::PrepareAsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientQuarantine, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_QuarantinePatient_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PatientManagement::Stub::AsyncPatientTransferRaw(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::AsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncPatientTransferRaw(context, request, cq);
+    this->PrepareAsyncQuarantinePatientRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status PatientManagement::Stub::GetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::PatientInformation* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::PatientInfoRequest, ::PatientInformation, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetPatientInformation_, context, request, response);
+::grpc::Status PatientManagement::Stub::LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_LiftPatientQuarantine_, context, request, response);
 }
 
-void PatientManagement::Stub::async::GetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest* request, ::PatientInformation* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::PatientInfoRequest, ::PatientInformation, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPatientInformation_, context, request, response, std::move(f));
+void PatientManagement::Stub::async::LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_LiftPatientQuarantine_, context, request, response, std::move(f));
 }
 
-void PatientManagement::Stub::async::GetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest* request, ::PatientInformation* response, ::grpc::ClientUnaryReactor* reactor) {
+void PatientManagement::Stub::async::LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_LiftPatientQuarantine_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::PrepareAsyncLiftPatientQuarantineRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientQuarantine, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_LiftPatientQuarantine_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::AsyncLiftPatientQuarantineRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncLiftPatientQuarantineRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status PatientManagement::Stub::GetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::PatientDTO* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientDTO, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetPatientInformation_, context, request, response);
+}
+
+void PatientManagement::Stub::async::GetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::PatientDTO* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientDTO, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPatientInformation_, context, request, response, std::move(f));
+}
+
+void PatientManagement::Stub::async::GetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::PatientDTO* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPatientInformation_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::PatientInformation>* PatientManagement::Stub::PrepareAsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::PatientInformation, ::PatientInfoRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetPatientInformation_, context, request);
+::grpc::ClientAsyncResponseReader< ::PatientDTO>* PatientManagement::Stub::PrepareAsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::PatientDTO, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetPatientInformation_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::PatientInformation>* PatientManagement::Stub::AsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::PatientDTO>* PatientManagement::Stub::AsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetPatientInformationRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status PatientManagement::Stub::Print(::grpc::ClientContext* context, const ::Nothing& request, ::Nothing* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Print_, context, request, response);
+::grpc::Status PatientManagement::Stub::UpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_UpdatePatientInformation_, context, request, response);
 }
 
-void PatientManagement::Stub::async::Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Print_, context, request, response, std::move(f));
+void PatientManagement::Stub::async::UpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_UpdatePatientInformation_, context, request, response, std::move(f));
 }
 
-void PatientManagement::Stub::async::Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Print_, context, request, response, reactor);
+void PatientManagement::Stub::async::UpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_UpdatePatientInformation_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::Nothing>* PatientManagement::Stub::PrepareAsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_Print_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::PrepareAsyncUpdatePatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_UpdatePatientInformation_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::Nothing>* PatientManagement::Stub::AsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* PatientManagement::Stub::AsyncUpdatePatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncPrintRaw(context, request, cq);
+    this->PrepareAsyncUpdatePatientInformationRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status PatientManagement::Stub::GetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::PatientList* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::RoomRequest, ::PatientList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetPatientsInRoom_, context, request, response);
+}
+
+void PatientManagement::Stub::async::GetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::PatientList* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::RoomRequest, ::PatientList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPatientsInRoom_, context, request, response, std::move(f));
+}
+
+void PatientManagement::Stub::async::GetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::PatientList* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPatientsInRoom_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::PatientList>* PatientManagement::Stub::PrepareAsyncGetPatientsInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::PatientList, ::RoomRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetPatientsInRoom_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::PatientList>* PatientManagement::Stub::AsyncGetPatientsInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetPatientsInRoomRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -187,104 +237,138 @@ PatientManagement::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PatientManagement_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientPingRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](PatientManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::PatientPingRequest* req,
-             ::PatientSuccess* resp) {
-               return service->PatientPing(ctx, req, resp);
+             const ::PatientDTO* req,
+             ::Success* resp) {
+               return service->AdmitPatient(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PatientManagement_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientAdmissionRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](PatientManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::PatientAdmissionRequest* req,
-             ::PatientSuccess* resp) {
-               return service->PatientAdmission(ctx, req, resp);
+             const ::PatientDTO* req,
+             ::Success* resp) {
+               return service->DischargePatient(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PatientManagement_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientDischargeRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientTransfer, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](PatientManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::PatientDischargeRequest* req,
-             ::PatientSuccess* resp) {
-               return service->PatientDischarge(ctx, req, resp);
+             const ::PatientTransfer* req,
+             ::Success* resp) {
+               return service->TransferPatient(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PatientManagement_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientTransferRequest, ::PatientSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](PatientManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::PatientTransferRequest* req,
-             ::PatientSuccess* resp) {
-               return service->PatientTransfer(ctx, req, resp);
+             const ::PatientQuarantine* req,
+             ::Success* resp) {
+               return service->QuarantinePatient(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PatientManagement_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientInfoRequest, ::PatientInformation, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](PatientManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::PatientInfoRequest* req,
-             ::PatientInformation* resp) {
-               return service->GetPatientInformation(ctx, req, resp);
+             const ::PatientQuarantine* req,
+             ::Success* resp) {
+               return service->LiftPatientQuarantine(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PatientManagement_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientDTO, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](PatientManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::Nothing* req,
-             ::Nothing* resp) {
-               return service->Print(ctx, req, resp);
+             const ::PatientDTO* req,
+             ::PatientDTO* resp) {
+               return service->GetPatientInformation(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PatientManagement_method_names[6],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](PatientManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::PatientDTO* req,
+             ::Success* resp) {
+               return service->UpdatePatientInformation(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PatientManagement_method_names[7],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< PatientManagement::Service, ::RoomRequest, ::PatientList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](PatientManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::RoomRequest* req,
+             ::PatientList* resp) {
+               return service->GetPatientsInRoom(ctx, req, resp);
              }, this)));
 }
 
 PatientManagement::Service::~Service() {
 }
 
-::grpc::Status PatientManagement::Service::PatientPing(::grpc::ServerContext* context, const ::PatientPingRequest* request, ::PatientSuccess* response) {
+::grpc::Status PatientManagement::Service::AdmitPatient(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status PatientManagement::Service::PatientAdmission(::grpc::ServerContext* context, const ::PatientAdmissionRequest* request, ::PatientSuccess* response) {
+::grpc::Status PatientManagement::Service::DischargePatient(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status PatientManagement::Service::PatientDischarge(::grpc::ServerContext* context, const ::PatientDischargeRequest* request, ::PatientSuccess* response) {
+::grpc::Status PatientManagement::Service::TransferPatient(::grpc::ServerContext* context, const ::PatientTransfer* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status PatientManagement::Service::PatientTransfer(::grpc::ServerContext* context, const ::PatientTransferRequest* request, ::PatientSuccess* response) {
+::grpc::Status PatientManagement::Service::QuarantinePatient(::grpc::ServerContext* context, const ::PatientQuarantine* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status PatientManagement::Service::GetPatientInformation(::grpc::ServerContext* context, const ::PatientInfoRequest* request, ::PatientInformation* response) {
+::grpc::Status PatientManagement::Service::LiftPatientQuarantine(::grpc::ServerContext* context, const ::PatientQuarantine* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status PatientManagement::Service::Print(::grpc::ServerContext* context, const ::Nothing* request, ::Nothing* response) {
+::grpc::Status PatientManagement::Service::GetPatientInformation(::grpc::ServerContext* context, const ::PatientDTO* request, ::PatientDTO* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PatientManagement::Service::UpdatePatientInformation(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PatientManagement::Service::GetPatientsInRoom(::grpc::ServerContext* context, const ::RoomRequest* request, ::PatientList* response) {
   (void) context;
   (void) request;
   (void) response;

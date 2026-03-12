@@ -25,230 +25,123 @@ namespace _pb = ::google::protobuf;
 namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 
-inline constexpr PatientTransferRequest::Impl_::Impl_(
+inline constexpr PatientTransfer::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
         room_type_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         patient_id_{::uint64_t{0u}},
-        desired_room_{0u},
-        quarantined_{false} {}
+        new_room_id_{0u},
+        is_quarantined_{false} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR PatientTransferRequest::PatientTransferRequest(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR PatientTransfer::PatientTransfer(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(PatientTransferRequest_class_data_.base()),
+    : ::google::protobuf::Message(PatientTransfer_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct PatientTransferRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PatientTransferRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PatientTransferRequestDefaultTypeInternal() {}
+struct PatientTransferDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PatientTransferDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PatientTransferDefaultTypeInternal() {}
   union {
-    PatientTransferRequest _instance;
+    PatientTransfer _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientTransferRequestDefaultTypeInternal _PatientTransferRequest_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientTransferDefaultTypeInternal _PatientTransfer_default_instance_;
 
-inline constexpr PatientSuccess::Impl_::Impl_(
+inline constexpr PatientQuarantine::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
         patient_id_{::uint64_t{0u}},
-        success_{false} {}
+        quarantine_room_{false} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR PatientSuccess::PatientSuccess(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR PatientQuarantine::PatientQuarantine(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(PatientSuccess_class_data_.base()),
+    : ::google::protobuf::Message(PatientQuarantine_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct PatientSuccessDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PatientSuccessDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PatientSuccessDefaultTypeInternal() {}
+struct PatientQuarantineDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PatientQuarantineDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PatientQuarantineDefaultTypeInternal() {}
   union {
-    PatientSuccess _instance;
+    PatientQuarantine _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientSuccessDefaultTypeInternal _PatientSuccess_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientQuarantineDefaultTypeInternal _PatientQuarantine_default_instance_;
 
-inline constexpr PatientPingRequest::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        ping_{false} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR PatientPingRequest::PatientPingRequest(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(PatientPingRequest_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct PatientPingRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PatientPingRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PatientPingRequestDefaultTypeInternal() {}
-  union {
-    PatientPingRequest _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientPingRequestDefaultTypeInternal _PatientPingRequest_default_instance_;
-
-inline constexpr PatientName::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        first_name_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        middle_name_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        last_name_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()) {}
-
-template <typename>
-PROTOBUF_CONSTEXPR PatientName::PatientName(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(PatientName_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct PatientNameDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PatientNameDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PatientNameDefaultTypeInternal() {}
-  union {
-    PatientName _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientNameDefaultTypeInternal _PatientName_default_instance_;
-
-inline constexpr PatientInfoRequest::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        patient_id_{::uint64_t{0u}} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR PatientInfoRequest::PatientInfoRequest(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(PatientInfoRequest_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct PatientInfoRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PatientInfoRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PatientInfoRequestDefaultTypeInternal() {}
-  union {
-    PatientInfoRequest _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientInfoRequestDefaultTypeInternal _PatientInfoRequest_default_instance_;
-
-inline constexpr PatientDischargeRequest::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        patient_id_{::uint64_t{0u}} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR PatientDischargeRequest::PatientDischargeRequest(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(PatientDischargeRequest_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct PatientDischargeRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PatientDischargeRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PatientDischargeRequestDefaultTypeInternal() {}
-  union {
-    PatientDischargeRequest _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientDischargeRequestDefaultTypeInternal _PatientDischargeRequest_default_instance_;
-
-inline constexpr PatientInformation::Impl_::Impl_(
+inline constexpr PatientDTO::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
         patient_sex_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        patient_condition_(
+        patient_cond_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        patient_name_{nullptr},
-        patient_room_{0u} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR PatientInformation::PatientInformation(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(PatientInformation_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct PatientInformationDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PatientInformationDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PatientInformationDefaultTypeInternal() {}
-  union {
-    PatientInformation _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientInformationDefaultTypeInternal _PatientInformation_default_instance_;
-
-inline constexpr PatientAdmissionRequest::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
         room_type_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        patient_info_{nullptr},
-        quarantined_{false} {}
+        patient_name_{nullptr},
+        patient_id_{::uint64_t{0u}},
+        patient_room_{0u},
+        is_quarantined_{false} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR PatientAdmissionRequest::PatientAdmissionRequest(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR PatientDTO::PatientDTO(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(PatientAdmissionRequest_class_data_.base()),
+    : ::google::protobuf::Message(PatientDTO_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct PatientAdmissionRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PatientAdmissionRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PatientAdmissionRequestDefaultTypeInternal() {}
+struct PatientDTODefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PatientDTODefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PatientDTODefaultTypeInternal() {}
   union {
-    PatientAdmissionRequest _instance;
+    PatientDTO _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientAdmissionRequestDefaultTypeInternal _PatientAdmissionRequest_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientDTODefaultTypeInternal _PatientDTO_default_instance_;
+
+inline constexpr PatientList::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : patients_{},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR PatientList::PatientList(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(PatientList_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct PatientListDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PatientListDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PatientListDefaultTypeInternal() {}
+  union {
+    PatientList _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PatientListDefaultTypeInternal _PatientList_default_instance_;
 static constexpr const ::_pb::EnumDescriptor *PROTOBUF_NONNULL *PROTOBUF_NULLABLE
     file_level_enum_descriptors_PatientManagement_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor *PROTOBUF_NONNULL *PROTOBUF_NULLABLE
@@ -257,134 +150,97 @@ const ::uint32_t
     TableStruct_PatientManagement_2eproto::offsets[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
         protodesc_cold) = {
         0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::PatientPingRequest, _impl_._has_bits_),
-        4, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::PatientPingRequest, _impl_.ping_),
+        PROTOBUF_FIELD_OFFSET(::PatientDTO, _impl_._has_bits_),
+        10, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::PatientDTO, _impl_.patient_name_),
+        PROTOBUF_FIELD_OFFSET(::PatientDTO, _impl_.patient_id_),
+        PROTOBUF_FIELD_OFFSET(::PatientDTO, _impl_.patient_sex_),
+        PROTOBUF_FIELD_OFFSET(::PatientDTO, _impl_.patient_cond_),
+        PROTOBUF_FIELD_OFFSET(::PatientDTO, _impl_.patient_room_),
+        PROTOBUF_FIELD_OFFSET(::PatientDTO, _impl_.room_type_),
+        PROTOBUF_FIELD_OFFSET(::PatientDTO, _impl_.is_quarantined_),
+        3,
+        4,
         0,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::PatientAdmissionRequest, _impl_._has_bits_),
-        6, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::PatientAdmissionRequest, _impl_.patient_info_),
-        PROTOBUF_FIELD_OFFSET(::PatientAdmissionRequest, _impl_.room_type_),
-        PROTOBUF_FIELD_OFFSET(::PatientAdmissionRequest, _impl_.quarantined_),
         1,
-        0,
+        5,
         2,
+        6,
         0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::PatientDischargeRequest, _impl_._has_bits_),
-        4, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::PatientDischargeRequest, _impl_.patient_id_),
-        0,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::PatientTransferRequest, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_._has_bits_),
         7, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::PatientTransferRequest, _impl_.patient_id_),
-        PROTOBUF_FIELD_OFFSET(::PatientTransferRequest, _impl_.desired_room_),
-        PROTOBUF_FIELD_OFFSET(::PatientTransferRequest, _impl_.room_type_),
-        PROTOBUF_FIELD_OFFSET(::PatientTransferRequest, _impl_.quarantined_),
+        PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_.patient_id_),
+        PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_.new_room_id_),
+        PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_.room_type_),
+        PROTOBUF_FIELD_OFFSET(::PatientTransfer, _impl_.is_quarantined_),
         1,
         2,
         0,
         3,
         0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::PatientSuccess, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::PatientQuarantine, _impl_._has_bits_),
         5, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::PatientSuccess, _impl_.success_),
-        PROTOBUF_FIELD_OFFSET(::PatientSuccess, _impl_.patient_id_),
-        1,
-        0,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::PatientInfoRequest, _impl_._has_bits_),
-        4, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::PatientInfoRequest, _impl_.patient_id_),
-        0,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::PatientName, _impl_._has_bits_),
-        6, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::PatientName, _impl_.first_name_),
-        PROTOBUF_FIELD_OFFSET(::PatientName, _impl_.middle_name_),
-        PROTOBUF_FIELD_OFFSET(::PatientName, _impl_.last_name_),
+        PROTOBUF_FIELD_OFFSET(::PatientQuarantine, _impl_.patient_id_),
+        PROTOBUF_FIELD_OFFSET(::PatientQuarantine, _impl_.quarantine_room_),
         0,
         1,
-        2,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::PatientInformation, _impl_._has_bits_),
-        7, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::PatientInformation, _impl_.patient_name_),
-        PROTOBUF_FIELD_OFFSET(::PatientInformation, _impl_.patient_sex_),
-        PROTOBUF_FIELD_OFFSET(::PatientInformation, _impl_.patient_condition_),
-        PROTOBUF_FIELD_OFFSET(::PatientInformation, _impl_.patient_room_),
-        2,
-        0,
-        1,
-        3,
+        0x000, // bitmap
+        PROTOBUF_FIELD_OFFSET(::PatientList, _impl_.patients_),
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-        {0, sizeof(::PatientPingRequest)},
-        {5, sizeof(::PatientAdmissionRequest)},
-        {14, sizeof(::PatientDischargeRequest)},
-        {19, sizeof(::PatientTransferRequest)},
-        {30, sizeof(::PatientSuccess)},
-        {37, sizeof(::PatientInfoRequest)},
-        {42, sizeof(::PatientName)},
-        {51, sizeof(::PatientInformation)},
+        {0, sizeof(::PatientDTO)},
+        {17, sizeof(::PatientTransfer)},
+        {28, sizeof(::PatientQuarantine)},
+        {35, sizeof(::PatientList)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
-    &::_PatientPingRequest_default_instance_._instance,
-    &::_PatientAdmissionRequest_default_instance_._instance,
-    &::_PatientDischargeRequest_default_instance_._instance,
-    &::_PatientTransferRequest_default_instance_._instance,
-    &::_PatientSuccess_default_instance_._instance,
-    &::_PatientInfoRequest_default_instance_._instance,
-    &::_PatientName_default_instance_._instance,
-    &::_PatientInformation_default_instance_._instance,
+    &::_PatientDTO_default_instance_._instance,
+    &::_PatientTransfer_default_instance_._instance,
+    &::_PatientQuarantine_default_instance_._instance,
+    &::_PatientList_default_instance_._instance,
 };
 const char descriptor_table_protodef_PatientManagement_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\027PatientManagement.proto\032\014common.proto\""
-    "\"\n\022PatientPingRequest\022\014\n\004ping\030\001 \001(\010\"l\n\027P"
-    "atientAdmissionRequest\022)\n\014patient_info\030\001"
-    " \001(\0132\023.PatientInformation\022\021\n\troom_type\030\002"
-    " \001(\t\022\023\n\013quarantined\030\003 \001(\010\"-\n\027PatientDisc"
-    "hargeRequest\022\022\n\npatient_id\030\001 \001(\004\"j\n\026Pati"
-    "entTransferRequest\022\022\n\npatient_id\030\001 \001(\004\022\024"
-    "\n\014desired_room\030\002 \001(\r\022\021\n\troom_type\030\003 \001(\t\022"
-    "\023\n\013quarantined\030\004 \001(\010\"5\n\016PatientSuccess\022\017"
-    "\n\007success\030\001 \001(\010\022\022\n\npatient_id\030\002 \001(\004\"(\n\022P"
-    "atientInfoRequest\022\022\n\npatient_id\030\001 \001(\004\"I\n"
-    "\013PatientName\022\022\n\nfirst_name\030\001 \001(\t\022\023\n\013midd"
-    "le_name\030\002 \001(\t\022\021\n\tlast_name\030\003 \001(\t\"~\n\022Pati"
-    "entInformation\022\"\n\014patient_name\030\001 \001(\0132\014.P"
-    "atientName\022\023\n\013patient_sex\030\002 \001(\t\022\031\n\021patie"
-    "nt_condition\030\003 \001(\t\022\024\n\014patient_room\030\004 \001(\r"
-    "2\343\002\n\021PatientManagement\0223\n\013PatientPing\022\023."
-    "PatientPingRequest\032\017.PatientSuccess\022=\n\020P"
-    "atientAdmission\022\030.PatientAdmissionReques"
-    "t\032\017.PatientSuccess\022=\n\020PatientDischarge\022\030"
-    ".PatientDischargeRequest\032\017.PatientSucces"
-    "s\022;\n\017PatientTransfer\022\027.PatientTransferRe"
-    "quest\032\017.PatientSuccess\022A\n\025GetPatientInfo"
-    "rmation\022\023.PatientInfoRequest\032\023.PatientIn"
-    "formation\022\033\n\005Print\022\010.Nothing\032\010.Nothingb\006"
-    "proto3"
+    "\n\027PatientManagement.proto\032\014Common.proto\""
+    "\254\001\n\nPatientDTO\022\036\n\014patient_name\030\001 \001(\0132\010.N"
+    "ameDTO\022\022\n\npatient_id\030\002 \001(\004\022\023\n\013patient_se"
+    "x\030\003 \001(\t\022\024\n\014patient_cond\030\004 \001(\t\022\024\n\014patient"
+    "_room\030\005 \001(\r\022\021\n\troom_type\030\006 \001(\t\022\026\n\016is_qua"
+    "rantined\030\007 \001(\010\"e\n\017PatientTransfer\022\022\n\npat"
+    "ient_id\030\001 \001(\004\022\023\n\013new_room_id\030\002 \001(\r\022\021\n\tro"
+    "om_type\030\003 \001(\t\022\026\n\016is_quarantined\030\004 \001(\010\"@\n"
+    "\021PatientQuarantine\022\022\n\npatient_id\030\001 \001(\004\022\027"
+    "\n\017quarantine_room\030\002 \001(\010\",\n\013PatientList\022\035"
+    "\n\010patients\030\001 \003(\0132\013.PatientDTO2\225\003\n\021Patien"
+    "tManagement\022%\n\014AdmitPatient\022\013.PatientDTO"
+    "\032\010.Success\022)\n\020DischargePatient\022\013.Patient"
+    "DTO\032\010.Success\022-\n\017TransferPatient\022\020.Patie"
+    "ntTransfer\032\010.Success\0221\n\021QuarantinePatien"
+    "t\022\022.PatientQuarantine\032\010.Success\0225\n\025LiftP"
+    "atientQuarantine\022\022.PatientQuarantine\032\010.S"
+    "uccess\0221\n\025GetPatientInformation\022\013.Patien"
+    "tDTO\032\013.PatientDTO\0221\n\030UpdatePatientInform"
+    "ation\022\013.PatientDTO\032\010.Success\022/\n\021GetPatie"
+    "ntsInRoom\022\014.RoomRequest\032\014.PatientListb\006p"
+    "roto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_PatientManagement_2eproto_deps[1] = {
-        &::descriptor_table_common_2eproto,
+        &::descriptor_table_Common_2eproto,
 };
 static ::absl::once_flag descriptor_table_PatientManagement_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_PatientManagement_2eproto = {
     false,
     false,
-    1006,
+    845,
     descriptor_table_protodef_PatientManagement_2eproto,
     "PatientManagement.proto",
     &descriptor_table_PatientManagement_2eproto_once,
     descriptor_table_PatientManagement_2eproto_deps,
     1,
-    8,
+    4,
     schemas,
     file_default_instances,
     TableStruct_PatientManagement_2eproto::offsets,
@@ -393,469 +249,326 @@ PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_PatientManagem
 };
 // ===================================================================
 
-class PatientPingRequest::_Internal {
+class PatientDTO::_Internal {
  public:
   using HasBits =
-      decltype(::std::declval<PatientPingRequest>()._impl_._has_bits_);
+      decltype(::std::declval<PatientDTO>()._impl_._has_bits_);
   static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(PatientPingRequest, _impl_._has_bits_);
+      8 * PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_._has_bits_);
 };
 
-PatientPingRequest::PatientPingRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientPingRequest_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:PatientPingRequest)
-}
-PatientPingRequest::PatientPingRequest(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientPingRequest& from)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientPingRequest_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(from._impl_) {
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-}
-PROTOBUF_NDEBUG_INLINE PatientPingRequest::Impl_::Impl_(
-    ::google::protobuf::internal::InternalVisibility visibility,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0} {}
-
-inline void PatientPingRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
-  new (&_impl_) Impl_(internal_visibility(), arena);
-  _impl_.ping_ = {};
-}
-PatientPingRequest::~PatientPingRequest() {
-  // @@protoc_insertion_point(destructor:PatientPingRequest)
-  SharedDtor(*this);
-}
-inline void PatientPingRequest::SharedDtor(MessageLite& self) {
-  PatientPingRequest& this_ = static_cast<PatientPingRequest&>(self);
-  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.~Impl_();
-}
-
-inline void* PROTOBUF_NONNULL PatientPingRequest::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) PatientPingRequest(arena);
-}
-constexpr auto PatientPingRequest::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(PatientPingRequest),
-                                            alignof(PatientPingRequest));
-}
-constexpr auto PatientPingRequest::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_PatientPingRequest_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &PatientPingRequest::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<PatientPingRequest>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &PatientPingRequest::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<PatientPingRequest>(), &PatientPingRequest::ByteSizeLong,
-              &PatientPingRequest::_InternalSerialize,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(PatientPingRequest, _impl_._cached_size_),
-          false,
-      },
-      &PatientPingRequest::kDescriptorMethods,
-      &descriptor_table_PatientManagement_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull PatientPingRequest_class_data_ =
-        PatientPingRequest::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-PatientPingRequest::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&PatientPingRequest_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(PatientPingRequest_class_data_.tc_table);
-  return PatientPingRequest_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 0, 2>
-PatientPingRequest::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(PatientPingRequest, _impl_._has_bits_),
-    0, // no _extensions_
-    1, 0,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967294,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    1,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    PatientPingRequest_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::GenericFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::PatientPingRequest>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    // bool ping = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(PatientPingRequest, _impl_.ping_), 0>(),
-     {8, 0, 0, PROTOBUF_FIELD_OFFSET(PatientPingRequest, _impl_.ping_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // bool ping = 1;
-    {PROTOBUF_FIELD_OFFSET(PatientPingRequest, _impl_.ping_), _Internal::kHasBitsOffset + 0, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kBool)},
-  }},
-  // no aux_entries
-  {{
-  }},
-};
-PROTOBUF_NOINLINE void PatientPingRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:PatientPingRequest)
+void PatientDTO::clear_patient_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.ping_ = false;
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+  if (_impl_.patient_name_ != nullptr) _impl_.patient_name_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000008u;
 }
-
+PatientDTO::PatientDTO(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL PatientPingRequest::_InternalSerialize(
-    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const PatientPingRequest& this_ = static_cast<const PatientPingRequest&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL PatientPingRequest::_InternalSerialize(
-    ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const PatientPingRequest& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:PatientPingRequest)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  // bool ping = 1;
-  if ((this_._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    if (this_._internal_ping() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteBoolToArray(
-          1, this_._internal_ping(), target);
-    }
-  }
-
-  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:PatientPingRequest)
-  return target;
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t PatientPingRequest::ByteSizeLong(const MessageLite& base) {
-  const PatientPingRequest& this_ = static_cast<const PatientPingRequest&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::size_t PatientPingRequest::ByteSizeLong() const {
-  const PatientPingRequest& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:PatientPingRequest)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void)cached_has_bits;
-
-   {
-    // bool ping = 1;
-    cached_has_bits = this_._impl_._has_bits_[0];
-    if ((cached_has_bits & 0x00000001u) != 0) {
-      if (this_._internal_ping() != 0) {
-        total_size += 2;
-      }
-    }
-  }
-  return this_.MaybeComputeUnknownFieldsSize(total_size,
-                                             &this_._impl_._cached_size_);
-}
-
-void PatientPingRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<PatientPingRequest*>(&to_msg);
-  auto& from = static_cast<const PatientPingRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:PatientPingRequest)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000001u) != 0) {
-    if (from._internal_ping() != 0) {
-      _this->_impl_.ping_ = from._impl_.ping_;
-    }
-  }
-  _this->_impl_._has_bits_[0] |= cached_has_bits;
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void PatientPingRequest::CopyFrom(const PatientPingRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PatientPingRequest)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-
-void PatientPingRequest::InternalSwap(PatientPingRequest* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
-  using ::std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  swap(_impl_.ping_, other->_impl_.ping_);
-}
-
-::google::protobuf::Metadata PatientPingRequest::GetMetadata() const {
-  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
-}
-// ===================================================================
-
-class PatientAdmissionRequest::_Internal {
- public:
-  using HasBits =
-      decltype(::std::declval<PatientAdmissionRequest>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_._has_bits_);
-};
-
-PatientAdmissionRequest::PatientAdmissionRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientAdmissionRequest_class_data_.base()) {
+    : ::google::protobuf::Message(arena, PatientDTO_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:PatientAdmissionRequest)
+  // @@protoc_insertion_point(arena_constructor:PatientDTO)
 }
-PROTOBUF_NDEBUG_INLINE PatientAdmissionRequest::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE PatientDTO::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    const ::PatientAdmissionRequest& from_msg)
+    const ::PatientDTO& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
+        patient_sex_(arena, from.patient_sex_),
+        patient_cond_(arena, from.patient_cond_),
         room_type_(arena, from.room_type_) {}
 
-PatientAdmissionRequest::PatientAdmissionRequest(
+PatientDTO::PatientDTO(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const PatientAdmissionRequest& from)
+    const PatientDTO& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientAdmissionRequest_class_data_.base()) {
+    : ::google::protobuf::Message(arena, PatientDTO_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  PatientAdmissionRequest* const _this = this;
+  PatientDTO* const _this = this;
   (void)_this;
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.patient_info_ = ((cached_has_bits & 0x00000002u) != 0)
-                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.patient_info_)
+  _impl_.patient_name_ = ((cached_has_bits & 0x00000008u) != 0)
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.patient_name_)
                 : nullptr;
-  _impl_.quarantined_ = from._impl_.quarantined_;
+  ::memcpy(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, patient_id_),
+           reinterpret_cast<const char *>(&from._impl_) +
+               offsetof(Impl_, patient_id_),
+           offsetof(Impl_, is_quarantined_) -
+               offsetof(Impl_, patient_id_) +
+               sizeof(Impl_::is_quarantined_));
 
-  // @@protoc_insertion_point(copy_constructor:PatientAdmissionRequest)
+  // @@protoc_insertion_point(copy_constructor:PatientDTO)
 }
-PROTOBUF_NDEBUG_INLINE PatientAdmissionRequest::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE PatientDTO::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
+        patient_sex_(arena),
+        patient_cond_(arena),
         room_type_(arena) {}
 
-inline void PatientAdmissionRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+inline void PatientDTO::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   ::memset(reinterpret_cast<char *>(&_impl_) +
-               offsetof(Impl_, patient_info_),
+               offsetof(Impl_, patient_name_),
            0,
-           offsetof(Impl_, quarantined_) -
-               offsetof(Impl_, patient_info_) +
-               sizeof(Impl_::quarantined_));
+           offsetof(Impl_, is_quarantined_) -
+               offsetof(Impl_, patient_name_) +
+               sizeof(Impl_::is_quarantined_));
 }
-PatientAdmissionRequest::~PatientAdmissionRequest() {
-  // @@protoc_insertion_point(destructor:PatientAdmissionRequest)
+PatientDTO::~PatientDTO() {
+  // @@protoc_insertion_point(destructor:PatientDTO)
   SharedDtor(*this);
 }
-inline void PatientAdmissionRequest::SharedDtor(MessageLite& self) {
-  PatientAdmissionRequest& this_ = static_cast<PatientAdmissionRequest&>(self);
+inline void PatientDTO::SharedDtor(MessageLite& self) {
+  PatientDTO& this_ = static_cast<PatientDTO&>(self);
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.patient_sex_.Destroy();
+  this_._impl_.patient_cond_.Destroy();
   this_._impl_.room_type_.Destroy();
-  delete this_._impl_.patient_info_;
+  delete this_._impl_.patient_name_;
   this_._impl_.~Impl_();
 }
 
-inline void* PROTOBUF_NONNULL PatientAdmissionRequest::PlacementNew_(
+inline void* PROTOBUF_NONNULL PatientDTO::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) PatientAdmissionRequest(arena);
+  return ::new (mem) PatientDTO(arena);
 }
-constexpr auto PatientAdmissionRequest::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(PatientAdmissionRequest),
-                                            alignof(PatientAdmissionRequest));
+constexpr auto PatientDTO::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(PatientDTO),
+                                            alignof(PatientDTO));
 }
-constexpr auto PatientAdmissionRequest::InternalGenerateClassData_() {
+constexpr auto PatientDTO::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_PatientAdmissionRequest_default_instance_._instance,
+          &_PatientDTO_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &PatientAdmissionRequest::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<PatientAdmissionRequest>(),
+          &PatientDTO::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<PatientDTO>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &PatientAdmissionRequest::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<PatientAdmissionRequest>(), &PatientAdmissionRequest::ByteSizeLong,
-              &PatientAdmissionRequest::_InternalSerialize,
+          &PatientDTO::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<PatientDTO>(), &PatientDTO::ByteSizeLong,
+              &PatientDTO::_InternalSerialize,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_._cached_size_),
           false,
       },
-      &PatientAdmissionRequest::kDescriptorMethods,
+      &PatientDTO::kDescriptorMethods,
       &descriptor_table_PatientManagement_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull PatientAdmissionRequest_class_data_ =
-        PatientAdmissionRequest::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull PatientDTO_class_data_ =
+        PatientDTO::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-PatientAdmissionRequest::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&PatientAdmissionRequest_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(PatientAdmissionRequest_class_data_.tc_table);
-  return PatientAdmissionRequest_class_data_.base();
+PatientDTO::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&PatientDTO_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(PatientDTO_class_data_.tc_table);
+  return PatientDTO_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 1, 41, 2>
-PatientAdmissionRequest::_table_ = {
+const ::_pbi::TcParseTable<3, 7, 1, 51, 2>
+PatientDTO::_table_ = {
   {
-    PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_._has_bits_),
     0, // no _extensions_
-    3, 24,  // max_field_number, fast_idx_mask
+    7, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967288,  // skipmap
+    4294967168,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    3,  // num_field_entries
+    7,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
-    PatientAdmissionRequest_class_data_.base(),
+    PatientDTO_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::PatientAdmissionRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::PatientDTO>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
-    // .PatientInformation patient_info = 1;
+    // .NameDTO patient_name = 1;
     {::_pbi::TcParser::FastMtS1,
-     {10, 1, 0, PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_.patient_info_)}},
-    // string room_type = 2;
+     {10, 3, 0, PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_name_)}},
+    // uint64 patient_id = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(PatientDTO, _impl_.patient_id_), 4>(),
+     {16, 4, 0, PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_id_)}},
+    // string patient_sex = 3;
     {::_pbi::TcParser::FastUS1,
-     {18, 0, 0, PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_.room_type_)}},
-    // bool quarantined = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(PatientAdmissionRequest, _impl_.quarantined_), 2>(),
-     {24, 2, 0, PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_.quarantined_)}},
+     {26, 0, 0, PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_sex_)}},
+    // string patient_cond = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 1, 0, PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_cond_)}},
+    // uint32 patient_room = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(PatientDTO, _impl_.patient_room_), 5>(),
+     {40, 5, 0, PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_room_)}},
+    // string room_type = 6;
+    {::_pbi::TcParser::FastUS1,
+     {50, 2, 0, PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.room_type_)}},
+    // bool is_quarantined = 7;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(PatientDTO, _impl_.is_quarantined_), 6>(),
+     {56, 6, 0, PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.is_quarantined_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // .PatientInformation patient_info = 1;
-    {PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_.patient_info_), _Internal::kHasBitsOffset + 1, 0,
+    // .NameDTO patient_name = 1;
+    {PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_name_), _Internal::kHasBitsOffset + 3, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // string room_type = 2;
-    {PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_.room_type_), _Internal::kHasBitsOffset + 0, 0,
+    // uint64 patient_id = 2;
+    {PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_id_), _Internal::kHasBitsOffset + 4, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // string patient_sex = 3;
+    {PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_sex_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // bool quarantined = 3;
-    {PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_.quarantined_), _Internal::kHasBitsOffset + 2, 0,
+    // string patient_cond = 4;
+    {PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_cond_), _Internal::kHasBitsOffset + 1, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // uint32 patient_room = 5;
+    {PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_room_), _Internal::kHasBitsOffset + 5, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // string room_type = 6;
+    {PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.room_type_), _Internal::kHasBitsOffset + 2, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // bool is_quarantined = 7;
+    {PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.is_quarantined_), _Internal::kHasBitsOffset + 6, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kBool)},
   }},
   {{
-      {::_pbi::TcParser::GetTable<::PatientInformation>()},
+      {::_pbi::TcParser::GetTable<::NameDTO>()},
   }},
   {{
-    "\27\0\11\0\0\0\0\0"
-    "PatientAdmissionRequest"
+    "\12\0\0\13\14\0\11\0"
+    "PatientDTO"
+    "patient_sex"
+    "patient_cond"
     "room_type"
   }},
 };
-PROTOBUF_NOINLINE void PatientAdmissionRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:PatientAdmissionRequest)
+PROTOBUF_NOINLINE void PatientDTO::Clear() {
+// @@protoc_insertion_point(message_clear_start:PatientDTO)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000003u) != 0) {
+  if ((cached_has_bits & 0x0000000fu) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
-      _impl_.room_type_.ClearNonDefaultToEmpty();
+      _impl_.patient_sex_.ClearNonDefaultToEmpty();
     }
     if ((cached_has_bits & 0x00000002u) != 0) {
-      ABSL_DCHECK(_impl_.patient_info_ != nullptr);
-      _impl_.patient_info_->Clear();
+      _impl_.patient_cond_.ClearNonDefaultToEmpty();
+    }
+    if ((cached_has_bits & 0x00000004u) != 0) {
+      _impl_.room_type_.ClearNonDefaultToEmpty();
+    }
+    if ((cached_has_bits & 0x00000008u) != 0) {
+      ABSL_DCHECK(_impl_.patient_name_ != nullptr);
+      _impl_.patient_name_->Clear();
     }
   }
-  _impl_.quarantined_ = false;
+  if ((cached_has_bits & 0x00000070u) != 0) {
+    ::memset(&_impl_.patient_id_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.is_quarantined_) -
+        reinterpret_cast<char*>(&_impl_.patient_id_)) + sizeof(_impl_.is_quarantined_));
+  }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL PatientAdmissionRequest::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL PatientDTO::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const PatientAdmissionRequest& this_ = static_cast<const PatientAdmissionRequest&>(base);
+  const PatientDTO& this_ = static_cast<const PatientDTO&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL PatientAdmissionRequest::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL PatientDTO::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const PatientAdmissionRequest& this_ = *this;
+  const PatientDTO& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:PatientAdmissionRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:PatientDTO)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
   cached_has_bits = this_._impl_._has_bits_[0];
-  // .PatientInformation patient_info = 1;
-  if ((cached_has_bits & 0x00000002u) != 0) {
+  // .NameDTO patient_name = 1;
+  if ((cached_has_bits & 0x00000008u) != 0) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        1, *this_._impl_.patient_info_, this_._impl_.patient_info_->GetCachedSize(), target,
+        1, *this_._impl_.patient_name_, this_._impl_.patient_name_->GetCachedSize(), target,
         stream);
   }
 
-  // string room_type = 2;
-  if ((cached_has_bits & 0x00000001u) != 0) {
-    if (!this_._internal_room_type().empty()) {
-      const ::std::string& _s = this_._internal_room_type();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientAdmissionRequest.room_type");
-      target = stream->WriteStringMaybeAliased(2, _s, target);
+  // uint64 patient_id = 2;
+  if ((cached_has_bits & 0x00000010u) != 0) {
+    if (this_._internal_patient_id() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          2, this_._internal_patient_id(), target);
     }
   }
 
-  // bool quarantined = 3;
+  // string patient_sex = 3;
+  if ((cached_has_bits & 0x00000001u) != 0) {
+    if (!this_._internal_patient_sex().empty()) {
+      const ::std::string& _s = this_._internal_patient_sex();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientDTO.patient_sex");
+      target = stream->WriteStringMaybeAliased(3, _s, target);
+    }
+  }
+
+  // string patient_cond = 4;
+  if ((cached_has_bits & 0x00000002u) != 0) {
+    if (!this_._internal_patient_cond().empty()) {
+      const ::std::string& _s = this_._internal_patient_cond();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientDTO.patient_cond");
+      target = stream->WriteStringMaybeAliased(4, _s, target);
+    }
+  }
+
+  // uint32 patient_room = 5;
+  if ((cached_has_bits & 0x00000020u) != 0) {
+    if (this_._internal_patient_room() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+          5, this_._internal_patient_room(), target);
+    }
+  }
+
+  // string room_type = 6;
   if ((cached_has_bits & 0x00000004u) != 0) {
-    if (this_._internal_quarantined() != 0) {
+    if (!this_._internal_room_type().empty()) {
+      const ::std::string& _s = this_._internal_room_type();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientDTO.room_type");
+      target = stream->WriteStringMaybeAliased(6, _s, target);
+    }
+  }
+
+  // bool is_quarantined = 7;
+  if ((cached_has_bits & 0x00000040u) != 0) {
+    if (this_._internal_is_quarantined() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
-          3, this_._internal_quarantined(), target);
+          7, this_._internal_is_quarantined(), target);
     }
   }
 
@@ -864,18 +577,18 @@ PROTOBUF_NOINLINE void PatientAdmissionRequest::Clear() {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:PatientAdmissionRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:PatientDTO)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t PatientAdmissionRequest::ByteSizeLong(const MessageLite& base) {
-  const PatientAdmissionRequest& this_ = static_cast<const PatientAdmissionRequest&>(base);
+::size_t PatientDTO::ByteSizeLong(const MessageLite& base) {
+  const PatientDTO& this_ = static_cast<const PatientDTO&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t PatientAdmissionRequest::ByteSizeLong() const {
-  const PatientAdmissionRequest& this_ = *this;
+::size_t PatientDTO::ByteSizeLong() const {
+  const PatientDTO& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:PatientAdmissionRequest)
+  // @@protoc_insertion_point(message_byte_size_start:PatientDTO)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -884,22 +597,50 @@ PROTOBUF_NOINLINE void PatientAdmissionRequest::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000007u) != 0) {
-    // string room_type = 2;
+  if ((cached_has_bits & 0x0000007fu) != 0) {
+    // string patient_sex = 3;
     if ((cached_has_bits & 0x00000001u) != 0) {
+      if (!this_._internal_patient_sex().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_patient_sex());
+      }
+    }
+    // string patient_cond = 4;
+    if ((cached_has_bits & 0x00000002u) != 0) {
+      if (!this_._internal_patient_cond().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_patient_cond());
+      }
+    }
+    // string room_type = 6;
+    if ((cached_has_bits & 0x00000004u) != 0) {
       if (!this_._internal_room_type().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_room_type());
       }
     }
-    // .PatientInformation patient_info = 1;
-    if ((cached_has_bits & 0x00000002u) != 0) {
+    // .NameDTO patient_name = 1;
+    if ((cached_has_bits & 0x00000008u) != 0) {
       total_size += 1 +
-                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.patient_info_);
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.patient_name_);
     }
-    // bool quarantined = 3;
-    if ((cached_has_bits & 0x00000004u) != 0) {
-      if (this_._internal_quarantined() != 0) {
+    // uint64 patient_id = 2;
+    if ((cached_has_bits & 0x00000010u) != 0) {
+      if (this_._internal_patient_id() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_patient_id());
+      }
+    }
+    // uint32 patient_room = 5;
+    if ((cached_has_bits & 0x00000020u) != 0) {
+      if (this_._internal_patient_room() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+            this_._internal_patient_room());
+      }
+    }
+    // bool is_quarantined = 7;
+    if ((cached_has_bits & 0x00000040u) != 0) {
+      if (this_._internal_is_quarantined() != 0) {
         total_size += 2;
       }
     }
@@ -908,18 +649,36 @@ PROTOBUF_NOINLINE void PatientAdmissionRequest::Clear() {
                                              &this_._impl_._cached_size_);
 }
 
-void PatientAdmissionRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<PatientAdmissionRequest*>(&to_msg);
-  auto& from = static_cast<const PatientAdmissionRequest&>(from_msg);
+void PatientDTO::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<PatientDTO*>(&to_msg);
+  auto& from = static_cast<const PatientDTO&>(from_msg);
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:PatientAdmissionRequest)
+  // @@protoc_insertion_point(class_specific_merge_from_start:PatientDTO)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000007u) != 0) {
+  if ((cached_has_bits & 0x0000007fu) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
+      if (!from._internal_patient_sex().empty()) {
+        _this->_internal_set_patient_sex(from._internal_patient_sex());
+      } else {
+        if (_this->_impl_.patient_sex_.IsDefault()) {
+          _this->_internal_set_patient_sex("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000002u) != 0) {
+      if (!from._internal_patient_cond().empty()) {
+        _this->_internal_set_patient_cond(from._internal_patient_cond());
+      } else {
+        if (_this->_impl_.patient_cond_.IsDefault()) {
+          _this->_internal_set_patient_cond("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000004u) != 0) {
       if (!from._internal_room_type().empty()) {
         _this->_internal_set_room_type(from._internal_room_type());
       } else {
@@ -928,17 +687,27 @@ void PatientAdmissionRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
       }
     }
-    if ((cached_has_bits & 0x00000002u) != 0) {
-      ABSL_DCHECK(from._impl_.patient_info_ != nullptr);
-      if (_this->_impl_.patient_info_ == nullptr) {
-        _this->_impl_.patient_info_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.patient_info_);
+    if ((cached_has_bits & 0x00000008u) != 0) {
+      ABSL_DCHECK(from._impl_.patient_name_ != nullptr);
+      if (_this->_impl_.patient_name_ == nullptr) {
+        _this->_impl_.patient_name_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.patient_name_);
       } else {
-        _this->_impl_.patient_info_->MergeFrom(*from._impl_.patient_info_);
+        _this->_impl_.patient_name_->MergeFrom(*from._impl_.patient_name_);
       }
     }
-    if ((cached_has_bits & 0x00000004u) != 0) {
-      if (from._internal_quarantined() != 0) {
-        _this->_impl_.quarantined_ = from._impl_.quarantined_;
+    if ((cached_has_bits & 0x00000010u) != 0) {
+      if (from._internal_patient_id() != 0) {
+        _this->_impl_.patient_id_ = from._impl_.patient_id_;
+      }
+    }
+    if ((cached_has_bits & 0x00000020u) != 0) {
+      if (from._internal_patient_room() != 0) {
+        _this->_impl_.patient_room_ = from._impl_.patient_room_;
+      }
+    }
+    if ((cached_has_bits & 0x00000040u) != 0) {
+      if (from._internal_is_quarantined() != 0) {
+        _this->_impl_.is_quarantined_ = from._impl_.is_quarantined_;
       }
     }
   }
@@ -946,303 +715,70 @@ void PatientAdmissionRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void PatientAdmissionRequest::CopyFrom(const PatientAdmissionRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PatientAdmissionRequest)
+void PatientDTO::CopyFrom(const PatientDTO& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PatientDTO)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 
-void PatientAdmissionRequest::InternalSwap(PatientAdmissionRequest* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+void PatientDTO::InternalSwap(PatientDTO* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
   auto* arena = GetArena();
   ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.patient_sex_, &other->_impl_.patient_sex_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.patient_cond_, &other->_impl_.patient_cond_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.room_type_, &other->_impl_.room_type_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_.quarantined_)
-      + sizeof(PatientAdmissionRequest::_impl_.quarantined_)
-      - PROTOBUF_FIELD_OFFSET(PatientAdmissionRequest, _impl_.patient_info_)>(
-          reinterpret_cast<char*>(&_impl_.patient_info_),
-          reinterpret_cast<char*>(&other->_impl_.patient_info_));
+      PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.is_quarantined_)
+      + sizeof(PatientDTO::_impl_.is_quarantined_)
+      - PROTOBUF_FIELD_OFFSET(PatientDTO, _impl_.patient_name_)>(
+          reinterpret_cast<char*>(&_impl_.patient_name_),
+          reinterpret_cast<char*>(&other->_impl_.patient_name_));
 }
 
-::google::protobuf::Metadata PatientAdmissionRequest::GetMetadata() const {
+::google::protobuf::Metadata PatientDTO::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
 
-class PatientDischargeRequest::_Internal {
+class PatientTransfer::_Internal {
  public:
   using HasBits =
-      decltype(::std::declval<PatientDischargeRequest>()._impl_._has_bits_);
+      decltype(::std::declval<PatientTransfer>()._impl_._has_bits_);
   static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(PatientDischargeRequest, _impl_._has_bits_);
+      8 * PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_._has_bits_);
 };
 
-PatientDischargeRequest::PatientDischargeRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+PatientTransfer::PatientTransfer(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientDischargeRequest_class_data_.base()) {
+    : ::google::protobuf::Message(arena, PatientTransfer_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:PatientDischargeRequest)
+  // @@protoc_insertion_point(arena_constructor:PatientTransfer)
 }
-PatientDischargeRequest::PatientDischargeRequest(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientDischargeRequest& from)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientDischargeRequest_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(from._impl_) {
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-}
-PROTOBUF_NDEBUG_INLINE PatientDischargeRequest::Impl_::Impl_(
-    ::google::protobuf::internal::InternalVisibility visibility,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0} {}
-
-inline void PatientDischargeRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
-  new (&_impl_) Impl_(internal_visibility(), arena);
-  _impl_.patient_id_ = {};
-}
-PatientDischargeRequest::~PatientDischargeRequest() {
-  // @@protoc_insertion_point(destructor:PatientDischargeRequest)
-  SharedDtor(*this);
-}
-inline void PatientDischargeRequest::SharedDtor(MessageLite& self) {
-  PatientDischargeRequest& this_ = static_cast<PatientDischargeRequest&>(self);
-  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.~Impl_();
-}
-
-inline void* PROTOBUF_NONNULL PatientDischargeRequest::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) PatientDischargeRequest(arena);
-}
-constexpr auto PatientDischargeRequest::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(PatientDischargeRequest),
-                                            alignof(PatientDischargeRequest));
-}
-constexpr auto PatientDischargeRequest::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_PatientDischargeRequest_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &PatientDischargeRequest::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<PatientDischargeRequest>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &PatientDischargeRequest::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<PatientDischargeRequest>(), &PatientDischargeRequest::ByteSizeLong,
-              &PatientDischargeRequest::_InternalSerialize,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(PatientDischargeRequest, _impl_._cached_size_),
-          false,
-      },
-      &PatientDischargeRequest::kDescriptorMethods,
-      &descriptor_table_PatientManagement_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull PatientDischargeRequest_class_data_ =
-        PatientDischargeRequest::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-PatientDischargeRequest::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&PatientDischargeRequest_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(PatientDischargeRequest_class_data_.tc_table);
-  return PatientDischargeRequest_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 0, 2>
-PatientDischargeRequest::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(PatientDischargeRequest, _impl_._has_bits_),
-    0, // no _extensions_
-    1, 0,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967294,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    1,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    PatientDischargeRequest_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::GenericFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::PatientDischargeRequest>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    // uint64 patient_id = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(PatientDischargeRequest, _impl_.patient_id_), 0>(),
-     {8, 0, 0, PROTOBUF_FIELD_OFFSET(PatientDischargeRequest, _impl_.patient_id_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // uint64 patient_id = 1;
-    {PROTOBUF_FIELD_OFFSET(PatientDischargeRequest, _impl_.patient_id_), _Internal::kHasBitsOffset + 0, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-  }},
-  // no aux_entries
-  {{
-  }},
-};
-PROTOBUF_NOINLINE void PatientDischargeRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:PatientDischargeRequest)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.patient_id_ = ::uint64_t{0u};
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL PatientDischargeRequest::_InternalSerialize(
-    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const PatientDischargeRequest& this_ = static_cast<const PatientDischargeRequest&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL PatientDischargeRequest::_InternalSerialize(
-    ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const PatientDischargeRequest& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:PatientDischargeRequest)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  // uint64 patient_id = 1;
-  if ((this_._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    if (this_._internal_patient_id() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          1, this_._internal_patient_id(), target);
-    }
-  }
-
-  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:PatientDischargeRequest)
-  return target;
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t PatientDischargeRequest::ByteSizeLong(const MessageLite& base) {
-  const PatientDischargeRequest& this_ = static_cast<const PatientDischargeRequest&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::size_t PatientDischargeRequest::ByteSizeLong() const {
-  const PatientDischargeRequest& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:PatientDischargeRequest)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void)cached_has_bits;
-
-   {
-    // uint64 patient_id = 1;
-    cached_has_bits = this_._impl_._has_bits_[0];
-    if ((cached_has_bits & 0x00000001u) != 0) {
-      if (this_._internal_patient_id() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
-            this_._internal_patient_id());
-      }
-    }
-  }
-  return this_.MaybeComputeUnknownFieldsSize(total_size,
-                                             &this_._impl_._cached_size_);
-}
-
-void PatientDischargeRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<PatientDischargeRequest*>(&to_msg);
-  auto& from = static_cast<const PatientDischargeRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:PatientDischargeRequest)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000001u) != 0) {
-    if (from._internal_patient_id() != 0) {
-      _this->_impl_.patient_id_ = from._impl_.patient_id_;
-    }
-  }
-  _this->_impl_._has_bits_[0] |= cached_has_bits;
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void PatientDischargeRequest::CopyFrom(const PatientDischargeRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PatientDischargeRequest)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-
-void PatientDischargeRequest::InternalSwap(PatientDischargeRequest* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
-  using ::std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  swap(_impl_.patient_id_, other->_impl_.patient_id_);
-}
-
-::google::protobuf::Metadata PatientDischargeRequest::GetMetadata() const {
-  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
-}
-// ===================================================================
-
-class PatientTransferRequest::_Internal {
- public:
-  using HasBits =
-      decltype(::std::declval<PatientTransferRequest>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_._has_bits_);
-};
-
-PatientTransferRequest::PatientTransferRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientTransferRequest_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:PatientTransferRequest)
-}
-PROTOBUF_NDEBUG_INLINE PatientTransferRequest::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE PatientTransfer::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    const ::PatientTransferRequest& from_msg)
+    const ::PatientTransfer& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         room_type_(arena, from.room_type_) {}
 
-PatientTransferRequest::PatientTransferRequest(
+PatientTransfer::PatientTransfer(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const PatientTransferRequest& from)
+    const PatientTransfer& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientTransferRequest_class_data_.base()) {
+    : ::google::protobuf::Message(arena, PatientTransfer_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  PatientTransferRequest* const _this = this;
+  PatientTransfer* const _this = this;
   (void)_this;
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
@@ -1251,86 +787,86 @@ PatientTransferRequest::PatientTransferRequest(
                offsetof(Impl_, patient_id_),
            reinterpret_cast<const char *>(&from._impl_) +
                offsetof(Impl_, patient_id_),
-           offsetof(Impl_, quarantined_) -
+           offsetof(Impl_, is_quarantined_) -
                offsetof(Impl_, patient_id_) +
-               sizeof(Impl_::quarantined_));
+               sizeof(Impl_::is_quarantined_));
 
-  // @@protoc_insertion_point(copy_constructor:PatientTransferRequest)
+  // @@protoc_insertion_point(copy_constructor:PatientTransfer)
 }
-PROTOBUF_NDEBUG_INLINE PatientTransferRequest::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE PatientTransfer::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
         room_type_(arena) {}
 
-inline void PatientTransferRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+inline void PatientTransfer::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   ::memset(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, patient_id_),
            0,
-           offsetof(Impl_, quarantined_) -
+           offsetof(Impl_, is_quarantined_) -
                offsetof(Impl_, patient_id_) +
-               sizeof(Impl_::quarantined_));
+               sizeof(Impl_::is_quarantined_));
 }
-PatientTransferRequest::~PatientTransferRequest() {
-  // @@protoc_insertion_point(destructor:PatientTransferRequest)
+PatientTransfer::~PatientTransfer() {
+  // @@protoc_insertion_point(destructor:PatientTransfer)
   SharedDtor(*this);
 }
-inline void PatientTransferRequest::SharedDtor(MessageLite& self) {
-  PatientTransferRequest& this_ = static_cast<PatientTransferRequest&>(self);
+inline void PatientTransfer::SharedDtor(MessageLite& self) {
+  PatientTransfer& this_ = static_cast<PatientTransfer&>(self);
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.room_type_.Destroy();
   this_._impl_.~Impl_();
 }
 
-inline void* PROTOBUF_NONNULL PatientTransferRequest::PlacementNew_(
+inline void* PROTOBUF_NONNULL PatientTransfer::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) PatientTransferRequest(arena);
+  return ::new (mem) PatientTransfer(arena);
 }
-constexpr auto PatientTransferRequest::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(PatientTransferRequest),
-                                            alignof(PatientTransferRequest));
+constexpr auto PatientTransfer::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(PatientTransfer),
+                                            alignof(PatientTransfer));
 }
-constexpr auto PatientTransferRequest::InternalGenerateClassData_() {
+constexpr auto PatientTransfer::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_PatientTransferRequest_default_instance_._instance,
+          &_PatientTransfer_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &PatientTransferRequest::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<PatientTransferRequest>(),
+          &PatientTransfer::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<PatientTransfer>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &PatientTransferRequest::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<PatientTransferRequest>(), &PatientTransferRequest::ByteSizeLong,
-              &PatientTransferRequest::_InternalSerialize,
+          &PatientTransfer::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<PatientTransfer>(), &PatientTransfer::ByteSizeLong,
+              &PatientTransfer::_InternalSerialize,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_._cached_size_),
           false,
       },
-      &PatientTransferRequest::kDescriptorMethods,
+      &PatientTransfer::kDescriptorMethods,
       &descriptor_table_PatientManagement_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull PatientTransferRequest_class_data_ =
-        PatientTransferRequest::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull PatientTransfer_class_data_ =
+        PatientTransfer::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-PatientTransferRequest::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&PatientTransferRequest_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(PatientTransferRequest_class_data_.tc_table);
-  return PatientTransferRequest_class_data_.base();
+PatientTransfer::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&PatientTransfer_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(PatientTransfer_class_data_.tc_table);
+  return PatientTransfer_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 0, 40, 2>
-PatientTransferRequest::_table_ = {
+const ::_pbi::TcParseTable<2, 4, 0, 33, 2>
+PatientTransfer::_table_ = {
   {
-    PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_._has_bits_),
     0, // no _extensions_
     4, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
@@ -1339,50 +875,50 @@ PatientTransferRequest::_table_ = {
     4,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
-    PatientTransferRequest_class_data_.base(),
+    PatientTransfer_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::PatientTransferRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::PatientTransfer>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // bool quarantined = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(PatientTransferRequest, _impl_.quarantined_), 3>(),
-     {32, 3, 0, PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_.quarantined_)}},
+    // bool is_quarantined = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(PatientTransfer, _impl_.is_quarantined_), 3>(),
+     {32, 3, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.is_quarantined_)}},
     // uint64 patient_id = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(PatientTransferRequest, _impl_.patient_id_), 1>(),
-     {8, 1, 0, PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_.patient_id_)}},
-    // uint32 desired_room = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(PatientTransferRequest, _impl_.desired_room_), 2>(),
-     {16, 2, 0, PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_.desired_room_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(PatientTransfer, _impl_.patient_id_), 1>(),
+     {8, 1, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.patient_id_)}},
+    // uint32 new_room_id = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(PatientTransfer, _impl_.new_room_id_), 2>(),
+     {16, 2, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.new_room_id_)}},
     // string room_type = 3;
     {::_pbi::TcParser::FastUS1,
-     {26, 0, 0, PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_.room_type_)}},
+     {26, 0, 0, PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.room_type_)}},
   }}, {{
     65535, 65535
   }}, {{
     // uint64 patient_id = 1;
-    {PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_.patient_id_), _Internal::kHasBitsOffset + 1, 0,
+    {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.patient_id_), _Internal::kHasBitsOffset + 1, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint32 desired_room = 2;
-    {PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_.desired_room_), _Internal::kHasBitsOffset + 2, 0,
+    // uint32 new_room_id = 2;
+    {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.new_room_id_), _Internal::kHasBitsOffset + 2, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // string room_type = 3;
-    {PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_.room_type_), _Internal::kHasBitsOffset + 0, 0,
+    {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.room_type_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // bool quarantined = 4;
-    {PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_.quarantined_), _Internal::kHasBitsOffset + 3, 0,
+    // bool is_quarantined = 4;
+    {PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.is_quarantined_), _Internal::kHasBitsOffset + 3, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kBool)},
   }},
   // no aux_entries
   {{
-    "\26\0\0\11\0\0\0\0"
-    "PatientTransferRequest"
+    "\17\0\0\11\0\0\0\0"
+    "PatientTransfer"
     "room_type"
   }},
 };
-PROTOBUF_NOINLINE void PatientTransferRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:PatientTransferRequest)
+PROTOBUF_NOINLINE void PatientTransfer::Clear() {
+// @@protoc_insertion_point(message_clear_start:PatientTransfer)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1394,25 +930,25 @@ PROTOBUF_NOINLINE void PatientTransferRequest::Clear() {
   }
   if ((cached_has_bits & 0x0000000eu) != 0) {
     ::memset(&_impl_.patient_id_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.quarantined_) -
-        reinterpret_cast<char*>(&_impl_.patient_id_)) + sizeof(_impl_.quarantined_));
+        reinterpret_cast<char*>(&_impl_.is_quarantined_) -
+        reinterpret_cast<char*>(&_impl_.patient_id_)) + sizeof(_impl_.is_quarantined_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL PatientTransferRequest::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL PatientTransfer::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const PatientTransferRequest& this_ = static_cast<const PatientTransferRequest&>(base);
+  const PatientTransfer& this_ = static_cast<const PatientTransfer&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL PatientTransferRequest::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL PatientTransfer::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const PatientTransferRequest& this_ = *this;
+  const PatientTransfer& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:PatientTransferRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:PatientTransfer)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -1425,12 +961,12 @@ PROTOBUF_NOINLINE void PatientTransferRequest::Clear() {
     }
   }
 
-  // uint32 desired_room = 2;
+  // uint32 new_room_id = 2;
   if ((this_._impl_._has_bits_[0] & 0x00000004u) != 0) {
-    if (this_._internal_desired_room() != 0) {
+    if (this_._internal_new_room_id() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          2, this_._internal_desired_room(), target);
+          2, this_._internal_new_room_id(), target);
     }
   }
 
@@ -1439,17 +975,17 @@ PROTOBUF_NOINLINE void PatientTransferRequest::Clear() {
     if (!this_._internal_room_type().empty()) {
       const ::std::string& _s = this_._internal_room_type();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientTransferRequest.room_type");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientTransfer.room_type");
       target = stream->WriteStringMaybeAliased(3, _s, target);
     }
   }
 
-  // bool quarantined = 4;
+  // bool is_quarantined = 4;
   if ((this_._impl_._has_bits_[0] & 0x00000008u) != 0) {
-    if (this_._internal_quarantined() != 0) {
+    if (this_._internal_is_quarantined() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
-          4, this_._internal_quarantined(), target);
+          4, this_._internal_is_quarantined(), target);
     }
   }
 
@@ -1458,18 +994,18 @@ PROTOBUF_NOINLINE void PatientTransferRequest::Clear() {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:PatientTransferRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:PatientTransfer)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t PatientTransferRequest::ByteSizeLong(const MessageLite& base) {
-  const PatientTransferRequest& this_ = static_cast<const PatientTransferRequest&>(base);
+::size_t PatientTransfer::ByteSizeLong(const MessageLite& base) {
+  const PatientTransfer& this_ = static_cast<const PatientTransfer&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t PatientTransferRequest::ByteSizeLong() const {
-  const PatientTransferRequest& this_ = *this;
+::size_t PatientTransfer::ByteSizeLong() const {
+  const PatientTransfer& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:PatientTransferRequest)
+  // @@protoc_insertion_point(message_byte_size_start:PatientTransfer)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -1493,16 +1029,16 @@ PROTOBUF_NOINLINE void PatientTransferRequest::Clear() {
             this_._internal_patient_id());
       }
     }
-    // uint32 desired_room = 2;
+    // uint32 new_room_id = 2;
     if ((cached_has_bits & 0x00000004u) != 0) {
-      if (this_._internal_desired_room() != 0) {
+      if (this_._internal_new_room_id() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_desired_room());
+            this_._internal_new_room_id());
       }
     }
-    // bool quarantined = 4;
+    // bool is_quarantined = 4;
     if ((cached_has_bits & 0x00000008u) != 0) {
-      if (this_._internal_quarantined() != 0) {
+      if (this_._internal_is_quarantined() != 0) {
         total_size += 2;
       }
     }
@@ -1511,10 +1047,10 @@ PROTOBUF_NOINLINE void PatientTransferRequest::Clear() {
                                              &this_._impl_._cached_size_);
 }
 
-void PatientTransferRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<PatientTransferRequest*>(&to_msg);
-  auto& from = static_cast<const PatientTransferRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:PatientTransferRequest)
+void PatientTransfer::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<PatientTransfer*>(&to_msg);
+  auto& from = static_cast<const PatientTransfer&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:PatientTransfer)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1536,13 +1072,13 @@ void PatientTransferRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, 
       }
     }
     if ((cached_has_bits & 0x00000004u) != 0) {
-      if (from._internal_desired_room() != 0) {
-        _this->_impl_.desired_room_ = from._impl_.desired_room_;
+      if (from._internal_new_room_id() != 0) {
+        _this->_impl_.new_room_id_ = from._impl_.new_room_id_;
       }
     }
     if ((cached_has_bits & 0x00000008u) != 0) {
-      if (from._internal_quarantined() != 0) {
-        _this->_impl_.quarantined_ = from._impl_.quarantined_;
+      if (from._internal_is_quarantined() != 0) {
+        _this->_impl_.is_quarantined_ = from._impl_.is_quarantined_;
       }
     }
   }
@@ -1550,15 +1086,15 @@ void PatientTransferRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, 
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void PatientTransferRequest::CopyFrom(const PatientTransferRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PatientTransferRequest)
+void PatientTransfer::CopyFrom(const PatientTransfer& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PatientTransfer)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 
-void PatientTransferRequest::InternalSwap(PatientTransferRequest* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+void PatientTransfer::InternalSwap(PatientTransfer* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
   auto* arena = GetArena();
   ABSL_DCHECK_EQ(arena, other->GetArena());
@@ -1566,39 +1102,39 @@ void PatientTransferRequest::InternalSwap(PatientTransferRequest* PROTOBUF_RESTR
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.room_type_, &other->_impl_.room_type_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_.quarantined_)
-      + sizeof(PatientTransferRequest::_impl_.quarantined_)
-      - PROTOBUF_FIELD_OFFSET(PatientTransferRequest, _impl_.patient_id_)>(
+      PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.is_quarantined_)
+      + sizeof(PatientTransfer::_impl_.is_quarantined_)
+      - PROTOBUF_FIELD_OFFSET(PatientTransfer, _impl_.patient_id_)>(
           reinterpret_cast<char*>(&_impl_.patient_id_),
           reinterpret_cast<char*>(&other->_impl_.patient_id_));
 }
 
-::google::protobuf::Metadata PatientTransferRequest::GetMetadata() const {
+::google::protobuf::Metadata PatientTransfer::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
 
-class PatientSuccess::_Internal {
+class PatientQuarantine::_Internal {
  public:
   using HasBits =
-      decltype(::std::declval<PatientSuccess>()._impl_._has_bits_);
+      decltype(::std::declval<PatientQuarantine>()._impl_._has_bits_);
   static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(PatientSuccess, _impl_._has_bits_);
+      8 * PROTOBUF_FIELD_OFFSET(PatientQuarantine, _impl_._has_bits_);
 };
 
-PatientSuccess::PatientSuccess(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+PatientQuarantine::PatientQuarantine(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientSuccess_class_data_.base()) {
+    : ::google::protobuf::Message(arena, PatientQuarantine_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:PatientSuccess)
+  // @@protoc_insertion_point(arena_constructor:PatientQuarantine)
 }
-PatientSuccess::PatientSuccess(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientSuccess& from)
+PatientQuarantine::PatientQuarantine(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientQuarantine& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientSuccess_class_data_.base()),
+    : ::google::protobuf::Message(arena, PatientQuarantine_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena),
 #endif  // PROTOBUF_CUSTOM_VTABLE
@@ -1606,78 +1142,78 @@ PatientSuccess::PatientSuccess(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
 }
-PROTOBUF_NDEBUG_INLINE PatientSuccess::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE PatientQuarantine::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0} {}
 
-inline void PatientSuccess::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+inline void PatientQuarantine::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   ::memset(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, patient_id_),
            0,
-           offsetof(Impl_, success_) -
+           offsetof(Impl_, quarantine_room_) -
                offsetof(Impl_, patient_id_) +
-               sizeof(Impl_::success_));
+               sizeof(Impl_::quarantine_room_));
 }
-PatientSuccess::~PatientSuccess() {
-  // @@protoc_insertion_point(destructor:PatientSuccess)
+PatientQuarantine::~PatientQuarantine() {
+  // @@protoc_insertion_point(destructor:PatientQuarantine)
   SharedDtor(*this);
 }
-inline void PatientSuccess::SharedDtor(MessageLite& self) {
-  PatientSuccess& this_ = static_cast<PatientSuccess&>(self);
+inline void PatientQuarantine::SharedDtor(MessageLite& self) {
+  PatientQuarantine& this_ = static_cast<PatientQuarantine&>(self);
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.~Impl_();
 }
 
-inline void* PROTOBUF_NONNULL PatientSuccess::PlacementNew_(
+inline void* PROTOBUF_NONNULL PatientQuarantine::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) PatientSuccess(arena);
+  return ::new (mem) PatientQuarantine(arena);
 }
-constexpr auto PatientSuccess::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(PatientSuccess),
-                                            alignof(PatientSuccess));
+constexpr auto PatientQuarantine::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(PatientQuarantine),
+                                            alignof(PatientQuarantine));
 }
-constexpr auto PatientSuccess::InternalGenerateClassData_() {
+constexpr auto PatientQuarantine::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_PatientSuccess_default_instance_._instance,
+          &_PatientQuarantine_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &PatientSuccess::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<PatientSuccess>(),
+          &PatientQuarantine::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<PatientQuarantine>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &PatientSuccess::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<PatientSuccess>(), &PatientSuccess::ByteSizeLong,
-              &PatientSuccess::_InternalSerialize,
+          &PatientQuarantine::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<PatientQuarantine>(), &PatientQuarantine::ByteSizeLong,
+              &PatientQuarantine::_InternalSerialize,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(PatientSuccess, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(PatientQuarantine, _impl_._cached_size_),
           false,
       },
-      &PatientSuccess::kDescriptorMethods,
+      &PatientQuarantine::kDescriptorMethods,
       &descriptor_table_PatientManagement_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull PatientSuccess_class_data_ =
-        PatientSuccess::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull PatientQuarantine_class_data_ =
+        PatientQuarantine::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-PatientSuccess::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&PatientSuccess_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(PatientSuccess_class_data_.tc_table);
-  return PatientSuccess_class_data_.base();
+PatientQuarantine::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&PatientQuarantine_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(PatientQuarantine_class_data_.tc_table);
+  return PatientQuarantine_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
 const ::_pbi::TcParseTable<1, 2, 0, 0, 2>
-PatientSuccess::_table_ = {
+PatientQuarantine::_table_ = {
   {
-    PROTOBUF_FIELD_OFFSET(PatientSuccess, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(PatientQuarantine, _impl_._has_bits_),
     0, // no _extensions_
     2, 8,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
@@ -1686,35 +1222,35 @@ PatientSuccess::_table_ = {
     2,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
-    PatientSuccess_class_data_.base(),
+    PatientQuarantine_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::PatientSuccess>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::PatientQuarantine>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // uint64 patient_id = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(PatientSuccess, _impl_.patient_id_), 0>(),
-     {16, 0, 0, PROTOBUF_FIELD_OFFSET(PatientSuccess, _impl_.patient_id_)}},
-    // bool success = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(PatientSuccess, _impl_.success_), 1>(),
-     {8, 1, 0, PROTOBUF_FIELD_OFFSET(PatientSuccess, _impl_.success_)}},
+    // bool quarantine_room = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(PatientQuarantine, _impl_.quarantine_room_), 1>(),
+     {16, 1, 0, PROTOBUF_FIELD_OFFSET(PatientQuarantine, _impl_.quarantine_room_)}},
+    // uint64 patient_id = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(PatientQuarantine, _impl_.patient_id_), 0>(),
+     {8, 0, 0, PROTOBUF_FIELD_OFFSET(PatientQuarantine, _impl_.patient_id_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // bool success = 1;
-    {PROTOBUF_FIELD_OFFSET(PatientSuccess, _impl_.success_), _Internal::kHasBitsOffset + 1, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kBool)},
-    // uint64 patient_id = 2;
-    {PROTOBUF_FIELD_OFFSET(PatientSuccess, _impl_.patient_id_), _Internal::kHasBitsOffset + 0, 0,
+    // uint64 patient_id = 1;
+    {PROTOBUF_FIELD_OFFSET(PatientQuarantine, _impl_.patient_id_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // bool quarantine_room = 2;
+    {PROTOBUF_FIELD_OFFSET(PatientQuarantine, _impl_.quarantine_room_), _Internal::kHasBitsOffset + 1, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kBool)},
   }},
   // no aux_entries
   {{
   }},
 };
-PROTOBUF_NOINLINE void PatientSuccess::Clear() {
-// @@protoc_insertion_point(message_clear_start:PatientSuccess)
+PROTOBUF_NOINLINE void PatientQuarantine::Clear() {
+// @@protoc_insertion_point(message_clear_start:PatientQuarantine)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1723,288 +1259,25 @@ PROTOBUF_NOINLINE void PatientSuccess::Clear() {
   cached_has_bits = _impl_._has_bits_[0];
   if ((cached_has_bits & 0x00000003u) != 0) {
     ::memset(&_impl_.patient_id_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.success_) -
-        reinterpret_cast<char*>(&_impl_.patient_id_)) + sizeof(_impl_.success_));
+        reinterpret_cast<char*>(&_impl_.quarantine_room_) -
+        reinterpret_cast<char*>(&_impl_.patient_id_)) + sizeof(_impl_.quarantine_room_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL PatientSuccess::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL PatientQuarantine::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const PatientSuccess& this_ = static_cast<const PatientSuccess&>(base);
+  const PatientQuarantine& this_ = static_cast<const PatientQuarantine&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL PatientSuccess::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL PatientQuarantine::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const PatientSuccess& this_ = *this;
+  const PatientQuarantine& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:PatientSuccess)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  // bool success = 1;
-  if ((this_._impl_._has_bits_[0] & 0x00000002u) != 0) {
-    if (this_._internal_success() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteBoolToArray(
-          1, this_._internal_success(), target);
-    }
-  }
-
-  // uint64 patient_id = 2;
-  if ((this_._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    if (this_._internal_patient_id() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          2, this_._internal_patient_id(), target);
-    }
-  }
-
-  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:PatientSuccess)
-  return target;
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t PatientSuccess::ByteSizeLong(const MessageLite& base) {
-  const PatientSuccess& this_ = static_cast<const PatientSuccess&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::size_t PatientSuccess::ByteSizeLong() const {
-  const PatientSuccess& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:PatientSuccess)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void)cached_has_bits;
-
-  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
-  cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000003u) != 0) {
-    // uint64 patient_id = 2;
-    if ((cached_has_bits & 0x00000001u) != 0) {
-      if (this_._internal_patient_id() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
-            this_._internal_patient_id());
-      }
-    }
-    // bool success = 1;
-    if ((cached_has_bits & 0x00000002u) != 0) {
-      if (this_._internal_success() != 0) {
-        total_size += 2;
-      }
-    }
-  }
-  return this_.MaybeComputeUnknownFieldsSize(total_size,
-                                             &this_._impl_._cached_size_);
-}
-
-void PatientSuccess::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<PatientSuccess*>(&to_msg);
-  auto& from = static_cast<const PatientSuccess&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:PatientSuccess)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000003u) != 0) {
-    if ((cached_has_bits & 0x00000001u) != 0) {
-      if (from._internal_patient_id() != 0) {
-        _this->_impl_.patient_id_ = from._impl_.patient_id_;
-      }
-    }
-    if ((cached_has_bits & 0x00000002u) != 0) {
-      if (from._internal_success() != 0) {
-        _this->_impl_.success_ = from._impl_.success_;
-      }
-    }
-  }
-  _this->_impl_._has_bits_[0] |= cached_has_bits;
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void PatientSuccess::CopyFrom(const PatientSuccess& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PatientSuccess)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-
-void PatientSuccess::InternalSwap(PatientSuccess* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
-  using ::std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PatientSuccess, _impl_.success_)
-      + sizeof(PatientSuccess::_impl_.success_)
-      - PROTOBUF_FIELD_OFFSET(PatientSuccess, _impl_.patient_id_)>(
-          reinterpret_cast<char*>(&_impl_.patient_id_),
-          reinterpret_cast<char*>(&other->_impl_.patient_id_));
-}
-
-::google::protobuf::Metadata PatientSuccess::GetMetadata() const {
-  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
-}
-// ===================================================================
-
-class PatientInfoRequest::_Internal {
- public:
-  using HasBits =
-      decltype(::std::declval<PatientInfoRequest>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(PatientInfoRequest, _impl_._has_bits_);
-};
-
-PatientInfoRequest::PatientInfoRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientInfoRequest_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:PatientInfoRequest)
-}
-PatientInfoRequest::PatientInfoRequest(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientInfoRequest& from)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientInfoRequest_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(from._impl_) {
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-}
-PROTOBUF_NDEBUG_INLINE PatientInfoRequest::Impl_::Impl_(
-    ::google::protobuf::internal::InternalVisibility visibility,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0} {}
-
-inline void PatientInfoRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
-  new (&_impl_) Impl_(internal_visibility(), arena);
-  _impl_.patient_id_ = {};
-}
-PatientInfoRequest::~PatientInfoRequest() {
-  // @@protoc_insertion_point(destructor:PatientInfoRequest)
-  SharedDtor(*this);
-}
-inline void PatientInfoRequest::SharedDtor(MessageLite& self) {
-  PatientInfoRequest& this_ = static_cast<PatientInfoRequest&>(self);
-  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.~Impl_();
-}
-
-inline void* PROTOBUF_NONNULL PatientInfoRequest::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) PatientInfoRequest(arena);
-}
-constexpr auto PatientInfoRequest::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(PatientInfoRequest),
-                                            alignof(PatientInfoRequest));
-}
-constexpr auto PatientInfoRequest::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_PatientInfoRequest_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &PatientInfoRequest::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<PatientInfoRequest>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &PatientInfoRequest::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<PatientInfoRequest>(), &PatientInfoRequest::ByteSizeLong,
-              &PatientInfoRequest::_InternalSerialize,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(PatientInfoRequest, _impl_._cached_size_),
-          false,
-      },
-      &PatientInfoRequest::kDescriptorMethods,
-      &descriptor_table_PatientManagement_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull PatientInfoRequest_class_data_ =
-        PatientInfoRequest::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-PatientInfoRequest::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&PatientInfoRequest_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(PatientInfoRequest_class_data_.tc_table);
-  return PatientInfoRequest_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 0, 2>
-PatientInfoRequest::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(PatientInfoRequest, _impl_._has_bits_),
-    0, // no _extensions_
-    1, 0,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967294,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    1,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    PatientInfoRequest_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::GenericFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::PatientInfoRequest>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    // uint64 patient_id = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(PatientInfoRequest, _impl_.patient_id_), 0>(),
-     {8, 0, 0, PROTOBUF_FIELD_OFFSET(PatientInfoRequest, _impl_.patient_id_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // uint64 patient_id = 1;
-    {PROTOBUF_FIELD_OFFSET(PatientInfoRequest, _impl_.patient_id_), _Internal::kHasBitsOffset + 0, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-  }},
-  // no aux_entries
-  {{
-  }},
-};
-PROTOBUF_NOINLINE void PatientInfoRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:PatientInfoRequest)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.patient_id_ = ::uint64_t{0u};
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL PatientInfoRequest::_InternalSerialize(
-    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const PatientInfoRequest& this_ = static_cast<const PatientInfoRequest&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL PatientInfoRequest::_InternalSerialize(
-    ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const PatientInfoRequest& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:PatientInfoRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:PatientQuarantine)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -2017,356 +1290,52 @@ PROTOBUF_NOINLINE void PatientInfoRequest::Clear() {
     }
   }
 
+  // bool quarantine_room = 2;
+  if ((this_._impl_._has_bits_[0] & 0x00000002u) != 0) {
+    if (this_._internal_quarantine_room() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          2, this_._internal_quarantine_room(), target);
+    }
+  }
+
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:PatientInfoRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:PatientQuarantine)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t PatientInfoRequest::ByteSizeLong(const MessageLite& base) {
-  const PatientInfoRequest& this_ = static_cast<const PatientInfoRequest&>(base);
+::size_t PatientQuarantine::ByteSizeLong(const MessageLite& base) {
+  const PatientQuarantine& this_ = static_cast<const PatientQuarantine&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t PatientInfoRequest::ByteSizeLong() const {
-  const PatientInfoRequest& this_ = *this;
+::size_t PatientQuarantine::ByteSizeLong() const {
+  const PatientQuarantine& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:PatientInfoRequest)
+  // @@protoc_insertion_point(message_byte_size_start:PatientQuarantine)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void)cached_has_bits;
 
-   {
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x00000003u) != 0) {
     // uint64 patient_id = 1;
-    cached_has_bits = this_._impl_._has_bits_[0];
     if ((cached_has_bits & 0x00000001u) != 0) {
       if (this_._internal_patient_id() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_patient_id());
       }
     }
-  }
-  return this_.MaybeComputeUnknownFieldsSize(total_size,
-                                             &this_._impl_._cached_size_);
-}
-
-void PatientInfoRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<PatientInfoRequest*>(&to_msg);
-  auto& from = static_cast<const PatientInfoRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:PatientInfoRequest)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000001u) != 0) {
-    if (from._internal_patient_id() != 0) {
-      _this->_impl_.patient_id_ = from._impl_.patient_id_;
-    }
-  }
-  _this->_impl_._has_bits_[0] |= cached_has_bits;
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void PatientInfoRequest::CopyFrom(const PatientInfoRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PatientInfoRequest)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-
-void PatientInfoRequest::InternalSwap(PatientInfoRequest* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
-  using ::std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  swap(_impl_.patient_id_, other->_impl_.patient_id_);
-}
-
-::google::protobuf::Metadata PatientInfoRequest::GetMetadata() const {
-  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
-}
-// ===================================================================
-
-class PatientName::_Internal {
- public:
-  using HasBits =
-      decltype(::std::declval<PatientName>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(PatientName, _impl_._has_bits_);
-};
-
-PatientName::PatientName(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientName_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:PatientName)
-}
-PROTOBUF_NDEBUG_INLINE PatientName::Impl_::Impl_(
-    ::google::protobuf::internal::InternalVisibility visibility,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    const ::PatientName& from_msg)
-      : _has_bits_{from._has_bits_},
-        _cached_size_{0},
-        first_name_(arena, from.first_name_),
-        middle_name_(arena, from.middle_name_),
-        last_name_(arena, from.last_name_) {}
-
-PatientName::PatientName(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const PatientName& from)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientName_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  PatientName* const _this = this;
-  (void)_this;
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
-
-  // @@protoc_insertion_point(copy_constructor:PatientName)
-}
-PROTOBUF_NDEBUG_INLINE PatientName::Impl_::Impl_(
-    ::google::protobuf::internal::InternalVisibility visibility,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0},
-        first_name_(arena),
-        middle_name_(arena),
-        last_name_(arena) {}
-
-inline void PatientName::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
-  new (&_impl_) Impl_(internal_visibility(), arena);
-}
-PatientName::~PatientName() {
-  // @@protoc_insertion_point(destructor:PatientName)
-  SharedDtor(*this);
-}
-inline void PatientName::SharedDtor(MessageLite& self) {
-  PatientName& this_ = static_cast<PatientName&>(self);
-  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.first_name_.Destroy();
-  this_._impl_.middle_name_.Destroy();
-  this_._impl_.last_name_.Destroy();
-  this_._impl_.~Impl_();
-}
-
-inline void* PROTOBUF_NONNULL PatientName::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) PatientName(arena);
-}
-constexpr auto PatientName::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(PatientName),
-                                            alignof(PatientName));
-}
-constexpr auto PatientName::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_PatientName_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &PatientName::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<PatientName>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &PatientName::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<PatientName>(), &PatientName::ByteSizeLong,
-              &PatientName::_InternalSerialize,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(PatientName, _impl_._cached_size_),
-          false,
-      },
-      &PatientName::kDescriptorMethods,
-      &descriptor_table_PatientManagement_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull PatientName_class_data_ =
-        PatientName::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-PatientName::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&PatientName_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(PatientName_class_data_.tc_table);
-  return PatientName_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 0, 50, 2>
-PatientName::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(PatientName, _impl_._has_bits_),
-    0, // no _extensions_
-    3, 24,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967288,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    3,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    PatientName_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::GenericFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::PatientName>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    {::_pbi::TcParser::MiniParse, {}},
-    // string first_name = 1;
-    {::_pbi::TcParser::FastUS1,
-     {10, 0, 0, PROTOBUF_FIELD_OFFSET(PatientName, _impl_.first_name_)}},
-    // string middle_name = 2;
-    {::_pbi::TcParser::FastUS1,
-     {18, 1, 0, PROTOBUF_FIELD_OFFSET(PatientName, _impl_.middle_name_)}},
-    // string last_name = 3;
-    {::_pbi::TcParser::FastUS1,
-     {26, 2, 0, PROTOBUF_FIELD_OFFSET(PatientName, _impl_.last_name_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // string first_name = 1;
-    {PROTOBUF_FIELD_OFFSET(PatientName, _impl_.first_name_), _Internal::kHasBitsOffset + 0, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // string middle_name = 2;
-    {PROTOBUF_FIELD_OFFSET(PatientName, _impl_.middle_name_), _Internal::kHasBitsOffset + 1, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // string last_name = 3;
-    {PROTOBUF_FIELD_OFFSET(PatientName, _impl_.last_name_), _Internal::kHasBitsOffset + 2, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-  }},
-  // no aux_entries
-  {{
-    "\13\12\13\11\0\0\0\0"
-    "PatientName"
-    "first_name"
-    "middle_name"
-    "last_name"
-  }},
-};
-PROTOBUF_NOINLINE void PatientName::Clear() {
-// @@protoc_insertion_point(message_clear_start:PatientName)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  cached_has_bits = _impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000007u) != 0) {
-    if ((cached_has_bits & 0x00000001u) != 0) {
-      _impl_.first_name_.ClearNonDefaultToEmpty();
-    }
+    // bool quarantine_room = 2;
     if ((cached_has_bits & 0x00000002u) != 0) {
-      _impl_.middle_name_.ClearNonDefaultToEmpty();
-    }
-    if ((cached_has_bits & 0x00000004u) != 0) {
-      _impl_.last_name_.ClearNonDefaultToEmpty();
-    }
-  }
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL PatientName::_InternalSerialize(
-    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const PatientName& this_ = static_cast<const PatientName&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL PatientName::_InternalSerialize(
-    ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const PatientName& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:PatientName)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  // string first_name = 1;
-  if ((this_._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    if (!this_._internal_first_name().empty()) {
-      const ::std::string& _s = this_._internal_first_name();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientName.first_name");
-      target = stream->WriteStringMaybeAliased(1, _s, target);
-    }
-  }
-
-  // string middle_name = 2;
-  if ((this_._impl_._has_bits_[0] & 0x00000002u) != 0) {
-    if (!this_._internal_middle_name().empty()) {
-      const ::std::string& _s = this_._internal_middle_name();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientName.middle_name");
-      target = stream->WriteStringMaybeAliased(2, _s, target);
-    }
-  }
-
-  // string last_name = 3;
-  if ((this_._impl_._has_bits_[0] & 0x00000004u) != 0) {
-    if (!this_._internal_last_name().empty()) {
-      const ::std::string& _s = this_._internal_last_name();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientName.last_name");
-      target = stream->WriteStringMaybeAliased(3, _s, target);
-    }
-  }
-
-  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:PatientName)
-  return target;
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t PatientName::ByteSizeLong(const MessageLite& base) {
-  const PatientName& this_ = static_cast<const PatientName&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::size_t PatientName::ByteSizeLong() const {
-  const PatientName& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:PatientName)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void)cached_has_bits;
-
-  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
-  cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000007u) != 0) {
-    // string first_name = 1;
-    if ((cached_has_bits & 0x00000001u) != 0) {
-      if (!this_._internal_first_name().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_first_name());
-      }
-    }
-    // string middle_name = 2;
-    if ((cached_has_bits & 0x00000002u) != 0) {
-      if (!this_._internal_middle_name().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_middle_name());
-      }
-    }
-    // string last_name = 3;
-    if ((cached_has_bits & 0x00000004u) != 0) {
-      if (!this_._internal_last_name().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_last_name());
+      if (this_._internal_quarantine_room() != 0) {
+        total_size += 2;
       }
     }
   }
@@ -2374,41 +1343,24 @@ PROTOBUF_NOINLINE void PatientName::Clear() {
                                              &this_._impl_._cached_size_);
 }
 
-void PatientName::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<PatientName*>(&to_msg);
-  auto& from = static_cast<const PatientName&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:PatientName)
+void PatientQuarantine::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<PatientQuarantine*>(&to_msg);
+  auto& from = static_cast<const PatientQuarantine&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:PatientQuarantine)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000007u) != 0) {
+  if ((cached_has_bits & 0x00000003u) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
-      if (!from._internal_first_name().empty()) {
-        _this->_internal_set_first_name(from._internal_first_name());
-      } else {
-        if (_this->_impl_.first_name_.IsDefault()) {
-          _this->_internal_set_first_name("");
-        }
+      if (from._internal_patient_id() != 0) {
+        _this->_impl_.patient_id_ = from._impl_.patient_id_;
       }
     }
     if ((cached_has_bits & 0x00000002u) != 0) {
-      if (!from._internal_middle_name().empty()) {
-        _this->_internal_set_middle_name(from._internal_middle_name());
-      } else {
-        if (_this->_impl_.middle_name_.IsDefault()) {
-          _this->_internal_set_middle_name("");
-        }
-      }
-    }
-    if ((cached_has_bits & 0x00000004u) != 0) {
-      if (!from._internal_last_name().empty()) {
-        _this->_internal_set_last_name(from._internal_last_name());
-      } else {
-        if (_this->_impl_.last_name_.IsDefault()) {
-          _this->_internal_set_last_name("");
-        }
+      if (from._internal_quarantine_room() != 0) {
+        _this->_impl_.quarantine_room_ = from._impl_.quarantine_room_;
       }
     }
   }
@@ -2416,282 +1368,212 @@ void PatientName::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::goo
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void PatientName::CopyFrom(const PatientName& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PatientName)
+void PatientQuarantine::CopyFrom(const PatientQuarantine& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PatientQuarantine)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 
-void PatientName::InternalSwap(PatientName* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+void PatientQuarantine::InternalSwap(PatientQuarantine* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
-  auto* arena = GetArena();
-  ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.first_name_, &other->_impl_.first_name_, arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.middle_name_, &other->_impl_.middle_name_, arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.last_name_, &other->_impl_.last_name_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PatientQuarantine, _impl_.quarantine_room_)
+      + sizeof(PatientQuarantine::_impl_.quarantine_room_)
+      - PROTOBUF_FIELD_OFFSET(PatientQuarantine, _impl_.patient_id_)>(
+          reinterpret_cast<char*>(&_impl_.patient_id_),
+          reinterpret_cast<char*>(&other->_impl_.patient_id_));
 }
 
-::google::protobuf::Metadata PatientName::GetMetadata() const {
+::google::protobuf::Metadata PatientQuarantine::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
 
-class PatientInformation::_Internal {
+class PatientList::_Internal {
  public:
-  using HasBits =
-      decltype(::std::declval<PatientInformation>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_._has_bits_);
 };
 
-PatientInformation::PatientInformation(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+PatientList::PatientList(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientInformation_class_data_.base()) {
+    : ::google::protobuf::Message(arena, PatientList_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:PatientInformation)
+  // @@protoc_insertion_point(arena_constructor:PatientList)
 }
-PROTOBUF_NDEBUG_INLINE PatientInformation::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE PatientList::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    const ::PatientInformation& from_msg)
-      : _has_bits_{from._has_bits_},
-        _cached_size_{0},
-        patient_sex_(arena, from.patient_sex_),
-        patient_condition_(arena, from.patient_condition_) {}
+    const ::PatientList& from_msg)
+      : patients_{visibility, arena, from.patients_},
+        _cached_size_{0} {}
 
-PatientInformation::PatientInformation(
+PatientList::PatientList(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const PatientInformation& from)
+    const PatientList& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, PatientInformation_class_data_.base()) {
+    : ::google::protobuf::Message(arena, PatientList_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  PatientInformation* const _this = this;
+  PatientList* const _this = this;
   (void)_this;
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
-  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.patient_name_ = ((cached_has_bits & 0x00000004u) != 0)
-                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.patient_name_)
-                : nullptr;
-  _impl_.patient_room_ = from._impl_.patient_room_;
 
-  // @@protoc_insertion_point(copy_constructor:PatientInformation)
+  // @@protoc_insertion_point(copy_constructor:PatientList)
 }
-PROTOBUF_NDEBUG_INLINE PatientInformation::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE PatientList::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0},
-        patient_sex_(arena),
-        patient_condition_(arena) {}
+      : patients_{visibility, arena},
+        _cached_size_{0} {}
 
-inline void PatientInformation::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+inline void PatientList::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
-  ::memset(reinterpret_cast<char *>(&_impl_) +
-               offsetof(Impl_, patient_name_),
-           0,
-           offsetof(Impl_, patient_room_) -
-               offsetof(Impl_, patient_name_) +
-               sizeof(Impl_::patient_room_));
 }
-PatientInformation::~PatientInformation() {
-  // @@protoc_insertion_point(destructor:PatientInformation)
+PatientList::~PatientList() {
+  // @@protoc_insertion_point(destructor:PatientList)
   SharedDtor(*this);
 }
-inline void PatientInformation::SharedDtor(MessageLite& self) {
-  PatientInformation& this_ = static_cast<PatientInformation&>(self);
+inline void PatientList::SharedDtor(MessageLite& self) {
+  PatientList& this_ = static_cast<PatientList&>(self);
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.patient_sex_.Destroy();
-  this_._impl_.patient_condition_.Destroy();
-  delete this_._impl_.patient_name_;
   this_._impl_.~Impl_();
 }
 
-inline void* PROTOBUF_NONNULL PatientInformation::PlacementNew_(
+inline void* PROTOBUF_NONNULL PatientList::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) PatientInformation(arena);
+  return ::new (mem) PatientList(arena);
 }
-constexpr auto PatientInformation::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(PatientInformation),
-                                            alignof(PatientInformation));
+constexpr auto PatientList::InternalNewImpl_() {
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(PatientList, _impl_.patients_) +
+          decltype(PatientList::_impl_.patients_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::ZeroInit(
+        sizeof(PatientList), alignof(PatientList), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&PatientList::PlacementNew_,
+                                 sizeof(PatientList),
+                                 alignof(PatientList));
+  }
 }
-constexpr auto PatientInformation::InternalGenerateClassData_() {
+constexpr auto PatientList::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_PatientInformation_default_instance_._instance,
+          &_PatientList_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &PatientInformation::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<PatientInformation>(),
+          &PatientList::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<PatientList>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &PatientInformation::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<PatientInformation>(), &PatientInformation::ByteSizeLong,
-              &PatientInformation::_InternalSerialize,
+          &PatientList::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<PatientList>(), &PatientList::ByteSizeLong,
+              &PatientList::_InternalSerialize,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(PatientList, _impl_._cached_size_),
           false,
       },
-      &PatientInformation::kDescriptorMethods,
+      &PatientList::kDescriptorMethods,
       &descriptor_table_PatientManagement_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull PatientInformation_class_data_ =
-        PatientInformation::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull PatientList_class_data_ =
+        PatientList::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-PatientInformation::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&PatientInformation_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(PatientInformation_class_data_.tc_table);
-  return PatientInformation_class_data_.base();
+PatientList::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&PatientList_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(PatientList_class_data_.tc_table);
+  return PatientList_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 1, 55, 2>
-PatientInformation::_table_ = {
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2>
+PatientList::_table_ = {
   {
-    PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_._has_bits_),
+    0,  // no _has_bits_
     0, // no _extensions_
-    4, 24,  // max_field_number, fast_idx_mask
+    1, 0,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967280,  // skipmap
+    4294967294,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    4,  // num_field_entries
+    1,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
-    PatientInformation_class_data_.base(),
+    PatientList_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::PatientInformation>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::PatientList>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // uint32 patient_room = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(PatientInformation, _impl_.patient_room_), 3>(),
-     {32, 3, 0, PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_.patient_room_)}},
-    // .PatientName patient_name = 1;
-    {::_pbi::TcParser::FastMtS1,
-     {10, 2, 0, PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_.patient_name_)}},
-    // string patient_sex = 2;
-    {::_pbi::TcParser::FastUS1,
-     {18, 0, 0, PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_.patient_sex_)}},
-    // string patient_condition = 3;
-    {::_pbi::TcParser::FastUS1,
-     {26, 1, 0, PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_.patient_condition_)}},
+    // repeated .PatientDTO patients = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(PatientList, _impl_.patients_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // .PatientName patient_name = 1;
-    {PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_.patient_name_), _Internal::kHasBitsOffset + 2, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // string patient_sex = 2;
-    {PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_.patient_sex_), _Internal::kHasBitsOffset + 0, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // string patient_condition = 3;
-    {PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_.patient_condition_), _Internal::kHasBitsOffset + 1, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // uint32 patient_room = 4;
-    {PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_.patient_room_), _Internal::kHasBitsOffset + 3, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // repeated .PatientDTO patients = 1;
+    {PROTOBUF_FIELD_OFFSET(PatientList, _impl_.patients_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
-      {::_pbi::TcParser::GetTable<::PatientName>()},
+      {::_pbi::TcParser::GetTable<::PatientDTO>()},
   }},
   {{
-    "\22\0\13\21\0\0\0\0"
-    "PatientInformation"
-    "patient_sex"
-    "patient_condition"
   }},
 };
-PROTOBUF_NOINLINE void PatientInformation::Clear() {
-// @@protoc_insertion_point(message_clear_start:PatientInformation)
+PROTOBUF_NOINLINE void PatientList::Clear() {
+// @@protoc_insertion_point(message_clear_start:PatientList)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  cached_has_bits = _impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000007u) != 0) {
-    if ((cached_has_bits & 0x00000001u) != 0) {
-      _impl_.patient_sex_.ClearNonDefaultToEmpty();
-    }
-    if ((cached_has_bits & 0x00000002u) != 0) {
-      _impl_.patient_condition_.ClearNonDefaultToEmpty();
-    }
-    if ((cached_has_bits & 0x00000004u) != 0) {
-      ABSL_DCHECK(_impl_.patient_name_ != nullptr);
-      _impl_.patient_name_->Clear();
-    }
-  }
-  _impl_.patient_room_ = 0u;
-  _impl_._has_bits_.Clear();
+  _impl_.patients_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL PatientInformation::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL PatientList::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const PatientInformation& this_ = static_cast<const PatientInformation&>(base);
+  const PatientList& this_ = static_cast<const PatientList&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL PatientInformation::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL PatientList::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const PatientInformation& this_ = *this;
+  const PatientList& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:PatientInformation)
+  // @@protoc_insertion_point(serialize_to_array_start:PatientList)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  cached_has_bits = this_._impl_._has_bits_[0];
-  // .PatientName patient_name = 1;
-  if ((cached_has_bits & 0x00000004u) != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        1, *this_._impl_.patient_name_, this_._impl_.patient_name_->GetCachedSize(), target,
-        stream);
-  }
-
-  // string patient_sex = 2;
-  if ((cached_has_bits & 0x00000001u) != 0) {
-    if (!this_._internal_patient_sex().empty()) {
-      const ::std::string& _s = this_._internal_patient_sex();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientInformation.patient_sex");
-      target = stream->WriteStringMaybeAliased(2, _s, target);
-    }
-  }
-
-  // string patient_condition = 3;
-  if ((cached_has_bits & 0x00000002u) != 0) {
-    if (!this_._internal_patient_condition().empty()) {
-      const ::std::string& _s = this_._internal_patient_condition();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "PatientInformation.patient_condition");
-      target = stream->WriteStringMaybeAliased(3, _s, target);
-    }
-  }
-
-  // uint32 patient_room = 4;
-  if ((cached_has_bits & 0x00000008u) != 0) {
-    if (this_._internal_patient_room() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          4, this_._internal_patient_room(), target);
-    }
+  // repeated .PatientDTO patients = 1;
+  for (unsigned i = 0, n = static_cast<unsigned>(
+                           this_._internal_patients_size());
+       i < n; i++) {
+    const auto& repfield = this_._internal_patients().Get(i);
+    target =
+        ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+            1, repfield, repfield.GetCachedSize(),
+            target, stream);
   }
 
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
@@ -2699,18 +1581,18 @@ PROTOBUF_NOINLINE void PatientInformation::Clear() {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:PatientInformation)
+  // @@protoc_insertion_point(serialize_to_array_end:PatientList)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t PatientInformation::ByteSizeLong(const MessageLite& base) {
-  const PatientInformation& this_ = static_cast<const PatientInformation&>(base);
+::size_t PatientList::ByteSizeLong(const MessageLite& base) {
+  const PatientList& this_ = static_cast<const PatientList&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t PatientInformation::ByteSizeLong() const {
-  const PatientInformation& this_ = *this;
+::size_t PatientList::ByteSizeLong() const {
+  const PatientList& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:PatientInformation)
+  // @@protoc_insertion_point(message_byte_size_start:PatientList)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -2718,32 +1600,12 @@ PROTOBUF_NOINLINE void PatientInformation::Clear() {
   (void)cached_has_bits;
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
-  cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000000fu) != 0) {
-    // string patient_sex = 2;
-    if ((cached_has_bits & 0x00000001u) != 0) {
-      if (!this_._internal_patient_sex().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_patient_sex());
-      }
-    }
-    // string patient_condition = 3;
-    if ((cached_has_bits & 0x00000002u) != 0) {
-      if (!this_._internal_patient_condition().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_patient_condition());
-      }
-    }
-    // .PatientName patient_name = 1;
-    if ((cached_has_bits & 0x00000004u) != 0) {
-      total_size += 1 +
-                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.patient_name_);
-    }
-    // uint32 patient_room = 4;
-    if ((cached_has_bits & 0x00000008u) != 0) {
-      if (this_._internal_patient_room() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_patient_room());
+   {
+    // repeated .PatientDTO patients = 1;
+    {
+      total_size += 1UL * this_._internal_patients_size();
+      for (const auto& msg : this_._internal_patients()) {
+        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
       }
     }
   }
@@ -2751,78 +1613,34 @@ PROTOBUF_NOINLINE void PatientInformation::Clear() {
                                              &this_._impl_._cached_size_);
 }
 
-void PatientInformation::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<PatientInformation*>(&to_msg);
-  auto& from = static_cast<const PatientInformation&>(from_msg);
-  ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:PatientInformation)
+void PatientList::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<PatientList*>(&to_msg);
+  auto& from = static_cast<const PatientList&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:PatientList)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000000fu) != 0) {
-    if ((cached_has_bits & 0x00000001u) != 0) {
-      if (!from._internal_patient_sex().empty()) {
-        _this->_internal_set_patient_sex(from._internal_patient_sex());
-      } else {
-        if (_this->_impl_.patient_sex_.IsDefault()) {
-          _this->_internal_set_patient_sex("");
-        }
-      }
-    }
-    if ((cached_has_bits & 0x00000002u) != 0) {
-      if (!from._internal_patient_condition().empty()) {
-        _this->_internal_set_patient_condition(from._internal_patient_condition());
-      } else {
-        if (_this->_impl_.patient_condition_.IsDefault()) {
-          _this->_internal_set_patient_condition("");
-        }
-      }
-    }
-    if ((cached_has_bits & 0x00000004u) != 0) {
-      ABSL_DCHECK(from._impl_.patient_name_ != nullptr);
-      if (_this->_impl_.patient_name_ == nullptr) {
-        _this->_impl_.patient_name_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.patient_name_);
-      } else {
-        _this->_impl_.patient_name_->MergeFrom(*from._impl_.patient_name_);
-      }
-    }
-    if ((cached_has_bits & 0x00000008u) != 0) {
-      if (from._internal_patient_room() != 0) {
-        _this->_impl_.patient_room_ = from._impl_.patient_room_;
-      }
-    }
-  }
-  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_mutable_patients()->MergeFrom(
+      from._internal_patients());
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void PatientInformation::CopyFrom(const PatientInformation& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PatientInformation)
+void PatientList::CopyFrom(const PatientList& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PatientList)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 
-void PatientInformation::InternalSwap(PatientInformation* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+void PatientList::InternalSwap(PatientList* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
-  auto* arena = GetArena();
-  ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.patient_sex_, &other->_impl_.patient_sex_, arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.patient_condition_, &other->_impl_.patient_condition_, arena);
-  ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_.patient_room_)
-      + sizeof(PatientInformation::_impl_.patient_room_)
-      - PROTOBUF_FIELD_OFFSET(PatientInformation, _impl_.patient_name_)>(
-          reinterpret_cast<char*>(&_impl_.patient_name_),
-          reinterpret_cast<char*>(&other->_impl_.patient_name_));
+  _impl_.patients_.InternalSwap(&other->_impl_.patients_);
 }
 
-::google::protobuf::Metadata PatientInformation::GetMetadata() const {
+::google::protobuf::Metadata PatientList::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // @@protoc_insertion_point(namespace_scope)

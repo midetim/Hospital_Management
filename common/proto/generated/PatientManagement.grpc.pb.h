@@ -26,6 +26,7 @@
 #include <grpcpp/support/sync_stream.h>
 #include <grpcpp/ports_def.inc>
 
+// Each one of these must be accessible by the front end
 class PatientManagement final {
  public:
   static constexpr char const* service_full_name() {
@@ -34,143 +35,187 @@ class PatientManagement final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    virtual ::grpc::Status PatientPing(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::PatientSuccess* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>> AsyncPatientPing(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>>(AsyncPatientPingRaw(context, request, cq));
+    // Patient movement
+    virtual ::grpc::Status AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncAdmitPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncAdmitPatientRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>> PrepareAsyncPatientPing(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>>(PrepareAsyncPatientPingRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncAdmitPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncAdmitPatientRaw(context, request, cq));
     }
-    virtual ::grpc::Status PatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::PatientSuccess* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>> AsyncPatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>>(AsyncPatientAdmissionRaw(context, request, cq));
+    virtual ::grpc::Status DischargePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncDischargePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncDischargePatientRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>> PrepareAsyncPatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>>(PrepareAsyncPatientAdmissionRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncDischargePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncDischargePatientRaw(context, request, cq));
     }
-    virtual ::grpc::Status PatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::PatientSuccess* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>> AsyncPatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>>(AsyncPatientDischargeRaw(context, request, cq));
+    virtual ::grpc::Status TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncTransferPatient(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncTransferPatientRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>> PrepareAsyncPatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>>(PrepareAsyncPatientDischargeRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncTransferPatient(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncTransferPatientRaw(context, request, cq));
     }
-    virtual ::grpc::Status PatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::PatientSuccess* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>> AsyncPatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>>(AsyncPatientTransferRaw(context, request, cq));
+    virtual ::grpc::Status QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncQuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncQuarantinePatientRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>> PrepareAsyncPatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>>(PrepareAsyncPatientTransferRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncQuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncQuarantinePatientRaw(context, request, cq));
     }
-    virtual ::grpc::Status GetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::PatientInformation* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientInformation>> AsyncGetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientInformation>>(AsyncGetPatientInformationRaw(context, request, cq));
+    virtual ::grpc::Status LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncLiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncLiftPatientQuarantineRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientInformation>> PrepareAsyncGetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientInformation>>(PrepareAsyncGetPatientInformationRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncLiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncLiftPatientQuarantineRaw(context, request, cq));
     }
-    // Globals
-    virtual ::grpc::Status Print(::grpc::ClientContext* context, const ::Nothing& request, ::Nothing* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>> AsyncPrint(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>>(AsyncPrintRaw(context, request, cq));
+    // Patient information
+    virtual ::grpc::Status GetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::PatientDTO* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientDTO>> AsyncGetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientDTO>>(AsyncGetPatientInformationRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>> PrepareAsyncPrint(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>>(PrepareAsyncPrintRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientDTO>> PrepareAsyncGetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientDTO>>(PrepareAsyncGetPatientInformationRaw(context, request, cq));
+    }
+    virtual ::grpc::Status UpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncUpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncUpdatePatientInformationRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncUpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncUpdatePatientInformationRaw(context, request, cq));
+    }
+    // This call is not accessible to the front end 
+    virtual ::grpc::Status GetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::PatientList* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientList>> AsyncGetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientList>>(AsyncGetPatientsInRoomRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientList>> PrepareAsyncGetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PatientList>>(PrepareAsyncGetPatientsInRoomRaw(context, request, cq));
     }
     class async_interface {
      public:
       virtual ~async_interface() {}
-      virtual void PatientPing(::grpc::ClientContext* context, const ::PatientPingRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void PatientPing(::grpc::ClientContext* context, const ::PatientPingRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void PatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void PatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void PatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void PatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void PatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void PatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void GetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest* request, ::PatientInformation* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void GetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest* request, ::PatientInformation* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Globals
-      virtual void Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Patient movement
+      virtual void AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void DischargePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void DischargePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Patient information
+      virtual void GetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::PatientDTO* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::PatientDTO* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void UpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void UpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // This call is not accessible to the front end 
+      virtual void GetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::PatientList* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::PatientList* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
    private:
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>* AsyncPatientPingRaw(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>* PrepareAsyncPatientPingRaw(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>* AsyncPatientAdmissionRaw(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>* PrepareAsyncPatientAdmissionRaw(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>* AsyncPatientDischargeRaw(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>* PrepareAsyncPatientDischargeRaw(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>* AsyncPatientTransferRaw(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientSuccess>* PrepareAsyncPatientTransferRaw(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientInformation>* AsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientInformation>* PrepareAsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>* AsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>* PrepareAsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncAdmitPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncAdmitPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncDischargePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncDischargePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncLiftPatientQuarantineRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncLiftPatientQuarantineRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientDTO>* AsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientDTO>* PrepareAsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncUpdatePatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncUpdatePatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientList>* AsyncGetPatientsInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PatientList>* PrepareAsyncGetPatientsInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
-    ::grpc::Status PatientPing(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::PatientSuccess* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>> AsyncPatientPing(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>>(AsyncPatientPingRaw(context, request, cq));
+    ::grpc::Status AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncAdmitPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncAdmitPatientRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>> PrepareAsyncPatientPing(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>>(PrepareAsyncPatientPingRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncAdmitPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncAdmitPatientRaw(context, request, cq));
     }
-    ::grpc::Status PatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::PatientSuccess* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>> AsyncPatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>>(AsyncPatientAdmissionRaw(context, request, cq));
+    ::grpc::Status DischargePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncDischargePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncDischargePatientRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>> PrepareAsyncPatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>>(PrepareAsyncPatientAdmissionRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncDischargePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncDischargePatientRaw(context, request, cq));
     }
-    ::grpc::Status PatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::PatientSuccess* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>> AsyncPatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>>(AsyncPatientDischargeRaw(context, request, cq));
+    ::grpc::Status TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncTransferPatient(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncTransferPatientRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>> PrepareAsyncPatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>>(PrepareAsyncPatientDischargeRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncTransferPatient(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncTransferPatientRaw(context, request, cq));
     }
-    ::grpc::Status PatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::PatientSuccess* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>> AsyncPatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>>(AsyncPatientTransferRaw(context, request, cq));
+    ::grpc::Status QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncQuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncQuarantinePatientRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>> PrepareAsyncPatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientSuccess>>(PrepareAsyncPatientTransferRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncQuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncQuarantinePatientRaw(context, request, cq));
     }
-    ::grpc::Status GetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::PatientInformation* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientInformation>> AsyncGetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientInformation>>(AsyncGetPatientInformationRaw(context, request, cq));
+    ::grpc::Status LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncLiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncLiftPatientQuarantineRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientInformation>> PrepareAsyncGetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientInformation>>(PrepareAsyncGetPatientInformationRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncLiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncLiftPatientQuarantineRaw(context, request, cq));
     }
-    ::grpc::Status Print(::grpc::ClientContext* context, const ::Nothing& request, ::Nothing* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Nothing>> AsyncPrint(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Nothing>>(AsyncPrintRaw(context, request, cq));
+    ::grpc::Status GetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::PatientDTO* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientDTO>> AsyncGetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientDTO>>(AsyncGetPatientInformationRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Nothing>> PrepareAsyncPrint(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Nothing>>(PrepareAsyncPrintRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientDTO>> PrepareAsyncGetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientDTO>>(PrepareAsyncGetPatientInformationRaw(context, request, cq));
+    }
+    ::grpc::Status UpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncUpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncUpdatePatientInformationRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncUpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncUpdatePatientInformationRaw(context, request, cq));
+    }
+    ::grpc::Status GetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::PatientList* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientList>> AsyncGetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientList>>(AsyncGetPatientsInRoomRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientList>> PrepareAsyncGetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PatientList>>(PrepareAsyncGetPatientsInRoomRaw(context, request, cq));
     }
     class async final :
       public StubInterface::async_interface {
      public:
-      void PatientPing(::grpc::ClientContext* context, const ::PatientPingRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)>) override;
-      void PatientPing(::grpc::ClientContext* context, const ::PatientPingRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void PatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)>) override;
-      void PatientAdmission(::grpc::ClientContext* context, const ::PatientAdmissionRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void PatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)>) override;
-      void PatientDischarge(::grpc::ClientContext* context, const ::PatientDischargeRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void PatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest* request, ::PatientSuccess* response, std::function<void(::grpc::Status)>) override;
-      void PatientTransfer(::grpc::ClientContext* context, const ::PatientTransferRequest* request, ::PatientSuccess* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void GetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest* request, ::PatientInformation* response, std::function<void(::grpc::Status)>) override;
-      void GetPatientInformation(::grpc::ClientContext* context, const ::PatientInfoRequest* request, ::PatientInformation* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, std::function<void(::grpc::Status)>) override;
-      void Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void DischargePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void DischargePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void TransferPatient(::grpc::ClientContext* context, const ::PatientTransfer* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void LiftPatientQuarantine(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::PatientDTO* response, std::function<void(::grpc::Status)>) override;
+      void GetPatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::PatientDTO* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void UpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void UpdatePatientInformation(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::PatientList* response, std::function<void(::grpc::Status)>) override;
+      void GetPatientsInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::PatientList* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -182,24 +227,30 @@ class PatientManagement final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
-    ::grpc::ClientAsyncResponseReader< ::PatientSuccess>* AsyncPatientPingRaw(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PrepareAsyncPatientPingRaw(::grpc::ClientContext* context, const ::PatientPingRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PatientSuccess>* AsyncPatientAdmissionRaw(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PrepareAsyncPatientAdmissionRaw(::grpc::ClientContext* context, const ::PatientAdmissionRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PatientSuccess>* AsyncPatientDischargeRaw(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PrepareAsyncPatientDischargeRaw(::grpc::ClientContext* context, const ::PatientDischargeRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PatientSuccess>* AsyncPatientTransferRaw(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PatientSuccess>* PrepareAsyncPatientTransferRaw(::grpc::ClientContext* context, const ::PatientTransferRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PatientInformation>* AsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PatientInformation>* PrepareAsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientInfoRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Nothing>* AsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Nothing>* PrepareAsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) override;
-    const ::grpc::internal::RpcMethod rpcmethod_PatientPing_;
-    const ::grpc::internal::RpcMethod rpcmethod_PatientAdmission_;
-    const ::grpc::internal::RpcMethod rpcmethod_PatientDischarge_;
-    const ::grpc::internal::RpcMethod rpcmethod_PatientTransfer_;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncAdmitPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncAdmitPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncDischargePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncDischargePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientTransfer& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncLiftPatientQuarantineRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncLiftPatientQuarantineRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::PatientDTO>* AsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::PatientDTO>* PrepareAsyncGetPatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncUpdatePatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncUpdatePatientInformationRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::PatientList>* AsyncGetPatientsInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::PatientList>* PrepareAsyncGetPatientsInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) override;
+    const ::grpc::internal::RpcMethod rpcmethod_AdmitPatient_;
+    const ::grpc::internal::RpcMethod rpcmethod_DischargePatient_;
+    const ::grpc::internal::RpcMethod rpcmethod_TransferPatient_;
+    const ::grpc::internal::RpcMethod rpcmethod_QuarantinePatient_;
+    const ::grpc::internal::RpcMethod rpcmethod_LiftPatientQuarantine_;
     const ::grpc::internal::RpcMethod rpcmethod_GetPatientInformation_;
-    const ::grpc::internal::RpcMethod rpcmethod_Print_;
+    const ::grpc::internal::RpcMethod rpcmethod_UpdatePatientInformation_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetPatientsInRoom_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -207,92 +258,116 @@ class PatientManagement final {
    public:
     Service();
     virtual ~Service();
-    virtual ::grpc::Status PatientPing(::grpc::ServerContext* context, const ::PatientPingRequest* request, ::PatientSuccess* response);
-    virtual ::grpc::Status PatientAdmission(::grpc::ServerContext* context, const ::PatientAdmissionRequest* request, ::PatientSuccess* response);
-    virtual ::grpc::Status PatientDischarge(::grpc::ServerContext* context, const ::PatientDischargeRequest* request, ::PatientSuccess* response);
-    virtual ::grpc::Status PatientTransfer(::grpc::ServerContext* context, const ::PatientTransferRequest* request, ::PatientSuccess* response);
-    virtual ::grpc::Status GetPatientInformation(::grpc::ServerContext* context, const ::PatientInfoRequest* request, ::PatientInformation* response);
-    // Globals
-    virtual ::grpc::Status Print(::grpc::ServerContext* context, const ::Nothing* request, ::Nothing* response);
+    // Patient movement
+    virtual ::grpc::Status AdmitPatient(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response);
+    virtual ::grpc::Status DischargePatient(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response);
+    virtual ::grpc::Status TransferPatient(::grpc::ServerContext* context, const ::PatientTransfer* request, ::Success* response);
+    virtual ::grpc::Status QuarantinePatient(::grpc::ServerContext* context, const ::PatientQuarantine* request, ::Success* response);
+    virtual ::grpc::Status LiftPatientQuarantine(::grpc::ServerContext* context, const ::PatientQuarantine* request, ::Success* response);
+    // Patient information
+    virtual ::grpc::Status GetPatientInformation(::grpc::ServerContext* context, const ::PatientDTO* request, ::PatientDTO* response);
+    virtual ::grpc::Status UpdatePatientInformation(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response);
+    // This call is not accessible to the front end 
+    virtual ::grpc::Status GetPatientsInRoom(::grpc::ServerContext* context, const ::RoomRequest* request, ::PatientList* response);
   };
   template <class BaseClass>
-  class WithAsyncMethod_PatientPing : public BaseClass {
+  class WithAsyncMethod_AdmitPatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_PatientPing() {
+    WithAsyncMethod_AdmitPatient() {
       ::grpc::Service::MarkMethodAsync(0);
     }
-    ~WithAsyncMethod_PatientPing() override {
+    ~WithAsyncMethod_AdmitPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientPing(::grpc::ServerContext* /*context*/, const ::PatientPingRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status AdmitPatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPatientPing(::grpc::ServerContext* context, ::PatientPingRequest* request, ::grpc::ServerAsyncResponseWriter< ::PatientSuccess>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestAdmitPatient(::grpc::ServerContext* context, ::PatientDTO* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_PatientAdmission : public BaseClass {
+  class WithAsyncMethod_DischargePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_PatientAdmission() {
+    WithAsyncMethod_DischargePatient() {
       ::grpc::Service::MarkMethodAsync(1);
     }
-    ~WithAsyncMethod_PatientAdmission() override {
+    ~WithAsyncMethod_DischargePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientAdmission(::grpc::ServerContext* /*context*/, const ::PatientAdmissionRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status DischargePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPatientAdmission(::grpc::ServerContext* context, ::PatientAdmissionRequest* request, ::grpc::ServerAsyncResponseWriter< ::PatientSuccess>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestDischargePatient(::grpc::ServerContext* context, ::PatientDTO* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_PatientDischarge : public BaseClass {
+  class WithAsyncMethod_TransferPatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_PatientDischarge() {
+    WithAsyncMethod_TransferPatient() {
       ::grpc::Service::MarkMethodAsync(2);
     }
-    ~WithAsyncMethod_PatientDischarge() override {
+    ~WithAsyncMethod_TransferPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientDischarge(::grpc::ServerContext* /*context*/, const ::PatientDischargeRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status TransferPatient(::grpc::ServerContext* /*context*/, const ::PatientTransfer* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPatientDischarge(::grpc::ServerContext* context, ::PatientDischargeRequest* request, ::grpc::ServerAsyncResponseWriter< ::PatientSuccess>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestTransferPatient(::grpc::ServerContext* context, ::PatientTransfer* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_PatientTransfer : public BaseClass {
+  class WithAsyncMethod_QuarantinePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_PatientTransfer() {
+    WithAsyncMethod_QuarantinePatient() {
       ::grpc::Service::MarkMethodAsync(3);
     }
-    ~WithAsyncMethod_PatientTransfer() override {
+    ~WithAsyncMethod_QuarantinePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientTransfer(::grpc::ServerContext* /*context*/, const ::PatientTransferRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status QuarantinePatient(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPatientTransfer(::grpc::ServerContext* context, ::PatientTransferRequest* request, ::grpc::ServerAsyncResponseWriter< ::PatientSuccess>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestQuarantinePatient(::grpc::ServerContext* context, ::PatientQuarantine* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_LiftPatientQuarantine : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_LiftPatientQuarantine() {
+      ::grpc::Service::MarkMethodAsync(4);
+    }
+    ~WithAsyncMethod_LiftPatientQuarantine() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LiftPatientQuarantine(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestLiftPatientQuarantine(::grpc::ServerContext* context, ::PatientQuarantine* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -301,148 +376,195 @@ class PatientManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_GetPatientInformation() {
-      ::grpc::Service::MarkMethodAsync(4);
+      ::grpc::Service::MarkMethodAsync(5);
     }
     ~WithAsyncMethod_GetPatientInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientInfoRequest* /*request*/, ::PatientInformation* /*response*/) override {
+    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::PatientDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestGetPatientInformation(::grpc::ServerContext* context, ::PatientInfoRequest* request, ::grpc::ServerAsyncResponseWriter< ::PatientInformation>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithAsyncMethod_Print : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithAsyncMethod_Print() {
-      ::grpc::Service::MarkMethodAsync(5);
-    }
-    ~WithAsyncMethod_Print() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestPrint(::grpc::ServerContext* context, ::Nothing* request, ::grpc::ServerAsyncResponseWriter< ::Nothing>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestGetPatientInformation(::grpc::ServerContext* context, ::PatientDTO* request, ::grpc::ServerAsyncResponseWriter< ::PatientDTO>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_PatientPing<WithAsyncMethod_PatientAdmission<WithAsyncMethod_PatientDischarge<WithAsyncMethod_PatientTransfer<WithAsyncMethod_GetPatientInformation<WithAsyncMethod_Print<Service > > > > > > AsyncService;
   template <class BaseClass>
-  class WithCallbackMethod_PatientPing : public BaseClass {
+  class WithAsyncMethod_UpdatePatientInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_PatientPing() {
+    WithAsyncMethod_UpdatePatientInformation() {
+      ::grpc::Service::MarkMethodAsync(6);
+    }
+    ~WithAsyncMethod_UpdatePatientInformation() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdatePatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUpdatePatientInformation(::grpc::ServerContext* context, ::PatientDTO* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetPatientsInRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetPatientsInRoom() {
+      ::grpc::Service::MarkMethodAsync(7);
+    }
+    ~WithAsyncMethod_GetPatientsInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetPatientsInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::PatientList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetPatientsInRoom(::grpc::ServerContext* context, ::RoomRequest* request, ::grpc::ServerAsyncResponseWriter< ::PatientList>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_AdmitPatient<WithAsyncMethod_DischargePatient<WithAsyncMethod_TransferPatient<WithAsyncMethod_QuarantinePatient<WithAsyncMethod_LiftPatientQuarantine<WithAsyncMethod_GetPatientInformation<WithAsyncMethod_UpdatePatientInformation<WithAsyncMethod_GetPatientsInRoom<Service > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithCallbackMethod_AdmitPatient : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_AdmitPatient() {
       ::grpc::Service::MarkMethodCallback(0,
-          new ::grpc::internal::CallbackUnaryHandler< ::PatientPingRequest, ::PatientSuccess>(
+          new ::grpc::internal::CallbackUnaryHandler< ::PatientDTO, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::PatientPingRequest* request, ::PatientSuccess* response) { return this->PatientPing(context, request, response); }));}
-    void SetMessageAllocatorFor_PatientPing(
-        ::grpc::MessageAllocator< ::PatientPingRequest, ::PatientSuccess>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::PatientDTO* request, ::Success* response) { return this->AdmitPatient(context, request, response); }));}
+    void SetMessageAllocatorFor_AdmitPatient(
+        ::grpc::MessageAllocator< ::PatientDTO, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientPingRequest, ::PatientSuccess>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientDTO, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_PatientPing() override {
+    ~WithCallbackMethod_AdmitPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientPing(::grpc::ServerContext* /*context*/, const ::PatientPingRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status AdmitPatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* PatientPing(
-      ::grpc::CallbackServerContext* /*context*/, const ::PatientPingRequest* /*request*/, ::PatientSuccess* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* AdmitPatient(
+      ::grpc::CallbackServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_PatientAdmission : public BaseClass {
+  class WithCallbackMethod_DischargePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_PatientAdmission() {
+    WithCallbackMethod_DischargePatient() {
       ::grpc::Service::MarkMethodCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::PatientAdmissionRequest, ::PatientSuccess>(
+          new ::grpc::internal::CallbackUnaryHandler< ::PatientDTO, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::PatientAdmissionRequest* request, ::PatientSuccess* response) { return this->PatientAdmission(context, request, response); }));}
-    void SetMessageAllocatorFor_PatientAdmission(
-        ::grpc::MessageAllocator< ::PatientAdmissionRequest, ::PatientSuccess>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::PatientDTO* request, ::Success* response) { return this->DischargePatient(context, request, response); }));}
+    void SetMessageAllocatorFor_DischargePatient(
+        ::grpc::MessageAllocator< ::PatientDTO, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientAdmissionRequest, ::PatientSuccess>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientDTO, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_PatientAdmission() override {
+    ~WithCallbackMethod_DischargePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientAdmission(::grpc::ServerContext* /*context*/, const ::PatientAdmissionRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status DischargePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* PatientAdmission(
-      ::grpc::CallbackServerContext* /*context*/, const ::PatientAdmissionRequest* /*request*/, ::PatientSuccess* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* DischargePatient(
+      ::grpc::CallbackServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_PatientDischarge : public BaseClass {
+  class WithCallbackMethod_TransferPatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_PatientDischarge() {
+    WithCallbackMethod_TransferPatient() {
       ::grpc::Service::MarkMethodCallback(2,
-          new ::grpc::internal::CallbackUnaryHandler< ::PatientDischargeRequest, ::PatientSuccess>(
+          new ::grpc::internal::CallbackUnaryHandler< ::PatientTransfer, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::PatientDischargeRequest* request, ::PatientSuccess* response) { return this->PatientDischarge(context, request, response); }));}
-    void SetMessageAllocatorFor_PatientDischarge(
-        ::grpc::MessageAllocator< ::PatientDischargeRequest, ::PatientSuccess>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::PatientTransfer* request, ::Success* response) { return this->TransferPatient(context, request, response); }));}
+    void SetMessageAllocatorFor_TransferPatient(
+        ::grpc::MessageAllocator< ::PatientTransfer, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientDischargeRequest, ::PatientSuccess>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientTransfer, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_PatientDischarge() override {
+    ~WithCallbackMethod_TransferPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientDischarge(::grpc::ServerContext* /*context*/, const ::PatientDischargeRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status TransferPatient(::grpc::ServerContext* /*context*/, const ::PatientTransfer* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* PatientDischarge(
-      ::grpc::CallbackServerContext* /*context*/, const ::PatientDischargeRequest* /*request*/, ::PatientSuccess* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* TransferPatient(
+      ::grpc::CallbackServerContext* /*context*/, const ::PatientTransfer* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_PatientTransfer : public BaseClass {
+  class WithCallbackMethod_QuarantinePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_PatientTransfer() {
+    WithCallbackMethod_QuarantinePatient() {
       ::grpc::Service::MarkMethodCallback(3,
-          new ::grpc::internal::CallbackUnaryHandler< ::PatientTransferRequest, ::PatientSuccess>(
+          new ::grpc::internal::CallbackUnaryHandler< ::PatientQuarantine, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::PatientTransferRequest* request, ::PatientSuccess* response) { return this->PatientTransfer(context, request, response); }));}
-    void SetMessageAllocatorFor_PatientTransfer(
-        ::grpc::MessageAllocator< ::PatientTransferRequest, ::PatientSuccess>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::PatientQuarantine* request, ::Success* response) { return this->QuarantinePatient(context, request, response); }));}
+    void SetMessageAllocatorFor_QuarantinePatient(
+        ::grpc::MessageAllocator< ::PatientQuarantine, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientTransferRequest, ::PatientSuccess>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientQuarantine, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_PatientTransfer() override {
+    ~WithCallbackMethod_QuarantinePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientTransfer(::grpc::ServerContext* /*context*/, const ::PatientTransferRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status QuarantinePatient(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* PatientTransfer(
-      ::grpc::CallbackServerContext* /*context*/, const ::PatientTransferRequest* /*request*/, ::PatientSuccess* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* QuarantinePatient(
+      ::grpc::CallbackServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_LiftPatientQuarantine : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_LiftPatientQuarantine() {
+      ::grpc::Service::MarkMethodCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::PatientQuarantine, ::Success>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::PatientQuarantine* request, ::Success* response) { return this->LiftPatientQuarantine(context, request, response); }));}
+    void SetMessageAllocatorFor_LiftPatientQuarantine(
+        ::grpc::MessageAllocator< ::PatientQuarantine, ::Success>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientQuarantine, ::Success>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_LiftPatientQuarantine() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LiftPatientQuarantine(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* LiftPatientQuarantine(
+      ::grpc::CallbackServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_GetPatientInformation : public BaseClass {
@@ -450,120 +572,164 @@ class PatientManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_GetPatientInformation() {
-      ::grpc::Service::MarkMethodCallback(4,
-          new ::grpc::internal::CallbackUnaryHandler< ::PatientInfoRequest, ::PatientInformation>(
+      ::grpc::Service::MarkMethodCallback(5,
+          new ::grpc::internal::CallbackUnaryHandler< ::PatientDTO, ::PatientDTO>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::PatientInfoRequest* request, ::PatientInformation* response) { return this->GetPatientInformation(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::PatientDTO* request, ::PatientDTO* response) { return this->GetPatientInformation(context, request, response); }));}
     void SetMessageAllocatorFor_GetPatientInformation(
-        ::grpc::MessageAllocator< ::PatientInfoRequest, ::PatientInformation>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientInfoRequest, ::PatientInformation>*>(handler)
+        ::grpc::MessageAllocator< ::PatientDTO, ::PatientDTO>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientDTO, ::PatientDTO>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_GetPatientInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientInfoRequest* /*request*/, ::PatientInformation* /*response*/) override {
+    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::PatientDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetPatientInformation(
-      ::grpc::CallbackServerContext* /*context*/, const ::PatientInfoRequest* /*request*/, ::PatientInformation* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::PatientDTO* /*request*/, ::PatientDTO* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_Print : public BaseClass {
+  class WithCallbackMethod_UpdatePatientInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_Print() {
-      ::grpc::Service::MarkMethodCallback(5,
-          new ::grpc::internal::CallbackUnaryHandler< ::Nothing, ::Nothing>(
+    WithCallbackMethod_UpdatePatientInformation() {
+      ::grpc::Service::MarkMethodCallback(6,
+          new ::grpc::internal::CallbackUnaryHandler< ::PatientDTO, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::Nothing* request, ::Nothing* response) { return this->Print(context, request, response); }));}
-    void SetMessageAllocatorFor_Print(
-        ::grpc::MessageAllocator< ::Nothing, ::Nothing>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::Nothing, ::Nothing>*>(handler)
+                   ::grpc::CallbackServerContext* context, const ::PatientDTO* request, ::Success* response) { return this->UpdatePatientInformation(context, request, response); }));}
+    void SetMessageAllocatorFor_UpdatePatientInformation(
+        ::grpc::MessageAllocator< ::PatientDTO, ::Success>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientDTO, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_Print() override {
+    ~WithCallbackMethod_UpdatePatientInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
+    ::grpc::Status UpdatePatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* Print(
-      ::grpc::CallbackServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* UpdatePatientInformation(
+      ::grpc::CallbackServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_PatientPing<WithCallbackMethod_PatientAdmission<WithCallbackMethod_PatientDischarge<WithCallbackMethod_PatientTransfer<WithCallbackMethod_GetPatientInformation<WithCallbackMethod_Print<Service > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_GetPatientsInRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetPatientsInRoom() {
+      ::grpc::Service::MarkMethodCallback(7,
+          new ::grpc::internal::CallbackUnaryHandler< ::RoomRequest, ::PatientList>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::RoomRequest* request, ::PatientList* response) { return this->GetPatientsInRoom(context, request, response); }));}
+    void SetMessageAllocatorFor_GetPatientsInRoom(
+        ::grpc::MessageAllocator< ::RoomRequest, ::PatientList>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::RoomRequest, ::PatientList>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetPatientsInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetPatientsInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::PatientList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetPatientsInRoom(
+      ::grpc::CallbackServerContext* /*context*/, const ::RoomRequest* /*request*/, ::PatientList* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_AdmitPatient<WithCallbackMethod_DischargePatient<WithCallbackMethod_TransferPatient<WithCallbackMethod_QuarantinePatient<WithCallbackMethod_LiftPatientQuarantine<WithCallbackMethod_GetPatientInformation<WithCallbackMethod_UpdatePatientInformation<WithCallbackMethod_GetPatientsInRoom<Service > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
-  class WithGenericMethod_PatientPing : public BaseClass {
+  class WithGenericMethod_AdmitPatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_PatientPing() {
+    WithGenericMethod_AdmitPatient() {
       ::grpc::Service::MarkMethodGeneric(0);
     }
-    ~WithGenericMethod_PatientPing() override {
+    ~WithGenericMethod_AdmitPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientPing(::grpc::ServerContext* /*context*/, const ::PatientPingRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status AdmitPatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_PatientAdmission : public BaseClass {
+  class WithGenericMethod_DischargePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_PatientAdmission() {
+    WithGenericMethod_DischargePatient() {
       ::grpc::Service::MarkMethodGeneric(1);
     }
-    ~WithGenericMethod_PatientAdmission() override {
+    ~WithGenericMethod_DischargePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientAdmission(::grpc::ServerContext* /*context*/, const ::PatientAdmissionRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status DischargePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_PatientDischarge : public BaseClass {
+  class WithGenericMethod_TransferPatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_PatientDischarge() {
+    WithGenericMethod_TransferPatient() {
       ::grpc::Service::MarkMethodGeneric(2);
     }
-    ~WithGenericMethod_PatientDischarge() override {
+    ~WithGenericMethod_TransferPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientDischarge(::grpc::ServerContext* /*context*/, const ::PatientDischargeRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status TransferPatient(::grpc::ServerContext* /*context*/, const ::PatientTransfer* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_PatientTransfer : public BaseClass {
+  class WithGenericMethod_QuarantinePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_PatientTransfer() {
+    WithGenericMethod_QuarantinePatient() {
       ::grpc::Service::MarkMethodGeneric(3);
     }
-    ~WithGenericMethod_PatientTransfer() override {
+    ~WithGenericMethod_QuarantinePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientTransfer(::grpc::ServerContext* /*context*/, const ::PatientTransferRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status QuarantinePatient(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_LiftPatientQuarantine : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_LiftPatientQuarantine() {
+      ::grpc::Service::MarkMethodGeneric(4);
+    }
+    ~WithGenericMethod_LiftPatientQuarantine() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LiftPatientQuarantine(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -574,112 +740,149 @@ class PatientManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_GetPatientInformation() {
-      ::grpc::Service::MarkMethodGeneric(4);
+      ::grpc::Service::MarkMethodGeneric(5);
     }
     ~WithGenericMethod_GetPatientInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientInfoRequest* /*request*/, ::PatientInformation* /*response*/) override {
+    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::PatientDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_Print : public BaseClass {
+  class WithGenericMethod_UpdatePatientInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_Print() {
-      ::grpc::Service::MarkMethodGeneric(5);
+    WithGenericMethod_UpdatePatientInformation() {
+      ::grpc::Service::MarkMethodGeneric(6);
     }
-    ~WithGenericMethod_Print() override {
+    ~WithGenericMethod_UpdatePatientInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
+    ::grpc::Status UpdatePatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithRawMethod_PatientPing : public BaseClass {
+  class WithGenericMethod_GetPatientsInRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_PatientPing() {
+    WithGenericMethod_GetPatientsInRoom() {
+      ::grpc::Service::MarkMethodGeneric(7);
+    }
+    ~WithGenericMethod_GetPatientsInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetPatientsInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::PatientList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_AdmitPatient : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_AdmitPatient() {
       ::grpc::Service::MarkMethodRaw(0);
     }
-    ~WithRawMethod_PatientPing() override {
+    ~WithRawMethod_AdmitPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientPing(::grpc::ServerContext* /*context*/, const ::PatientPingRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status AdmitPatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPatientPing(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestAdmitPatient(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_PatientAdmission : public BaseClass {
+  class WithRawMethod_DischargePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_PatientAdmission() {
+    WithRawMethod_DischargePatient() {
       ::grpc::Service::MarkMethodRaw(1);
     }
-    ~WithRawMethod_PatientAdmission() override {
+    ~WithRawMethod_DischargePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientAdmission(::grpc::ServerContext* /*context*/, const ::PatientAdmissionRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status DischargePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPatientAdmission(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestDischargePatient(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_PatientDischarge : public BaseClass {
+  class WithRawMethod_TransferPatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_PatientDischarge() {
+    WithRawMethod_TransferPatient() {
       ::grpc::Service::MarkMethodRaw(2);
     }
-    ~WithRawMethod_PatientDischarge() override {
+    ~WithRawMethod_TransferPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientDischarge(::grpc::ServerContext* /*context*/, const ::PatientDischargeRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status TransferPatient(::grpc::ServerContext* /*context*/, const ::PatientTransfer* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPatientDischarge(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestTransferPatient(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_PatientTransfer : public BaseClass {
+  class WithRawMethod_QuarantinePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_PatientTransfer() {
+    WithRawMethod_QuarantinePatient() {
       ::grpc::Service::MarkMethodRaw(3);
     }
-    ~WithRawMethod_PatientTransfer() override {
+    ~WithRawMethod_QuarantinePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientTransfer(::grpc::ServerContext* /*context*/, const ::PatientTransferRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status QuarantinePatient(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPatientTransfer(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestQuarantinePatient(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_LiftPatientQuarantine : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_LiftPatientQuarantine() {
+      ::grpc::Service::MarkMethodRaw(4);
+    }
+    ~WithRawMethod_LiftPatientQuarantine() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LiftPatientQuarantine(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestLiftPatientQuarantine(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -688,126 +891,168 @@ class PatientManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_GetPatientInformation() {
-      ::grpc::Service::MarkMethodRaw(4);
+      ::grpc::Service::MarkMethodRaw(5);
     }
     ~WithRawMethod_GetPatientInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientInfoRequest* /*request*/, ::PatientInformation* /*response*/) override {
+    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::PatientDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetPatientInformation(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithRawMethod_Print : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawMethod_Print() {
-      ::grpc::Service::MarkMethodRaw(5);
-    }
-    ~WithRawMethod_Print() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestPrint(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_PatientPing : public BaseClass {
+  class WithRawMethod_UpdatePatientInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_PatientPing() {
+    WithRawMethod_UpdatePatientInformation() {
+      ::grpc::Service::MarkMethodRaw(6);
+    }
+    ~WithRawMethod_UpdatePatientInformation() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdatePatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUpdatePatientInformation(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetPatientsInRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetPatientsInRoom() {
+      ::grpc::Service::MarkMethodRaw(7);
+    }
+    ~WithRawMethod_GetPatientsInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetPatientsInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::PatientList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetPatientsInRoom(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_AdmitPatient : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_AdmitPatient() {
       ::grpc::Service::MarkMethodRawCallback(0,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->PatientPing(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->AdmitPatient(context, request, response); }));
     }
-    ~WithRawCallbackMethod_PatientPing() override {
+    ~WithRawCallbackMethod_AdmitPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientPing(::grpc::ServerContext* /*context*/, const ::PatientPingRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status AdmitPatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* PatientPing(
+    virtual ::grpc::ServerUnaryReactor* AdmitPatient(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_PatientAdmission : public BaseClass {
+  class WithRawCallbackMethod_DischargePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_PatientAdmission() {
+    WithRawCallbackMethod_DischargePatient() {
       ::grpc::Service::MarkMethodRawCallback(1,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->PatientAdmission(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->DischargePatient(context, request, response); }));
     }
-    ~WithRawCallbackMethod_PatientAdmission() override {
+    ~WithRawCallbackMethod_DischargePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientAdmission(::grpc::ServerContext* /*context*/, const ::PatientAdmissionRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status DischargePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* PatientAdmission(
+    virtual ::grpc::ServerUnaryReactor* DischargePatient(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_PatientDischarge : public BaseClass {
+  class WithRawCallbackMethod_TransferPatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_PatientDischarge() {
+    WithRawCallbackMethod_TransferPatient() {
       ::grpc::Service::MarkMethodRawCallback(2,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->PatientDischarge(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->TransferPatient(context, request, response); }));
     }
-    ~WithRawCallbackMethod_PatientDischarge() override {
+    ~WithRawCallbackMethod_TransferPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientDischarge(::grpc::ServerContext* /*context*/, const ::PatientDischargeRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status TransferPatient(::grpc::ServerContext* /*context*/, const ::PatientTransfer* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* PatientDischarge(
+    virtual ::grpc::ServerUnaryReactor* TransferPatient(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_PatientTransfer : public BaseClass {
+  class WithRawCallbackMethod_QuarantinePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_PatientTransfer() {
+    WithRawCallbackMethod_QuarantinePatient() {
       ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->PatientTransfer(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->QuarantinePatient(context, request, response); }));
     }
-    ~WithRawCallbackMethod_PatientTransfer() override {
+    ~WithRawCallbackMethod_QuarantinePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PatientTransfer(::grpc::ServerContext* /*context*/, const ::PatientTransferRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status QuarantinePatient(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* PatientTransfer(
+    virtual ::grpc::ServerUnaryReactor* QuarantinePatient(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_LiftPatientQuarantine : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_LiftPatientQuarantine() {
+      ::grpc::Service::MarkMethodRawCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->LiftPatientQuarantine(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_LiftPatientQuarantine() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LiftPatientQuarantine(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* LiftPatientQuarantine(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -816,7 +1061,7 @@ class PatientManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_GetPatientInformation() {
-      ::grpc::Service::MarkMethodRawCallback(4,
+      ::grpc::Service::MarkMethodRawCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetPatientInformation(context, request, response); }));
@@ -825,7 +1070,7 @@ class PatientManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientInfoRequest* /*request*/, ::PatientInformation* /*response*/) override {
+    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::PatientDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -833,134 +1078,183 @@ class PatientManagement final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_Print : public BaseClass {
+  class WithRawCallbackMethod_UpdatePatientInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_Print() {
-      ::grpc::Service::MarkMethodRawCallback(5,
+    WithRawCallbackMethod_UpdatePatientInformation() {
+      ::grpc::Service::MarkMethodRawCallback(6,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->Print(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->UpdatePatientInformation(context, request, response); }));
     }
-    ~WithRawCallbackMethod_Print() override {
+    ~WithRawCallbackMethod_UpdatePatientInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
+    ::grpc::Status UpdatePatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* Print(
+    virtual ::grpc::ServerUnaryReactor* UpdatePatientInformation(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_PatientPing : public BaseClass {
+  class WithRawCallbackMethod_GetPatientsInRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_PatientPing() {
+    WithRawCallbackMethod_GetPatientsInRoom() {
+      ::grpc::Service::MarkMethodRawCallback(7,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetPatientsInRoom(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetPatientsInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetPatientsInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::PatientList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetPatientsInRoom(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_AdmitPatient : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_AdmitPatient() {
       ::grpc::Service::MarkMethodStreamed(0,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::PatientPingRequest, ::PatientSuccess>(
+          ::PatientDTO, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::PatientPingRequest, ::PatientSuccess>* streamer) {
-                       return this->StreamedPatientPing(context,
+                     ::PatientDTO, ::Success>* streamer) {
+                       return this->StreamedAdmitPatient(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_PatientPing() override {
+    ~WithStreamedUnaryMethod_AdmitPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status PatientPing(::grpc::ServerContext* /*context*/, const ::PatientPingRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status AdmitPatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedPatientPing(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientPingRequest,::PatientSuccess>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedAdmitPatient(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientDTO,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_PatientAdmission : public BaseClass {
+  class WithStreamedUnaryMethod_DischargePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_PatientAdmission() {
+    WithStreamedUnaryMethod_DischargePatient() {
       ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::PatientAdmissionRequest, ::PatientSuccess>(
+          ::PatientDTO, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::PatientAdmissionRequest, ::PatientSuccess>* streamer) {
-                       return this->StreamedPatientAdmission(context,
+                     ::PatientDTO, ::Success>* streamer) {
+                       return this->StreamedDischargePatient(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_PatientAdmission() override {
+    ~WithStreamedUnaryMethod_DischargePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status PatientAdmission(::grpc::ServerContext* /*context*/, const ::PatientAdmissionRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status DischargePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedPatientAdmission(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientAdmissionRequest,::PatientSuccess>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedDischargePatient(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientDTO,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_PatientDischarge : public BaseClass {
+  class WithStreamedUnaryMethod_TransferPatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_PatientDischarge() {
+    WithStreamedUnaryMethod_TransferPatient() {
       ::grpc::Service::MarkMethodStreamed(2,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::PatientDischargeRequest, ::PatientSuccess>(
+          ::PatientTransfer, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::PatientDischargeRequest, ::PatientSuccess>* streamer) {
-                       return this->StreamedPatientDischarge(context,
+                     ::PatientTransfer, ::Success>* streamer) {
+                       return this->StreamedTransferPatient(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_PatientDischarge() override {
+    ~WithStreamedUnaryMethod_TransferPatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status PatientDischarge(::grpc::ServerContext* /*context*/, const ::PatientDischargeRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status TransferPatient(::grpc::ServerContext* /*context*/, const ::PatientTransfer* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedPatientDischarge(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientDischargeRequest,::PatientSuccess>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedTransferPatient(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientTransfer,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_PatientTransfer : public BaseClass {
+  class WithStreamedUnaryMethod_QuarantinePatient : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_PatientTransfer() {
+    WithStreamedUnaryMethod_QuarantinePatient() {
       ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::PatientTransferRequest, ::PatientSuccess>(
+          ::PatientQuarantine, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::PatientTransferRequest, ::PatientSuccess>* streamer) {
-                       return this->StreamedPatientTransfer(context,
+                     ::PatientQuarantine, ::Success>* streamer) {
+                       return this->StreamedQuarantinePatient(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_PatientTransfer() override {
+    ~WithStreamedUnaryMethod_QuarantinePatient() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status PatientTransfer(::grpc::ServerContext* /*context*/, const ::PatientTransferRequest* /*request*/, ::PatientSuccess* /*response*/) override {
+    ::grpc::Status QuarantinePatient(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedPatientTransfer(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientTransferRequest,::PatientSuccess>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedQuarantinePatient(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientQuarantine,::Success>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_LiftPatientQuarantine : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_LiftPatientQuarantine() {
+      ::grpc::Service::MarkMethodStreamed(4,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::PatientQuarantine, ::Success>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::PatientQuarantine, ::Success>* streamer) {
+                       return this->StreamedLiftPatientQuarantine(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_LiftPatientQuarantine() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status LiftPatientQuarantine(::grpc::ServerContext* /*context*/, const ::PatientQuarantine* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedLiftPatientQuarantine(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientQuarantine,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_GetPatientInformation : public BaseClass {
@@ -968,12 +1262,12 @@ class PatientManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_GetPatientInformation() {
-      ::grpc::Service::MarkMethodStreamed(4,
+      ::grpc::Service::MarkMethodStreamed(5,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::PatientInfoRequest, ::PatientInformation>(
+          ::PatientDTO, ::PatientDTO>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::PatientInfoRequest, ::PatientInformation>* streamer) {
+                     ::PatientDTO, ::PatientDTO>* streamer) {
                        return this->StreamedGetPatientInformation(context,
                          streamer);
                   }));
@@ -982,43 +1276,70 @@ class PatientManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientInfoRequest* /*request*/, ::PatientInformation* /*response*/) override {
+    ::grpc::Status GetPatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::PatientDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedGetPatientInformation(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientInfoRequest,::PatientInformation>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedGetPatientInformation(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientDTO,::PatientDTO>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_Print : public BaseClass {
+  class WithStreamedUnaryMethod_UpdatePatientInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_Print() {
-      ::grpc::Service::MarkMethodStreamed(5,
+    WithStreamedUnaryMethod_UpdatePatientInformation() {
+      ::grpc::Service::MarkMethodStreamed(6,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::Nothing, ::Nothing>(
+          ::PatientDTO, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::Nothing, ::Nothing>* streamer) {
-                       return this->StreamedPrint(context,
+                     ::PatientDTO, ::Success>* streamer) {
+                       return this->StreamedUpdatePatientInformation(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_Print() override {
+    ~WithStreamedUnaryMethod_UpdatePatientInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
+    ::grpc::Status UpdatePatientInformation(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedPrint(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::Nothing,::Nothing>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedUpdatePatientInformation(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientDTO,::Success>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_PatientPing<WithStreamedUnaryMethod_PatientAdmission<WithStreamedUnaryMethod_PatientDischarge<WithStreamedUnaryMethod_PatientTransfer<WithStreamedUnaryMethod_GetPatientInformation<WithStreamedUnaryMethod_Print<Service > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetPatientsInRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetPatientsInRoom() {
+      ::grpc::Service::MarkMethodStreamed(7,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::RoomRequest, ::PatientList>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::RoomRequest, ::PatientList>* streamer) {
+                       return this->StreamedGetPatientsInRoom(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetPatientsInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetPatientsInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::PatientList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetPatientsInRoom(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::RoomRequest,::PatientList>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_AdmitPatient<WithStreamedUnaryMethod_DischargePatient<WithStreamedUnaryMethod_TransferPatient<WithStreamedUnaryMethod_QuarantinePatient<WithStreamedUnaryMethod_LiftPatientQuarantine<WithStreamedUnaryMethod_GetPatientInformation<WithStreamedUnaryMethod_UpdatePatientInformation<WithStreamedUnaryMethod_GetPatientsInRoom<Service > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_PatientPing<WithStreamedUnaryMethod_PatientAdmission<WithStreamedUnaryMethod_PatientDischarge<WithStreamedUnaryMethod_PatientTransfer<WithStreamedUnaryMethod_GetPatientInformation<WithStreamedUnaryMethod_Print<Service > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_AdmitPatient<WithStreamedUnaryMethod_DischargePatient<WithStreamedUnaryMethod_TransferPatient<WithStreamedUnaryMethod_QuarantinePatient<WithStreamedUnaryMethod_LiftPatientQuarantine<WithStreamedUnaryMethod_GetPatientInformation<WithStreamedUnaryMethod_UpdatePatientInformation<WithStreamedUnaryMethod_GetPatientsInRoom<Service > > > > > > > > StreamedService;
 };
 
 

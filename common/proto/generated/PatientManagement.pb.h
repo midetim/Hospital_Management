@@ -29,7 +29,7 @@
 #include "google/protobuf/repeated_field.h"  // IWYU pragma: export
 #include "google/protobuf/extension_set.h"  // IWYU pragma: export
 #include "google/protobuf/unknown_field_set.h"
-#include "common.pb.h"
+#include "Common.pb.h"
 // @@protoc_insertion_point(includes)
 
 // Must be included last.
@@ -53,38 +53,22 @@ struct TableStruct_PatientManagement_2eproto {
 extern "C" {
 extern const ::google::protobuf::internal::DescriptorTable descriptor_table_PatientManagement_2eproto;
 }  // extern "C"
-class PatientAdmissionRequest;
-struct PatientAdmissionRequestDefaultTypeInternal;
-extern PatientAdmissionRequestDefaultTypeInternal _PatientAdmissionRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull PatientAdmissionRequest_class_data_;
-class PatientDischargeRequest;
-struct PatientDischargeRequestDefaultTypeInternal;
-extern PatientDischargeRequestDefaultTypeInternal _PatientDischargeRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull PatientDischargeRequest_class_data_;
-class PatientInfoRequest;
-struct PatientInfoRequestDefaultTypeInternal;
-extern PatientInfoRequestDefaultTypeInternal _PatientInfoRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull PatientInfoRequest_class_data_;
-class PatientInformation;
-struct PatientInformationDefaultTypeInternal;
-extern PatientInformationDefaultTypeInternal _PatientInformation_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull PatientInformation_class_data_;
-class PatientName;
-struct PatientNameDefaultTypeInternal;
-extern PatientNameDefaultTypeInternal _PatientName_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull PatientName_class_data_;
-class PatientPingRequest;
-struct PatientPingRequestDefaultTypeInternal;
-extern PatientPingRequestDefaultTypeInternal _PatientPingRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull PatientPingRequest_class_data_;
-class PatientSuccess;
-struct PatientSuccessDefaultTypeInternal;
-extern PatientSuccessDefaultTypeInternal _PatientSuccess_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull PatientSuccess_class_data_;
-class PatientTransferRequest;
-struct PatientTransferRequestDefaultTypeInternal;
-extern PatientTransferRequestDefaultTypeInternal _PatientTransferRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull PatientTransferRequest_class_data_;
+class PatientDTO;
+struct PatientDTODefaultTypeInternal;
+extern PatientDTODefaultTypeInternal _PatientDTO_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull PatientDTO_class_data_;
+class PatientList;
+struct PatientListDefaultTypeInternal;
+extern PatientListDefaultTypeInternal _PatientList_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull PatientList_class_data_;
+class PatientQuarantine;
+struct PatientQuarantineDefaultTypeInternal;
+extern PatientQuarantineDefaultTypeInternal _PatientQuarantine_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull PatientQuarantine_class_data_;
+class PatientTransfer;
+struct PatientTransferDefaultTypeInternal;
+extern PatientTransferDefaultTypeInternal _PatientTransfer_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull PatientTransfer_class_data_;
 namespace google {
 namespace protobuf {
 }  // namespace protobuf
@@ -96,30 +80,30 @@ namespace protobuf {
 
 // -------------------------------------------------------------------
 
-class PatientTransferRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:PatientTransferRequest) */ {
+class PatientTransfer final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:PatientTransfer) */ {
  public:
-  inline PatientTransferRequest() : PatientTransferRequest(nullptr) {}
-  ~PatientTransferRequest() PROTOBUF_FINAL;
+  inline PatientTransfer() : PatientTransfer(nullptr) {}
+  ~PatientTransfer() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(PatientTransferRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+  void operator delete(PatientTransfer* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientTransferRequest));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientTransfer));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PatientTransferRequest(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR PatientTransfer(::google::protobuf::internal::ConstantInitialized);
 
-  inline PatientTransferRequest(const PatientTransferRequest& from) : PatientTransferRequest(nullptr, from) {}
-  inline PatientTransferRequest(PatientTransferRequest&& from) noexcept
-      : PatientTransferRequest(nullptr, ::std::move(from)) {}
-  inline PatientTransferRequest& operator=(const PatientTransferRequest& from) {
+  inline PatientTransfer(const PatientTransfer& from) : PatientTransfer(nullptr, from) {}
+  inline PatientTransfer(PatientTransfer&& from) noexcept
+      : PatientTransfer(nullptr, ::std::move(from)) {}
+  inline PatientTransfer& operator=(const PatientTransfer& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PatientTransferRequest& operator=(PatientTransferRequest&& from) noexcept {
+  inline PatientTransfer& operator=(PatientTransfer&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -147,13 +131,13 @@ class PatientTransferRequest final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PatientTransferRequest& default_instance() {
-    return *reinterpret_cast<const PatientTransferRequest*>(
-        &_PatientTransferRequest_default_instance_);
+  static const PatientTransfer& default_instance() {
+    return *reinterpret_cast<const PatientTransfer*>(
+        &_PatientTransfer_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 3;
-  friend void swap(PatientTransferRequest& a, PatientTransferRequest& b) { a.Swap(&b); }
-  inline void Swap(PatientTransferRequest* PROTOBUF_NONNULL other) {
+  static constexpr int kIndexInFileMessages = 1;
+  friend void swap(PatientTransfer& a, PatientTransfer& b) { a.Swap(&b); }
+  inline void Swap(PatientTransfer* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -161,7 +145,7 @@ class PatientTransferRequest final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PatientTransferRequest* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(PatientTransfer* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -169,13 +153,13 @@ class PatientTransferRequest final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PatientTransferRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<PatientTransferRequest>(arena);
+  PatientTransfer* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<PatientTransfer>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PatientTransferRequest& from);
+  void CopyFrom(const PatientTransfer& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PatientTransferRequest& from) { PatientTransferRequest::MergeImpl(*this, from); }
+  void MergeFrom(const PatientTransfer& from) { PatientTransfer::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -211,18 +195,18 @@ class PatientTransferRequest final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(PatientTransferRequest* PROTOBUF_NONNULL other);
+  void InternalSwap(PatientTransfer* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "PatientTransferRequest"; }
+  static ::absl::string_view FullMessageName() { return "PatientTransfer"; }
 
  protected:
-  explicit PatientTransferRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  PatientTransferRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientTransferRequest& from);
-  PatientTransferRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientTransferRequest&& from) noexcept
-      : PatientTransferRequest(arena) {
+  explicit PatientTransfer(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  PatientTransfer(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientTransfer& from);
+  PatientTransfer(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientTransfer&& from) noexcept
+      : PatientTransfer(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -241,8 +225,8 @@ class PatientTransferRequest final : public ::google::protobuf::Message
   enum : int {
     kRoomTypeFieldNumber = 3,
     kPatientIdFieldNumber = 1,
-    kDesiredRoomFieldNumber = 2,
-    kQuarantinedFieldNumber = 4,
+    kNewRoomIdFieldNumber = 2,
+    kIsQuarantinedFieldNumber = 4,
   };
   // string room_type = 3;
   void clear_room_type() ;
@@ -269,32 +253,32 @@ class PatientTransferRequest final : public ::google::protobuf::Message
   void _internal_set_patient_id(::uint64_t value);
 
   public:
-  // uint32 desired_room = 2;
-  void clear_desired_room() ;
-  ::uint32_t desired_room() const;
-  void set_desired_room(::uint32_t value);
+  // uint32 new_room_id = 2;
+  void clear_new_room_id() ;
+  ::uint32_t new_room_id() const;
+  void set_new_room_id(::uint32_t value);
 
   private:
-  ::uint32_t _internal_desired_room() const;
-  void _internal_set_desired_room(::uint32_t value);
+  ::uint32_t _internal_new_room_id() const;
+  void _internal_set_new_room_id(::uint32_t value);
 
   public:
-  // bool quarantined = 4;
-  void clear_quarantined() ;
-  bool quarantined() const;
-  void set_quarantined(bool value);
+  // bool is_quarantined = 4;
+  void clear_is_quarantined() ;
+  bool is_quarantined() const;
+  void set_is_quarantined(bool value);
 
   private:
-  bool _internal_quarantined() const;
-  void _internal_set_quarantined(bool value);
+  bool _internal_is_quarantined() const;
+  void _internal_set_is_quarantined(bool value);
 
   public:
-  // @@protoc_insertion_point(class_scope:PatientTransferRequest)
+  // @@protoc_insertion_point(class_scope:PatientTransfer)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<2, 4,
-                                   0, 40,
+                                   0, 33,
                                    2>
       _table_;
 
@@ -312,46 +296,46 @@ class PatientTransferRequest final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const PatientTransferRequest& from_msg);
+        const PatientTransfer& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr room_type_;
     ::uint64_t patient_id_;
-    ::uint32_t desired_room_;
-    bool quarantined_;
+    ::uint32_t new_room_id_;
+    bool is_quarantined_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_PatientManagement_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull PatientTransferRequest_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull PatientTransfer_class_data_;
 // -------------------------------------------------------------------
 
-class PatientSuccess final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:PatientSuccess) */ {
+class PatientQuarantine final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:PatientQuarantine) */ {
  public:
-  inline PatientSuccess() : PatientSuccess(nullptr) {}
-  ~PatientSuccess() PROTOBUF_FINAL;
+  inline PatientQuarantine() : PatientQuarantine(nullptr) {}
+  ~PatientQuarantine() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(PatientSuccess* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+  void operator delete(PatientQuarantine* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientSuccess));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientQuarantine));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PatientSuccess(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR PatientQuarantine(::google::protobuf::internal::ConstantInitialized);
 
-  inline PatientSuccess(const PatientSuccess& from) : PatientSuccess(nullptr, from) {}
-  inline PatientSuccess(PatientSuccess&& from) noexcept
-      : PatientSuccess(nullptr, ::std::move(from)) {}
-  inline PatientSuccess& operator=(const PatientSuccess& from) {
+  inline PatientQuarantine(const PatientQuarantine& from) : PatientQuarantine(nullptr, from) {}
+  inline PatientQuarantine(PatientQuarantine&& from) noexcept
+      : PatientQuarantine(nullptr, ::std::move(from)) {}
+  inline PatientQuarantine& operator=(const PatientQuarantine& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PatientSuccess& operator=(PatientSuccess&& from) noexcept {
+  inline PatientQuarantine& operator=(PatientQuarantine&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -379,13 +363,13 @@ class PatientSuccess final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PatientSuccess& default_instance() {
-    return *reinterpret_cast<const PatientSuccess*>(
-        &_PatientSuccess_default_instance_);
+  static const PatientQuarantine& default_instance() {
+    return *reinterpret_cast<const PatientQuarantine*>(
+        &_PatientQuarantine_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 4;
-  friend void swap(PatientSuccess& a, PatientSuccess& b) { a.Swap(&b); }
-  inline void Swap(PatientSuccess* PROTOBUF_NONNULL other) {
+  static constexpr int kIndexInFileMessages = 2;
+  friend void swap(PatientQuarantine& a, PatientQuarantine& b) { a.Swap(&b); }
+  inline void Swap(PatientQuarantine* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -393,7 +377,7 @@ class PatientSuccess final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PatientSuccess* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(PatientQuarantine* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -401,13 +385,13 @@ class PatientSuccess final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PatientSuccess* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<PatientSuccess>(arena);
+  PatientQuarantine* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<PatientQuarantine>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PatientSuccess& from);
+  void CopyFrom(const PatientQuarantine& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PatientSuccess& from) { PatientSuccess::MergeImpl(*this, from); }
+  void MergeFrom(const PatientQuarantine& from) { PatientQuarantine::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -443,18 +427,18 @@ class PatientSuccess final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(PatientSuccess* PROTOBUF_NONNULL other);
+  void InternalSwap(PatientQuarantine* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "PatientSuccess"; }
+  static ::absl::string_view FullMessageName() { return "PatientQuarantine"; }
 
  protected:
-  explicit PatientSuccess(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  PatientSuccess(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientSuccess& from);
-  PatientSuccess(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientSuccess&& from) noexcept
-      : PatientSuccess(arena) {
+  explicit PatientQuarantine(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  PatientQuarantine(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientQuarantine& from);
+  PatientQuarantine(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientQuarantine&& from) noexcept
+      : PatientQuarantine(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -471,10 +455,10 @@ class PatientSuccess final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kPatientIdFieldNumber = 2,
-    kSuccessFieldNumber = 1,
+    kPatientIdFieldNumber = 1,
+    kQuarantineRoomFieldNumber = 2,
   };
-  // uint64 patient_id = 2;
+  // uint64 patient_id = 1;
   void clear_patient_id() ;
   ::uint64_t patient_id() const;
   void set_patient_id(::uint64_t value);
@@ -484,17 +468,17 @@ class PatientSuccess final : public ::google::protobuf::Message
   void _internal_set_patient_id(::uint64_t value);
 
   public:
-  // bool success = 1;
-  void clear_success() ;
-  bool success() const;
-  void set_success(bool value);
+  // bool quarantine_room = 2;
+  void clear_quarantine_room() ;
+  bool quarantine_room() const;
+  void set_quarantine_room(bool value);
 
   private:
-  bool _internal_success() const;
-  void _internal_set_success(bool value);
+  bool _internal_quarantine_room() const;
+  void _internal_set_quarantine_room(bool value);
 
   public:
-  // @@protoc_insertion_point(class_scope:PatientSuccess)
+  // @@protoc_insertion_point(class_scope:PatientQuarantine)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -517,44 +501,44 @@ class PatientSuccess final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const PatientSuccess& from_msg);
+        const PatientQuarantine& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint64_t patient_id_;
-    bool success_;
+    bool quarantine_room_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_PatientManagement_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull PatientSuccess_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull PatientQuarantine_class_data_;
 // -------------------------------------------------------------------
 
-class PatientPingRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:PatientPingRequest) */ {
+class PatientDTO final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:PatientDTO) */ {
  public:
-  inline PatientPingRequest() : PatientPingRequest(nullptr) {}
-  ~PatientPingRequest() PROTOBUF_FINAL;
+  inline PatientDTO() : PatientDTO(nullptr) {}
+  ~PatientDTO() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(PatientPingRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+  void operator delete(PatientDTO* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientPingRequest));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientDTO));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PatientPingRequest(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR PatientDTO(::google::protobuf::internal::ConstantInitialized);
 
-  inline PatientPingRequest(const PatientPingRequest& from) : PatientPingRequest(nullptr, from) {}
-  inline PatientPingRequest(PatientPingRequest&& from) noexcept
-      : PatientPingRequest(nullptr, ::std::move(from)) {}
-  inline PatientPingRequest& operator=(const PatientPingRequest& from) {
+  inline PatientDTO(const PatientDTO& from) : PatientDTO(nullptr, from) {}
+  inline PatientDTO(PatientDTO&& from) noexcept
+      : PatientDTO(nullptr, ::std::move(from)) {}
+  inline PatientDTO& operator=(const PatientDTO& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PatientPingRequest& operator=(PatientPingRequest&& from) noexcept {
+  inline PatientDTO& operator=(PatientDTO&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -582,13 +566,13 @@ class PatientPingRequest final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PatientPingRequest& default_instance() {
-    return *reinterpret_cast<const PatientPingRequest*>(
-        &_PatientPingRequest_default_instance_);
+  static const PatientDTO& default_instance() {
+    return *reinterpret_cast<const PatientDTO*>(
+        &_PatientDTO_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 0;
-  friend void swap(PatientPingRequest& a, PatientPingRequest& b) { a.Swap(&b); }
-  inline void Swap(PatientPingRequest* PROTOBUF_NONNULL other) {
+  friend void swap(PatientDTO& a, PatientDTO& b) { a.Swap(&b); }
+  inline void Swap(PatientDTO* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -596,7 +580,7 @@ class PatientPingRequest final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PatientPingRequest* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(PatientDTO* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -604,13 +588,13 @@ class PatientPingRequest final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PatientPingRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<PatientPingRequest>(arena);
+  PatientDTO* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<PatientDTO>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PatientPingRequest& from);
+  void CopyFrom(const PatientDTO& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PatientPingRequest& from) { PatientPingRequest::MergeImpl(*this, from); }
+  void MergeFrom(const PatientDTO& from) { PatientDTO::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -646,18 +630,18 @@ class PatientPingRequest final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(PatientPingRequest* PROTOBUF_NONNULL other);
+  void InternalSwap(PatientDTO* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "PatientPingRequest"; }
+  static ::absl::string_view FullMessageName() { return "PatientDTO"; }
 
  protected:
-  explicit PatientPingRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  PatientPingRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientPingRequest& from);
-  PatientPingRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientPingRequest&& from) noexcept
-      : PatientPingRequest(arena) {
+  explicit PatientDTO(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  PatientDTO(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientDTO& from);
+  PatientDTO(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientDTO&& from) noexcept
+      : PatientDTO(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -674,815 +658,15 @@ class PatientPingRequest final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kPingFieldNumber = 1,
-  };
-  // bool ping = 1;
-  void clear_ping() ;
-  bool ping() const;
-  void set_ping(bool value);
-
-  private:
-  bool _internal_ping() const;
-  void _internal_set_ping(bool value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:PatientPingRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1,
-                                   0, 0,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const PatientPingRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    bool ping_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_PatientManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull PatientPingRequest_class_data_;
-// -------------------------------------------------------------------
-
-class PatientName final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:PatientName) */ {
- public:
-  inline PatientName() : PatientName(nullptr) {}
-  ~PatientName() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(PatientName* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientName));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PatientName(::google::protobuf::internal::ConstantInitialized);
-
-  inline PatientName(const PatientName& from) : PatientName(nullptr, from) {}
-  inline PatientName(PatientName&& from) noexcept
-      : PatientName(nullptr, ::std::move(from)) {}
-  inline PatientName& operator=(const PatientName& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline PatientName& operator=(PatientName&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const PatientName& default_instance() {
-    return *reinterpret_cast<const PatientName*>(
-        &_PatientName_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 6;
-  friend void swap(PatientName& a, PatientName& b) { a.Swap(&b); }
-  inline void Swap(PatientName* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(PatientName* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  PatientName* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<PatientName>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PatientName& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PatientName& from) { PatientName::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(PatientName* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "PatientName"; }
-
- protected:
-  explicit PatientName(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  PatientName(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientName& from);
-  PatientName(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientName&& from) noexcept
-      : PatientName(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kFirstNameFieldNumber = 1,
-    kMiddleNameFieldNumber = 2,
-    kLastNameFieldNumber = 3,
-  };
-  // string first_name = 1;
-  void clear_first_name() ;
-  const ::std::string& first_name() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_first_name(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_first_name();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_first_name();
-  void set_allocated_first_name(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_first_name() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_first_name(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_first_name();
-
-  public:
-  // string middle_name = 2;
-  void clear_middle_name() ;
-  const ::std::string& middle_name() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_middle_name(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_middle_name();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_middle_name();
-  void set_allocated_middle_name(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_middle_name() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_middle_name(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_middle_name();
-
-  public:
-  // string last_name = 3;
-  void clear_last_name() ;
-  const ::std::string& last_name() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_last_name(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_last_name();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_last_name();
-  void set_allocated_last_name(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_last_name() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_last_name(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_last_name();
-
-  public:
-  // @@protoc_insertion_point(class_scope:PatientName)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
-                                   0, 50,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const PatientName& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr first_name_;
-    ::google::protobuf::internal::ArenaStringPtr middle_name_;
-    ::google::protobuf::internal::ArenaStringPtr last_name_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_PatientManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull PatientName_class_data_;
-// -------------------------------------------------------------------
-
-class PatientInfoRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:PatientInfoRequest) */ {
- public:
-  inline PatientInfoRequest() : PatientInfoRequest(nullptr) {}
-  ~PatientInfoRequest() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(PatientInfoRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientInfoRequest));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PatientInfoRequest(::google::protobuf::internal::ConstantInitialized);
-
-  inline PatientInfoRequest(const PatientInfoRequest& from) : PatientInfoRequest(nullptr, from) {}
-  inline PatientInfoRequest(PatientInfoRequest&& from) noexcept
-      : PatientInfoRequest(nullptr, ::std::move(from)) {}
-  inline PatientInfoRequest& operator=(const PatientInfoRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline PatientInfoRequest& operator=(PatientInfoRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const PatientInfoRequest& default_instance() {
-    return *reinterpret_cast<const PatientInfoRequest*>(
-        &_PatientInfoRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 5;
-  friend void swap(PatientInfoRequest& a, PatientInfoRequest& b) { a.Swap(&b); }
-  inline void Swap(PatientInfoRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(PatientInfoRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  PatientInfoRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<PatientInfoRequest>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PatientInfoRequest& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PatientInfoRequest& from) { PatientInfoRequest::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(PatientInfoRequest* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "PatientInfoRequest"; }
-
- protected:
-  explicit PatientInfoRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  PatientInfoRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientInfoRequest& from);
-  PatientInfoRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientInfoRequest&& from) noexcept
-      : PatientInfoRequest(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kPatientIdFieldNumber = 1,
-  };
-  // uint64 patient_id = 1;
-  void clear_patient_id() ;
-  ::uint64_t patient_id() const;
-  void set_patient_id(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_patient_id() const;
-  void _internal_set_patient_id(::uint64_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:PatientInfoRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1,
-                                   0, 0,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const PatientInfoRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::uint64_t patient_id_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_PatientManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull PatientInfoRequest_class_data_;
-// -------------------------------------------------------------------
-
-class PatientDischargeRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:PatientDischargeRequest) */ {
- public:
-  inline PatientDischargeRequest() : PatientDischargeRequest(nullptr) {}
-  ~PatientDischargeRequest() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(PatientDischargeRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientDischargeRequest));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PatientDischargeRequest(::google::protobuf::internal::ConstantInitialized);
-
-  inline PatientDischargeRequest(const PatientDischargeRequest& from) : PatientDischargeRequest(nullptr, from) {}
-  inline PatientDischargeRequest(PatientDischargeRequest&& from) noexcept
-      : PatientDischargeRequest(nullptr, ::std::move(from)) {}
-  inline PatientDischargeRequest& operator=(const PatientDischargeRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline PatientDischargeRequest& operator=(PatientDischargeRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const PatientDischargeRequest& default_instance() {
-    return *reinterpret_cast<const PatientDischargeRequest*>(
-        &_PatientDischargeRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 2;
-  friend void swap(PatientDischargeRequest& a, PatientDischargeRequest& b) { a.Swap(&b); }
-  inline void Swap(PatientDischargeRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(PatientDischargeRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  PatientDischargeRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<PatientDischargeRequest>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PatientDischargeRequest& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PatientDischargeRequest& from) { PatientDischargeRequest::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(PatientDischargeRequest* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "PatientDischargeRequest"; }
-
- protected:
-  explicit PatientDischargeRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  PatientDischargeRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientDischargeRequest& from);
-  PatientDischargeRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientDischargeRequest&& from) noexcept
-      : PatientDischargeRequest(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kPatientIdFieldNumber = 1,
-  };
-  // uint64 patient_id = 1;
-  void clear_patient_id() ;
-  ::uint64_t patient_id() const;
-  void set_patient_id(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_patient_id() const;
-  void _internal_set_patient_id(::uint64_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:PatientDischargeRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1,
-                                   0, 0,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const PatientDischargeRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::uint64_t patient_id_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_PatientManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull PatientDischargeRequest_class_data_;
-// -------------------------------------------------------------------
-
-class PatientInformation final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:PatientInformation) */ {
- public:
-  inline PatientInformation() : PatientInformation(nullptr) {}
-  ~PatientInformation() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(PatientInformation* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientInformation));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PatientInformation(::google::protobuf::internal::ConstantInitialized);
-
-  inline PatientInformation(const PatientInformation& from) : PatientInformation(nullptr, from) {}
-  inline PatientInformation(PatientInformation&& from) noexcept
-      : PatientInformation(nullptr, ::std::move(from)) {}
-  inline PatientInformation& operator=(const PatientInformation& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline PatientInformation& operator=(PatientInformation&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const PatientInformation& default_instance() {
-    return *reinterpret_cast<const PatientInformation*>(
-        &_PatientInformation_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 7;
-  friend void swap(PatientInformation& a, PatientInformation& b) { a.Swap(&b); }
-  inline void Swap(PatientInformation* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(PatientInformation* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  PatientInformation* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<PatientInformation>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PatientInformation& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PatientInformation& from) { PatientInformation::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(PatientInformation* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "PatientInformation"; }
-
- protected:
-  explicit PatientInformation(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  PatientInformation(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientInformation& from);
-  PatientInformation(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientInformation&& from) noexcept
-      : PatientInformation(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kPatientSexFieldNumber = 2,
-    kPatientConditionFieldNumber = 3,
+    kPatientSexFieldNumber = 3,
+    kPatientCondFieldNumber = 4,
+    kRoomTypeFieldNumber = 6,
     kPatientNameFieldNumber = 1,
-    kPatientRoomFieldNumber = 4,
+    kPatientIdFieldNumber = 2,
+    kPatientRoomFieldNumber = 5,
+    kIsQuarantinedFieldNumber = 7,
   };
-  // string patient_sex = 2;
+  // string patient_sex = 3;
   void clear_patient_sex() ;
   const ::std::string& patient_sex() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
@@ -1497,37 +681,62 @@ class PatientInformation final : public ::google::protobuf::Message
   ::std::string* PROTOBUF_NONNULL _internal_mutable_patient_sex();
 
   public:
-  // string patient_condition = 3;
-  void clear_patient_condition() ;
-  const ::std::string& patient_condition() const;
+  // string patient_cond = 4;
+  void clear_patient_cond() ;
+  const ::std::string& patient_cond() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_patient_condition(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_patient_condition();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_patient_condition();
-  void set_allocated_patient_condition(::std::string* PROTOBUF_NULLABLE value);
+  void set_patient_cond(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_patient_cond();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_patient_cond();
+  void set_allocated_patient_cond(::std::string* PROTOBUF_NULLABLE value);
 
   private:
-  const ::std::string& _internal_patient_condition() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_patient_condition(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_patient_condition();
+  const ::std::string& _internal_patient_cond() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_patient_cond(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_patient_cond();
 
   public:
-  // .PatientName patient_name = 1;
+  // string room_type = 6;
+  void clear_room_type() ;
+  const ::std::string& room_type() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_room_type(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_room_type();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_room_type();
+  void set_allocated_room_type(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_room_type() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_room_type(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_room_type();
+
+  public:
+  // .NameDTO patient_name = 1;
   bool has_patient_name() const;
   void clear_patient_name() ;
-  const ::PatientName& patient_name() const;
-  [[nodiscard]] ::PatientName* PROTOBUF_NULLABLE release_patient_name();
-  ::PatientName* PROTOBUF_NONNULL mutable_patient_name();
-  void set_allocated_patient_name(::PatientName* PROTOBUF_NULLABLE value);
-  void unsafe_arena_set_allocated_patient_name(::PatientName* PROTOBUF_NULLABLE value);
-  ::PatientName* PROTOBUF_NULLABLE unsafe_arena_release_patient_name();
+  const ::NameDTO& patient_name() const;
+  [[nodiscard]] ::NameDTO* PROTOBUF_NULLABLE release_patient_name();
+  ::NameDTO* PROTOBUF_NONNULL mutable_patient_name();
+  void set_allocated_patient_name(::NameDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_patient_name(::NameDTO* PROTOBUF_NULLABLE value);
+  ::NameDTO* PROTOBUF_NULLABLE unsafe_arena_release_patient_name();
 
   private:
-  const ::PatientName& _internal_patient_name() const;
-  ::PatientName* PROTOBUF_NONNULL _internal_mutable_patient_name();
+  const ::NameDTO& _internal_patient_name() const;
+  ::NameDTO* PROTOBUF_NONNULL _internal_mutable_patient_name();
 
   public:
-  // uint32 patient_room = 4;
+  // uint64 patient_id = 2;
+  void clear_patient_id() ;
+  ::uint64_t patient_id() const;
+  void set_patient_id(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_patient_id() const;
+  void _internal_set_patient_id(::uint64_t value);
+
+  public:
+  // uint32 patient_room = 5;
   void clear_patient_room() ;
   ::uint32_t patient_room() const;
   void set_patient_room(::uint32_t value);
@@ -1537,12 +746,22 @@ class PatientInformation final : public ::google::protobuf::Message
   void _internal_set_patient_room(::uint32_t value);
 
   public:
-  // @@protoc_insertion_point(class_scope:PatientInformation)
+  // bool is_quarantined = 7;
+  void clear_is_quarantined() ;
+  bool is_quarantined() const;
+  void set_is_quarantined(bool value);
+
+  private:
+  bool _internal_is_quarantined() const;
+  void _internal_set_is_quarantined(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:PatientDTO)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 4,
-                                   1, 55,
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
+                                   1, 51,
                                    2>
       _table_;
 
@@ -1560,46 +779,49 @@ class PatientInformation final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const PatientInformation& from_msg);
+        const PatientDTO& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr patient_sex_;
-    ::google::protobuf::internal::ArenaStringPtr patient_condition_;
-    ::PatientName* PROTOBUF_NULLABLE patient_name_;
+    ::google::protobuf::internal::ArenaStringPtr patient_cond_;
+    ::google::protobuf::internal::ArenaStringPtr room_type_;
+    ::NameDTO* PROTOBUF_NULLABLE patient_name_;
+    ::uint64_t patient_id_;
     ::uint32_t patient_room_;
+    bool is_quarantined_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_PatientManagement_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull PatientInformation_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull PatientDTO_class_data_;
 // -------------------------------------------------------------------
 
-class PatientAdmissionRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:PatientAdmissionRequest) */ {
+class PatientList final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:PatientList) */ {
  public:
-  inline PatientAdmissionRequest() : PatientAdmissionRequest(nullptr) {}
-  ~PatientAdmissionRequest() PROTOBUF_FINAL;
+  inline PatientList() : PatientList(nullptr) {}
+  ~PatientList() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(PatientAdmissionRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+  void operator delete(PatientList* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientAdmissionRequest));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(PatientList));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PatientAdmissionRequest(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR PatientList(::google::protobuf::internal::ConstantInitialized);
 
-  inline PatientAdmissionRequest(const PatientAdmissionRequest& from) : PatientAdmissionRequest(nullptr, from) {}
-  inline PatientAdmissionRequest(PatientAdmissionRequest&& from) noexcept
-      : PatientAdmissionRequest(nullptr, ::std::move(from)) {}
-  inline PatientAdmissionRequest& operator=(const PatientAdmissionRequest& from) {
+  inline PatientList(const PatientList& from) : PatientList(nullptr, from) {}
+  inline PatientList(PatientList&& from) noexcept
+      : PatientList(nullptr, ::std::move(from)) {}
+  inline PatientList& operator=(const PatientList& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PatientAdmissionRequest& operator=(PatientAdmissionRequest&& from) noexcept {
+  inline PatientList& operator=(PatientList&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -1627,13 +849,13 @@ class PatientAdmissionRequest final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PatientAdmissionRequest& default_instance() {
-    return *reinterpret_cast<const PatientAdmissionRequest*>(
-        &_PatientAdmissionRequest_default_instance_);
+  static const PatientList& default_instance() {
+    return *reinterpret_cast<const PatientList*>(
+        &_PatientList_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 1;
-  friend void swap(PatientAdmissionRequest& a, PatientAdmissionRequest& b) { a.Swap(&b); }
-  inline void Swap(PatientAdmissionRequest* PROTOBUF_NONNULL other) {
+  static constexpr int kIndexInFileMessages = 3;
+  friend void swap(PatientList& a, PatientList& b) { a.Swap(&b); }
+  inline void Swap(PatientList* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -1641,7 +863,7 @@ class PatientAdmissionRequest final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PatientAdmissionRequest* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(PatientList* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -1649,13 +871,13 @@ class PatientAdmissionRequest final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PatientAdmissionRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<PatientAdmissionRequest>(arena);
+  PatientList* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<PatientList>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PatientAdmissionRequest& from);
+  void CopyFrom(const PatientList& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PatientAdmissionRequest& from) { PatientAdmissionRequest::MergeImpl(*this, from); }
+  void MergeFrom(const PatientList& from) { PatientList::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -1691,18 +913,18 @@ class PatientAdmissionRequest final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(PatientAdmissionRequest* PROTOBUF_NONNULL other);
+  void InternalSwap(PatientList* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "PatientAdmissionRequest"; }
+  static ::absl::string_view FullMessageName() { return "PatientList"; }
 
  protected:
-  explicit PatientAdmissionRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  PatientAdmissionRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientAdmissionRequest& from);
-  PatientAdmissionRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientAdmissionRequest&& from) noexcept
-      : PatientAdmissionRequest(arena) {
+  explicit PatientList(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  PatientList(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PatientList& from);
+  PatientList(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PatientList&& from) noexcept
+      : PatientList(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -1719,56 +941,31 @@ class PatientAdmissionRequest final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kRoomTypeFieldNumber = 2,
-    kPatientInfoFieldNumber = 1,
-    kQuarantinedFieldNumber = 3,
+    kPatientsFieldNumber = 1,
   };
-  // string room_type = 2;
-  void clear_room_type() ;
-  const ::std::string& room_type() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_room_type(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_room_type();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_room_type();
-  void set_allocated_room_type(::std::string* PROTOBUF_NULLABLE value);
-
+  // repeated .PatientDTO patients = 1;
+  int patients_size() const;
   private:
-  const ::std::string& _internal_room_type() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_room_type(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_room_type();
+  int _internal_patients_size() const;
 
   public:
-  // .PatientInformation patient_info = 1;
-  bool has_patient_info() const;
-  void clear_patient_info() ;
-  const ::PatientInformation& patient_info() const;
-  [[nodiscard]] ::PatientInformation* PROTOBUF_NULLABLE release_patient_info();
-  ::PatientInformation* PROTOBUF_NONNULL mutable_patient_info();
-  void set_allocated_patient_info(::PatientInformation* PROTOBUF_NULLABLE value);
-  void unsafe_arena_set_allocated_patient_info(::PatientInformation* PROTOBUF_NULLABLE value);
-  ::PatientInformation* PROTOBUF_NULLABLE unsafe_arena_release_patient_info();
+  void clear_patients() ;
+  ::PatientDTO* PROTOBUF_NONNULL mutable_patients(int index);
+  ::google::protobuf::RepeatedPtrField<::PatientDTO>* PROTOBUF_NONNULL mutable_patients();
 
   private:
-  const ::PatientInformation& _internal_patient_info() const;
-  ::PatientInformation* PROTOBUF_NONNULL _internal_mutable_patient_info();
-
+  const ::google::protobuf::RepeatedPtrField<::PatientDTO>& _internal_patients() const;
+  ::google::protobuf::RepeatedPtrField<::PatientDTO>* PROTOBUF_NONNULL _internal_mutable_patients();
   public:
-  // bool quarantined = 3;
-  void clear_quarantined() ;
-  bool quarantined() const;
-  void set_quarantined(bool value);
-
-  private:
-  bool _internal_quarantined() const;
-  void _internal_set_quarantined(bool value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:PatientAdmissionRequest)
+  const ::PatientDTO& patients(int index) const;
+  ::PatientDTO* PROTOBUF_NONNULL add_patients();
+  const ::google::protobuf::RepeatedPtrField<::PatientDTO>& patients() const;
+  // @@protoc_insertion_point(class_scope:PatientList)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
-                                   1, 41,
+  static const ::google::protobuf::internal::TcParseTable<0, 1,
+                                   1, 0,
                                    2>
       _table_;
 
@@ -1786,19 +983,16 @@ class PatientAdmissionRequest final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const PatientAdmissionRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
+        const PatientList& from_msg);
+    ::google::protobuf::RepeatedPtrField< ::PatientDTO > patients_;
     ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr room_type_;
-    ::PatientInformation* PROTOBUF_NULLABLE patient_info_;
-    bool quarantined_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_PatientManagement_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull PatientAdmissionRequest_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull PatientList_class_data_;
 
 // ===================================================================
 
@@ -1814,714 +1008,42 @@ extern const ::google::protobuf::internal::ClassDataFull PatientAdmissionRequest
 #endif  // __GNUC__
 // -------------------------------------------------------------------
 
-// PatientPingRequest
+// PatientDTO
 
-// bool ping = 1;
-inline void PatientPingRequest::clear_ping() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.ping_ = false;
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline bool PatientPingRequest::ping() const {
-  // @@protoc_insertion_point(field_get:PatientPingRequest.ping)
-  return _internal_ping();
-}
-inline void PatientPingRequest::set_ping(bool value) {
-  _internal_set_ping(value);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_set:PatientPingRequest.ping)
-}
-inline bool PatientPingRequest::_internal_ping() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.ping_;
-}
-inline void PatientPingRequest::_internal_set_ping(bool value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.ping_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// PatientAdmissionRequest
-
-// .PatientInformation patient_info = 1;
-inline bool PatientAdmissionRequest::has_patient_info() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.patient_info_ != nullptr);
-  return value;
-}
-inline void PatientAdmissionRequest::clear_patient_info() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.patient_info_ != nullptr) _impl_.patient_info_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline const ::PatientInformation& PatientAdmissionRequest::_internal_patient_info() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::PatientInformation* p = _impl_.patient_info_;
-  return p != nullptr ? *p : reinterpret_cast<const ::PatientInformation&>(::_PatientInformation_default_instance_);
-}
-inline const ::PatientInformation& PatientAdmissionRequest::patient_info() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:PatientAdmissionRequest.patient_info)
-  return _internal_patient_info();
-}
-inline void PatientAdmissionRequest::unsafe_arena_set_allocated_patient_info(
-    ::PatientInformation* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.patient_info_);
-  }
-  _impl_.patient_info_ = reinterpret_cast<::PatientInformation*>(value);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000002u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000002u;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:PatientAdmissionRequest.patient_info)
-}
-inline ::PatientInformation* PROTOBUF_NULLABLE PatientAdmissionRequest::release_patient_info() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-
-  _impl_._has_bits_[0] &= ~0x00000002u;
-  ::PatientInformation* released = _impl_.patient_info_;
-  _impl_.patient_info_ = nullptr;
-  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
-    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
-    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
-    if (GetArena() == nullptr) {
-      delete old;
-    }
-  } else {
-    if (GetArena() != nullptr) {
-      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
-    }
-  }
-  return released;
-}
-inline ::PatientInformation* PROTOBUF_NULLABLE PatientAdmissionRequest::unsafe_arena_release_patient_info() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:PatientAdmissionRequest.patient_info)
-
-  _impl_._has_bits_[0] &= ~0x00000002u;
-  ::PatientInformation* temp = _impl_.patient_info_;
-  _impl_.patient_info_ = nullptr;
-  return temp;
-}
-inline ::PatientInformation* PROTOBUF_NONNULL PatientAdmissionRequest::_internal_mutable_patient_info() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.patient_info_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::PatientInformation>(GetArena());
-    _impl_.patient_info_ = reinterpret_cast<::PatientInformation*>(p);
-  }
-  return _impl_.patient_info_;
-}
-inline ::PatientInformation* PROTOBUF_NONNULL PatientAdmissionRequest::mutable_patient_info()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000002u;
-  ::PatientInformation* _msg = _internal_mutable_patient_info();
-  // @@protoc_insertion_point(field_mutable:PatientAdmissionRequest.patient_info)
-  return _msg;
-}
-inline void PatientAdmissionRequest::set_allocated_patient_info(::PatientInformation* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::Arena* message_arena = GetArena();
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.patient_info_);
-  }
-
-  if (value != nullptr) {
-    ::google::protobuf::Arena* submessage_arena = value->GetArena();
-    if (message_arena != submessage_arena) {
-      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
-    }
-    _impl_._has_bits_[0] |= 0x00000002u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000002u;
-  }
-
-  _impl_.patient_info_ = reinterpret_cast<::PatientInformation*>(value);
-  // @@protoc_insertion_point(field_set_allocated:PatientAdmissionRequest.patient_info)
-}
-
-// string room_type = 2;
-inline void PatientAdmissionRequest::clear_room_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.room_type_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline const ::std::string& PatientAdmissionRequest::room_type() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:PatientAdmissionRequest.room_type)
-  return _internal_room_type();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void PatientAdmissionRequest::set_room_type(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.room_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:PatientAdmissionRequest.room_type)
-}
-inline ::std::string* PROTOBUF_NONNULL PatientAdmissionRequest::mutable_room_type()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_room_type();
-  // @@protoc_insertion_point(field_mutable:PatientAdmissionRequest.room_type)
-  return _s;
-}
-inline const ::std::string& PatientAdmissionRequest::_internal_room_type() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.room_type_.Get();
-}
-inline void PatientAdmissionRequest::_internal_set_room_type(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.room_type_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL PatientAdmissionRequest::_internal_mutable_room_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  return _impl_.room_type_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE PatientAdmissionRequest::release_room_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:PatientAdmissionRequest.room_type)
-  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000001u;
-  auto* released = _impl_.room_type_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.room_type_.Set("", GetArena());
-  }
-  return released;
-}
-inline void PatientAdmissionRequest::set_allocated_room_type(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
-  }
-  _impl_.room_type_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.room_type_.IsDefault()) {
-    _impl_.room_type_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:PatientAdmissionRequest.room_type)
-}
-
-// bool quarantined = 3;
-inline void PatientAdmissionRequest::clear_quarantined() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.quarantined_ = false;
-  _impl_._has_bits_[0] &= ~0x00000004u;
-}
-inline bool PatientAdmissionRequest::quarantined() const {
-  // @@protoc_insertion_point(field_get:PatientAdmissionRequest.quarantined)
-  return _internal_quarantined();
-}
-inline void PatientAdmissionRequest::set_quarantined(bool value) {
-  _internal_set_quarantined(value);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  // @@protoc_insertion_point(field_set:PatientAdmissionRequest.quarantined)
-}
-inline bool PatientAdmissionRequest::_internal_quarantined() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.quarantined_;
-}
-inline void PatientAdmissionRequest::_internal_set_quarantined(bool value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.quarantined_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// PatientDischargeRequest
-
-// uint64 patient_id = 1;
-inline void PatientDischargeRequest::clear_patient_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.patient_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline ::uint64_t PatientDischargeRequest::patient_id() const {
-  // @@protoc_insertion_point(field_get:PatientDischargeRequest.patient_id)
-  return _internal_patient_id();
-}
-inline void PatientDischargeRequest::set_patient_id(::uint64_t value) {
-  _internal_set_patient_id(value);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_set:PatientDischargeRequest.patient_id)
-}
-inline ::uint64_t PatientDischargeRequest::_internal_patient_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.patient_id_;
-}
-inline void PatientDischargeRequest::_internal_set_patient_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.patient_id_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// PatientTransferRequest
-
-// uint64 patient_id = 1;
-inline void PatientTransferRequest::clear_patient_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.patient_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline ::uint64_t PatientTransferRequest::patient_id() const {
-  // @@protoc_insertion_point(field_get:PatientTransferRequest.patient_id)
-  return _internal_patient_id();
-}
-inline void PatientTransferRequest::set_patient_id(::uint64_t value) {
-  _internal_set_patient_id(value);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_set:PatientTransferRequest.patient_id)
-}
-inline ::uint64_t PatientTransferRequest::_internal_patient_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.patient_id_;
-}
-inline void PatientTransferRequest::_internal_set_patient_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.patient_id_ = value;
-}
-
-// uint32 desired_room = 2;
-inline void PatientTransferRequest::clear_desired_room() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.desired_room_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000004u;
-}
-inline ::uint32_t PatientTransferRequest::desired_room() const {
-  // @@protoc_insertion_point(field_get:PatientTransferRequest.desired_room)
-  return _internal_desired_room();
-}
-inline void PatientTransferRequest::set_desired_room(::uint32_t value) {
-  _internal_set_desired_room(value);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  // @@protoc_insertion_point(field_set:PatientTransferRequest.desired_room)
-}
-inline ::uint32_t PatientTransferRequest::_internal_desired_room() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.desired_room_;
-}
-inline void PatientTransferRequest::_internal_set_desired_room(::uint32_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.desired_room_ = value;
-}
-
-// string room_type = 3;
-inline void PatientTransferRequest::clear_room_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.room_type_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline const ::std::string& PatientTransferRequest::room_type() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:PatientTransferRequest.room_type)
-  return _internal_room_type();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void PatientTransferRequest::set_room_type(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.room_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:PatientTransferRequest.room_type)
-}
-inline ::std::string* PROTOBUF_NONNULL PatientTransferRequest::mutable_room_type()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_room_type();
-  // @@protoc_insertion_point(field_mutable:PatientTransferRequest.room_type)
-  return _s;
-}
-inline const ::std::string& PatientTransferRequest::_internal_room_type() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.room_type_.Get();
-}
-inline void PatientTransferRequest::_internal_set_room_type(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.room_type_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL PatientTransferRequest::_internal_mutable_room_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  return _impl_.room_type_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE PatientTransferRequest::release_room_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:PatientTransferRequest.room_type)
-  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000001u;
-  auto* released = _impl_.room_type_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.room_type_.Set("", GetArena());
-  }
-  return released;
-}
-inline void PatientTransferRequest::set_allocated_room_type(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
-  }
-  _impl_.room_type_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.room_type_.IsDefault()) {
-    _impl_.room_type_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:PatientTransferRequest.room_type)
-}
-
-// bool quarantined = 4;
-inline void PatientTransferRequest::clear_quarantined() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.quarantined_ = false;
-  _impl_._has_bits_[0] &= ~0x00000008u;
-}
-inline bool PatientTransferRequest::quarantined() const {
-  // @@protoc_insertion_point(field_get:PatientTransferRequest.quarantined)
-  return _internal_quarantined();
-}
-inline void PatientTransferRequest::set_quarantined(bool value) {
-  _internal_set_quarantined(value);
-  _impl_._has_bits_[0] |= 0x00000008u;
-  // @@protoc_insertion_point(field_set:PatientTransferRequest.quarantined)
-}
-inline bool PatientTransferRequest::_internal_quarantined() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.quarantined_;
-}
-inline void PatientTransferRequest::_internal_set_quarantined(bool value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.quarantined_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// PatientSuccess
-
-// bool success = 1;
-inline void PatientSuccess::clear_success() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.success_ = false;
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline bool PatientSuccess::success() const {
-  // @@protoc_insertion_point(field_get:PatientSuccess.success)
-  return _internal_success();
-}
-inline void PatientSuccess::set_success(bool value) {
-  _internal_set_success(value);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_set:PatientSuccess.success)
-}
-inline bool PatientSuccess::_internal_success() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.success_;
-}
-inline void PatientSuccess::_internal_set_success(bool value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.success_ = value;
-}
-
-// uint64 patient_id = 2;
-inline void PatientSuccess::clear_patient_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.patient_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline ::uint64_t PatientSuccess::patient_id() const {
-  // @@protoc_insertion_point(field_get:PatientSuccess.patient_id)
-  return _internal_patient_id();
-}
-inline void PatientSuccess::set_patient_id(::uint64_t value) {
-  _internal_set_patient_id(value);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_set:PatientSuccess.patient_id)
-}
-inline ::uint64_t PatientSuccess::_internal_patient_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.patient_id_;
-}
-inline void PatientSuccess::_internal_set_patient_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.patient_id_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// PatientInfoRequest
-
-// uint64 patient_id = 1;
-inline void PatientInfoRequest::clear_patient_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.patient_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline ::uint64_t PatientInfoRequest::patient_id() const {
-  // @@protoc_insertion_point(field_get:PatientInfoRequest.patient_id)
-  return _internal_patient_id();
-}
-inline void PatientInfoRequest::set_patient_id(::uint64_t value) {
-  _internal_set_patient_id(value);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_set:PatientInfoRequest.patient_id)
-}
-inline ::uint64_t PatientInfoRequest::_internal_patient_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.patient_id_;
-}
-inline void PatientInfoRequest::_internal_set_patient_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.patient_id_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// PatientName
-
-// string first_name = 1;
-inline void PatientName::clear_first_name() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.first_name_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline const ::std::string& PatientName::first_name() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:PatientName.first_name)
-  return _internal_first_name();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void PatientName::set_first_name(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.first_name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:PatientName.first_name)
-}
-inline ::std::string* PROTOBUF_NONNULL PatientName::mutable_first_name()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_first_name();
-  // @@protoc_insertion_point(field_mutable:PatientName.first_name)
-  return _s;
-}
-inline const ::std::string& PatientName::_internal_first_name() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.first_name_.Get();
-}
-inline void PatientName::_internal_set_first_name(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.first_name_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL PatientName::_internal_mutable_first_name() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  return _impl_.first_name_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE PatientName::release_first_name() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:PatientName.first_name)
-  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000001u;
-  auto* released = _impl_.first_name_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.first_name_.Set("", GetArena());
-  }
-  return released;
-}
-inline void PatientName::set_allocated_first_name(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
-  }
-  _impl_.first_name_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.first_name_.IsDefault()) {
-    _impl_.first_name_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:PatientName.first_name)
-}
-
-// string middle_name = 2;
-inline void PatientName::clear_middle_name() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.middle_name_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline const ::std::string& PatientName::middle_name() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:PatientName.middle_name)
-  return _internal_middle_name();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void PatientName::set_middle_name(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  _impl_.middle_name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:PatientName.middle_name)
-}
-inline ::std::string* PROTOBUF_NONNULL PatientName::mutable_middle_name()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_middle_name();
-  // @@protoc_insertion_point(field_mutable:PatientName.middle_name)
-  return _s;
-}
-inline const ::std::string& PatientName::_internal_middle_name() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.middle_name_.Get();
-}
-inline void PatientName::_internal_set_middle_name(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  _impl_.middle_name_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL PatientName::_internal_mutable_middle_name() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  return _impl_.middle_name_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE PatientName::release_middle_name() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:PatientName.middle_name)
-  if ((_impl_._has_bits_[0] & 0x00000002u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000002u;
-  auto* released = _impl_.middle_name_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.middle_name_.Set("", GetArena());
-  }
-  return released;
-}
-inline void PatientName::set_allocated_middle_name(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000002u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000002u;
-  }
-  _impl_.middle_name_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.middle_name_.IsDefault()) {
-    _impl_.middle_name_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:PatientName.middle_name)
-}
-
-// string last_name = 3;
-inline void PatientName::clear_last_name() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.last_name_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000004u;
-}
-inline const ::std::string& PatientName::last_name() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:PatientName.last_name)
-  return _internal_last_name();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void PatientName::set_last_name(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  _impl_.last_name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:PatientName.last_name)
-}
-inline ::std::string* PROTOBUF_NONNULL PatientName::mutable_last_name()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_last_name();
-  // @@protoc_insertion_point(field_mutable:PatientName.last_name)
-  return _s;
-}
-inline const ::std::string& PatientName::_internal_last_name() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.last_name_.Get();
-}
-inline void PatientName::_internal_set_last_name(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  _impl_.last_name_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL PatientName::_internal_mutable_last_name() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  return _impl_.last_name_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE PatientName::release_last_name() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:PatientName.last_name)
-  if ((_impl_._has_bits_[0] & 0x00000004u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000004u;
-  auto* released = _impl_.last_name_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.last_name_.Set("", GetArena());
-  }
-  return released;
-}
-inline void PatientName::set_allocated_last_name(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000004u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000004u;
-  }
-  _impl_.last_name_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.last_name_.IsDefault()) {
-    _impl_.last_name_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:PatientName.last_name)
-}
-
-// -------------------------------------------------------------------
-
-// PatientInformation
-
-// .PatientName patient_name = 1;
-inline bool PatientInformation::has_patient_name() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
+// .NameDTO patient_name = 1;
+inline bool PatientDTO::has_patient_name() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.patient_name_ != nullptr);
   return value;
 }
-inline void PatientInformation::clear_patient_name() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.patient_name_ != nullptr) _impl_.patient_name_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000004u;
-}
-inline const ::PatientName& PatientInformation::_internal_patient_name() const {
+inline const ::NameDTO& PatientDTO::_internal_patient_name() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::PatientName* p = _impl_.patient_name_;
-  return p != nullptr ? *p : reinterpret_cast<const ::PatientName&>(::_PatientName_default_instance_);
+  const ::NameDTO* p = _impl_.patient_name_;
+  return p != nullptr ? *p : reinterpret_cast<const ::NameDTO&>(::_NameDTO_default_instance_);
 }
-inline const ::PatientName& PatientInformation::patient_name() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:PatientInformation.patient_name)
+inline const ::NameDTO& PatientDTO::patient_name() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:PatientDTO.patient_name)
   return _internal_patient_name();
 }
-inline void PatientInformation::unsafe_arena_set_allocated_patient_name(
-    ::PatientName* PROTOBUF_NULLABLE value) {
+inline void PatientDTO::unsafe_arena_set_allocated_patient_name(
+    ::NameDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.patient_name_);
   }
-  _impl_.patient_name_ = reinterpret_cast<::PatientName*>(value);
+  _impl_.patient_name_ = reinterpret_cast<::NameDTO*>(value);
   if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000004u;
+    _impl_._has_bits_[0] |= 0x00000008u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000004u;
+    _impl_._has_bits_[0] &= ~0x00000008u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:PatientInformation.patient_name)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:PatientDTO.patient_name)
 }
-inline ::PatientName* PROTOBUF_NULLABLE PatientInformation::release_patient_name() {
+inline ::NameDTO* PROTOBUF_NULLABLE PatientDTO::release_patient_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  _impl_._has_bits_[0] &= ~0x00000004u;
-  ::PatientName* released = _impl_.patient_name_;
+  _impl_._has_bits_[0] &= ~0x00000008u;
+  ::NameDTO* released = _impl_.patient_name_;
   _impl_.patient_name_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -2536,31 +1058,31 @@ inline ::PatientName* PROTOBUF_NULLABLE PatientInformation::release_patient_name
   }
   return released;
 }
-inline ::PatientName* PROTOBUF_NULLABLE PatientInformation::unsafe_arena_release_patient_name() {
+inline ::NameDTO* PROTOBUF_NULLABLE PatientDTO::unsafe_arena_release_patient_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:PatientInformation.patient_name)
+  // @@protoc_insertion_point(field_release:PatientDTO.patient_name)
 
-  _impl_._has_bits_[0] &= ~0x00000004u;
-  ::PatientName* temp = _impl_.patient_name_;
+  _impl_._has_bits_[0] &= ~0x00000008u;
+  ::NameDTO* temp = _impl_.patient_name_;
   _impl_.patient_name_ = nullptr;
   return temp;
 }
-inline ::PatientName* PROTOBUF_NONNULL PatientInformation::_internal_mutable_patient_name() {
+inline ::NameDTO* PROTOBUF_NONNULL PatientDTO::_internal_mutable_patient_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.patient_name_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::PatientName>(GetArena());
-    _impl_.patient_name_ = reinterpret_cast<::PatientName*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::NameDTO>(GetArena());
+    _impl_.patient_name_ = reinterpret_cast<::NameDTO*>(p);
   }
   return _impl_.patient_name_;
 }
-inline ::PatientName* PROTOBUF_NONNULL PatientInformation::mutable_patient_name()
+inline ::NameDTO* PROTOBUF_NONNULL PatientDTO::mutable_patient_name()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000004u;
-  ::PatientName* _msg = _internal_mutable_patient_name();
-  // @@protoc_insertion_point(field_mutable:PatientInformation.patient_name)
+  _impl_._has_bits_[0] |= 0x00000008u;
+  ::NameDTO* _msg = _internal_mutable_patient_name();
+  // @@protoc_insertion_point(field_mutable:PatientDTO.patient_name)
   return _msg;
 }
-inline void PatientInformation::set_allocated_patient_name(::PatientName* PROTOBUF_NULLABLE value) {
+inline void PatientDTO::set_allocated_patient_name(::NameDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -2568,60 +1090,84 @@ inline void PatientInformation::set_allocated_patient_name(::PatientName* PROTOB
   }
 
   if (value != nullptr) {
-    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    _impl_._has_bits_[0] |= 0x00000004u;
+    _impl_._has_bits_[0] |= 0x00000008u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000004u;
+    _impl_._has_bits_[0] &= ~0x00000008u;
   }
 
-  _impl_.patient_name_ = reinterpret_cast<::PatientName*>(value);
-  // @@protoc_insertion_point(field_set_allocated:PatientInformation.patient_name)
+  _impl_.patient_name_ = reinterpret_cast<::NameDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:PatientDTO.patient_name)
 }
 
-// string patient_sex = 2;
-inline void PatientInformation::clear_patient_sex() {
+// uint64 patient_id = 2;
+inline void PatientDTO::clear_patient_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.patient_id_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000010u;
+}
+inline ::uint64_t PatientDTO::patient_id() const {
+  // @@protoc_insertion_point(field_get:PatientDTO.patient_id)
+  return _internal_patient_id();
+}
+inline void PatientDTO::set_patient_id(::uint64_t value) {
+  _internal_set_patient_id(value);
+  _impl_._has_bits_[0] |= 0x00000010u;
+  // @@protoc_insertion_point(field_set:PatientDTO.patient_id)
+}
+inline ::uint64_t PatientDTO::_internal_patient_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.patient_id_;
+}
+inline void PatientDTO::_internal_set_patient_id(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.patient_id_ = value;
+}
+
+// string patient_sex = 3;
+inline void PatientDTO::clear_patient_sex() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.patient_sex_.ClearToEmpty();
   _impl_._has_bits_[0] &= ~0x00000001u;
 }
-inline const ::std::string& PatientInformation::patient_sex() const
+inline const ::std::string& PatientDTO::patient_sex() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:PatientInformation.patient_sex)
+  // @@protoc_insertion_point(field_get:PatientDTO.patient_sex)
   return _internal_patient_sex();
 }
 template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void PatientInformation::set_patient_sex(Arg_&& arg, Args_... args) {
+PROTOBUF_ALWAYS_INLINE void PatientDTO::set_patient_sex(Arg_&& arg, Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000001u;
   _impl_.patient_sex_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:PatientInformation.patient_sex)
+  // @@protoc_insertion_point(field_set:PatientDTO.patient_sex)
 }
-inline ::std::string* PROTOBUF_NONNULL PatientInformation::mutable_patient_sex()
+inline ::std::string* PROTOBUF_NONNULL PatientDTO::mutable_patient_sex()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   ::std::string* _s = _internal_mutable_patient_sex();
-  // @@protoc_insertion_point(field_mutable:PatientInformation.patient_sex)
+  // @@protoc_insertion_point(field_mutable:PatientDTO.patient_sex)
   return _s;
 }
-inline const ::std::string& PatientInformation::_internal_patient_sex() const {
+inline const ::std::string& PatientDTO::_internal_patient_sex() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.patient_sex_.Get();
 }
-inline void PatientInformation::_internal_set_patient_sex(const ::std::string& value) {
+inline void PatientDTO::_internal_set_patient_sex(const ::std::string& value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000001u;
   _impl_.patient_sex_.Set(value, GetArena());
 }
-inline ::std::string* PROTOBUF_NONNULL PatientInformation::_internal_mutable_patient_sex() {
+inline ::std::string* PROTOBUF_NONNULL PatientDTO::_internal_mutable_patient_sex() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000001u;
   return _impl_.patient_sex_.Mutable( GetArena());
 }
-inline ::std::string* PROTOBUF_NULLABLE PatientInformation::release_patient_sex() {
+inline ::std::string* PROTOBUF_NULLABLE PatientDTO::release_patient_sex() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:PatientInformation.patient_sex)
+  // @@protoc_insertion_point(field_release:PatientDTO.patient_sex)
   if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
     return nullptr;
   }
@@ -2632,7 +1178,7 @@ inline ::std::string* PROTOBUF_NULLABLE PatientInformation::release_patient_sex(
   }
   return released;
 }
-inline void PatientInformation::set_allocated_patient_sex(::std::string* PROTOBUF_NULLABLE value) {
+inline void PatientDTO::set_allocated_patient_sex(::std::string* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000001u;
@@ -2643,96 +1189,432 @@ inline void PatientInformation::set_allocated_patient_sex(::std::string* PROTOBU
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.patient_sex_.IsDefault()) {
     _impl_.patient_sex_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:PatientInformation.patient_sex)
+  // @@protoc_insertion_point(field_set_allocated:PatientDTO.patient_sex)
 }
 
-// string patient_condition = 3;
-inline void PatientInformation::clear_patient_condition() {
+// string patient_cond = 4;
+inline void PatientDTO::clear_patient_cond() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.patient_condition_.ClearToEmpty();
+  _impl_.patient_cond_.ClearToEmpty();
   _impl_._has_bits_[0] &= ~0x00000002u;
 }
-inline const ::std::string& PatientInformation::patient_condition() const
+inline const ::std::string& PatientDTO::patient_cond() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:PatientInformation.patient_condition)
-  return _internal_patient_condition();
+  // @@protoc_insertion_point(field_get:PatientDTO.patient_cond)
+  return _internal_patient_cond();
 }
 template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void PatientInformation::set_patient_condition(Arg_&& arg, Args_... args) {
+PROTOBUF_ALWAYS_INLINE void PatientDTO::set_patient_cond(Arg_&& arg, Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000002u;
-  _impl_.patient_condition_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:PatientInformation.patient_condition)
+  _impl_.patient_cond_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:PatientDTO.patient_cond)
 }
-inline ::std::string* PROTOBUF_NONNULL PatientInformation::mutable_patient_condition()
+inline ::std::string* PROTOBUF_NONNULL PatientDTO::mutable_patient_cond()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_patient_condition();
-  // @@protoc_insertion_point(field_mutable:PatientInformation.patient_condition)
+  ::std::string* _s = _internal_mutable_patient_cond();
+  // @@protoc_insertion_point(field_mutable:PatientDTO.patient_cond)
   return _s;
 }
-inline const ::std::string& PatientInformation::_internal_patient_condition() const {
+inline const ::std::string& PatientDTO::_internal_patient_cond() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.patient_condition_.Get();
+  return _impl_.patient_cond_.Get();
 }
-inline void PatientInformation::_internal_set_patient_condition(const ::std::string& value) {
+inline void PatientDTO::_internal_set_patient_cond(const ::std::string& value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000002u;
-  _impl_.patient_condition_.Set(value, GetArena());
+  _impl_.patient_cond_.Set(value, GetArena());
 }
-inline ::std::string* PROTOBUF_NONNULL PatientInformation::_internal_mutable_patient_condition() {
+inline ::std::string* PROTOBUF_NONNULL PatientDTO::_internal_mutable_patient_cond() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000002u;
-  return _impl_.patient_condition_.Mutable( GetArena());
+  return _impl_.patient_cond_.Mutable( GetArena());
 }
-inline ::std::string* PROTOBUF_NULLABLE PatientInformation::release_patient_condition() {
+inline ::std::string* PROTOBUF_NULLABLE PatientDTO::release_patient_cond() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:PatientInformation.patient_condition)
+  // @@protoc_insertion_point(field_release:PatientDTO.patient_cond)
   if ((_impl_._has_bits_[0] & 0x00000002u) == 0) {
     return nullptr;
   }
   _impl_._has_bits_[0] &= ~0x00000002u;
-  auto* released = _impl_.patient_condition_.Release();
+  auto* released = _impl_.patient_cond_.Release();
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.patient_condition_.Set("", GetArena());
+    _impl_.patient_cond_.Set("", GetArena());
   }
   return released;
 }
-inline void PatientInformation::set_allocated_patient_condition(::std::string* PROTOBUF_NULLABLE value) {
+inline void PatientDTO::set_allocated_patient_cond(::std::string* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000002u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
-  _impl_.patient_condition_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.patient_condition_.IsDefault()) {
-    _impl_.patient_condition_.Set("", GetArena());
+  _impl_.patient_cond_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.patient_cond_.IsDefault()) {
+    _impl_.patient_cond_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:PatientInformation.patient_condition)
+  // @@protoc_insertion_point(field_set_allocated:PatientDTO.patient_cond)
 }
 
-// uint32 patient_room = 4;
-inline void PatientInformation::clear_patient_room() {
+// uint32 patient_room = 5;
+inline void PatientDTO::clear_patient_room() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.patient_room_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000008u;
+  _impl_._has_bits_[0] &= ~0x00000020u;
 }
-inline ::uint32_t PatientInformation::patient_room() const {
-  // @@protoc_insertion_point(field_get:PatientInformation.patient_room)
+inline ::uint32_t PatientDTO::patient_room() const {
+  // @@protoc_insertion_point(field_get:PatientDTO.patient_room)
   return _internal_patient_room();
 }
-inline void PatientInformation::set_patient_room(::uint32_t value) {
+inline void PatientDTO::set_patient_room(::uint32_t value) {
   _internal_set_patient_room(value);
-  _impl_._has_bits_[0] |= 0x00000008u;
-  // @@protoc_insertion_point(field_set:PatientInformation.patient_room)
+  _impl_._has_bits_[0] |= 0x00000020u;
+  // @@protoc_insertion_point(field_set:PatientDTO.patient_room)
 }
-inline ::uint32_t PatientInformation::_internal_patient_room() const {
+inline ::uint32_t PatientDTO::_internal_patient_room() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.patient_room_;
 }
-inline void PatientInformation::_internal_set_patient_room(::uint32_t value) {
+inline void PatientDTO::_internal_set_patient_room(::uint32_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.patient_room_ = value;
+}
+
+// string room_type = 6;
+inline void PatientDTO::clear_room_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.room_type_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000004u;
+}
+inline const ::std::string& PatientDTO::room_type() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:PatientDTO.room_type)
+  return _internal_room_type();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void PatientDTO::set_room_type(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  _impl_.room_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:PatientDTO.room_type)
+}
+inline ::std::string* PROTOBUF_NONNULL PatientDTO::mutable_room_type()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_room_type();
+  // @@protoc_insertion_point(field_mutable:PatientDTO.room_type)
+  return _s;
+}
+inline const ::std::string& PatientDTO::_internal_room_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.room_type_.Get();
+}
+inline void PatientDTO::_internal_set_room_type(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  _impl_.room_type_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL PatientDTO::_internal_mutable_room_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  return _impl_.room_type_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE PatientDTO::release_room_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:PatientDTO.room_type)
+  if ((_impl_._has_bits_[0] & 0x00000004u) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000004u;
+  auto* released = _impl_.room_type_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.room_type_.Set("", GetArena());
+  }
+  return released;
+}
+inline void PatientDTO::set_allocated_room_type(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000004u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000004u;
+  }
+  _impl_.room_type_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.room_type_.IsDefault()) {
+    _impl_.room_type_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:PatientDTO.room_type)
+}
+
+// bool is_quarantined = 7;
+inline void PatientDTO::clear_is_quarantined() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.is_quarantined_ = false;
+  _impl_._has_bits_[0] &= ~0x00000040u;
+}
+inline bool PatientDTO::is_quarantined() const {
+  // @@protoc_insertion_point(field_get:PatientDTO.is_quarantined)
+  return _internal_is_quarantined();
+}
+inline void PatientDTO::set_is_quarantined(bool value) {
+  _internal_set_is_quarantined(value);
+  _impl_._has_bits_[0] |= 0x00000040u;
+  // @@protoc_insertion_point(field_set:PatientDTO.is_quarantined)
+}
+inline bool PatientDTO::_internal_is_quarantined() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.is_quarantined_;
+}
+inline void PatientDTO::_internal_set_is_quarantined(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.is_quarantined_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// PatientTransfer
+
+// uint64 patient_id = 1;
+inline void PatientTransfer::clear_patient_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.patient_id_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000002u;
+}
+inline ::uint64_t PatientTransfer::patient_id() const {
+  // @@protoc_insertion_point(field_get:PatientTransfer.patient_id)
+  return _internal_patient_id();
+}
+inline void PatientTransfer::set_patient_id(::uint64_t value) {
+  _internal_set_patient_id(value);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  // @@protoc_insertion_point(field_set:PatientTransfer.patient_id)
+}
+inline ::uint64_t PatientTransfer::_internal_patient_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.patient_id_;
+}
+inline void PatientTransfer::_internal_set_patient_id(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.patient_id_ = value;
+}
+
+// uint32 new_room_id = 2;
+inline void PatientTransfer::clear_new_room_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.new_room_id_ = 0u;
+  _impl_._has_bits_[0] &= ~0x00000004u;
+}
+inline ::uint32_t PatientTransfer::new_room_id() const {
+  // @@protoc_insertion_point(field_get:PatientTransfer.new_room_id)
+  return _internal_new_room_id();
+}
+inline void PatientTransfer::set_new_room_id(::uint32_t value) {
+  _internal_set_new_room_id(value);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  // @@protoc_insertion_point(field_set:PatientTransfer.new_room_id)
+}
+inline ::uint32_t PatientTransfer::_internal_new_room_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.new_room_id_;
+}
+inline void PatientTransfer::_internal_set_new_room_id(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.new_room_id_ = value;
+}
+
+// string room_type = 3;
+inline void PatientTransfer::clear_room_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.room_type_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::std::string& PatientTransfer::room_type() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:PatientTransfer.room_type)
+  return _internal_room_type();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void PatientTransfer::set_room_type(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  _impl_.room_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:PatientTransfer.room_type)
+}
+inline ::std::string* PROTOBUF_NONNULL PatientTransfer::mutable_room_type()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_room_type();
+  // @@protoc_insertion_point(field_mutable:PatientTransfer.room_type)
+  return _s;
+}
+inline const ::std::string& PatientTransfer::_internal_room_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.room_type_.Get();
+}
+inline void PatientTransfer::_internal_set_room_type(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  _impl_.room_type_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL PatientTransfer::_internal_mutable_room_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  return _impl_.room_type_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE PatientTransfer::release_room_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:PatientTransfer.room_type)
+  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  auto* released = _impl_.room_type_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.room_type_.Set("", GetArena());
+  }
+  return released;
+}
+inline void PatientTransfer::set_allocated_room_type(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  _impl_.room_type_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.room_type_.IsDefault()) {
+    _impl_.room_type_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:PatientTransfer.room_type)
+}
+
+// bool is_quarantined = 4;
+inline void PatientTransfer::clear_is_quarantined() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.is_quarantined_ = false;
+  _impl_._has_bits_[0] &= ~0x00000008u;
+}
+inline bool PatientTransfer::is_quarantined() const {
+  // @@protoc_insertion_point(field_get:PatientTransfer.is_quarantined)
+  return _internal_is_quarantined();
+}
+inline void PatientTransfer::set_is_quarantined(bool value) {
+  _internal_set_is_quarantined(value);
+  _impl_._has_bits_[0] |= 0x00000008u;
+  // @@protoc_insertion_point(field_set:PatientTransfer.is_quarantined)
+}
+inline bool PatientTransfer::_internal_is_quarantined() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.is_quarantined_;
+}
+inline void PatientTransfer::_internal_set_is_quarantined(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.is_quarantined_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// PatientQuarantine
+
+// uint64 patient_id = 1;
+inline void PatientQuarantine::clear_patient_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.patient_id_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline ::uint64_t PatientQuarantine::patient_id() const {
+  // @@protoc_insertion_point(field_get:PatientQuarantine.patient_id)
+  return _internal_patient_id();
+}
+inline void PatientQuarantine::set_patient_id(::uint64_t value) {
+  _internal_set_patient_id(value);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  // @@protoc_insertion_point(field_set:PatientQuarantine.patient_id)
+}
+inline ::uint64_t PatientQuarantine::_internal_patient_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.patient_id_;
+}
+inline void PatientQuarantine::_internal_set_patient_id(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.patient_id_ = value;
+}
+
+// bool quarantine_room = 2;
+inline void PatientQuarantine::clear_quarantine_room() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.quarantine_room_ = false;
+  _impl_._has_bits_[0] &= ~0x00000002u;
+}
+inline bool PatientQuarantine::quarantine_room() const {
+  // @@protoc_insertion_point(field_get:PatientQuarantine.quarantine_room)
+  return _internal_quarantine_room();
+}
+inline void PatientQuarantine::set_quarantine_room(bool value) {
+  _internal_set_quarantine_room(value);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  // @@protoc_insertion_point(field_set:PatientQuarantine.quarantine_room)
+}
+inline bool PatientQuarantine::_internal_quarantine_room() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.quarantine_room_;
+}
+inline void PatientQuarantine::_internal_set_quarantine_room(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.quarantine_room_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// PatientList
+
+// repeated .PatientDTO patients = 1;
+inline int PatientList::_internal_patients_size() const {
+  return _internal_patients().size();
+}
+inline int PatientList::patients_size() const {
+  return _internal_patients_size();
+}
+inline void PatientList::clear_patients() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.patients_.Clear();
+}
+inline ::PatientDTO* PROTOBUF_NONNULL PatientList::mutable_patients(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:PatientList.patients)
+  return _internal_mutable_patients()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::PatientDTO>* PROTOBUF_NONNULL PatientList::mutable_patients()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:PatientList.patients)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_patients();
+}
+inline const ::PatientDTO& PatientList::patients(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:PatientList.patients)
+  return _internal_patients().Get(index);
+}
+inline ::PatientDTO* PROTOBUF_NONNULL PatientList::add_patients()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::PatientDTO* _add = _internal_mutable_patients()->Add();
+  // @@protoc_insertion_point(field_add:PatientList.patients)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::PatientDTO>& PatientList::patients() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:PatientList.patients)
+  return _internal_patients();
+}
+inline const ::google::protobuf::RepeatedPtrField<::PatientDTO>&
+PatientList::_internal_patients() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.patients_;
+}
+inline ::google::protobuf::RepeatedPtrField<::PatientDTO>* PROTOBUF_NONNULL
+PatientList::_internal_mutable_patients() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.patients_;
 }
 
 #ifdef __GNUC__

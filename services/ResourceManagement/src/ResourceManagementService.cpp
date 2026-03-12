@@ -470,7 +470,7 @@ void ResourceManagementService::print_internal() {
     using namespace std;
 
     cout << ansi::bgreen
-         << "==== " << SERVICE_NAME << " STATE ===="
+         << "==== " << service::resource << " STATE ===="
          << ansi::reset << '\n';
 
     auto print_map = [&](const auto& map, const string& name) {

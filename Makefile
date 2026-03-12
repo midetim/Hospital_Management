@@ -31,4 +31,13 @@ buf:
 	rm -rf common/proto/generated/*.pb.*
 	external/grpc/local/bin/protoc -I=common/proto --cpp_out=common/proto/generated --grpc_out=common/proto/generated --plugin=protoc-gen-grpc=external/grpc/local/bin/grpc_cpp_plugin common/proto/*.proto
 
-.PHONY: all xcode ref open clean
+# Git automation
+git:
+ifndef MSG
+	$(error MSG is undefined. Usage: make git MSG="commit message")
+endif
+	git add .
+	git commit -m "$(MSG)"
+	git push -u origin main
+
+.PHONY: all xcode ref open clean git

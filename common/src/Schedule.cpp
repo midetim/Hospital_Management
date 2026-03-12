@@ -16,6 +16,16 @@ Date Date::current_date() {
     };
 }
 
+void Date::to_end_of_day(Date & d) {
+    d.hour = 23;
+    d.minute = 59;
+}
+
+void Date::to_start_of_day(Date & d) {
+    d.hour = 0;
+    d.minute = 0;
+}
+
 void Date::print() {
     std::cout << ansi::bblack << " [ " << year << "-" << month << "-" << day << " " << hour << ":" << minute << " ] "<< ansi::reset << std::endl;
 }
@@ -61,8 +71,6 @@ bool Schedule::addToSchedule(const Date & d, uint32_t room) {
     return addToSchedule(date_to_timestamp(d), room);
 }
 
-
-
 bool Schedule::removeFromSchedule(Timestamp ts) {
     Timestamp::to_next_interval(ts);
     auto it = times.find(ts);
@@ -103,8 +111,6 @@ int64_t Schedule::timeUntilNext() {
     return static_cast<int64_t>(times.begin()->first.time) - static_cast<int64_t>(now());
 }
 
-
-
 uint32_t Schedule::check_schedule() {
     if (timeUntilNext() <= 0) {
         auto it = times.begin();
@@ -115,6 +121,56 @@ uint32_t Schedule::check_schedule() {
         return 0; // Otherwise send nothing
     }
 }
+
+
+std::map<Timestamp, uint32_t> Schedule::getFrom(const Date & d) const {
+    std::map<Timestamp, uint32_t> sub_map;
+    for (const auto & [ts, rid] : times) {
+        if (ts < date_to_timestamp(d)) {
+            sub_map.emplace(ts, rid);
+        } else {
+            break;
+        }
+    }
+    return sub_map;
+}
+
+std::map<Timestamp, uint32_t> Schedule::getToday() const {
+    Date start = Date::current_date();
+    Date::to_start_of_day(start);
+
+    Date end = start;
+    Date::to_end_of_day(end);
+
+    Timestamp start_ts = date_to_timestamp(start);
+    Timestamp end_ts = date_to_timestamp(end);
+
+    auto begin = times.lower_bound(start_ts);
+    auto finish = times.upper_bound(end_ts);
+
+    return std::map<Timestamp, uint32_t>(begin, finish);
+}
+
+std::map<Timestamp, uint32_t> Schedule::getTomorrow() const {
+    Timestamp now = Timestamp::current_time();
+    now += 1440;
+
+    Date start = timestamp_to_date(now);
+    Date::to_start_of_day(start);
+
+    Date end = start;
+    Date::to_end_of_day(end);
+
+    Timestamp start_ts = date_to_timestamp(start);
+    Timestamp end_ts = date_to_timestamp(end);
+
+    auto begin = times.lower_bound(start_ts);
+    auto finish = times.upper_bound(end_ts);
+
+    return std::map<Timestamp, uint32_t>(begin, finish);
+}
+
+
 
 void Schedule::print() {
     if (times.empty()) {

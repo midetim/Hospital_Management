@@ -26,7 +26,7 @@ void FrontEndService::add_patient() {
     
     patient_data p{n, stringToSex(t_sex), stringToCondition(t_cond), 0};
     
-    uint64_t pid = patient_client->admitPatient(p, "General", false, SERVICE_NAME);
+    uint64_t pid = patient_client->admitPatient(p, "General", false, service::front);
     
     if (pid == INVALID_PID) {
         std::cout << ansi::red << "Could not admit patient" << ansi::reset << std::endl;
@@ -49,7 +49,7 @@ void FrontEndService::remove_patient() {
         std::cout << "Invalid input: number out of range\n";
     }
     
-    bool success = patient_client->dischargePatient(pid, SERVICE_NAME);
+    bool success = patient_client->dischargePatient(pid, service::front);
     std::string intro = success ? "S" : "Uns";
     std::cout << intro << "uccessfully removed patient" << ansi::cyan << pid << ansi::reset << std::endl;
 }
@@ -68,7 +68,7 @@ void FrontEndService::view_patient() {
         std::cout << "Invalid input: number out of range\n";
     }
     
-    patient_data p = patient_client->getPatientInfo(pid, SERVICE_NAME);
+    patient_data p = patient_client->getPatientInfo(pid, service::front);
     PatientManagementClient::printPatientData(p, pid);
 }
 
@@ -158,7 +158,7 @@ ReturnCode FrontEndService::init() {
     // Check all connections
     
     /* Room management service */
-    bool success = room_client->ping(SERVICE_NAME);
+    bool success = room_client->ping(service::front);
     if (!success) {
         std::cout   << ansi::bblack << Utils::timestamp() << ansi::reset
                     << "Could not connect to " << room_client->name() << std::endl;
@@ -166,7 +166,7 @@ ReturnCode FrontEndService::init() {
     } 
     
     /* Room management service */
-    success = patient_client->ping(SERVICE_NAME);
+    success = patient_client->ping(service::front);
     if (!success) {
         std::cout   << ansi::bblack << Utils::timestamp() << ansi::reset
                     << "Could not connect to " << patient_client->name() << std::endl;
@@ -174,7 +174,7 @@ ReturnCode FrontEndService::init() {
     }
     
     /* Room management service */
-    success = resource_client->ping(SERVICE_NAME);
+    success = resource_client->ping(service::front);
     if (!success) {
         std::cout   << ansi::bblack << Utils::timestamp() << ansi::reset
                     << "Could not connect to " << resource_client->name() << std::endl;

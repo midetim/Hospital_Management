@@ -1,11 +1,37 @@
 syntax = "proto3";
 
-
-// May want to do differently
-service common {
+service Common {
     rpc update(Nothing) returns (Nothing);
+    rpc print(Nothing)  returns (Nothing);
+    rpc ping(Nothing)   returns (Nothing);
 }
 
 message Nothing {
     bool error = 1;
+}
+
+message Success {
+    bool successful = 1;
+}
+
+message NameDTO {
+    string first  = 1;
+    string middle = 2;
+    string last   = 3;
+}
+
+message TimeDTO {
+    uint32 hour   = 1;
+    uint32 minute = 2;
+}
+
+message DateDTO {
+    uint32  year  = 1;
+    uint32  month = 2;
+    uint32  day   = 3;
+    TimeDTO time  = 4;
+}
+
+message RoomRequest {
+    uint32 room_id = 1;
 }

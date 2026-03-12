@@ -133,7 +133,7 @@ bool RoomManagementClient::quarantineRoom(uint32_t room_id, bool quarantine_room
 }
 
 
-void RoomManagementClient::update() {
+void RoomManagementClient::update(std::string_view service_name) {
     // Nothing req, res;
     grpc::ClientContext context;
     

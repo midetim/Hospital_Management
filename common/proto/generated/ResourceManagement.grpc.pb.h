@@ -26,6 +26,7 @@
 #include <grpcpp/support/sync_stream.h>
 #include <grpcpp/ports_def.inc>
 
+// Each one of these must be accessible by the front end
 class ResourceManagement final {
  public:
   static constexpr char const* service_full_name() {
@@ -34,253 +35,271 @@ class ResourceManagement final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Ping -- Connection check
-    virtual ::grpc::Status ResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::ResourceSuccess* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>> AsyncResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>>(AsyncResourcePingRaw(context, request, cq));
+    // Machine Resource Movement
+    virtual ::grpc::Status RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncRegisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncRegisterResourceRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>> PrepareAsyncResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>>(PrepareAsyncResourcePingRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncRegisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncRegisterResourceRaw(context, request, cq));
     }
-    // Front end to resource -- find an available resource
-    virtual ::grpc::Status FindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::ResourceAvailabilityResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceAvailabilityResponse>> AsyncFindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceAvailabilityResponse>>(AsyncFindResourcesRaw(context, request, cq));
+    virtual ::grpc::Status DeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncDeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncDeregisterResourceRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceAvailabilityResponse>> PrepareAsyncFindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceAvailabilityResponse>>(PrepareAsyncFindResourcesRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncDeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncDeregisterResourceRaw(context, request, cq));
     }
-    virtual ::grpc::Status ShowResources(::grpc::ClientContext* context, const ::Nothing& request, ::Resources* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Resources>> AsyncShowResources(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Resources>>(AsyncShowResourcesRaw(context, request, cq));
+    virtual ::grpc::Status SendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncSendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncSendForMaintenanceRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Resources>> PrepareAsyncShowResources(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Resources>>(PrepareAsyncShowResourcesRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncSendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncSendForMaintenanceRaw(context, request, cq));
     }
-    // Front end to resource -- moving resources to specific rooms
-    virtual ::grpc::Status SendResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::ResourceSuccess* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>> AsyncSendResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>>(AsyncSendResourceRaw(context, request, cq));
+    // Machine Resource Scheduling
+    virtual ::grpc::Status AddToSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncAddToSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncAddToScheduleRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>> PrepareAsyncSendResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>>(PrepareAsyncSendResourceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncAddToSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncAddToScheduleRaw(context, request, cq));
     }
-    virtual ::grpc::Status RetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::ResourceSuccess* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>> AsyncRetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>>(AsyncRetrieveResourceRaw(context, request, cq));
+    virtual ::grpc::Status RemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncRemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncRemoveFromScheduleRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>> PrepareAsyncRetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>>(PrepareAsyncRetrieveResourceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncRemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncRemoveFromScheduleRaw(context, request, cq));
     }
-    virtual ::grpc::Status TransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::ResourceSuccess* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>> AsyncTransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>>(AsyncTransferResourceRaw(context, request, cq));
+    virtual ::grpc::Status ChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncChangeScheduleRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>> PrepareAsyncTransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>>(PrepareAsyncTransferResourceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncChangeScheduleRaw(context, request, cq));
     }
-    // Front end to resource -- changing stock values
-    virtual ::grpc::Status AddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::StockAmount* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>> AsyncAddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>>(AsyncAddStockRaw(context, request, cq));
+    // Consumable Resource Updates
+    virtual ::grpc::Status AddStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncAddStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncAddStockRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>> PrepareAsyncAddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>>(PrepareAsyncAddStockRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncAddStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncAddStockRaw(context, request, cq));
     }
-    virtual ::grpc::Status RemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::StockAmount* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>> AsyncRemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>>(AsyncRemoveStockRaw(context, request, cq));
+    virtual ::grpc::Status RemoveStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncRemoveStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncRemoveStockRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>> PrepareAsyncRemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>>(PrepareAsyncRemoveStockRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncRemoveStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncRemoveStockRaw(context, request, cq));
     }
-    // Front end to resource -- De/Registering resources
-    virtual ::grpc::Status RegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::RegistrationSuccess* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RegistrationSuccess>> AsyncRegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RegistrationSuccess>>(AsyncRegisterResourceRaw(context, request, cq));
+    virtual ::grpc::Status UseStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncUseStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncUseStockRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RegistrationSuccess>> PrepareAsyncRegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RegistrationSuccess>>(PrepareAsyncRegisterResourceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncUseStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncUseStockRaw(context, request, cq));
     }
-    virtual ::grpc::Status DeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::ResourceSuccess* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>> AsyncDeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>>(AsyncDeregisterResourceRaw(context, request, cq));
+    virtual ::grpc::Status EmptyStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncEmptyStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncEmptyStockRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>> PrepareAsyncDeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>>(PrepareAsyncDeregisterResourceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncEmptyStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncEmptyStockRaw(context, request, cq));
     }
-    // Globals
-    virtual ::grpc::Status Print(::grpc::ClientContext* context, const ::Nothing& request, ::Nothing* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>> AsyncPrint(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>>(AsyncPrintRaw(context, request, cq));
+    // Resource Information
+    virtual ::grpc::Status GetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO& request, ::ResourceDTO* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceDTO>> AsyncGetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceDTO>>(AsyncGetResourceInformationRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>> PrepareAsyncPrint(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>>(PrepareAsyncPrintRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceDTO>> PrepareAsyncGetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceDTO>>(PrepareAsyncGetResourceInformationRaw(context, request, cq));
+    }
+    // This call is not accessible to the front end 
+    virtual ::grpc::Status GetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::ResourceList* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceList>> AsyncGetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceList>>(AsyncGetResourcesInRoomRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceList>> PrepareAsyncGetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ResourceList>>(PrepareAsyncGetResourcesInRoomRaw(context, request, cq));
     }
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Ping -- Connection check
-      virtual void ResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Front end to resource -- find an available resource
-      virtual void FindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest* request, ::ResourceAvailabilityResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void FindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest* request, ::ResourceAvailabilityResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void ShowResources(::grpc::ClientContext* context, const ::Nothing* request, ::Resources* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ShowResources(::grpc::ClientContext* context, const ::Nothing* request, ::Resources* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Front end to resource -- moving resources to specific rooms
-      virtual void SendResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void SendResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void RetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void RetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void TransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void TransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Front end to resource -- changing stock values
-      virtual void AddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest* request, ::StockAmount* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void AddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest* request, ::StockAmount* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void RemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest* request, ::StockAmount* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void RemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest* request, ::StockAmount* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Front end to resource -- De/Registering resources
-      virtual void RegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest* request, ::RegistrationSuccess* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void RegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest* request, ::RegistrationSuccess* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void DeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void DeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Globals
-      virtual void Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Machine Resource Movement
+      virtual void RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void DeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void DeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void SendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Machine Resource Scheduling
+      virtual void AddToSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void AddToSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void RemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void RemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void ChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Consumable Resource Updates
+      virtual void AddStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void AddStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void RemoveStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void RemoveStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void UseStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void UseStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void EmptyStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void EmptyStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Resource Information
+      virtual void GetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO* request, ::ResourceDTO* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO* request, ::ResourceDTO* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // This call is not accessible to the front end 
+      virtual void GetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::ResourceList* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::ResourceList* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
    private:
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>* AsyncResourcePingRaw(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>* PrepareAsyncResourcePingRaw(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceAvailabilityResponse>* AsyncFindResourcesRaw(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceAvailabilityResponse>* PrepareAsyncFindResourcesRaw(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Resources>* AsyncShowResourcesRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Resources>* PrepareAsyncShowResourcesRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>* AsyncSendResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>* PrepareAsyncSendResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>* AsyncRetrieveResourceRaw(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>* PrepareAsyncRetrieveResourceRaw(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>* AsyncTransferResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>* PrepareAsyncTransferResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>* AsyncAddStockRaw(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>* PrepareAsyncAddStockRaw(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>* AsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::StockAmount>* PrepareAsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::RegistrationSuccess>* AsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::RegistrationSuccess>* PrepareAsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>* AsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceSuccess>* PrepareAsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>* AsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Nothing>* PrepareAsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncSendForMaintenanceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncSendForMaintenanceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncAddToScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncAddToScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncRemoveFromScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncRemoveFromScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncChangeScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncChangeScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncAddStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncAddStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncUseStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncUseStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncEmptyStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncEmptyStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceDTO>* AsyncGetResourceInformationRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceDTO>* PrepareAsyncGetResourceInformationRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceList>* AsyncGetResourcesInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ResourceList>* PrepareAsyncGetResourcesInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
-    ::grpc::Status ResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::ResourceSuccess* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>> AsyncResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>>(AsyncResourcePingRaw(context, request, cq));
+    ::grpc::Status RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncRegisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncRegisterResourceRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>> PrepareAsyncResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>>(PrepareAsyncResourcePingRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncRegisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncRegisterResourceRaw(context, request, cq));
     }
-    ::grpc::Status FindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::ResourceAvailabilityResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceAvailabilityResponse>> AsyncFindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceAvailabilityResponse>>(AsyncFindResourcesRaw(context, request, cq));
+    ::grpc::Status DeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncDeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncDeregisterResourceRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceAvailabilityResponse>> PrepareAsyncFindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceAvailabilityResponse>>(PrepareAsyncFindResourcesRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncDeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncDeregisterResourceRaw(context, request, cq));
     }
-    ::grpc::Status ShowResources(::grpc::ClientContext* context, const ::Nothing& request, ::Resources* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Resources>> AsyncShowResources(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Resources>>(AsyncShowResourcesRaw(context, request, cq));
+    ::grpc::Status SendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncSendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncSendForMaintenanceRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Resources>> PrepareAsyncShowResources(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Resources>>(PrepareAsyncShowResourcesRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncSendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncSendForMaintenanceRaw(context, request, cq));
     }
-    ::grpc::Status SendResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::ResourceSuccess* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>> AsyncSendResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>>(AsyncSendResourceRaw(context, request, cq));
+    ::grpc::Status AddToSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncAddToSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncAddToScheduleRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>> PrepareAsyncSendResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>>(PrepareAsyncSendResourceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncAddToSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncAddToScheduleRaw(context, request, cq));
     }
-    ::grpc::Status RetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::ResourceSuccess* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>> AsyncRetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>>(AsyncRetrieveResourceRaw(context, request, cq));
+    ::grpc::Status RemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncRemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncRemoveFromScheduleRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>> PrepareAsyncRetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>>(PrepareAsyncRetrieveResourceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncRemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncRemoveFromScheduleRaw(context, request, cq));
     }
-    ::grpc::Status TransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::ResourceSuccess* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>> AsyncTransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>>(AsyncTransferResourceRaw(context, request, cq));
+    ::grpc::Status ChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncChangeScheduleRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>> PrepareAsyncTransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>>(PrepareAsyncTransferResourceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncChangeScheduleRaw(context, request, cq));
     }
-    ::grpc::Status AddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::StockAmount* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StockAmount>> AsyncAddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StockAmount>>(AsyncAddStockRaw(context, request, cq));
+    ::grpc::Status AddStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncAddStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncAddStockRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StockAmount>> PrepareAsyncAddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StockAmount>>(PrepareAsyncAddStockRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncAddStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncAddStockRaw(context, request, cq));
     }
-    ::grpc::Status RemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::StockAmount* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StockAmount>> AsyncRemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StockAmount>>(AsyncRemoveStockRaw(context, request, cq));
+    ::grpc::Status RemoveStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncRemoveStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncRemoveStockRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StockAmount>> PrepareAsyncRemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StockAmount>>(PrepareAsyncRemoveStockRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncRemoveStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncRemoveStockRaw(context, request, cq));
     }
-    ::grpc::Status RegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::RegistrationSuccess* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RegistrationSuccess>> AsyncRegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RegistrationSuccess>>(AsyncRegisterResourceRaw(context, request, cq));
+    ::grpc::Status UseStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncUseStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncUseStockRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RegistrationSuccess>> PrepareAsyncRegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RegistrationSuccess>>(PrepareAsyncRegisterResourceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncUseStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncUseStockRaw(context, request, cq));
     }
-    ::grpc::Status DeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::ResourceSuccess* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>> AsyncDeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>>(AsyncDeregisterResourceRaw(context, request, cq));
+    ::grpc::Status EmptyStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncEmptyStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncEmptyStockRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>> PrepareAsyncDeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>>(PrepareAsyncDeregisterResourceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncEmptyStock(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncEmptyStockRaw(context, request, cq));
     }
-    ::grpc::Status Print(::grpc::ClientContext* context, const ::Nothing& request, ::Nothing* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Nothing>> AsyncPrint(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Nothing>>(AsyncPrintRaw(context, request, cq));
+    ::grpc::Status GetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO& request, ::ResourceDTO* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceDTO>> AsyncGetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceDTO>>(AsyncGetResourceInformationRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Nothing>> PrepareAsyncPrint(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Nothing>>(PrepareAsyncPrintRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceDTO>> PrepareAsyncGetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceDTO>>(PrepareAsyncGetResourceInformationRaw(context, request, cq));
+    }
+    ::grpc::Status GetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::ResourceList* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceList>> AsyncGetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceList>>(AsyncGetResourcesInRoomRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceList>> PrepareAsyncGetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ResourceList>>(PrepareAsyncGetResourcesInRoomRaw(context, request, cq));
     }
     class async final :
       public StubInterface::async_interface {
      public:
-      void ResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)>) override;
-      void ResourcePing(::grpc::ClientContext* context, const ::ResourcePingRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void FindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest* request, ::ResourceAvailabilityResponse* response, std::function<void(::grpc::Status)>) override;
-      void FindResources(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest* request, ::ResourceAvailabilityResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void ShowResources(::grpc::ClientContext* context, const ::Nothing* request, ::Resources* response, std::function<void(::grpc::Status)>) override;
-      void ShowResources(::grpc::ClientContext* context, const ::Nothing* request, ::Resources* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void SendResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)>) override;
-      void SendResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void RetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)>) override;
-      void RetrieveResource(::grpc::ClientContext* context, const ::ResourceRetrievalRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void TransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)>) override;
-      void TransferResource(::grpc::ClientContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void AddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest* request, ::StockAmount* response, std::function<void(::grpc::Status)>) override;
-      void AddStock(::grpc::ClientContext* context, const ::StockIncreaseRequest* request, ::StockAmount* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void RemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest* request, ::StockAmount* response, std::function<void(::grpc::Status)>) override;
-      void RemoveStock(::grpc::ClientContext* context, const ::StockDecreaseRequest* request, ::StockAmount* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void RegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest* request, ::RegistrationSuccess* response, std::function<void(::grpc::Status)>) override;
-      void RegisterResource(::grpc::ClientContext* context, const ::ResourceRegistrationRequest* request, ::RegistrationSuccess* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void DeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest* request, ::ResourceSuccess* response, std::function<void(::grpc::Status)>) override;
-      void DeregisterResource(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest* request, ::ResourceSuccess* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, std::function<void(::grpc::Status)>) override;
-      void Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void DeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void DeregisterResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void SendForMaintenance(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void AddToSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void AddToSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void RemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void RemoveFromSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void ChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void ChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void AddStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void AddStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void RemoveStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void RemoveStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void UseStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void UseStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void EmptyStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void EmptyStock(::grpc::ClientContext* context, const ::StockUpdate* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO* request, ::ResourceDTO* response, std::function<void(::grpc::Status)>) override;
+      void GetResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO* request, ::ResourceDTO* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::ResourceList* response, std::function<void(::grpc::Status)>) override;
+      void GetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::ResourceList* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -292,39 +311,42 @@ class ResourceManagement final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
-    ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* AsyncResourcePingRaw(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* PrepareAsyncResourcePingRaw(::grpc::ClientContext* context, const ::ResourcePingRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceAvailabilityResponse>* AsyncFindResourcesRaw(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceAvailabilityResponse>* PrepareAsyncFindResourcesRaw(::grpc::ClientContext* context, const ::ResourceAvailabilityRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Resources>* AsyncShowResourcesRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Resources>* PrepareAsyncShowResourcesRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* AsyncSendResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* PrepareAsyncSendResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* AsyncRetrieveResourceRaw(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* PrepareAsyncRetrieveResourceRaw(::grpc::ClientContext* context, const ::ResourceRetrievalRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* AsyncTransferResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* PrepareAsyncTransferResourceRaw(::grpc::ClientContext* context, const ::ResourceSendRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::StockAmount>* AsyncAddStockRaw(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::StockAmount>* PrepareAsyncAddStockRaw(::grpc::ClientContext* context, const ::StockIncreaseRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::StockAmount>* AsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::StockAmount>* PrepareAsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockDecreaseRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::RegistrationSuccess>* AsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::RegistrationSuccess>* PrepareAsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceRegistrationRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* AsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ResourceSuccess>* PrepareAsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDeregistrationRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Nothing>* AsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Nothing>* PrepareAsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) override;
-    const ::grpc::internal::RpcMethod rpcmethod_ResourcePing_;
-    const ::grpc::internal::RpcMethod rpcmethod_FindResources_;
-    const ::grpc::internal::RpcMethod rpcmethod_ShowResources_;
-    const ::grpc::internal::RpcMethod rpcmethod_SendResource_;
-    const ::grpc::internal::RpcMethod rpcmethod_RetrieveResource_;
-    const ::grpc::internal::RpcMethod rpcmethod_TransferResource_;
-    const ::grpc::internal::RpcMethod rpcmethod_AddStock_;
-    const ::grpc::internal::RpcMethod rpcmethod_RemoveStock_;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncRegisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncDeregisterResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncSendForMaintenanceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncSendForMaintenanceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncAddToScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncAddToScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncRemoveFromScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncRemoveFromScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncChangeScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncChangeScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncAddStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncAddStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncRemoveStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncUseStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncUseStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncEmptyStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncEmptyStockRaw(::grpc::ClientContext* context, const ::StockUpdate& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::ResourceDTO>* AsyncGetResourceInformationRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::ResourceDTO>* PrepareAsyncGetResourceInformationRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::ResourceList>* AsyncGetResourcesInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::ResourceList>* PrepareAsyncGetResourcesInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_RegisterResource_;
     const ::grpc::internal::RpcMethod rpcmethod_DeregisterResource_;
-    const ::grpc::internal::RpcMethod rpcmethod_Print_;
+    const ::grpc::internal::RpcMethod rpcmethod_SendForMaintenance_;
+    const ::grpc::internal::RpcMethod rpcmethod_AddToSchedule_;
+    const ::grpc::internal::RpcMethod rpcmethod_RemoveFromSchedule_;
+    const ::grpc::internal::RpcMethod rpcmethod_ChangeSchedule_;
+    const ::grpc::internal::RpcMethod rpcmethod_AddStock_;
+    const ::grpc::internal::RpcMethod rpcmethod_RemoveStock_;
+    const ::grpc::internal::RpcMethod rpcmethod_UseStock_;
+    const ::grpc::internal::RpcMethod rpcmethod_EmptyStock_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetResourceInformation_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetResourcesInRoom_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -332,141 +354,141 @@ class ResourceManagement final {
    public:
     Service();
     virtual ~Service();
-    // Ping -- Connection check
-    virtual ::grpc::Status ResourcePing(::grpc::ServerContext* context, const ::ResourcePingRequest* request, ::ResourceSuccess* response);
-    // Front end to resource -- find an available resource
-    virtual ::grpc::Status FindResources(::grpc::ServerContext* context, const ::ResourceAvailabilityRequest* request, ::ResourceAvailabilityResponse* response);
-    virtual ::grpc::Status ShowResources(::grpc::ServerContext* context, const ::Nothing* request, ::Resources* response);
-    // Front end to resource -- moving resources to specific rooms
-    virtual ::grpc::Status SendResource(::grpc::ServerContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response);
-    virtual ::grpc::Status RetrieveResource(::grpc::ServerContext* context, const ::ResourceRetrievalRequest* request, ::ResourceSuccess* response);
-    virtual ::grpc::Status TransferResource(::grpc::ServerContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response);
-    // Front end to resource -- changing stock values
-    virtual ::grpc::Status AddStock(::grpc::ServerContext* context, const ::StockIncreaseRequest* request, ::StockAmount* response);
-    virtual ::grpc::Status RemoveStock(::grpc::ServerContext* context, const ::StockDecreaseRequest* request, ::StockAmount* response);
-    // Front end to resource -- De/Registering resources
-    virtual ::grpc::Status RegisterResource(::grpc::ServerContext* context, const ::ResourceRegistrationRequest* request, ::RegistrationSuccess* response);
-    virtual ::grpc::Status DeregisterResource(::grpc::ServerContext* context, const ::ResourceDeregistrationRequest* request, ::ResourceSuccess* response);
-    // Globals
-    virtual ::grpc::Status Print(::grpc::ServerContext* context, const ::Nothing* request, ::Nothing* response);
+    // Machine Resource Movement
+    virtual ::grpc::Status RegisterResource(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response);
+    virtual ::grpc::Status DeregisterResource(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response);
+    virtual ::grpc::Status SendForMaintenance(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response);
+    // Machine Resource Scheduling
+    virtual ::grpc::Status AddToSchedule(::grpc::ServerContext* context, const ::ResourceShift* request, ::Success* response);
+    virtual ::grpc::Status RemoveFromSchedule(::grpc::ServerContext* context, const ::ResourceShift* request, ::Success* response);
+    virtual ::grpc::Status ChangeSchedule(::grpc::ServerContext* context, const ::ResourceShift* request, ::Success* response);
+    // Consumable Resource Updates
+    virtual ::grpc::Status AddStock(::grpc::ServerContext* context, const ::StockUpdate* request, ::Success* response);
+    virtual ::grpc::Status RemoveStock(::grpc::ServerContext* context, const ::StockUpdate* request, ::Success* response);
+    virtual ::grpc::Status UseStock(::grpc::ServerContext* context, const ::StockUpdate* request, ::Success* response);
+    virtual ::grpc::Status EmptyStock(::grpc::ServerContext* context, const ::StockUpdate* request, ::Success* response);
+    // Resource Information
+    virtual ::grpc::Status GetResourceInformation(::grpc::ServerContext* context, const ::ResourceDTO* request, ::ResourceDTO* response);
+    // This call is not accessible to the front end 
+    virtual ::grpc::Status GetResourcesInRoom(::grpc::ServerContext* context, const ::RoomRequest* request, ::ResourceList* response);
   };
   template <class BaseClass>
-  class WithAsyncMethod_ResourcePing : public BaseClass {
+  class WithAsyncMethod_RegisterResource : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_ResourcePing() {
+    WithAsyncMethod_RegisterResource() {
       ::grpc::Service::MarkMethodAsync(0);
     }
-    ~WithAsyncMethod_ResourcePing() override {
+    ~WithAsyncMethod_RegisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ResourcePing(::grpc::ServerContext* /*context*/, const ::ResourcePingRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestResourcePing(::grpc::ServerContext* context, ::ResourcePingRequest* request, ::grpc::ServerAsyncResponseWriter< ::ResourceSuccess>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestRegisterResource(::grpc::ServerContext* context, ::ResourceDTO* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_FindResources : public BaseClass {
+  class WithAsyncMethod_DeregisterResource : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_FindResources() {
+    WithAsyncMethod_DeregisterResource() {
       ::grpc::Service::MarkMethodAsync(1);
     }
-    ~WithAsyncMethod_FindResources() override {
+    ~WithAsyncMethod_DeregisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status FindResources(::grpc::ServerContext* /*context*/, const ::ResourceAvailabilityRequest* /*request*/, ::ResourceAvailabilityResponse* /*response*/) override {
+    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestFindResources(::grpc::ServerContext* context, ::ResourceAvailabilityRequest* request, ::grpc::ServerAsyncResponseWriter< ::ResourceAvailabilityResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestDeregisterResource(::grpc::ServerContext* context, ::ResourceDTO* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_ShowResources : public BaseClass {
+  class WithAsyncMethod_SendForMaintenance : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_ShowResources() {
+    WithAsyncMethod_SendForMaintenance() {
       ::grpc::Service::MarkMethodAsync(2);
     }
-    ~WithAsyncMethod_ShowResources() override {
+    ~WithAsyncMethod_SendForMaintenance() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ShowResources(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Resources* /*response*/) override {
+    ::grpc::Status SendForMaintenance(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestShowResources(::grpc::ServerContext* context, ::Nothing* request, ::grpc::ServerAsyncResponseWriter< ::Resources>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestSendForMaintenance(::grpc::ServerContext* context, ::ResourceDTO* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_SendResource : public BaseClass {
+  class WithAsyncMethod_AddToSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_SendResource() {
+    WithAsyncMethod_AddToSchedule() {
       ::grpc::Service::MarkMethodAsync(3);
     }
-    ~WithAsyncMethod_SendResource() override {
+    ~WithAsyncMethod_AddToSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SendResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status AddToSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestSendResource(::grpc::ServerContext* context, ::ResourceSendRequest* request, ::grpc::ServerAsyncResponseWriter< ::ResourceSuccess>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestAddToSchedule(::grpc::ServerContext* context, ::ResourceShift* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_RetrieveResource : public BaseClass {
+  class WithAsyncMethod_RemoveFromSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_RetrieveResource() {
+    WithAsyncMethod_RemoveFromSchedule() {
       ::grpc::Service::MarkMethodAsync(4);
     }
-    ~WithAsyncMethod_RetrieveResource() override {
+    ~WithAsyncMethod_RemoveFromSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RetrieveResource(::grpc::ServerContext* /*context*/, const ::ResourceRetrievalRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RemoveFromSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestRetrieveResource(::grpc::ServerContext* context, ::ResourceRetrievalRequest* request, ::grpc::ServerAsyncResponseWriter< ::ResourceSuccess>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestRemoveFromSchedule(::grpc::ServerContext* context, ::ResourceShift* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_TransferResource : public BaseClass {
+  class WithAsyncMethod_ChangeSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_TransferResource() {
+    WithAsyncMethod_ChangeSchedule() {
       ::grpc::Service::MarkMethodAsync(5);
     }
-    ~WithAsyncMethod_TransferResource() override {
+    ~WithAsyncMethod_ChangeSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TransferResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status ChangeSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestTransferResource(::grpc::ServerContext* context, ::ResourceSendRequest* request, ::grpc::ServerAsyncResponseWriter< ::ResourceSuccess>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestChangeSchedule(::grpc::ServerContext* context, ::ResourceShift* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -482,11 +504,11 @@ class ResourceManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockIncreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestAddStock(::grpc::ServerContext* context, ::StockIncreaseRequest* request, ::grpc::ServerAsyncResponseWriter< ::StockAmount>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestAddStock(::grpc::ServerContext* context, ::StockUpdate* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -502,236 +524,256 @@ class ResourceManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockDecreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestRemoveStock(::grpc::ServerContext* context, ::StockDecreaseRequest* request, ::grpc::ServerAsyncResponseWriter< ::StockAmount>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestRemoveStock(::grpc::ServerContext* context, ::StockUpdate* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_RegisterResource : public BaseClass {
+  class WithAsyncMethod_UseStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_RegisterResource() {
+    WithAsyncMethod_UseStock() {
       ::grpc::Service::MarkMethodAsync(8);
     }
-    ~WithAsyncMethod_RegisterResource() override {
+    ~WithAsyncMethod_UseStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceRegistrationRequest* /*request*/, ::RegistrationSuccess* /*response*/) override {
+    ::grpc::Status UseStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestRegisterResource(::grpc::ServerContext* context, ::ResourceRegistrationRequest* request, ::grpc::ServerAsyncResponseWriter< ::RegistrationSuccess>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestUseStock(::grpc::ServerContext* context, ::StockUpdate* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_DeregisterResource : public BaseClass {
+  class WithAsyncMethod_EmptyStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_DeregisterResource() {
+    WithAsyncMethod_EmptyStock() {
       ::grpc::Service::MarkMethodAsync(9);
     }
-    ~WithAsyncMethod_DeregisterResource() override {
+    ~WithAsyncMethod_EmptyStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDeregistrationRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status EmptyStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestDeregisterResource(::grpc::ServerContext* context, ::ResourceDeregistrationRequest* request, ::grpc::ServerAsyncResponseWriter< ::ResourceSuccess>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestEmptyStock(::grpc::ServerContext* context, ::StockUpdate* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_Print : public BaseClass {
+  class WithAsyncMethod_GetResourceInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_Print() {
+    WithAsyncMethod_GetResourceInformation() {
       ::grpc::Service::MarkMethodAsync(10);
     }
-    ~WithAsyncMethod_Print() override {
+    ~WithAsyncMethod_GetResourceInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
+    ::grpc::Status GetResourceInformation(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::ResourceDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPrint(::grpc::ServerContext* context, ::Nothing* request, ::grpc::ServerAsyncResponseWriter< ::Nothing>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestGetResourceInformation(::grpc::ServerContext* context, ::ResourceDTO* request, ::grpc::ServerAsyncResponseWriter< ::ResourceDTO>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_ResourcePing<WithAsyncMethod_FindResources<WithAsyncMethod_ShowResources<WithAsyncMethod_SendResource<WithAsyncMethod_RetrieveResource<WithAsyncMethod_TransferResource<WithAsyncMethod_AddStock<WithAsyncMethod_RemoveStock<WithAsyncMethod_RegisterResource<WithAsyncMethod_DeregisterResource<WithAsyncMethod_Print<Service > > > > > > > > > > > AsyncService;
   template <class BaseClass>
-  class WithCallbackMethod_ResourcePing : public BaseClass {
+  class WithAsyncMethod_GetResourcesInRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_ResourcePing() {
+    WithAsyncMethod_GetResourcesInRoom() {
+      ::grpc::Service::MarkMethodAsync(11);
+    }
+    ~WithAsyncMethod_GetResourcesInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetResourcesInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::ResourceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetResourcesInRoom(::grpc::ServerContext* context, ::RoomRequest* request, ::grpc::ServerAsyncResponseWriter< ::ResourceList>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_RegisterResource<WithAsyncMethod_DeregisterResource<WithAsyncMethod_SendForMaintenance<WithAsyncMethod_AddToSchedule<WithAsyncMethod_RemoveFromSchedule<WithAsyncMethod_ChangeSchedule<WithAsyncMethod_AddStock<WithAsyncMethod_RemoveStock<WithAsyncMethod_UseStock<WithAsyncMethod_EmptyStock<WithAsyncMethod_GetResourceInformation<WithAsyncMethod_GetResourcesInRoom<Service > > > > > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithCallbackMethod_RegisterResource : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_RegisterResource() {
       ::grpc::Service::MarkMethodCallback(0,
-          new ::grpc::internal::CallbackUnaryHandler< ::ResourcePingRequest, ::ResourceSuccess>(
+          new ::grpc::internal::CallbackUnaryHandler< ::ResourceDTO, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::ResourcePingRequest* request, ::ResourceSuccess* response) { return this->ResourcePing(context, request, response); }));}
-    void SetMessageAllocatorFor_ResourcePing(
-        ::grpc::MessageAllocator< ::ResourcePingRequest, ::ResourceSuccess>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::ResourceDTO* request, ::Success* response) { return this->RegisterResource(context, request, response); }));}
+    void SetMessageAllocatorFor_RegisterResource(
+        ::grpc::MessageAllocator< ::ResourceDTO, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourcePingRequest, ::ResourceSuccess>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceDTO, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_ResourcePing() override {
+    ~WithCallbackMethod_RegisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ResourcePing(::grpc::ServerContext* /*context*/, const ::ResourcePingRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* ResourcePing(
-      ::grpc::CallbackServerContext* /*context*/, const ::ResourcePingRequest* /*request*/, ::ResourceSuccess* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* RegisterResource(
+      ::grpc::CallbackServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_FindResources : public BaseClass {
+  class WithCallbackMethod_DeregisterResource : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_FindResources() {
+    WithCallbackMethod_DeregisterResource() {
       ::grpc::Service::MarkMethodCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::ResourceAvailabilityRequest, ::ResourceAvailabilityResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::ResourceDTO, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::ResourceAvailabilityRequest* request, ::ResourceAvailabilityResponse* response) { return this->FindResources(context, request, response); }));}
-    void SetMessageAllocatorFor_FindResources(
-        ::grpc::MessageAllocator< ::ResourceAvailabilityRequest, ::ResourceAvailabilityResponse>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::ResourceDTO* request, ::Success* response) { return this->DeregisterResource(context, request, response); }));}
+    void SetMessageAllocatorFor_DeregisterResource(
+        ::grpc::MessageAllocator< ::ResourceDTO, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceAvailabilityRequest, ::ResourceAvailabilityResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceDTO, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_FindResources() override {
+    ~WithCallbackMethod_DeregisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status FindResources(::grpc::ServerContext* /*context*/, const ::ResourceAvailabilityRequest* /*request*/, ::ResourceAvailabilityResponse* /*response*/) override {
+    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* FindResources(
-      ::grpc::CallbackServerContext* /*context*/, const ::ResourceAvailabilityRequest* /*request*/, ::ResourceAvailabilityResponse* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* DeregisterResource(
+      ::grpc::CallbackServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_ShowResources : public BaseClass {
+  class WithCallbackMethod_SendForMaintenance : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_ShowResources() {
+    WithCallbackMethod_SendForMaintenance() {
       ::grpc::Service::MarkMethodCallback(2,
-          new ::grpc::internal::CallbackUnaryHandler< ::Nothing, ::Resources>(
+          new ::grpc::internal::CallbackUnaryHandler< ::ResourceDTO, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::Nothing* request, ::Resources* response) { return this->ShowResources(context, request, response); }));}
-    void SetMessageAllocatorFor_ShowResources(
-        ::grpc::MessageAllocator< ::Nothing, ::Resources>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::ResourceDTO* request, ::Success* response) { return this->SendForMaintenance(context, request, response); }));}
+    void SetMessageAllocatorFor_SendForMaintenance(
+        ::grpc::MessageAllocator< ::ResourceDTO, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::Nothing, ::Resources>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceDTO, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_ShowResources() override {
+    ~WithCallbackMethod_SendForMaintenance() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ShowResources(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Resources* /*response*/) override {
+    ::grpc::Status SendForMaintenance(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* ShowResources(
-      ::grpc::CallbackServerContext* /*context*/, const ::Nothing* /*request*/, ::Resources* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* SendForMaintenance(
+      ::grpc::CallbackServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_SendResource : public BaseClass {
+  class WithCallbackMethod_AddToSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_SendResource() {
+    WithCallbackMethod_AddToSchedule() {
       ::grpc::Service::MarkMethodCallback(3,
-          new ::grpc::internal::CallbackUnaryHandler< ::ResourceSendRequest, ::ResourceSuccess>(
+          new ::grpc::internal::CallbackUnaryHandler< ::ResourceShift, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response) { return this->SendResource(context, request, response); }));}
-    void SetMessageAllocatorFor_SendResource(
-        ::grpc::MessageAllocator< ::ResourceSendRequest, ::ResourceSuccess>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::ResourceShift* request, ::Success* response) { return this->AddToSchedule(context, request, response); }));}
+    void SetMessageAllocatorFor_AddToSchedule(
+        ::grpc::MessageAllocator< ::ResourceShift, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceSendRequest, ::ResourceSuccess>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceShift, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_SendResource() override {
+    ~WithCallbackMethod_AddToSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SendResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status AddToSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* SendResource(
-      ::grpc::CallbackServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* AddToSchedule(
+      ::grpc::CallbackServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_RetrieveResource : public BaseClass {
+  class WithCallbackMethod_RemoveFromSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_RetrieveResource() {
+    WithCallbackMethod_RemoveFromSchedule() {
       ::grpc::Service::MarkMethodCallback(4,
-          new ::grpc::internal::CallbackUnaryHandler< ::ResourceRetrievalRequest, ::ResourceSuccess>(
+          new ::grpc::internal::CallbackUnaryHandler< ::ResourceShift, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::ResourceRetrievalRequest* request, ::ResourceSuccess* response) { return this->RetrieveResource(context, request, response); }));}
-    void SetMessageAllocatorFor_RetrieveResource(
-        ::grpc::MessageAllocator< ::ResourceRetrievalRequest, ::ResourceSuccess>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::ResourceShift* request, ::Success* response) { return this->RemoveFromSchedule(context, request, response); }));}
+    void SetMessageAllocatorFor_RemoveFromSchedule(
+        ::grpc::MessageAllocator< ::ResourceShift, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceRetrievalRequest, ::ResourceSuccess>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceShift, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_RetrieveResource() override {
+    ~WithCallbackMethod_RemoveFromSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RetrieveResource(::grpc::ServerContext* /*context*/, const ::ResourceRetrievalRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RemoveFromSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* RetrieveResource(
-      ::grpc::CallbackServerContext* /*context*/, const ::ResourceRetrievalRequest* /*request*/, ::ResourceSuccess* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* RemoveFromSchedule(
+      ::grpc::CallbackServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_TransferResource : public BaseClass {
+  class WithCallbackMethod_ChangeSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_TransferResource() {
+    WithCallbackMethod_ChangeSchedule() {
       ::grpc::Service::MarkMethodCallback(5,
-          new ::grpc::internal::CallbackUnaryHandler< ::ResourceSendRequest, ::ResourceSuccess>(
+          new ::grpc::internal::CallbackUnaryHandler< ::ResourceShift, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::ResourceSendRequest* request, ::ResourceSuccess* response) { return this->TransferResource(context, request, response); }));}
-    void SetMessageAllocatorFor_TransferResource(
-        ::grpc::MessageAllocator< ::ResourceSendRequest, ::ResourceSuccess>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::ResourceShift* request, ::Success* response) { return this->ChangeSchedule(context, request, response); }));}
+    void SetMessageAllocatorFor_ChangeSchedule(
+        ::grpc::MessageAllocator< ::ResourceShift, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceSendRequest, ::ResourceSuccess>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceShift, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_TransferResource() override {
+    ~WithCallbackMethod_ChangeSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TransferResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status ChangeSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* TransferResource(
-      ::grpc::CallbackServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* ChangeSchedule(
+      ::grpc::CallbackServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_AddStock : public BaseClass {
@@ -740,25 +782,25 @@ class ResourceManagement final {
    public:
     WithCallbackMethod_AddStock() {
       ::grpc::Service::MarkMethodCallback(6,
-          new ::grpc::internal::CallbackUnaryHandler< ::StockIncreaseRequest, ::StockAmount>(
+          new ::grpc::internal::CallbackUnaryHandler< ::StockUpdate, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::StockIncreaseRequest* request, ::StockAmount* response) { return this->AddStock(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::StockUpdate* request, ::Success* response) { return this->AddStock(context, request, response); }));}
     void SetMessageAllocatorFor_AddStock(
-        ::grpc::MessageAllocator< ::StockIncreaseRequest, ::StockAmount>* allocator) {
+        ::grpc::MessageAllocator< ::StockUpdate, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::StockIncreaseRequest, ::StockAmount>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StockUpdate, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_AddStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockIncreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* AddStock(
-      ::grpc::CallbackServerContext* /*context*/, const ::StockIncreaseRequest* /*request*/, ::StockAmount* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_RemoveStock : public BaseClass {
@@ -767,207 +809,234 @@ class ResourceManagement final {
    public:
     WithCallbackMethod_RemoveStock() {
       ::grpc::Service::MarkMethodCallback(7,
-          new ::grpc::internal::CallbackUnaryHandler< ::StockDecreaseRequest, ::StockAmount>(
+          new ::grpc::internal::CallbackUnaryHandler< ::StockUpdate, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::StockDecreaseRequest* request, ::StockAmount* response) { return this->RemoveStock(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::StockUpdate* request, ::Success* response) { return this->RemoveStock(context, request, response); }));}
     void SetMessageAllocatorFor_RemoveStock(
-        ::grpc::MessageAllocator< ::StockDecreaseRequest, ::StockAmount>* allocator) {
+        ::grpc::MessageAllocator< ::StockUpdate, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::StockDecreaseRequest, ::StockAmount>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StockUpdate, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_RemoveStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockDecreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* RemoveStock(
-      ::grpc::CallbackServerContext* /*context*/, const ::StockDecreaseRequest* /*request*/, ::StockAmount* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_RegisterResource : public BaseClass {
+  class WithCallbackMethod_UseStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_RegisterResource() {
+    WithCallbackMethod_UseStock() {
       ::grpc::Service::MarkMethodCallback(8,
-          new ::grpc::internal::CallbackUnaryHandler< ::ResourceRegistrationRequest, ::RegistrationSuccess>(
+          new ::grpc::internal::CallbackUnaryHandler< ::StockUpdate, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::ResourceRegistrationRequest* request, ::RegistrationSuccess* response) { return this->RegisterResource(context, request, response); }));}
-    void SetMessageAllocatorFor_RegisterResource(
-        ::grpc::MessageAllocator< ::ResourceRegistrationRequest, ::RegistrationSuccess>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::StockUpdate* request, ::Success* response) { return this->UseStock(context, request, response); }));}
+    void SetMessageAllocatorFor_UseStock(
+        ::grpc::MessageAllocator< ::StockUpdate, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(8);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceRegistrationRequest, ::RegistrationSuccess>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StockUpdate, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_RegisterResource() override {
+    ~WithCallbackMethod_UseStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceRegistrationRequest* /*request*/, ::RegistrationSuccess* /*response*/) override {
+    ::grpc::Status UseStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* RegisterResource(
-      ::grpc::CallbackServerContext* /*context*/, const ::ResourceRegistrationRequest* /*request*/, ::RegistrationSuccess* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* UseStock(
+      ::grpc::CallbackServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_DeregisterResource : public BaseClass {
+  class WithCallbackMethod_EmptyStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_DeregisterResource() {
+    WithCallbackMethod_EmptyStock() {
       ::grpc::Service::MarkMethodCallback(9,
-          new ::grpc::internal::CallbackUnaryHandler< ::ResourceDeregistrationRequest, ::ResourceSuccess>(
+          new ::grpc::internal::CallbackUnaryHandler< ::StockUpdate, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::ResourceDeregistrationRequest* request, ::ResourceSuccess* response) { return this->DeregisterResource(context, request, response); }));}
-    void SetMessageAllocatorFor_DeregisterResource(
-        ::grpc::MessageAllocator< ::ResourceDeregistrationRequest, ::ResourceSuccess>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::StockUpdate* request, ::Success* response) { return this->EmptyStock(context, request, response); }));}
+    void SetMessageAllocatorFor_EmptyStock(
+        ::grpc::MessageAllocator< ::StockUpdate, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(9);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceDeregistrationRequest, ::ResourceSuccess>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StockUpdate, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_DeregisterResource() override {
+    ~WithCallbackMethod_EmptyStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDeregistrationRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status EmptyStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* DeregisterResource(
-      ::grpc::CallbackServerContext* /*context*/, const ::ResourceDeregistrationRequest* /*request*/, ::ResourceSuccess* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* EmptyStock(
+      ::grpc::CallbackServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_Print : public BaseClass {
+  class WithCallbackMethod_GetResourceInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_Print() {
+    WithCallbackMethod_GetResourceInformation() {
       ::grpc::Service::MarkMethodCallback(10,
-          new ::grpc::internal::CallbackUnaryHandler< ::Nothing, ::Nothing>(
+          new ::grpc::internal::CallbackUnaryHandler< ::ResourceDTO, ::ResourceDTO>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::Nothing* request, ::Nothing* response) { return this->Print(context, request, response); }));}
-    void SetMessageAllocatorFor_Print(
-        ::grpc::MessageAllocator< ::Nothing, ::Nothing>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::ResourceDTO* request, ::ResourceDTO* response) { return this->GetResourceInformation(context, request, response); }));}
+    void SetMessageAllocatorFor_GetResourceInformation(
+        ::grpc::MessageAllocator< ::ResourceDTO, ::ResourceDTO>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(10);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::Nothing, ::Nothing>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceDTO, ::ResourceDTO>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_Print() override {
+    ~WithCallbackMethod_GetResourceInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
+    ::grpc::Status GetResourceInformation(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::ResourceDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* Print(
-      ::grpc::CallbackServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* GetResourceInformation(
+      ::grpc::CallbackServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::ResourceDTO* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_ResourcePing<WithCallbackMethod_FindResources<WithCallbackMethod_ShowResources<WithCallbackMethod_SendResource<WithCallbackMethod_RetrieveResource<WithCallbackMethod_TransferResource<WithCallbackMethod_AddStock<WithCallbackMethod_RemoveStock<WithCallbackMethod_RegisterResource<WithCallbackMethod_DeregisterResource<WithCallbackMethod_Print<Service > > > > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_GetResourcesInRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetResourcesInRoom() {
+      ::grpc::Service::MarkMethodCallback(11,
+          new ::grpc::internal::CallbackUnaryHandler< ::RoomRequest, ::ResourceList>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::RoomRequest* request, ::ResourceList* response) { return this->GetResourcesInRoom(context, request, response); }));}
+    void SetMessageAllocatorFor_GetResourcesInRoom(
+        ::grpc::MessageAllocator< ::RoomRequest, ::ResourceList>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(11);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::RoomRequest, ::ResourceList>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetResourcesInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetResourcesInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::ResourceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetResourcesInRoom(
+      ::grpc::CallbackServerContext* /*context*/, const ::RoomRequest* /*request*/, ::ResourceList* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_RegisterResource<WithCallbackMethod_DeregisterResource<WithCallbackMethod_SendForMaintenance<WithCallbackMethod_AddToSchedule<WithCallbackMethod_RemoveFromSchedule<WithCallbackMethod_ChangeSchedule<WithCallbackMethod_AddStock<WithCallbackMethod_RemoveStock<WithCallbackMethod_UseStock<WithCallbackMethod_EmptyStock<WithCallbackMethod_GetResourceInformation<WithCallbackMethod_GetResourcesInRoom<Service > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
-  class WithGenericMethod_ResourcePing : public BaseClass {
+  class WithGenericMethod_RegisterResource : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_ResourcePing() {
+    WithGenericMethod_RegisterResource() {
       ::grpc::Service::MarkMethodGeneric(0);
     }
-    ~WithGenericMethod_ResourcePing() override {
+    ~WithGenericMethod_RegisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ResourcePing(::grpc::ServerContext* /*context*/, const ::ResourcePingRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_FindResources : public BaseClass {
+  class WithGenericMethod_DeregisterResource : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_FindResources() {
+    WithGenericMethod_DeregisterResource() {
       ::grpc::Service::MarkMethodGeneric(1);
     }
-    ~WithGenericMethod_FindResources() override {
+    ~WithGenericMethod_DeregisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status FindResources(::grpc::ServerContext* /*context*/, const ::ResourceAvailabilityRequest* /*request*/, ::ResourceAvailabilityResponse* /*response*/) override {
+    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_ShowResources : public BaseClass {
+  class WithGenericMethod_SendForMaintenance : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_ShowResources() {
+    WithGenericMethod_SendForMaintenance() {
       ::grpc::Service::MarkMethodGeneric(2);
     }
-    ~WithGenericMethod_ShowResources() override {
+    ~WithGenericMethod_SendForMaintenance() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ShowResources(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Resources* /*response*/) override {
+    ::grpc::Status SendForMaintenance(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_SendResource : public BaseClass {
+  class WithGenericMethod_AddToSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_SendResource() {
+    WithGenericMethod_AddToSchedule() {
       ::grpc::Service::MarkMethodGeneric(3);
     }
-    ~WithGenericMethod_SendResource() override {
+    ~WithGenericMethod_AddToSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SendResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status AddToSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_RetrieveResource : public BaseClass {
+  class WithGenericMethod_RemoveFromSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_RetrieveResource() {
+    WithGenericMethod_RemoveFromSchedule() {
       ::grpc::Service::MarkMethodGeneric(4);
     }
-    ~WithGenericMethod_RetrieveResource() override {
+    ~WithGenericMethod_RemoveFromSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RetrieveResource(::grpc::ServerContext* /*context*/, const ::ResourceRetrievalRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RemoveFromSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_TransferResource : public BaseClass {
+  class WithGenericMethod_ChangeSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_TransferResource() {
+    WithGenericMethod_ChangeSchedule() {
       ::grpc::Service::MarkMethodGeneric(5);
     }
-    ~WithGenericMethod_TransferResource() override {
+    ~WithGenericMethod_ChangeSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TransferResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status ChangeSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -984,7 +1053,7 @@ class ResourceManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockIncreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1001,179 +1070,196 @@ class ResourceManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockDecreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_RegisterResource : public BaseClass {
+  class WithGenericMethod_UseStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_RegisterResource() {
+    WithGenericMethod_UseStock() {
       ::grpc::Service::MarkMethodGeneric(8);
     }
-    ~WithGenericMethod_RegisterResource() override {
+    ~WithGenericMethod_UseStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceRegistrationRequest* /*request*/, ::RegistrationSuccess* /*response*/) override {
+    ::grpc::Status UseStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_DeregisterResource : public BaseClass {
+  class WithGenericMethod_EmptyStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_DeregisterResource() {
+    WithGenericMethod_EmptyStock() {
       ::grpc::Service::MarkMethodGeneric(9);
     }
-    ~WithGenericMethod_DeregisterResource() override {
+    ~WithGenericMethod_EmptyStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDeregistrationRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status EmptyStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_Print : public BaseClass {
+  class WithGenericMethod_GetResourceInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_Print() {
+    WithGenericMethod_GetResourceInformation() {
       ::grpc::Service::MarkMethodGeneric(10);
     }
-    ~WithGenericMethod_Print() override {
+    ~WithGenericMethod_GetResourceInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
+    ::grpc::Status GetResourceInformation(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::ResourceDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithRawMethod_ResourcePing : public BaseClass {
+  class WithGenericMethod_GetResourcesInRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_ResourcePing() {
-      ::grpc::Service::MarkMethodRaw(0);
+    WithGenericMethod_GetResourcesInRoom() {
+      ::grpc::Service::MarkMethodGeneric(11);
     }
-    ~WithRawMethod_ResourcePing() override {
+    ~WithGenericMethod_GetResourcesInRoom() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ResourcePing(::grpc::ServerContext* /*context*/, const ::ResourcePingRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status GetResourcesInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::ResourceList* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestResourcePing(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+  };
+  template <class BaseClass>
+  class WithRawMethod_RegisterResource : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_RegisterResource() {
+      ::grpc::Service::MarkMethodRaw(0);
+    }
+    ~WithRawMethod_RegisterResource() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestRegisterResource(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_FindResources : public BaseClass {
+  class WithRawMethod_DeregisterResource : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_FindResources() {
+    WithRawMethod_DeregisterResource() {
       ::grpc::Service::MarkMethodRaw(1);
     }
-    ~WithRawMethod_FindResources() override {
+    ~WithRawMethod_DeregisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status FindResources(::grpc::ServerContext* /*context*/, const ::ResourceAvailabilityRequest* /*request*/, ::ResourceAvailabilityResponse* /*response*/) override {
+    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestFindResources(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestDeregisterResource(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_ShowResources : public BaseClass {
+  class WithRawMethod_SendForMaintenance : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_ShowResources() {
+    WithRawMethod_SendForMaintenance() {
       ::grpc::Service::MarkMethodRaw(2);
     }
-    ~WithRawMethod_ShowResources() override {
+    ~WithRawMethod_SendForMaintenance() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ShowResources(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Resources* /*response*/) override {
+    ::grpc::Status SendForMaintenance(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestShowResources(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestSendForMaintenance(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_SendResource : public BaseClass {
+  class WithRawMethod_AddToSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_SendResource() {
+    WithRawMethod_AddToSchedule() {
       ::grpc::Service::MarkMethodRaw(3);
     }
-    ~WithRawMethod_SendResource() override {
+    ~WithRawMethod_AddToSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SendResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status AddToSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestSendResource(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestAddToSchedule(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_RetrieveResource : public BaseClass {
+  class WithRawMethod_RemoveFromSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_RetrieveResource() {
+    WithRawMethod_RemoveFromSchedule() {
       ::grpc::Service::MarkMethodRaw(4);
     }
-    ~WithRawMethod_RetrieveResource() override {
+    ~WithRawMethod_RemoveFromSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RetrieveResource(::grpc::ServerContext* /*context*/, const ::ResourceRetrievalRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RemoveFromSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestRetrieveResource(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestRemoveFromSchedule(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_TransferResource : public BaseClass {
+  class WithRawMethod_ChangeSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_TransferResource() {
+    WithRawMethod_ChangeSchedule() {
       ::grpc::Service::MarkMethodRaw(5);
     }
-    ~WithRawMethod_TransferResource() override {
+    ~WithRawMethod_ChangeSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TransferResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status ChangeSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestTransferResource(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestChangeSchedule(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -1189,7 +1275,7 @@ class ResourceManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockIncreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1209,7 +1295,7 @@ class ResourceManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockDecreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1218,195 +1304,215 @@ class ResourceManagement final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_RegisterResource : public BaseClass {
+  class WithRawMethod_UseStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_RegisterResource() {
+    WithRawMethod_UseStock() {
       ::grpc::Service::MarkMethodRaw(8);
     }
-    ~WithRawMethod_RegisterResource() override {
+    ~WithRawMethod_UseStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceRegistrationRequest* /*request*/, ::RegistrationSuccess* /*response*/) override {
+    ::grpc::Status UseStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestRegisterResource(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestUseStock(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_DeregisterResource : public BaseClass {
+  class WithRawMethod_EmptyStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_DeregisterResource() {
+    WithRawMethod_EmptyStock() {
       ::grpc::Service::MarkMethodRaw(9);
     }
-    ~WithRawMethod_DeregisterResource() override {
+    ~WithRawMethod_EmptyStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDeregistrationRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status EmptyStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestDeregisterResource(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestEmptyStock(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_Print : public BaseClass {
+  class WithRawMethod_GetResourceInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_Print() {
+    WithRawMethod_GetResourceInformation() {
       ::grpc::Service::MarkMethodRaw(10);
     }
-    ~WithRawMethod_Print() override {
+    ~WithRawMethod_GetResourceInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
+    ::grpc::Status GetResourceInformation(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::ResourceDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPrint(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestGetResourceInformation(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_ResourcePing : public BaseClass {
+  class WithRawMethod_GetResourcesInRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_ResourcePing() {
+    WithRawMethod_GetResourcesInRoom() {
+      ::grpc::Service::MarkMethodRaw(11);
+    }
+    ~WithRawMethod_GetResourcesInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetResourcesInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::ResourceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetResourcesInRoom(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_RegisterResource : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_RegisterResource() {
       ::grpc::Service::MarkMethodRawCallback(0,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ResourcePing(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RegisterResource(context, request, response); }));
     }
-    ~WithRawCallbackMethod_ResourcePing() override {
+    ~WithRawCallbackMethod_RegisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ResourcePing(::grpc::ServerContext* /*context*/, const ::ResourcePingRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* ResourcePing(
+    virtual ::grpc::ServerUnaryReactor* RegisterResource(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_FindResources : public BaseClass {
+  class WithRawCallbackMethod_DeregisterResource : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_FindResources() {
+    WithRawCallbackMethod_DeregisterResource() {
       ::grpc::Service::MarkMethodRawCallback(1,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->FindResources(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->DeregisterResource(context, request, response); }));
     }
-    ~WithRawCallbackMethod_FindResources() override {
+    ~WithRawCallbackMethod_DeregisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status FindResources(::grpc::ServerContext* /*context*/, const ::ResourceAvailabilityRequest* /*request*/, ::ResourceAvailabilityResponse* /*response*/) override {
+    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* FindResources(
+    virtual ::grpc::ServerUnaryReactor* DeregisterResource(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_ShowResources : public BaseClass {
+  class WithRawCallbackMethod_SendForMaintenance : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_ShowResources() {
+    WithRawCallbackMethod_SendForMaintenance() {
       ::grpc::Service::MarkMethodRawCallback(2,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ShowResources(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SendForMaintenance(context, request, response); }));
     }
-    ~WithRawCallbackMethod_ShowResources() override {
+    ~WithRawCallbackMethod_SendForMaintenance() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ShowResources(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Resources* /*response*/) override {
+    ::grpc::Status SendForMaintenance(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* ShowResources(
+    virtual ::grpc::ServerUnaryReactor* SendForMaintenance(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_SendResource : public BaseClass {
+  class WithRawCallbackMethod_AddToSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_SendResource() {
+    WithRawCallbackMethod_AddToSchedule() {
       ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SendResource(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->AddToSchedule(context, request, response); }));
     }
-    ~WithRawCallbackMethod_SendResource() override {
+    ~WithRawCallbackMethod_AddToSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SendResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status AddToSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* SendResource(
+    virtual ::grpc::ServerUnaryReactor* AddToSchedule(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_RetrieveResource : public BaseClass {
+  class WithRawCallbackMethod_RemoveFromSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_RetrieveResource() {
+    WithRawCallbackMethod_RemoveFromSchedule() {
       ::grpc::Service::MarkMethodRawCallback(4,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RetrieveResource(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RemoveFromSchedule(context, request, response); }));
     }
-    ~WithRawCallbackMethod_RetrieveResource() override {
+    ~WithRawCallbackMethod_RemoveFromSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RetrieveResource(::grpc::ServerContext* /*context*/, const ::ResourceRetrievalRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RemoveFromSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* RetrieveResource(
+    virtual ::grpc::ServerUnaryReactor* RemoveFromSchedule(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_TransferResource : public BaseClass {
+  class WithRawCallbackMethod_ChangeSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_TransferResource() {
+    WithRawCallbackMethod_ChangeSchedule() {
       ::grpc::Service::MarkMethodRawCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->TransferResource(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ChangeSchedule(context, request, response); }));
     }
-    ~WithRawCallbackMethod_TransferResource() override {
+    ~WithRawCallbackMethod_ChangeSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TransferResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status ChangeSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* TransferResource(
+    virtual ::grpc::ServerUnaryReactor* ChangeSchedule(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1424,7 +1530,7 @@ class ResourceManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockIncreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1446,7 +1552,7 @@ class ResourceManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockDecreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1454,232 +1560,254 @@ class ResourceManagement final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_RegisterResource : public BaseClass {
+  class WithRawCallbackMethod_UseStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_RegisterResource() {
+    WithRawCallbackMethod_UseStock() {
       ::grpc::Service::MarkMethodRawCallback(8,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RegisterResource(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->UseStock(context, request, response); }));
     }
-    ~WithRawCallbackMethod_RegisterResource() override {
+    ~WithRawCallbackMethod_UseStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceRegistrationRequest* /*request*/, ::RegistrationSuccess* /*response*/) override {
+    ::grpc::Status UseStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* RegisterResource(
+    virtual ::grpc::ServerUnaryReactor* UseStock(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_DeregisterResource : public BaseClass {
+  class WithRawCallbackMethod_EmptyStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_DeregisterResource() {
+    WithRawCallbackMethod_EmptyStock() {
       ::grpc::Service::MarkMethodRawCallback(9,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->DeregisterResource(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->EmptyStock(context, request, response); }));
     }
-    ~WithRawCallbackMethod_DeregisterResource() override {
+    ~WithRawCallbackMethod_EmptyStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDeregistrationRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status EmptyStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* DeregisterResource(
+    virtual ::grpc::ServerUnaryReactor* EmptyStock(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_Print : public BaseClass {
+  class WithRawCallbackMethod_GetResourceInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_Print() {
+    WithRawCallbackMethod_GetResourceInformation() {
       ::grpc::Service::MarkMethodRawCallback(10,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->Print(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetResourceInformation(context, request, response); }));
     }
-    ~WithRawCallbackMethod_Print() override {
+    ~WithRawCallbackMethod_GetResourceInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
+    ::grpc::Status GetResourceInformation(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::ResourceDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* Print(
+    virtual ::grpc::ServerUnaryReactor* GetResourceInformation(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_ResourcePing : public BaseClass {
+  class WithRawCallbackMethod_GetResourcesInRoom : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_ResourcePing() {
+    WithRawCallbackMethod_GetResourcesInRoom() {
+      ::grpc::Service::MarkMethodRawCallback(11,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetResourcesInRoom(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetResourcesInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetResourcesInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::ResourceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetResourcesInRoom(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_RegisterResource : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_RegisterResource() {
       ::grpc::Service::MarkMethodStreamed(0,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::ResourcePingRequest, ::ResourceSuccess>(
+          ::ResourceDTO, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::ResourcePingRequest, ::ResourceSuccess>* streamer) {
-                       return this->StreamedResourcePing(context,
+                     ::ResourceDTO, ::Success>* streamer) {
+                       return this->StreamedRegisterResource(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_ResourcePing() override {
+    ~WithStreamedUnaryMethod_RegisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status ResourcePing(::grpc::ServerContext* /*context*/, const ::ResourcePingRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedResourcePing(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourcePingRequest,::ResourceSuccess>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedRegisterResource(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceDTO,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_FindResources : public BaseClass {
+  class WithStreamedUnaryMethod_DeregisterResource : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_FindResources() {
+    WithStreamedUnaryMethod_DeregisterResource() {
       ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::ResourceAvailabilityRequest, ::ResourceAvailabilityResponse>(
+          ::ResourceDTO, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::ResourceAvailabilityRequest, ::ResourceAvailabilityResponse>* streamer) {
-                       return this->StreamedFindResources(context,
+                     ::ResourceDTO, ::Success>* streamer) {
+                       return this->StreamedDeregisterResource(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_FindResources() override {
+    ~WithStreamedUnaryMethod_DeregisterResource() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status FindResources(::grpc::ServerContext* /*context*/, const ::ResourceAvailabilityRequest* /*request*/, ::ResourceAvailabilityResponse* /*response*/) override {
+    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedFindResources(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceAvailabilityRequest,::ResourceAvailabilityResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedDeregisterResource(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceDTO,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_ShowResources : public BaseClass {
+  class WithStreamedUnaryMethod_SendForMaintenance : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_ShowResources() {
+    WithStreamedUnaryMethod_SendForMaintenance() {
       ::grpc::Service::MarkMethodStreamed(2,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::Nothing, ::Resources>(
+          ::ResourceDTO, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::Nothing, ::Resources>* streamer) {
-                       return this->StreamedShowResources(context,
+                     ::ResourceDTO, ::Success>* streamer) {
+                       return this->StreamedSendForMaintenance(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_ShowResources() override {
+    ~WithStreamedUnaryMethod_SendForMaintenance() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status ShowResources(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Resources* /*response*/) override {
+    ::grpc::Status SendForMaintenance(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedShowResources(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::Nothing,::Resources>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedSendForMaintenance(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceDTO,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_SendResource : public BaseClass {
+  class WithStreamedUnaryMethod_AddToSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_SendResource() {
+    WithStreamedUnaryMethod_AddToSchedule() {
       ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::ResourceSendRequest, ::ResourceSuccess>(
+          ::ResourceShift, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::ResourceSendRequest, ::ResourceSuccess>* streamer) {
-                       return this->StreamedSendResource(context,
+                     ::ResourceShift, ::Success>* streamer) {
+                       return this->StreamedAddToSchedule(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_SendResource() override {
+    ~WithStreamedUnaryMethod_AddToSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status SendResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status AddToSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedSendResource(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceSendRequest,::ResourceSuccess>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedAddToSchedule(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceShift,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_RetrieveResource : public BaseClass {
+  class WithStreamedUnaryMethod_RemoveFromSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_RetrieveResource() {
+    WithStreamedUnaryMethod_RemoveFromSchedule() {
       ::grpc::Service::MarkMethodStreamed(4,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::ResourceRetrievalRequest, ::ResourceSuccess>(
+          ::ResourceShift, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::ResourceRetrievalRequest, ::ResourceSuccess>* streamer) {
-                       return this->StreamedRetrieveResource(context,
+                     ::ResourceShift, ::Success>* streamer) {
+                       return this->StreamedRemoveFromSchedule(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_RetrieveResource() override {
+    ~WithStreamedUnaryMethod_RemoveFromSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status RetrieveResource(::grpc::ServerContext* /*context*/, const ::ResourceRetrievalRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status RemoveFromSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedRetrieveResource(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceRetrievalRequest,::ResourceSuccess>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedRemoveFromSchedule(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceShift,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_TransferResource : public BaseClass {
+  class WithStreamedUnaryMethod_ChangeSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_TransferResource() {
+    WithStreamedUnaryMethod_ChangeSchedule() {
       ::grpc::Service::MarkMethodStreamed(5,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::ResourceSendRequest, ::ResourceSuccess>(
+          ::ResourceShift, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::ResourceSendRequest, ::ResourceSuccess>* streamer) {
-                       return this->StreamedTransferResource(context,
+                     ::ResourceShift, ::Success>* streamer) {
+                       return this->StreamedChangeSchedule(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_TransferResource() override {
+    ~WithStreamedUnaryMethod_ChangeSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status TransferResource(::grpc::ServerContext* /*context*/, const ::ResourceSendRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status ChangeSchedule(::grpc::ServerContext* /*context*/, const ::ResourceShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedTransferResource(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceSendRequest,::ResourceSuccess>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedChangeSchedule(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceShift,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_AddStock : public BaseClass {
@@ -1689,10 +1817,10 @@ class ResourceManagement final {
     WithStreamedUnaryMethod_AddStock() {
       ::grpc::Service::MarkMethodStreamed(6,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::StockIncreaseRequest, ::StockAmount>(
+          ::StockUpdate, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::StockIncreaseRequest, ::StockAmount>* streamer) {
+                     ::StockUpdate, ::Success>* streamer) {
                        return this->StreamedAddStock(context,
                          streamer);
                   }));
@@ -1701,12 +1829,12 @@ class ResourceManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockIncreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status AddStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedAddStock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StockIncreaseRequest,::StockAmount>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedAddStock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StockUpdate,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_RemoveStock : public BaseClass {
@@ -1716,10 +1844,10 @@ class ResourceManagement final {
     WithStreamedUnaryMethod_RemoveStock() {
       ::grpc::Service::MarkMethodStreamed(7,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::StockDecreaseRequest, ::StockAmount>(
+          ::StockUpdate, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::StockDecreaseRequest, ::StockAmount>* streamer) {
+                     ::StockUpdate, ::Success>* streamer) {
                        return this->StreamedRemoveStock(context,
                          streamer);
                   }));
@@ -1728,97 +1856,124 @@ class ResourceManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockDecreaseRequest* /*request*/, ::StockAmount* /*response*/) override {
+    ::grpc::Status RemoveStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedRemoveStock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StockDecreaseRequest,::StockAmount>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedRemoveStock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StockUpdate,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_RegisterResource : public BaseClass {
+  class WithStreamedUnaryMethod_UseStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_RegisterResource() {
+    WithStreamedUnaryMethod_UseStock() {
       ::grpc::Service::MarkMethodStreamed(8,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::ResourceRegistrationRequest, ::RegistrationSuccess>(
+          ::StockUpdate, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::ResourceRegistrationRequest, ::RegistrationSuccess>* streamer) {
-                       return this->StreamedRegisterResource(context,
+                     ::StockUpdate, ::Success>* streamer) {
+                       return this->StreamedUseStock(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_RegisterResource() override {
+    ~WithStreamedUnaryMethod_UseStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status RegisterResource(::grpc::ServerContext* /*context*/, const ::ResourceRegistrationRequest* /*request*/, ::RegistrationSuccess* /*response*/) override {
+    ::grpc::Status UseStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedRegisterResource(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceRegistrationRequest,::RegistrationSuccess>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedUseStock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StockUpdate,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_DeregisterResource : public BaseClass {
+  class WithStreamedUnaryMethod_EmptyStock : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_DeregisterResource() {
+    WithStreamedUnaryMethod_EmptyStock() {
       ::grpc::Service::MarkMethodStreamed(9,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::ResourceDeregistrationRequest, ::ResourceSuccess>(
+          ::StockUpdate, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::ResourceDeregistrationRequest, ::ResourceSuccess>* streamer) {
-                       return this->StreamedDeregisterResource(context,
+                     ::StockUpdate, ::Success>* streamer) {
+                       return this->StreamedEmptyStock(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_DeregisterResource() override {
+    ~WithStreamedUnaryMethod_EmptyStock() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status DeregisterResource(::grpc::ServerContext* /*context*/, const ::ResourceDeregistrationRequest* /*request*/, ::ResourceSuccess* /*response*/) override {
+    ::grpc::Status EmptyStock(::grpc::ServerContext* /*context*/, const ::StockUpdate* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedDeregisterResource(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceDeregistrationRequest,::ResourceSuccess>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedEmptyStock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StockUpdate,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_Print : public BaseClass {
+  class WithStreamedUnaryMethod_GetResourceInformation : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_Print() {
+    WithStreamedUnaryMethod_GetResourceInformation() {
       ::grpc::Service::MarkMethodStreamed(10,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::Nothing, ::Nothing>(
+          ::ResourceDTO, ::ResourceDTO>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::Nothing, ::Nothing>* streamer) {
-                       return this->StreamedPrint(context,
+                     ::ResourceDTO, ::ResourceDTO>* streamer) {
+                       return this->StreamedGetResourceInformation(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_Print() override {
+    ~WithStreamedUnaryMethod_GetResourceInformation() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status Print(::grpc::ServerContext* /*context*/, const ::Nothing* /*request*/, ::Nothing* /*response*/) override {
+    ::grpc::Status GetResourceInformation(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::ResourceDTO* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedPrint(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::Nothing,::Nothing>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedGetResourceInformation(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceDTO,::ResourceDTO>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_ResourcePing<WithStreamedUnaryMethod_FindResources<WithStreamedUnaryMethod_ShowResources<WithStreamedUnaryMethod_SendResource<WithStreamedUnaryMethod_RetrieveResource<WithStreamedUnaryMethod_TransferResource<WithStreamedUnaryMethod_AddStock<WithStreamedUnaryMethod_RemoveStock<WithStreamedUnaryMethod_RegisterResource<WithStreamedUnaryMethod_DeregisterResource<WithStreamedUnaryMethod_Print<Service > > > > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetResourcesInRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetResourcesInRoom() {
+      ::grpc::Service::MarkMethodStreamed(11,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::RoomRequest, ::ResourceList>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::RoomRequest, ::ResourceList>* streamer) {
+                       return this->StreamedGetResourcesInRoom(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetResourcesInRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetResourcesInRoom(::grpc::ServerContext* /*context*/, const ::RoomRequest* /*request*/, ::ResourceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetResourcesInRoom(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::RoomRequest,::ResourceList>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_RegisterResource<WithStreamedUnaryMethod_DeregisterResource<WithStreamedUnaryMethod_SendForMaintenance<WithStreamedUnaryMethod_AddToSchedule<WithStreamedUnaryMethod_RemoveFromSchedule<WithStreamedUnaryMethod_ChangeSchedule<WithStreamedUnaryMethod_AddStock<WithStreamedUnaryMethod_RemoveStock<WithStreamedUnaryMethod_UseStock<WithStreamedUnaryMethod_EmptyStock<WithStreamedUnaryMethod_GetResourceInformation<WithStreamedUnaryMethod_GetResourcesInRoom<Service > > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_ResourcePing<WithStreamedUnaryMethod_FindResources<WithStreamedUnaryMethod_ShowResources<WithStreamedUnaryMethod_SendResource<WithStreamedUnaryMethod_RetrieveResource<WithStreamedUnaryMethod_TransferResource<WithStreamedUnaryMethod_AddStock<WithStreamedUnaryMethod_RemoveStock<WithStreamedUnaryMethod_RegisterResource<WithStreamedUnaryMethod_DeregisterResource<WithStreamedUnaryMethod_Print<Service > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_RegisterResource<WithStreamedUnaryMethod_DeregisterResource<WithStreamedUnaryMethod_SendForMaintenance<WithStreamedUnaryMethod_AddToSchedule<WithStreamedUnaryMethod_RemoveFromSchedule<WithStreamedUnaryMethod_ChangeSchedule<WithStreamedUnaryMethod_AddStock<WithStreamedUnaryMethod_RemoveStock<WithStreamedUnaryMethod_UseStock<WithStreamedUnaryMethod_EmptyStock<WithStreamedUnaryMethod_GetResourceInformation<WithStreamedUnaryMethod_GetResourcesInRoom<Service > > > > > > > > > > > > StreamedService;
 };
 
 

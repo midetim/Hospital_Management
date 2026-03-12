@@ -29,7 +29,7 @@
 #include "google/protobuf/repeated_field.h"  // IWYU pragma: export
 #include "google/protobuf/extension_set.h"  // IWYU pragma: export
 #include "google/protobuf/unknown_field_set.h"
-#include "common.pb.h"
+#include "Common.pb.h"
 // @@protoc_insertion_point(includes)
 
 // Must be included last.
@@ -53,62 +53,22 @@ struct TableStruct_ResourceManagement_2eproto {
 extern "C" {
 extern const ::google::protobuf::internal::DescriptorTable descriptor_table_ResourceManagement_2eproto;
 }  // extern "C"
-class RegistrationSuccess;
-struct RegistrationSuccessDefaultTypeInternal;
-extern RegistrationSuccessDefaultTypeInternal _RegistrationSuccess_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull RegistrationSuccess_class_data_;
-class ResourceAvailabilityRequest;
-struct ResourceAvailabilityRequestDefaultTypeInternal;
-extern ResourceAvailabilityRequestDefaultTypeInternal _ResourceAvailabilityRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ResourceAvailabilityRequest_class_data_;
-class ResourceAvailabilityResponse;
-struct ResourceAvailabilityResponseDefaultTypeInternal;
-extern ResourceAvailabilityResponseDefaultTypeInternal _ResourceAvailabilityResponse_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ResourceAvailabilityResponse_class_data_;
 class ResourceDTO;
 struct ResourceDTODefaultTypeInternal;
 extern ResourceDTODefaultTypeInternal _ResourceDTO_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull ResourceDTO_class_data_;
-class ResourceDeregistrationRequest;
-struct ResourceDeregistrationRequestDefaultTypeInternal;
-extern ResourceDeregistrationRequestDefaultTypeInternal _ResourceDeregistrationRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ResourceDeregistrationRequest_class_data_;
-class ResourcePingRequest;
-struct ResourcePingRequestDefaultTypeInternal;
-extern ResourcePingRequestDefaultTypeInternal _ResourcePingRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ResourcePingRequest_class_data_;
-class ResourceRegistrationRequest;
-struct ResourceRegistrationRequestDefaultTypeInternal;
-extern ResourceRegistrationRequestDefaultTypeInternal _ResourceRegistrationRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ResourceRegistrationRequest_class_data_;
-class ResourceRetrievalRequest;
-struct ResourceRetrievalRequestDefaultTypeInternal;
-extern ResourceRetrievalRequestDefaultTypeInternal _ResourceRetrievalRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ResourceRetrievalRequest_class_data_;
-class ResourceSendRequest;
-struct ResourceSendRequestDefaultTypeInternal;
-extern ResourceSendRequestDefaultTypeInternal _ResourceSendRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ResourceSendRequest_class_data_;
-class ResourceSuccess;
-struct ResourceSuccessDefaultTypeInternal;
-extern ResourceSuccessDefaultTypeInternal _ResourceSuccess_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ResourceSuccess_class_data_;
-class Resources;
-struct ResourcesDefaultTypeInternal;
-extern ResourcesDefaultTypeInternal _Resources_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull Resources_class_data_;
-class StockAmount;
-struct StockAmountDefaultTypeInternal;
-extern StockAmountDefaultTypeInternal _StockAmount_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull StockAmount_class_data_;
-class StockDecreaseRequest;
-struct StockDecreaseRequestDefaultTypeInternal;
-extern StockDecreaseRequestDefaultTypeInternal _StockDecreaseRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull StockDecreaseRequest_class_data_;
-class StockIncreaseRequest;
-struct StockIncreaseRequestDefaultTypeInternal;
-extern StockIncreaseRequestDefaultTypeInternal _StockIncreaseRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull StockIncreaseRequest_class_data_;
+class ResourceList;
+struct ResourceListDefaultTypeInternal;
+extern ResourceListDefaultTypeInternal _ResourceList_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ResourceList_class_data_;
+class ResourceShift;
+struct ResourceShiftDefaultTypeInternal;
+extern ResourceShiftDefaultTypeInternal _ResourceShift_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ResourceShift_class_data_;
+class StockUpdate;
+struct StockUpdateDefaultTypeInternal;
+extern StockUpdateDefaultTypeInternal _StockUpdate_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull StockUpdate_class_data_;
 namespace google {
 namespace protobuf {
 }  // namespace protobuf
@@ -120,30 +80,30 @@ namespace protobuf {
 
 // -------------------------------------------------------------------
 
-class StockIncreaseRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:StockIncreaseRequest) */ {
+class StockUpdate final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:StockUpdate) */ {
  public:
-  inline StockIncreaseRequest() : StockIncreaseRequest(nullptr) {}
-  ~StockIncreaseRequest() PROTOBUF_FINAL;
+  inline StockUpdate() : StockUpdate(nullptr) {}
+  ~StockUpdate() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(StockIncreaseRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+  void operator delete(StockUpdate* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(StockIncreaseRequest));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(StockUpdate));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR StockIncreaseRequest(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR StockUpdate(::google::protobuf::internal::ConstantInitialized);
 
-  inline StockIncreaseRequest(const StockIncreaseRequest& from) : StockIncreaseRequest(nullptr, from) {}
-  inline StockIncreaseRequest(StockIncreaseRequest&& from) noexcept
-      : StockIncreaseRequest(nullptr, ::std::move(from)) {}
-  inline StockIncreaseRequest& operator=(const StockIncreaseRequest& from) {
+  inline StockUpdate(const StockUpdate& from) : StockUpdate(nullptr, from) {}
+  inline StockUpdate(StockUpdate&& from) noexcept
+      : StockUpdate(nullptr, ::std::move(from)) {}
+  inline StockUpdate& operator=(const StockUpdate& from) {
     CopyFrom(from);
     return *this;
   }
-  inline StockIncreaseRequest& operator=(StockIncreaseRequest&& from) noexcept {
+  inline StockUpdate& operator=(StockUpdate&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -171,13 +131,13 @@ class StockIncreaseRequest final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const StockIncreaseRequest& default_instance() {
-    return *reinterpret_cast<const StockIncreaseRequest*>(
-        &_StockIncreaseRequest_default_instance_);
+  static const StockUpdate& default_instance() {
+    return *reinterpret_cast<const StockUpdate*>(
+        &_StockUpdate_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 8;
-  friend void swap(StockIncreaseRequest& a, StockIncreaseRequest& b) { a.Swap(&b); }
-  inline void Swap(StockIncreaseRequest* PROTOBUF_NONNULL other) {
+  static constexpr int kIndexInFileMessages = 2;
+  friend void swap(StockUpdate& a, StockUpdate& b) { a.Swap(&b); }
+  inline void Swap(StockUpdate* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -185,7 +145,7 @@ class StockIncreaseRequest final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(StockIncreaseRequest* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(StockUpdate* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -193,13 +153,13 @@ class StockIncreaseRequest final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  StockIncreaseRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<StockIncreaseRequest>(arena);
+  StockUpdate* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<StockUpdate>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const StockIncreaseRequest& from);
+  void CopyFrom(const StockUpdate& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const StockIncreaseRequest& from) { StockIncreaseRequest::MergeImpl(*this, from); }
+  void MergeFrom(const StockUpdate& from) { StockUpdate::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -235,18 +195,18 @@ class StockIncreaseRequest final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(StockIncreaseRequest* PROTOBUF_NONNULL other);
+  void InternalSwap(StockUpdate* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "StockIncreaseRequest"; }
+  static ::absl::string_view FullMessageName() { return "StockUpdate"; }
 
  protected:
-  explicit StockIncreaseRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  StockIncreaseRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const StockIncreaseRequest& from);
-  StockIncreaseRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, StockIncreaseRequest&& from) noexcept
-      : StockIncreaseRequest(arena) {
+  explicit StockUpdate(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  StockUpdate(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const StockUpdate& from);
+  StockUpdate(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, StockUpdate&& from) noexcept
+      : StockUpdate(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -265,7 +225,7 @@ class StockIncreaseRequest final : public ::google::protobuf::Message
   enum : int {
     kResourceTypeFieldNumber = 2,
     kResourceIdFieldNumber = 1,
-    kIncreaseAmountFieldNumber = 3,
+    kStockAmountFieldNumber = 3,
   };
   // string resource_type = 2;
   void clear_resource_type() ;
@@ -292,457 +252,17 @@ class StockIncreaseRequest final : public ::google::protobuf::Message
   void _internal_set_resource_id(::uint64_t value);
 
   public:
-  // uint32 increase_amount = 3;
-  void clear_increase_amount() ;
-  ::uint32_t increase_amount() const;
-  void set_increase_amount(::uint32_t value);
+  // uint32 stock_amount = 3;
+  void clear_stock_amount() ;
+  ::uint32_t stock_amount() const;
+  void set_stock_amount(::uint32_t value);
 
   private:
-  ::uint32_t _internal_increase_amount() const;
-  void _internal_set_increase_amount(::uint32_t value);
+  ::uint32_t _internal_stock_amount() const;
+  void _internal_set_stock_amount(::uint32_t value);
 
   public:
-  // @@protoc_insertion_point(class_scope:StockIncreaseRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
-                                   0, 42,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const StockIncreaseRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr resource_type_;
-    ::uint64_t resource_id_;
-    ::uint32_t increase_amount_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_ResourceManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull StockIncreaseRequest_class_data_;
-// -------------------------------------------------------------------
-
-class StockDecreaseRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:StockDecreaseRequest) */ {
- public:
-  inline StockDecreaseRequest() : StockDecreaseRequest(nullptr) {}
-  ~StockDecreaseRequest() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(StockDecreaseRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(StockDecreaseRequest));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR StockDecreaseRequest(::google::protobuf::internal::ConstantInitialized);
-
-  inline StockDecreaseRequest(const StockDecreaseRequest& from) : StockDecreaseRequest(nullptr, from) {}
-  inline StockDecreaseRequest(StockDecreaseRequest&& from) noexcept
-      : StockDecreaseRequest(nullptr, ::std::move(from)) {}
-  inline StockDecreaseRequest& operator=(const StockDecreaseRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline StockDecreaseRequest& operator=(StockDecreaseRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const StockDecreaseRequest& default_instance() {
-    return *reinterpret_cast<const StockDecreaseRequest*>(
-        &_StockDecreaseRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 9;
-  friend void swap(StockDecreaseRequest& a, StockDecreaseRequest& b) { a.Swap(&b); }
-  inline void Swap(StockDecreaseRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(StockDecreaseRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  StockDecreaseRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<StockDecreaseRequest>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const StockDecreaseRequest& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const StockDecreaseRequest& from) { StockDecreaseRequest::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(StockDecreaseRequest* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "StockDecreaseRequest"; }
-
- protected:
-  explicit StockDecreaseRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  StockDecreaseRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const StockDecreaseRequest& from);
-  StockDecreaseRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, StockDecreaseRequest&& from) noexcept
-      : StockDecreaseRequest(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kResourceTypeFieldNumber = 2,
-    kResourceIdFieldNumber = 1,
-    kDecreaseAmountFieldNumber = 3,
-  };
-  // string resource_type = 2;
-  void clear_resource_type() ;
-  const ::std::string& resource_type() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_resource_type(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_resource_type();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_resource_type();
-  void set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_resource_type() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_resource_type(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_resource_type();
-
-  public:
-  // uint64 resource_id = 1;
-  void clear_resource_id() ;
-  ::uint64_t resource_id() const;
-  void set_resource_id(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_resource_id() const;
-  void _internal_set_resource_id(::uint64_t value);
-
-  public:
-  // uint32 decrease_amount = 3;
-  void clear_decrease_amount() ;
-  ::uint32_t decrease_amount() const;
-  void set_decrease_amount(::uint32_t value);
-
-  private:
-  ::uint32_t _internal_decrease_amount() const;
-  void _internal_set_decrease_amount(::uint32_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:StockDecreaseRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
-                                   0, 42,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const StockDecreaseRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr resource_type_;
-    ::uint64_t resource_id_;
-    ::uint32_t decrease_amount_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_ResourceManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull StockDecreaseRequest_class_data_;
-// -------------------------------------------------------------------
-
-class StockAmount final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:StockAmount) */ {
- public:
-  inline StockAmount() : StockAmount(nullptr) {}
-  ~StockAmount() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(StockAmount* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(StockAmount));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR StockAmount(::google::protobuf::internal::ConstantInitialized);
-
-  inline StockAmount(const StockAmount& from) : StockAmount(nullptr, from) {}
-  inline StockAmount(StockAmount&& from) noexcept
-      : StockAmount(nullptr, ::std::move(from)) {}
-  inline StockAmount& operator=(const StockAmount& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline StockAmount& operator=(StockAmount&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const StockAmount& default_instance() {
-    return *reinterpret_cast<const StockAmount*>(
-        &_StockAmount_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 10;
-  friend void swap(StockAmount& a, StockAmount& b) { a.Swap(&b); }
-  inline void Swap(StockAmount* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(StockAmount* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  StockAmount* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<StockAmount>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const StockAmount& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const StockAmount& from) { StockAmount::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(StockAmount* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "StockAmount"; }
-
- protected:
-  explicit StockAmount(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  StockAmount(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const StockAmount& from);
-  StockAmount(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, StockAmount&& from) noexcept
-      : StockAmount(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kResourceTypeFieldNumber = 2,
-    kResourceIdFieldNumber = 1,
-    kCurrentStockFieldNumber = 3,
-  };
-  // string resource_type = 2;
-  void clear_resource_type() ;
-  const ::std::string& resource_type() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_resource_type(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_resource_type();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_resource_type();
-  void set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_resource_type() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_resource_type(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_resource_type();
-
-  public:
-  // uint64 resource_id = 1;
-  void clear_resource_id() ;
-  ::uint64_t resource_id() const;
-  void set_resource_id(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_resource_id() const;
-  void _internal_set_resource_id(::uint64_t value);
-
-  public:
-  // uint32 current_stock = 3;
-  void clear_current_stock() ;
-  ::uint32_t current_stock() const;
-  void set_current_stock(::uint32_t value);
-
-  private:
-  ::uint32_t _internal_current_stock() const;
-  void _internal_set_current_stock(::uint32_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:StockAmount)
+  // @@protoc_insertion_point(class_scope:StockUpdate)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -765,1228 +285,19 @@ class StockAmount final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const StockAmount& from_msg);
+        const StockUpdate& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr resource_type_;
     ::uint64_t resource_id_;
-    ::uint32_t current_stock_;
+    ::uint32_t stock_amount_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_ResourceManagement_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull StockAmount_class_data_;
-// -------------------------------------------------------------------
-
-class ResourceSuccess final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:ResourceSuccess) */ {
- public:
-  inline ResourceSuccess() : ResourceSuccess(nullptr) {}
-  ~ResourceSuccess() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ResourceSuccess* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceSuccess));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ResourceSuccess(::google::protobuf::internal::ConstantInitialized);
-
-  inline ResourceSuccess(const ResourceSuccess& from) : ResourceSuccess(nullptr, from) {}
-  inline ResourceSuccess(ResourceSuccess&& from) noexcept
-      : ResourceSuccess(nullptr, ::std::move(from)) {}
-  inline ResourceSuccess& operator=(const ResourceSuccess& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ResourceSuccess& operator=(ResourceSuccess&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const ResourceSuccess& default_instance() {
-    return *reinterpret_cast<const ResourceSuccess*>(
-        &_ResourceSuccess_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 7;
-  friend void swap(ResourceSuccess& a, ResourceSuccess& b) { a.Swap(&b); }
-  inline void Swap(ResourceSuccess* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(ResourceSuccess* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  ResourceSuccess* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ResourceSuccess>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ResourceSuccess& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ResourceSuccess& from) { ResourceSuccess::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(ResourceSuccess* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "ResourceSuccess"; }
-
- protected:
-  explicit ResourceSuccess(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ResourceSuccess(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceSuccess& from);
-  ResourceSuccess(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceSuccess&& from) noexcept
-      : ResourceSuccess(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kSuccessMessageFieldNumber = 3,
-    kResourceIdFieldNumber = 2,
-    kSuccessFieldNumber = 1,
-  };
-  // string success_message = 3;
-  void clear_success_message() ;
-  const ::std::string& success_message() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_success_message(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_success_message();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_success_message();
-  void set_allocated_success_message(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_success_message() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_success_message(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_success_message();
-
-  public:
-  // uint64 resource_id = 2;
-  void clear_resource_id() ;
-  ::uint64_t resource_id() const;
-  void set_resource_id(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_resource_id() const;
-  void _internal_set_resource_id(::uint64_t value);
-
-  public:
-  // bool success = 1;
-  void clear_success() ;
-  bool success() const;
-  void set_success(bool value);
-
-  private:
-  bool _internal_success() const;
-  void _internal_set_success(bool value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:ResourceSuccess)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
-                                   0, 39,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ResourceSuccess& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr success_message_;
-    ::uint64_t resource_id_;
-    bool success_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_ResourceManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull ResourceSuccess_class_data_;
-// -------------------------------------------------------------------
-
-class ResourceSendRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:ResourceSendRequest) */ {
- public:
-  inline ResourceSendRequest() : ResourceSendRequest(nullptr) {}
-  ~ResourceSendRequest() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ResourceSendRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceSendRequest));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ResourceSendRequest(::google::protobuf::internal::ConstantInitialized);
-
-  inline ResourceSendRequest(const ResourceSendRequest& from) : ResourceSendRequest(nullptr, from) {}
-  inline ResourceSendRequest(ResourceSendRequest&& from) noexcept
-      : ResourceSendRequest(nullptr, ::std::move(from)) {}
-  inline ResourceSendRequest& operator=(const ResourceSendRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ResourceSendRequest& operator=(ResourceSendRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const ResourceSendRequest& default_instance() {
-    return *reinterpret_cast<const ResourceSendRequest*>(
-        &_ResourceSendRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 5;
-  friend void swap(ResourceSendRequest& a, ResourceSendRequest& b) { a.Swap(&b); }
-  inline void Swap(ResourceSendRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(ResourceSendRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  ResourceSendRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ResourceSendRequest>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ResourceSendRequest& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ResourceSendRequest& from) { ResourceSendRequest::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(ResourceSendRequest* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "ResourceSendRequest"; }
-
- protected:
-  explicit ResourceSendRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ResourceSendRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceSendRequest& from);
-  ResourceSendRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceSendRequest&& from) noexcept
-      : ResourceSendRequest(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kResourceTypeFieldNumber = 2,
-    kResourceIdFieldNumber = 1,
-    kRoomIdFieldNumber = 3,
-  };
-  // string resource_type = 2;
-  void clear_resource_type() ;
-  const ::std::string& resource_type() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_resource_type(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_resource_type();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_resource_type();
-  void set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_resource_type() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_resource_type(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_resource_type();
-
-  public:
-  // uint64 resource_id = 1;
-  void clear_resource_id() ;
-  ::uint64_t resource_id() const;
-  void set_resource_id(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_resource_id() const;
-  void _internal_set_resource_id(::uint64_t value);
-
-  public:
-  // uint32 room_id = 3;
-  void clear_room_id() ;
-  ::uint32_t room_id() const;
-  void set_room_id(::uint32_t value);
-
-  private:
-  ::uint32_t _internal_room_id() const;
-  void _internal_set_room_id(::uint32_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:ResourceSendRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
-                                   0, 41,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ResourceSendRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr resource_type_;
-    ::uint64_t resource_id_;
-    ::uint32_t room_id_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_ResourceManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull ResourceSendRequest_class_data_;
-// -------------------------------------------------------------------
-
-class ResourceRetrievalRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:ResourceRetrievalRequest) */ {
- public:
-  inline ResourceRetrievalRequest() : ResourceRetrievalRequest(nullptr) {}
-  ~ResourceRetrievalRequest() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ResourceRetrievalRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceRetrievalRequest));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ResourceRetrievalRequest(::google::protobuf::internal::ConstantInitialized);
-
-  inline ResourceRetrievalRequest(const ResourceRetrievalRequest& from) : ResourceRetrievalRequest(nullptr, from) {}
-  inline ResourceRetrievalRequest(ResourceRetrievalRequest&& from) noexcept
-      : ResourceRetrievalRequest(nullptr, ::std::move(from)) {}
-  inline ResourceRetrievalRequest& operator=(const ResourceRetrievalRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ResourceRetrievalRequest& operator=(ResourceRetrievalRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const ResourceRetrievalRequest& default_instance() {
-    return *reinterpret_cast<const ResourceRetrievalRequest*>(
-        &_ResourceRetrievalRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 6;
-  friend void swap(ResourceRetrievalRequest& a, ResourceRetrievalRequest& b) { a.Swap(&b); }
-  inline void Swap(ResourceRetrievalRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(ResourceRetrievalRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  ResourceRetrievalRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ResourceRetrievalRequest>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ResourceRetrievalRequest& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ResourceRetrievalRequest& from) { ResourceRetrievalRequest::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(ResourceRetrievalRequest* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "ResourceRetrievalRequest"; }
-
- protected:
-  explicit ResourceRetrievalRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ResourceRetrievalRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceRetrievalRequest& from);
-  ResourceRetrievalRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceRetrievalRequest&& from) noexcept
-      : ResourceRetrievalRequest(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kResourceIdFieldNumber = 1,
-  };
-  // uint64 resource_id = 1;
-  void clear_resource_id() ;
-  ::uint64_t resource_id() const;
-  void set_resource_id(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_resource_id() const;
-  void _internal_set_resource_id(::uint64_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:ResourceRetrievalRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1,
-                                   0, 0,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ResourceRetrievalRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::uint64_t resource_id_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_ResourceManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull ResourceRetrievalRequest_class_data_;
-// -------------------------------------------------------------------
-
-class ResourceRegistrationRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:ResourceRegistrationRequest) */ {
- public:
-  inline ResourceRegistrationRequest() : ResourceRegistrationRequest(nullptr) {}
-  ~ResourceRegistrationRequest() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ResourceRegistrationRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceRegistrationRequest));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ResourceRegistrationRequest(::google::protobuf::internal::ConstantInitialized);
-
-  inline ResourceRegistrationRequest(const ResourceRegistrationRequest& from) : ResourceRegistrationRequest(nullptr, from) {}
-  inline ResourceRegistrationRequest(ResourceRegistrationRequest&& from) noexcept
-      : ResourceRegistrationRequest(nullptr, ::std::move(from)) {}
-  inline ResourceRegistrationRequest& operator=(const ResourceRegistrationRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ResourceRegistrationRequest& operator=(ResourceRegistrationRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const ResourceRegistrationRequest& default_instance() {
-    return *reinterpret_cast<const ResourceRegistrationRequest*>(
-        &_ResourceRegistrationRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 11;
-  friend void swap(ResourceRegistrationRequest& a, ResourceRegistrationRequest& b) { a.Swap(&b); }
-  inline void Swap(ResourceRegistrationRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(ResourceRegistrationRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  ResourceRegistrationRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ResourceRegistrationRequest>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ResourceRegistrationRequest& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ResourceRegistrationRequest& from) { ResourceRegistrationRequest::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(ResourceRegistrationRequest* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "ResourceRegistrationRequest"; }
-
- protected:
-  explicit ResourceRegistrationRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ResourceRegistrationRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceRegistrationRequest& from);
-  ResourceRegistrationRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceRegistrationRequest&& from) noexcept
-      : ResourceRegistrationRequest(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kResourceTypeFieldNumber = 1,
-  };
-  // string resource_type = 1;
-  void clear_resource_type() ;
-  const ::std::string& resource_type() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_resource_type(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_resource_type();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_resource_type();
-  void set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_resource_type() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_resource_type(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_resource_type();
-
-  public:
-  // @@protoc_insertion_point(class_scope:ResourceRegistrationRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1,
-                                   0, 49,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ResourceRegistrationRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr resource_type_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_ResourceManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull ResourceRegistrationRequest_class_data_;
-// -------------------------------------------------------------------
-
-class ResourcePingRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:ResourcePingRequest) */ {
- public:
-  inline ResourcePingRequest() : ResourcePingRequest(nullptr) {}
-  ~ResourcePingRequest() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ResourcePingRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourcePingRequest));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ResourcePingRequest(::google::protobuf::internal::ConstantInitialized);
-
-  inline ResourcePingRequest(const ResourcePingRequest& from) : ResourcePingRequest(nullptr, from) {}
-  inline ResourcePingRequest(ResourcePingRequest&& from) noexcept
-      : ResourcePingRequest(nullptr, ::std::move(from)) {}
-  inline ResourcePingRequest& operator=(const ResourcePingRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ResourcePingRequest& operator=(ResourcePingRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const ResourcePingRequest& default_instance() {
-    return *reinterpret_cast<const ResourcePingRequest*>(
-        &_ResourcePingRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 1;
-  friend void swap(ResourcePingRequest& a, ResourcePingRequest& b) { a.Swap(&b); }
-  inline void Swap(ResourcePingRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(ResourcePingRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  ResourcePingRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ResourcePingRequest>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ResourcePingRequest& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ResourcePingRequest& from) { ResourcePingRequest::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(ResourcePingRequest* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "ResourcePingRequest"; }
-
- protected:
-  explicit ResourcePingRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ResourcePingRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourcePingRequest& from);
-  ResourcePingRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourcePingRequest&& from) noexcept
-      : ResourcePingRequest(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kPingFieldNumber = 1,
-  };
-  // bool ping = 1;
-  void clear_ping() ;
-  bool ping() const;
-  void set_ping(bool value);
-
-  private:
-  bool _internal_ping() const;
-  void _internal_set_ping(bool value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:ResourcePingRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1,
-                                   0, 0,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ResourcePingRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    bool ping_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_ResourceManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull ResourcePingRequest_class_data_;
-// -------------------------------------------------------------------
-
-class ResourceDeregistrationRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:ResourceDeregistrationRequest) */ {
- public:
-  inline ResourceDeregistrationRequest() : ResourceDeregistrationRequest(nullptr) {}
-  ~ResourceDeregistrationRequest() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ResourceDeregistrationRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceDeregistrationRequest));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ResourceDeregistrationRequest(::google::protobuf::internal::ConstantInitialized);
-
-  inline ResourceDeregistrationRequest(const ResourceDeregistrationRequest& from) : ResourceDeregistrationRequest(nullptr, from) {}
-  inline ResourceDeregistrationRequest(ResourceDeregistrationRequest&& from) noexcept
-      : ResourceDeregistrationRequest(nullptr, ::std::move(from)) {}
-  inline ResourceDeregistrationRequest& operator=(const ResourceDeregistrationRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ResourceDeregistrationRequest& operator=(ResourceDeregistrationRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const ResourceDeregistrationRequest& default_instance() {
-    return *reinterpret_cast<const ResourceDeregistrationRequest*>(
-        &_ResourceDeregistrationRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 12;
-  friend void swap(ResourceDeregistrationRequest& a, ResourceDeregistrationRequest& b) { a.Swap(&b); }
-  inline void Swap(ResourceDeregistrationRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(ResourceDeregistrationRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  ResourceDeregistrationRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ResourceDeregistrationRequest>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ResourceDeregistrationRequest& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ResourceDeregistrationRequest& from) { ResourceDeregistrationRequest::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(ResourceDeregistrationRequest* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "ResourceDeregistrationRequest"; }
-
- protected:
-  explicit ResourceDeregistrationRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ResourceDeregistrationRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceDeregistrationRequest& from);
-  ResourceDeregistrationRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceDeregistrationRequest&& from) noexcept
-      : ResourceDeregistrationRequest(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kResourceIdFieldNumber = 1,
-  };
-  // uint64 resource_id = 1;
-  void clear_resource_id() ;
-  ::uint64_t resource_id() const;
-  void set_resource_id(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_resource_id() const;
-  void _internal_set_resource_id(::uint64_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:ResourceDeregistrationRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1,
-                                   0, 0,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ResourceDeregistrationRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::uint64_t resource_id_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_ResourceManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull ResourceDeregistrationRequest_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull StockUpdate_class_data_;
 // -------------------------------------------------------------------
 
 class ResourceDTO final : public ::google::protobuf::Message
@@ -2135,6 +446,7 @@ class ResourceDTO final : public ::google::protobuf::Message
     kResourceTypeFieldNumber = 3,
     kResourceIdFieldNumber = 1,
     kRoomIdFieldNumber = 2,
+    kResourceStockFieldNumber = 4,
   };
   // string resource_type = 3;
   void clear_resource_type() ;
@@ -2171,11 +483,21 @@ class ResourceDTO final : public ::google::protobuf::Message
   void _internal_set_room_id(::uint32_t value);
 
   public:
+  // uint32 resource_stock = 4;
+  void clear_resource_stock() ;
+  ::uint32_t resource_stock() const;
+  void set_resource_stock(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_resource_stock() const;
+  void _internal_set_resource_stock(::uint32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:ResourceDTO)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
+  static const ::google::protobuf::internal::TcParseTable<2, 4,
                                    0, 33,
                                    2>
       _table_;
@@ -2200,6 +522,7 @@ class ResourceDTO final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr resource_type_;
     ::uint64_t resource_id_;
     ::uint32_t room_id_;
+    ::uint32_t resource_stock_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -2209,30 +532,30 @@ class ResourceDTO final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull ResourceDTO_class_data_;
 // -------------------------------------------------------------------
 
-class ResourceAvailabilityResponse final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:ResourceAvailabilityResponse) */ {
+class ResourceList final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:ResourceList) */ {
  public:
-  inline ResourceAvailabilityResponse() : ResourceAvailabilityResponse(nullptr) {}
-  ~ResourceAvailabilityResponse() PROTOBUF_FINAL;
+  inline ResourceList() : ResourceList(nullptr) {}
+  ~ResourceList() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ResourceAvailabilityResponse* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+  void operator delete(ResourceList* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceAvailabilityResponse));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceList));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ResourceAvailabilityResponse(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR ResourceList(::google::protobuf::internal::ConstantInitialized);
 
-  inline ResourceAvailabilityResponse(const ResourceAvailabilityResponse& from) : ResourceAvailabilityResponse(nullptr, from) {}
-  inline ResourceAvailabilityResponse(ResourceAvailabilityResponse&& from) noexcept
-      : ResourceAvailabilityResponse(nullptr, ::std::move(from)) {}
-  inline ResourceAvailabilityResponse& operator=(const ResourceAvailabilityResponse& from) {
+  inline ResourceList(const ResourceList& from) : ResourceList(nullptr, from) {}
+  inline ResourceList(ResourceList&& from) noexcept
+      : ResourceList(nullptr, ::std::move(from)) {}
+  inline ResourceList& operator=(const ResourceList& from) {
     CopyFrom(from);
     return *this;
   }
-  inline ResourceAvailabilityResponse& operator=(ResourceAvailabilityResponse&& from) noexcept {
+  inline ResourceList& operator=(ResourceList&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -2260,13 +583,13 @@ class ResourceAvailabilityResponse final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const ResourceAvailabilityResponse& default_instance() {
-    return *reinterpret_cast<const ResourceAvailabilityResponse*>(
-        &_ResourceAvailabilityResponse_default_instance_);
+  static const ResourceList& default_instance() {
+    return *reinterpret_cast<const ResourceList*>(
+        &_ResourceList_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 3;
-  friend void swap(ResourceAvailabilityResponse& a, ResourceAvailabilityResponse& b) { a.Swap(&b); }
-  inline void Swap(ResourceAvailabilityResponse* PROTOBUF_NONNULL other) {
+  friend void swap(ResourceList& a, ResourceList& b) { a.Swap(&b); }
+  inline void Swap(ResourceList* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -2274,7 +597,7 @@ class ResourceAvailabilityResponse final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(ResourceAvailabilityResponse* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(ResourceList* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -2282,13 +605,13 @@ class ResourceAvailabilityResponse final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  ResourceAvailabilityResponse* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ResourceAvailabilityResponse>(arena);
+  ResourceList* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ResourceList>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ResourceAvailabilityResponse& from);
+  void CopyFrom(const ResourceList& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ResourceAvailabilityResponse& from) { ResourceAvailabilityResponse::MergeImpl(*this, from); }
+  void MergeFrom(const ResourceList& from) { ResourceList::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -2324,18 +647,18 @@ class ResourceAvailabilityResponse final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(ResourceAvailabilityResponse* PROTOBUF_NONNULL other);
+  void InternalSwap(ResourceList* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "ResourceAvailabilityResponse"; }
+  static ::absl::string_view FullMessageName() { return "ResourceList"; }
 
  protected:
-  explicit ResourceAvailabilityResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ResourceAvailabilityResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceAvailabilityResponse& from);
-  ResourceAvailabilityResponse(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceAvailabilityResponse&& from) noexcept
-      : ResourceAvailabilityResponse(arena) {
+  explicit ResourceList(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  ResourceList(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceList& from);
+  ResourceList(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceList&& from) noexcept
+      : ResourceList(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -2352,449 +675,26 @@ class ResourceAvailabilityResponse final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kAvailableFieldNumber = 1,
-    kResourceIdFieldNumber = 2,
-    kStockFieldNumber = 3,
+    kResourcesFieldNumber = 1,
   };
-  // bool available = 1;
-  void clear_available() ;
-  bool available() const;
-  void set_available(bool value);
-
+  // repeated .ResourceDTO resources = 1;
+  int resources_size() const;
   private:
-  bool _internal_available() const;
-  void _internal_set_available(bool value);
+  int _internal_resources_size() const;
 
   public:
-  // bool resource_id = 2;
-  void clear_resource_id() ;
-  bool resource_id() const;
-  void set_resource_id(bool value);
+  void clear_resources() ;
+  ::ResourceDTO* PROTOBUF_NONNULL mutable_resources(int index);
+  ::google::protobuf::RepeatedPtrField<::ResourceDTO>* PROTOBUF_NONNULL mutable_resources();
 
   private:
-  bool _internal_resource_id() const;
-  void _internal_set_resource_id(bool value);
-
+  const ::google::protobuf::RepeatedPtrField<::ResourceDTO>& _internal_resources() const;
+  ::google::protobuf::RepeatedPtrField<::ResourceDTO>* PROTOBUF_NONNULL _internal_mutable_resources();
   public:
-  // uint32 stock = 3;
-  void clear_stock() ;
-  ::uint32_t stock() const;
-  void set_stock(::uint32_t value);
-
-  private:
-  ::uint32_t _internal_stock() const;
-  void _internal_set_stock(::uint32_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:ResourceAvailabilityResponse)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
-                                   0, 0,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ResourceAvailabilityResponse& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    bool available_;
-    bool resource_id_;
-    ::uint32_t stock_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_ResourceManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull ResourceAvailabilityResponse_class_data_;
-// -------------------------------------------------------------------
-
-class ResourceAvailabilityRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:ResourceAvailabilityRequest) */ {
- public:
-  inline ResourceAvailabilityRequest() : ResourceAvailabilityRequest(nullptr) {}
-  ~ResourceAvailabilityRequest() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ResourceAvailabilityRequest* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceAvailabilityRequest));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ResourceAvailabilityRequest(::google::protobuf::internal::ConstantInitialized);
-
-  inline ResourceAvailabilityRequest(const ResourceAvailabilityRequest& from) : ResourceAvailabilityRequest(nullptr, from) {}
-  inline ResourceAvailabilityRequest(ResourceAvailabilityRequest&& from) noexcept
-      : ResourceAvailabilityRequest(nullptr, ::std::move(from)) {}
-  inline ResourceAvailabilityRequest& operator=(const ResourceAvailabilityRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ResourceAvailabilityRequest& operator=(ResourceAvailabilityRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const ResourceAvailabilityRequest& default_instance() {
-    return *reinterpret_cast<const ResourceAvailabilityRequest*>(
-        &_ResourceAvailabilityRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 2;
-  friend void swap(ResourceAvailabilityRequest& a, ResourceAvailabilityRequest& b) { a.Swap(&b); }
-  inline void Swap(ResourceAvailabilityRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(ResourceAvailabilityRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  ResourceAvailabilityRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ResourceAvailabilityRequest>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ResourceAvailabilityRequest& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ResourceAvailabilityRequest& from) { ResourceAvailabilityRequest::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(ResourceAvailabilityRequest* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "ResourceAvailabilityRequest"; }
-
- protected:
-  explicit ResourceAvailabilityRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ResourceAvailabilityRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceAvailabilityRequest& from);
-  ResourceAvailabilityRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceAvailabilityRequest&& from) noexcept
-      : ResourceAvailabilityRequest(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kResourceTypeFieldNumber = 2,
-    kResourceIdFieldNumber = 1,
-  };
-  // string resource_type = 2;
-  void clear_resource_type() ;
-  const ::std::string& resource_type() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_resource_type(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_resource_type();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_resource_type();
-  void set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_resource_type() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_resource_type(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_resource_type();
-
-  public:
-  // uint64 resource_id = 1;
-  void clear_resource_id() ;
-  ::uint64_t resource_id() const;
-  void set_resource_id(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_resource_id() const;
-  void _internal_set_resource_id(::uint64_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:ResourceAvailabilityRequest)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2,
-                                   0, 49,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ResourceAvailabilityRequest& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr resource_type_;
-    ::uint64_t resource_id_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_ResourceManagement_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull ResourceAvailabilityRequest_class_data_;
-// -------------------------------------------------------------------
-
-class Resources final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:Resources) */ {
- public:
-  inline Resources() : Resources(nullptr) {}
-  ~Resources() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(Resources* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(Resources));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR Resources(::google::protobuf::internal::ConstantInitialized);
-
-  inline Resources(const Resources& from) : Resources(nullptr, from) {}
-  inline Resources(Resources&& from) noexcept
-      : Resources(nullptr, ::std::move(from)) {}
-  inline Resources& operator=(const Resources& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline Resources& operator=(Resources&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const Resources& default_instance() {
-    return *reinterpret_cast<const Resources*>(
-        &_Resources_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 4;
-  friend void swap(Resources& a, Resources& b) { a.Swap(&b); }
-  inline void Swap(Resources* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(Resources* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  Resources* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<Resources>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const Resources& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const Resources& from) { Resources::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(Resources* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "Resources"; }
-
- protected:
-  explicit Resources(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  Resources(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Resources& from);
-  Resources(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, Resources&& from) noexcept
-      : Resources(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kResourceFieldNumber = 1,
-  };
-  // repeated .ResourceDTO resource = 1;
-  int resource_size() const;
-  private:
-  int _internal_resource_size() const;
-
-  public:
-  void clear_resource() ;
-  ::ResourceDTO* PROTOBUF_NONNULL mutable_resource(int index);
-  ::google::protobuf::RepeatedPtrField<::ResourceDTO>* PROTOBUF_NONNULL mutable_resource();
-
-  private:
-  const ::google::protobuf::RepeatedPtrField<::ResourceDTO>& _internal_resource() const;
-  ::google::protobuf::RepeatedPtrField<::ResourceDTO>* PROTOBUF_NONNULL _internal_mutable_resource();
-  public:
-  const ::ResourceDTO& resource(int index) const;
-  ::ResourceDTO* PROTOBUF_NONNULL add_resource();
-  const ::google::protobuf::RepeatedPtrField<::ResourceDTO>& resource() const;
-  // @@protoc_insertion_point(class_scope:Resources)
+  const ::ResourceDTO& resources(int index) const;
+  ::ResourceDTO* PROTOBUF_NONNULL add_resources();
+  const ::google::protobuf::RepeatedPtrField<::ResourceDTO>& resources() const;
+  // @@protoc_insertion_point(class_scope:ResourceList)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -2817,8 +717,8 @@ class Resources final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const Resources& from_msg);
-    ::google::protobuf::RepeatedPtrField< ::ResourceDTO > resource_;
+        const ResourceList& from_msg);
+    ::google::protobuf::RepeatedPtrField< ::ResourceDTO > resources_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -2826,33 +726,33 @@ class Resources final : public ::google::protobuf::Message
   friend struct ::TableStruct_ResourceManagement_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull Resources_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull ResourceList_class_data_;
 // -------------------------------------------------------------------
 
-class RegistrationSuccess final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:RegistrationSuccess) */ {
+class ResourceShift final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:ResourceShift) */ {
  public:
-  inline RegistrationSuccess() : RegistrationSuccess(nullptr) {}
-  ~RegistrationSuccess() PROTOBUF_FINAL;
+  inline ResourceShift() : ResourceShift(nullptr) {}
+  ~ResourceShift() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(RegistrationSuccess* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+  void operator delete(ResourceShift* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(RegistrationSuccess));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceShift));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR RegistrationSuccess(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR ResourceShift(::google::protobuf::internal::ConstantInitialized);
 
-  inline RegistrationSuccess(const RegistrationSuccess& from) : RegistrationSuccess(nullptr, from) {}
-  inline RegistrationSuccess(RegistrationSuccess&& from) noexcept
-      : RegistrationSuccess(nullptr, ::std::move(from)) {}
-  inline RegistrationSuccess& operator=(const RegistrationSuccess& from) {
+  inline ResourceShift(const ResourceShift& from) : ResourceShift(nullptr, from) {}
+  inline ResourceShift(ResourceShift&& from) noexcept
+      : ResourceShift(nullptr, ::std::move(from)) {}
+  inline ResourceShift& operator=(const ResourceShift& from) {
     CopyFrom(from);
     return *this;
   }
-  inline RegistrationSuccess& operator=(RegistrationSuccess&& from) noexcept {
+  inline ResourceShift& operator=(ResourceShift&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -2880,13 +780,13 @@ class RegistrationSuccess final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const RegistrationSuccess& default_instance() {
-    return *reinterpret_cast<const RegistrationSuccess*>(
-        &_RegistrationSuccess_default_instance_);
+  static const ResourceShift& default_instance() {
+    return *reinterpret_cast<const ResourceShift*>(
+        &_ResourceShift_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 13;
-  friend void swap(RegistrationSuccess& a, RegistrationSuccess& b) { a.Swap(&b); }
-  inline void Swap(RegistrationSuccess* PROTOBUF_NONNULL other) {
+  static constexpr int kIndexInFileMessages = 1;
+  friend void swap(ResourceShift& a, ResourceShift& b) { a.Swap(&b); }
+  inline void Swap(ResourceShift* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -2894,7 +794,7 @@ class RegistrationSuccess final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(RegistrationSuccess* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(ResourceShift* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -2902,13 +802,13 @@ class RegistrationSuccess final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  RegistrationSuccess* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<RegistrationSuccess>(arena);
+  ResourceShift* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ResourceShift>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const RegistrationSuccess& from);
+  void CopyFrom(const ResourceShift& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const RegistrationSuccess& from) { RegistrationSuccess::MergeImpl(*this, from); }
+  void MergeFrom(const ResourceShift& from) { ResourceShift::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -2944,18 +844,18 @@ class RegistrationSuccess final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(RegistrationSuccess* PROTOBUF_NONNULL other);
+  void InternalSwap(ResourceShift* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "RegistrationSuccess"; }
+  static ::absl::string_view FullMessageName() { return "ResourceShift"; }
 
  protected:
-  explicit RegistrationSuccess(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  RegistrationSuccess(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const RegistrationSuccess& from);
-  RegistrationSuccess(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, RegistrationSuccess&& from) noexcept
-      : RegistrationSuccess(arena) {
+  explicit ResourceShift(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  ResourceShift(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceShift& from);
+  ResourceShift(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceShift&& from) noexcept
+      : ResourceShift(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -2973,6 +873,8 @@ class RegistrationSuccess final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kResourceFieldNumber = 1,
+    kDateFieldNumber = 2,
+    kNewDateFieldNumber = 3,
   };
   // .ResourceDTO resource = 1;
   bool has_resource() const;
@@ -2989,12 +891,42 @@ class RegistrationSuccess final : public ::google::protobuf::Message
   ::ResourceDTO* PROTOBUF_NONNULL _internal_mutable_resource();
 
   public:
-  // @@protoc_insertion_point(class_scope:RegistrationSuccess)
+  // .DateDTO date = 2;
+  bool has_date() const;
+  void clear_date() ;
+  const ::DateDTO& date() const;
+  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_date();
+  ::DateDTO* PROTOBUF_NONNULL mutable_date();
+  void set_allocated_date(::DateDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_date(::DateDTO* PROTOBUF_NULLABLE value);
+  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_date();
+
+  private:
+  const ::DateDTO& _internal_date() const;
+  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_date();
+
+  public:
+  // .DateDTO new_date = 3;
+  bool has_new_date() const;
+  void clear_new_date() ;
+  const ::DateDTO& new_date() const;
+  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_new_date();
+  ::DateDTO* PROTOBUF_NONNULL mutable_new_date();
+  void set_allocated_new_date(::DateDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_new_date(::DateDTO* PROTOBUF_NULLABLE value);
+  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_new_date();
+
+  private:
+  const ::DateDTO& _internal_new_date() const;
+  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_new_date();
+
+  public:
+  // @@protoc_insertion_point(class_scope:ResourceShift)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1,
-                                   1, 0,
+  static const ::google::protobuf::internal::TcParseTable<2, 3,
+                                   3, 0,
                                    2>
       _table_;
 
@@ -3012,17 +944,19 @@ class RegistrationSuccess final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const RegistrationSuccess& from_msg);
+        const ResourceShift& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::ResourceDTO* PROTOBUF_NULLABLE resource_;
+    ::DateDTO* PROTOBUF_NULLABLE date_;
+    ::DateDTO* PROTOBUF_NULLABLE new_date_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_ResourceManagement_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull RegistrationSuccess_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull ResourceShift_class_data_;
 
 // ===================================================================
 
@@ -3153,992 +1087,55 @@ inline void ResourceDTO::set_allocated_resource_type(::std::string* PROTOBUF_NUL
   // @@protoc_insertion_point(field_set_allocated:ResourceDTO.resource_type)
 }
 
-// -------------------------------------------------------------------
-
-// ResourcePingRequest
-
-// bool ping = 1;
-inline void ResourcePingRequest::clear_ping() {
+// uint32 resource_stock = 4;
+inline void ResourceDTO::clear_resource_stock() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.ping_ = false;
-  _impl_._has_bits_[0] &= ~0x00000001u;
+  _impl_.resource_stock_ = 0u;
+  _impl_._has_bits_[0] &= ~0x00000008u;
 }
-inline bool ResourcePingRequest::ping() const {
-  // @@protoc_insertion_point(field_get:ResourcePingRequest.ping)
-  return _internal_ping();
+inline ::uint32_t ResourceDTO::resource_stock() const {
+  // @@protoc_insertion_point(field_get:ResourceDTO.resource_stock)
+  return _internal_resource_stock();
 }
-inline void ResourcePingRequest::set_ping(bool value) {
-  _internal_set_ping(value);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_set:ResourcePingRequest.ping)
+inline void ResourceDTO::set_resource_stock(::uint32_t value) {
+  _internal_set_resource_stock(value);
+  _impl_._has_bits_[0] |= 0x00000008u;
+  // @@protoc_insertion_point(field_set:ResourceDTO.resource_stock)
 }
-inline bool ResourcePingRequest::_internal_ping() const {
+inline ::uint32_t ResourceDTO::_internal_resource_stock() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.ping_;
+  return _impl_.resource_stock_;
 }
-inline void ResourcePingRequest::_internal_set_ping(bool value) {
+inline void ResourceDTO::_internal_set_resource_stock(::uint32_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.ping_ = value;
+  _impl_.resource_stock_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// ResourceAvailabilityRequest
-
-// uint64 resource_id = 1;
-inline void ResourceAvailabilityRequest::clear_resource_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline ::uint64_t ResourceAvailabilityRequest::resource_id() const {
-  // @@protoc_insertion_point(field_get:ResourceAvailabilityRequest.resource_id)
-  return _internal_resource_id();
-}
-inline void ResourceAvailabilityRequest::set_resource_id(::uint64_t value) {
-  _internal_set_resource_id(value);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_set:ResourceAvailabilityRequest.resource_id)
-}
-inline ::uint64_t ResourceAvailabilityRequest::_internal_resource_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_id_;
-}
-inline void ResourceAvailabilityRequest::_internal_set_resource_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = value;
-}
-
-// string resource_type = 2;
-inline void ResourceAvailabilityRequest::clear_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_type_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline const ::std::string& ResourceAvailabilityRequest::resource_type() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:ResourceAvailabilityRequest.resource_type)
-  return _internal_resource_type();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void ResourceAvailabilityRequest::set_resource_type(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:ResourceAvailabilityRequest.resource_type)
-}
-inline ::std::string* PROTOBUF_NONNULL ResourceAvailabilityRequest::mutable_resource_type()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_resource_type();
-  // @@protoc_insertion_point(field_mutable:ResourceAvailabilityRequest.resource_type)
-  return _s;
-}
-inline const ::std::string& ResourceAvailabilityRequest::_internal_resource_type() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_type_.Get();
-}
-inline void ResourceAvailabilityRequest::_internal_set_resource_type(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL ResourceAvailabilityRequest::_internal_mutable_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  return _impl_.resource_type_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE ResourceAvailabilityRequest::release_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:ResourceAvailabilityRequest.resource_type)
-  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000001u;
-  auto* released = _impl_.resource_type_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  return released;
-}
-inline void ResourceAvailabilityRequest::set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
-  }
-  _impl_.resource_type_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.resource_type_.IsDefault()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:ResourceAvailabilityRequest.resource_type)
-}
-
-// -------------------------------------------------------------------
-
-// ResourceAvailabilityResponse
-
-// bool available = 1;
-inline void ResourceAvailabilityResponse::clear_available() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.available_ = false;
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline bool ResourceAvailabilityResponse::available() const {
-  // @@protoc_insertion_point(field_get:ResourceAvailabilityResponse.available)
-  return _internal_available();
-}
-inline void ResourceAvailabilityResponse::set_available(bool value) {
-  _internal_set_available(value);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_set:ResourceAvailabilityResponse.available)
-}
-inline bool ResourceAvailabilityResponse::_internal_available() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.available_;
-}
-inline void ResourceAvailabilityResponse::_internal_set_available(bool value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.available_ = value;
-}
-
-// bool resource_id = 2;
-inline void ResourceAvailabilityResponse::clear_resource_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = false;
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline bool ResourceAvailabilityResponse::resource_id() const {
-  // @@protoc_insertion_point(field_get:ResourceAvailabilityResponse.resource_id)
-  return _internal_resource_id();
-}
-inline void ResourceAvailabilityResponse::set_resource_id(bool value) {
-  _internal_set_resource_id(value);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_set:ResourceAvailabilityResponse.resource_id)
-}
-inline bool ResourceAvailabilityResponse::_internal_resource_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_id_;
-}
-inline void ResourceAvailabilityResponse::_internal_set_resource_id(bool value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = value;
-}
-
-// uint32 stock = 3;
-inline void ResourceAvailabilityResponse::clear_stock() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.stock_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000004u;
-}
-inline ::uint32_t ResourceAvailabilityResponse::stock() const {
-  // @@protoc_insertion_point(field_get:ResourceAvailabilityResponse.stock)
-  return _internal_stock();
-}
-inline void ResourceAvailabilityResponse::set_stock(::uint32_t value) {
-  _internal_set_stock(value);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  // @@protoc_insertion_point(field_set:ResourceAvailabilityResponse.stock)
-}
-inline ::uint32_t ResourceAvailabilityResponse::_internal_stock() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.stock_;
-}
-inline void ResourceAvailabilityResponse::_internal_set_stock(::uint32_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.stock_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// Resources
-
-// repeated .ResourceDTO resource = 1;
-inline int Resources::_internal_resource_size() const {
-  return _internal_resource().size();
-}
-inline int Resources::resource_size() const {
-  return _internal_resource_size();
-}
-inline void Resources::clear_resource() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_.Clear();
-}
-inline ::ResourceDTO* PROTOBUF_NONNULL Resources::mutable_resource(int index)
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:Resources.resource)
-  return _internal_mutable_resource()->Mutable(index);
-}
-inline ::google::protobuf::RepeatedPtrField<::ResourceDTO>* PROTOBUF_NONNULL Resources::mutable_resource()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:Resources.resource)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _internal_mutable_resource();
-}
-inline const ::ResourceDTO& Resources::resource(int index) const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:Resources.resource)
-  return _internal_resource().Get(index);
-}
-inline ::ResourceDTO* PROTOBUF_NONNULL Resources::add_resource()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::ResourceDTO* _add = _internal_mutable_resource()->Add();
-  // @@protoc_insertion_point(field_add:Resources.resource)
-  return _add;
-}
-inline const ::google::protobuf::RepeatedPtrField<::ResourceDTO>& Resources::resource() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:Resources.resource)
-  return _internal_resource();
-}
-inline const ::google::protobuf::RepeatedPtrField<::ResourceDTO>&
-Resources::_internal_resource() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_;
-}
-inline ::google::protobuf::RepeatedPtrField<::ResourceDTO>* PROTOBUF_NONNULL
-Resources::_internal_mutable_resource() {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return &_impl_.resource_;
-}
-
-// -------------------------------------------------------------------
-
-// ResourceSendRequest
-
-// uint64 resource_id = 1;
-inline void ResourceSendRequest::clear_resource_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline ::uint64_t ResourceSendRequest::resource_id() const {
-  // @@protoc_insertion_point(field_get:ResourceSendRequest.resource_id)
-  return _internal_resource_id();
-}
-inline void ResourceSendRequest::set_resource_id(::uint64_t value) {
-  _internal_set_resource_id(value);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_set:ResourceSendRequest.resource_id)
-}
-inline ::uint64_t ResourceSendRequest::_internal_resource_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_id_;
-}
-inline void ResourceSendRequest::_internal_set_resource_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = value;
-}
-
-// string resource_type = 2;
-inline void ResourceSendRequest::clear_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_type_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline const ::std::string& ResourceSendRequest::resource_type() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:ResourceSendRequest.resource_type)
-  return _internal_resource_type();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void ResourceSendRequest::set_resource_type(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:ResourceSendRequest.resource_type)
-}
-inline ::std::string* PROTOBUF_NONNULL ResourceSendRequest::mutable_resource_type()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_resource_type();
-  // @@protoc_insertion_point(field_mutable:ResourceSendRequest.resource_type)
-  return _s;
-}
-inline const ::std::string& ResourceSendRequest::_internal_resource_type() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_type_.Get();
-}
-inline void ResourceSendRequest::_internal_set_resource_type(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL ResourceSendRequest::_internal_mutable_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  return _impl_.resource_type_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE ResourceSendRequest::release_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:ResourceSendRequest.resource_type)
-  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000001u;
-  auto* released = _impl_.resource_type_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  return released;
-}
-inline void ResourceSendRequest::set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
-  }
-  _impl_.resource_type_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.resource_type_.IsDefault()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:ResourceSendRequest.resource_type)
-}
-
-// uint32 room_id = 3;
-inline void ResourceSendRequest::clear_room_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.room_id_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000004u;
-}
-inline ::uint32_t ResourceSendRequest::room_id() const {
-  // @@protoc_insertion_point(field_get:ResourceSendRequest.room_id)
-  return _internal_room_id();
-}
-inline void ResourceSendRequest::set_room_id(::uint32_t value) {
-  _internal_set_room_id(value);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  // @@protoc_insertion_point(field_set:ResourceSendRequest.room_id)
-}
-inline ::uint32_t ResourceSendRequest::_internal_room_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.room_id_;
-}
-inline void ResourceSendRequest::_internal_set_room_id(::uint32_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.room_id_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// ResourceRetrievalRequest
-
-// uint64 resource_id = 1;
-inline void ResourceRetrievalRequest::clear_resource_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline ::uint64_t ResourceRetrievalRequest::resource_id() const {
-  // @@protoc_insertion_point(field_get:ResourceRetrievalRequest.resource_id)
-  return _internal_resource_id();
-}
-inline void ResourceRetrievalRequest::set_resource_id(::uint64_t value) {
-  _internal_set_resource_id(value);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_set:ResourceRetrievalRequest.resource_id)
-}
-inline ::uint64_t ResourceRetrievalRequest::_internal_resource_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_id_;
-}
-inline void ResourceRetrievalRequest::_internal_set_resource_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// ResourceSuccess
-
-// bool success = 1;
-inline void ResourceSuccess::clear_success() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.success_ = false;
-  _impl_._has_bits_[0] &= ~0x00000004u;
-}
-inline bool ResourceSuccess::success() const {
-  // @@protoc_insertion_point(field_get:ResourceSuccess.success)
-  return _internal_success();
-}
-inline void ResourceSuccess::set_success(bool value) {
-  _internal_set_success(value);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  // @@protoc_insertion_point(field_set:ResourceSuccess.success)
-}
-inline bool ResourceSuccess::_internal_success() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.success_;
-}
-inline void ResourceSuccess::_internal_set_success(bool value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.success_ = value;
-}
-
-// uint64 resource_id = 2;
-inline void ResourceSuccess::clear_resource_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline ::uint64_t ResourceSuccess::resource_id() const {
-  // @@protoc_insertion_point(field_get:ResourceSuccess.resource_id)
-  return _internal_resource_id();
-}
-inline void ResourceSuccess::set_resource_id(::uint64_t value) {
-  _internal_set_resource_id(value);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_set:ResourceSuccess.resource_id)
-}
-inline ::uint64_t ResourceSuccess::_internal_resource_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_id_;
-}
-inline void ResourceSuccess::_internal_set_resource_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = value;
-}
-
-// string success_message = 3;
-inline void ResourceSuccess::clear_success_message() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.success_message_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline const ::std::string& ResourceSuccess::success_message() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:ResourceSuccess.success_message)
-  return _internal_success_message();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void ResourceSuccess::set_success_message(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.success_message_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:ResourceSuccess.success_message)
-}
-inline ::std::string* PROTOBUF_NONNULL ResourceSuccess::mutable_success_message()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_success_message();
-  // @@protoc_insertion_point(field_mutable:ResourceSuccess.success_message)
-  return _s;
-}
-inline const ::std::string& ResourceSuccess::_internal_success_message() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.success_message_.Get();
-}
-inline void ResourceSuccess::_internal_set_success_message(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.success_message_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL ResourceSuccess::_internal_mutable_success_message() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  return _impl_.success_message_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE ResourceSuccess::release_success_message() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:ResourceSuccess.success_message)
-  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000001u;
-  auto* released = _impl_.success_message_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.success_message_.Set("", GetArena());
-  }
-  return released;
-}
-inline void ResourceSuccess::set_allocated_success_message(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
-  }
-  _impl_.success_message_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.success_message_.IsDefault()) {
-    _impl_.success_message_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:ResourceSuccess.success_message)
-}
-
-// -------------------------------------------------------------------
-
-// StockIncreaseRequest
-
-// uint64 resource_id = 1;
-inline void StockIncreaseRequest::clear_resource_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline ::uint64_t StockIncreaseRequest::resource_id() const {
-  // @@protoc_insertion_point(field_get:StockIncreaseRequest.resource_id)
-  return _internal_resource_id();
-}
-inline void StockIncreaseRequest::set_resource_id(::uint64_t value) {
-  _internal_set_resource_id(value);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_set:StockIncreaseRequest.resource_id)
-}
-inline ::uint64_t StockIncreaseRequest::_internal_resource_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_id_;
-}
-inline void StockIncreaseRequest::_internal_set_resource_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = value;
-}
-
-// string resource_type = 2;
-inline void StockIncreaseRequest::clear_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_type_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline const ::std::string& StockIncreaseRequest::resource_type() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:StockIncreaseRequest.resource_type)
-  return _internal_resource_type();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void StockIncreaseRequest::set_resource_type(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:StockIncreaseRequest.resource_type)
-}
-inline ::std::string* PROTOBUF_NONNULL StockIncreaseRequest::mutable_resource_type()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_resource_type();
-  // @@protoc_insertion_point(field_mutable:StockIncreaseRequest.resource_type)
-  return _s;
-}
-inline const ::std::string& StockIncreaseRequest::_internal_resource_type() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_type_.Get();
-}
-inline void StockIncreaseRequest::_internal_set_resource_type(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL StockIncreaseRequest::_internal_mutable_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  return _impl_.resource_type_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE StockIncreaseRequest::release_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:StockIncreaseRequest.resource_type)
-  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000001u;
-  auto* released = _impl_.resource_type_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  return released;
-}
-inline void StockIncreaseRequest::set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
-  }
-  _impl_.resource_type_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.resource_type_.IsDefault()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:StockIncreaseRequest.resource_type)
-}
-
-// uint32 increase_amount = 3;
-inline void StockIncreaseRequest::clear_increase_amount() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.increase_amount_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000004u;
-}
-inline ::uint32_t StockIncreaseRequest::increase_amount() const {
-  // @@protoc_insertion_point(field_get:StockIncreaseRequest.increase_amount)
-  return _internal_increase_amount();
-}
-inline void StockIncreaseRequest::set_increase_amount(::uint32_t value) {
-  _internal_set_increase_amount(value);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  // @@protoc_insertion_point(field_set:StockIncreaseRequest.increase_amount)
-}
-inline ::uint32_t StockIncreaseRequest::_internal_increase_amount() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.increase_amount_;
-}
-inline void StockIncreaseRequest::_internal_set_increase_amount(::uint32_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.increase_amount_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// StockDecreaseRequest
-
-// uint64 resource_id = 1;
-inline void StockDecreaseRequest::clear_resource_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline ::uint64_t StockDecreaseRequest::resource_id() const {
-  // @@protoc_insertion_point(field_get:StockDecreaseRequest.resource_id)
-  return _internal_resource_id();
-}
-inline void StockDecreaseRequest::set_resource_id(::uint64_t value) {
-  _internal_set_resource_id(value);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_set:StockDecreaseRequest.resource_id)
-}
-inline ::uint64_t StockDecreaseRequest::_internal_resource_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_id_;
-}
-inline void StockDecreaseRequest::_internal_set_resource_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = value;
-}
-
-// string resource_type = 2;
-inline void StockDecreaseRequest::clear_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_type_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline const ::std::string& StockDecreaseRequest::resource_type() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:StockDecreaseRequest.resource_type)
-  return _internal_resource_type();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void StockDecreaseRequest::set_resource_type(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:StockDecreaseRequest.resource_type)
-}
-inline ::std::string* PROTOBUF_NONNULL StockDecreaseRequest::mutable_resource_type()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_resource_type();
-  // @@protoc_insertion_point(field_mutable:StockDecreaseRequest.resource_type)
-  return _s;
-}
-inline const ::std::string& StockDecreaseRequest::_internal_resource_type() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_type_.Get();
-}
-inline void StockDecreaseRequest::_internal_set_resource_type(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL StockDecreaseRequest::_internal_mutable_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  return _impl_.resource_type_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE StockDecreaseRequest::release_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:StockDecreaseRequest.resource_type)
-  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000001u;
-  auto* released = _impl_.resource_type_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  return released;
-}
-inline void StockDecreaseRequest::set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
-  }
-  _impl_.resource_type_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.resource_type_.IsDefault()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:StockDecreaseRequest.resource_type)
-}
-
-// uint32 decrease_amount = 3;
-inline void StockDecreaseRequest::clear_decrease_amount() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.decrease_amount_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000004u;
-}
-inline ::uint32_t StockDecreaseRequest::decrease_amount() const {
-  // @@protoc_insertion_point(field_get:StockDecreaseRequest.decrease_amount)
-  return _internal_decrease_amount();
-}
-inline void StockDecreaseRequest::set_decrease_amount(::uint32_t value) {
-  _internal_set_decrease_amount(value);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  // @@protoc_insertion_point(field_set:StockDecreaseRequest.decrease_amount)
-}
-inline ::uint32_t StockDecreaseRequest::_internal_decrease_amount() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.decrease_amount_;
-}
-inline void StockDecreaseRequest::_internal_set_decrease_amount(::uint32_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.decrease_amount_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// StockAmount
-
-// uint64 resource_id = 1;
-inline void StockAmount::clear_resource_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-inline ::uint64_t StockAmount::resource_id() const {
-  // @@protoc_insertion_point(field_get:StockAmount.resource_id)
-  return _internal_resource_id();
-}
-inline void StockAmount::set_resource_id(::uint64_t value) {
-  _internal_set_resource_id(value);
-  _impl_._has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_set:StockAmount.resource_id)
-}
-inline ::uint64_t StockAmount::_internal_resource_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_id_;
-}
-inline void StockAmount::_internal_set_resource_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = value;
-}
-
-// string resource_type = 2;
-inline void StockAmount::clear_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_type_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline const ::std::string& StockAmount::resource_type() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:StockAmount.resource_type)
-  return _internal_resource_type();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void StockAmount::set_resource_type(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:StockAmount.resource_type)
-}
-inline ::std::string* PROTOBUF_NONNULL StockAmount::mutable_resource_type()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_resource_type();
-  // @@protoc_insertion_point(field_mutable:StockAmount.resource_type)
-  return _s;
-}
-inline const ::std::string& StockAmount::_internal_resource_type() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_type_.Get();
-}
-inline void StockAmount::_internal_set_resource_type(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL StockAmount::_internal_mutable_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  return _impl_.resource_type_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE StockAmount::release_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:StockAmount.resource_type)
-  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000001u;
-  auto* released = _impl_.resource_type_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  return released;
-}
-inline void StockAmount::set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
-  }
-  _impl_.resource_type_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.resource_type_.IsDefault()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:StockAmount.resource_type)
-}
-
-// uint32 current_stock = 3;
-inline void StockAmount::clear_current_stock() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.current_stock_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000004u;
-}
-inline ::uint32_t StockAmount::current_stock() const {
-  // @@protoc_insertion_point(field_get:StockAmount.current_stock)
-  return _internal_current_stock();
-}
-inline void StockAmount::set_current_stock(::uint32_t value) {
-  _internal_set_current_stock(value);
-  _impl_._has_bits_[0] |= 0x00000004u;
-  // @@protoc_insertion_point(field_set:StockAmount.current_stock)
-}
-inline ::uint32_t StockAmount::_internal_current_stock() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.current_stock_;
-}
-inline void StockAmount::_internal_set_current_stock(::uint32_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.current_stock_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// ResourceRegistrationRequest
-
-// string resource_type = 1;
-inline void ResourceRegistrationRequest::clear_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_type_.ClearToEmpty();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline const ::std::string& ResourceRegistrationRequest::resource_type() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:ResourceRegistrationRequest.resource_type)
-  return _internal_resource_type();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void ResourceRegistrationRequest::set_resource_type(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:ResourceRegistrationRequest.resource_type)
-}
-inline ::std::string* PROTOBUF_NONNULL ResourceRegistrationRequest::mutable_resource_type()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::std::string* _s = _internal_mutable_resource_type();
-  // @@protoc_insertion_point(field_mutable:ResourceRegistrationRequest.resource_type)
-  return _s;
-}
-inline const ::std::string& ResourceRegistrationRequest::_internal_resource_type() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_type_.Get();
-}
-inline void ResourceRegistrationRequest::_internal_set_resource_type(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  _impl_.resource_type_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL ResourceRegistrationRequest::_internal_mutable_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  return _impl_.resource_type_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE ResourceRegistrationRequest::release_resource_type() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:ResourceRegistrationRequest.resource_type)
-  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
-    return nullptr;
-  }
-  _impl_._has_bits_[0] &= ~0x00000001u;
-  auto* released = _impl_.resource_type_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  return released;
-}
-inline void ResourceRegistrationRequest::set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
-  }
-  _impl_.resource_type_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.resource_type_.IsDefault()) {
-    _impl_.resource_type_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:ResourceRegistrationRequest.resource_type)
-}
-
-// -------------------------------------------------------------------
-
-// ResourceDeregistrationRequest
-
-// uint64 resource_id = 1;
-inline void ResourceDeregistrationRequest::clear_resource_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-inline ::uint64_t ResourceDeregistrationRequest::resource_id() const {
-  // @@protoc_insertion_point(field_get:ResourceDeregistrationRequest.resource_id)
-  return _internal_resource_id();
-}
-inline void ResourceDeregistrationRequest::set_resource_id(::uint64_t value) {
-  _internal_set_resource_id(value);
-  _impl_._has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_set:ResourceDeregistrationRequest.resource_id)
-}
-inline ::uint64_t ResourceDeregistrationRequest::_internal_resource_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.resource_id_;
-}
-inline void ResourceDeregistrationRequest::_internal_set_resource_id(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.resource_id_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// RegistrationSuccess
+// ResourceShift
 
 // .ResourceDTO resource = 1;
-inline bool RegistrationSuccess::has_resource() const {
+inline bool ResourceShift::has_resource() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.resource_ != nullptr);
   return value;
 }
-inline void RegistrationSuccess::clear_resource() {
+inline void ResourceShift::clear_resource() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.resource_ != nullptr) _impl_.resource_->Clear();
   _impl_._has_bits_[0] &= ~0x00000001u;
 }
-inline const ::ResourceDTO& RegistrationSuccess::_internal_resource() const {
+inline const ::ResourceDTO& ResourceShift::_internal_resource() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   const ::ResourceDTO* p = _impl_.resource_;
   return p != nullptr ? *p : reinterpret_cast<const ::ResourceDTO&>(::_ResourceDTO_default_instance_);
 }
-inline const ::ResourceDTO& RegistrationSuccess::resource() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:RegistrationSuccess.resource)
+inline const ::ResourceDTO& ResourceShift::resource() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ResourceShift.resource)
   return _internal_resource();
 }
-inline void RegistrationSuccess::unsafe_arena_set_allocated_resource(
+inline void ResourceShift::unsafe_arena_set_allocated_resource(
     ::ResourceDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
@@ -4150,9 +1147,9 @@ inline void RegistrationSuccess::unsafe_arena_set_allocated_resource(
   } else {
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:RegistrationSuccess.resource)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ResourceShift.resource)
 }
-inline ::ResourceDTO* PROTOBUF_NULLABLE RegistrationSuccess::release_resource() {
+inline ::ResourceDTO* PROTOBUF_NULLABLE ResourceShift::release_resource() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000001u;
@@ -4171,16 +1168,16 @@ inline ::ResourceDTO* PROTOBUF_NULLABLE RegistrationSuccess::release_resource() 
   }
   return released;
 }
-inline ::ResourceDTO* PROTOBUF_NULLABLE RegistrationSuccess::unsafe_arena_release_resource() {
+inline ::ResourceDTO* PROTOBUF_NULLABLE ResourceShift::unsafe_arena_release_resource() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:RegistrationSuccess.resource)
+  // @@protoc_insertion_point(field_release:ResourceShift.resource)
 
   _impl_._has_bits_[0] &= ~0x00000001u;
   ::ResourceDTO* temp = _impl_.resource_;
   _impl_.resource_ = nullptr;
   return temp;
 }
-inline ::ResourceDTO* PROTOBUF_NONNULL RegistrationSuccess::_internal_mutable_resource() {
+inline ::ResourceDTO* PROTOBUF_NONNULL ResourceShift::_internal_mutable_resource() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.resource_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::ResourceDTO>(GetArena());
@@ -4188,14 +1185,14 @@ inline ::ResourceDTO* PROTOBUF_NONNULL RegistrationSuccess::_internal_mutable_re
   }
   return _impl_.resource_;
 }
-inline ::ResourceDTO* PROTOBUF_NONNULL RegistrationSuccess::mutable_resource()
+inline ::ResourceDTO* PROTOBUF_NONNULL ResourceShift::mutable_resource()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000001u;
   ::ResourceDTO* _msg = _internal_mutable_resource();
-  // @@protoc_insertion_point(field_mutable:RegistrationSuccess.resource)
+  // @@protoc_insertion_point(field_mutable:ResourceShift.resource)
   return _msg;
 }
-inline void RegistrationSuccess::set_allocated_resource(::ResourceDTO* PROTOBUF_NULLABLE value) {
+inline void ResourceShift::set_allocated_resource(::ResourceDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -4213,7 +1210,364 @@ inline void RegistrationSuccess::set_allocated_resource(::ResourceDTO* PROTOBUF_
   }
 
   _impl_.resource_ = reinterpret_cast<::ResourceDTO*>(value);
-  // @@protoc_insertion_point(field_set_allocated:RegistrationSuccess.resource)
+  // @@protoc_insertion_point(field_set_allocated:ResourceShift.resource)
+}
+
+// .DateDTO date = 2;
+inline bool ResourceShift::has_date() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.date_ != nullptr);
+  return value;
+}
+inline const ::DateDTO& ResourceShift::_internal_date() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::DateDTO* p = _impl_.date_;
+  return p != nullptr ? *p : reinterpret_cast<const ::DateDTO&>(::_DateDTO_default_instance_);
+}
+inline const ::DateDTO& ResourceShift::date() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ResourceShift.date)
+  return _internal_date();
+}
+inline void ResourceShift::unsafe_arena_set_allocated_date(
+    ::DateDTO* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.date_);
+  }
+  _impl_.date_ = reinterpret_cast<::DateDTO*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ResourceShift.date)
+}
+inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::DateDTO* released = _impl_.date_;
+  _impl_.date_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::unsafe_arena_release_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:ResourceShift.date)
+
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::DateDTO* temp = _impl_.date_;
+  _impl_.date_ = nullptr;
+  return temp;
+}
+inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::_internal_mutable_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.date_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::DateDTO>(GetArena());
+    _impl_.date_ = reinterpret_cast<::DateDTO*>(p);
+  }
+  return _impl_.date_;
+}
+inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::mutable_date()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000002u;
+  ::DateDTO* _msg = _internal_mutable_date();
+  // @@protoc_insertion_point(field_mutable:ResourceShift.date)
+  return _msg;
+}
+inline void ResourceShift::set_allocated_date(::DateDTO* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.date_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+
+  _impl_.date_ = reinterpret_cast<::DateDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:ResourceShift.date)
+}
+
+// .DateDTO new_date = 3;
+inline bool ResourceShift::has_new_date() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.new_date_ != nullptr);
+  return value;
+}
+inline const ::DateDTO& ResourceShift::_internal_new_date() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::DateDTO* p = _impl_.new_date_;
+  return p != nullptr ? *p : reinterpret_cast<const ::DateDTO&>(::_DateDTO_default_instance_);
+}
+inline const ::DateDTO& ResourceShift::new_date() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ResourceShift.new_date)
+  return _internal_new_date();
+}
+inline void ResourceShift::unsafe_arena_set_allocated_new_date(
+    ::DateDTO* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.new_date_);
+  }
+  _impl_.new_date_ = reinterpret_cast<::DateDTO*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000004u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000004u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ResourceShift.new_date)
+}
+inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_new_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000004u;
+  ::DateDTO* released = _impl_.new_date_;
+  _impl_.new_date_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::unsafe_arena_release_new_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:ResourceShift.new_date)
+
+  _impl_._has_bits_[0] &= ~0x00000004u;
+  ::DateDTO* temp = _impl_.new_date_;
+  _impl_.new_date_ = nullptr;
+  return temp;
+}
+inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::_internal_mutable_new_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.new_date_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::DateDTO>(GetArena());
+    _impl_.new_date_ = reinterpret_cast<::DateDTO*>(p);
+  }
+  return _impl_.new_date_;
+}
+inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::mutable_new_date()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000004u;
+  ::DateDTO* _msg = _internal_mutable_new_date();
+  // @@protoc_insertion_point(field_mutable:ResourceShift.new_date)
+  return _msg;
+}
+inline void ResourceShift::set_allocated_new_date(::DateDTO* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.new_date_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000004u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000004u;
+  }
+
+  _impl_.new_date_ = reinterpret_cast<::DateDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:ResourceShift.new_date)
+}
+
+// -------------------------------------------------------------------
+
+// StockUpdate
+
+// uint64 resource_id = 1;
+inline void StockUpdate::clear_resource_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.resource_id_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000002u;
+}
+inline ::uint64_t StockUpdate::resource_id() const {
+  // @@protoc_insertion_point(field_get:StockUpdate.resource_id)
+  return _internal_resource_id();
+}
+inline void StockUpdate::set_resource_id(::uint64_t value) {
+  _internal_set_resource_id(value);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  // @@protoc_insertion_point(field_set:StockUpdate.resource_id)
+}
+inline ::uint64_t StockUpdate::_internal_resource_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.resource_id_;
+}
+inline void StockUpdate::_internal_set_resource_id(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.resource_id_ = value;
+}
+
+// string resource_type = 2;
+inline void StockUpdate::clear_resource_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.resource_type_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::std::string& StockUpdate::resource_type() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:StockUpdate.resource_type)
+  return _internal_resource_type();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void StockUpdate::set_resource_type(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  _impl_.resource_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:StockUpdate.resource_type)
+}
+inline ::std::string* PROTOBUF_NONNULL StockUpdate::mutable_resource_type()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_resource_type();
+  // @@protoc_insertion_point(field_mutable:StockUpdate.resource_type)
+  return _s;
+}
+inline const ::std::string& StockUpdate::_internal_resource_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.resource_type_.Get();
+}
+inline void StockUpdate::_internal_set_resource_type(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  _impl_.resource_type_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL StockUpdate::_internal_mutable_resource_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  return _impl_.resource_type_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE StockUpdate::release_resource_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:StockUpdate.resource_type)
+  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  auto* released = _impl_.resource_type_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.resource_type_.Set("", GetArena());
+  }
+  return released;
+}
+inline void StockUpdate::set_allocated_resource_type(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  _impl_.resource_type_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.resource_type_.IsDefault()) {
+    _impl_.resource_type_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:StockUpdate.resource_type)
+}
+
+// uint32 stock_amount = 3;
+inline void StockUpdate::clear_stock_amount() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.stock_amount_ = 0u;
+  _impl_._has_bits_[0] &= ~0x00000004u;
+}
+inline ::uint32_t StockUpdate::stock_amount() const {
+  // @@protoc_insertion_point(field_get:StockUpdate.stock_amount)
+  return _internal_stock_amount();
+}
+inline void StockUpdate::set_stock_amount(::uint32_t value) {
+  _internal_set_stock_amount(value);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  // @@protoc_insertion_point(field_set:StockUpdate.stock_amount)
+}
+inline ::uint32_t StockUpdate::_internal_stock_amount() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.stock_amount_;
+}
+inline void StockUpdate::_internal_set_stock_amount(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.stock_amount_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ResourceList
+
+// repeated .ResourceDTO resources = 1;
+inline int ResourceList::_internal_resources_size() const {
+  return _internal_resources().size();
+}
+inline int ResourceList::resources_size() const {
+  return _internal_resources_size();
+}
+inline void ResourceList::clear_resources() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.resources_.Clear();
+}
+inline ::ResourceDTO* PROTOBUF_NONNULL ResourceList::mutable_resources(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:ResourceList.resources)
+  return _internal_mutable_resources()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::ResourceDTO>* PROTOBUF_NONNULL ResourceList::mutable_resources()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:ResourceList.resources)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_resources();
+}
+inline const ::ResourceDTO& ResourceList::resources(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ResourceList.resources)
+  return _internal_resources().Get(index);
+}
+inline ::ResourceDTO* PROTOBUF_NONNULL ResourceList::add_resources()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::ResourceDTO* _add = _internal_mutable_resources()->Add();
+  // @@protoc_insertion_point(field_add:ResourceList.resources)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::ResourceDTO>& ResourceList::resources() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:ResourceList.resources)
+  return _internal_resources();
+}
+inline const ::google::protobuf::RepeatedPtrField<::ResourceDTO>&
+ResourceList::_internal_resources() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.resources_;
+}
+inline ::google::protobuf::RepeatedPtrField<::ResourceDTO>* PROTOBUF_NONNULL
+ResourceList::_internal_mutable_resources() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.resources_;
 }
 
 #ifdef __GNUC__

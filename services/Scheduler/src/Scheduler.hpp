@@ -26,8 +26,8 @@ private:
     std::unique_ptr<RoomManagementClient> room;
     //std::unique_ptr<StaffManagementClient> staff;
     
-    bool prompt(client c);
-    bool update();
+    void prompt(client c);
+    void update();
     
 public:
     

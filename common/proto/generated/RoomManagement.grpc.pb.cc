@@ -26,15 +26,14 @@ static const char* RoomManagement_method_names[] = {
   "/RoomManagement/DischargePatient",
   "/RoomManagement/TransferPatient",
   "/RoomManagement/QuarantinePatient",
-  "/RoomManagement/GetAvailableRoom",
-  "/RoomManagement/QuarantineRoom",
-  "/RoomManagement/LiftQuarantine",
-  "/RoomManagement/GetRoomInformation",
-  "/RoomManagement/GetResource",
+  "/RoomManagement/RetrieveResource",
   "/RoomManagement/ReleaseResource",
   "/RoomManagement/TransferResource",
-  "/RoomManagement/Print",
-  "/RoomManagement/RoomPing",
+  "/RoomManagement/RetrieveStaff",
+  "/RoomManagement/ReleaseStaff",
+  "/RoomManagement/TransferStaff",
+  "/RoomManagement/QuarantineRoom",
+  "/RoomManagement/GetRoomInformation",
 };
 
 std::unique_ptr< RoomManagement::Stub> RoomManagement::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -48,312 +47,288 @@ RoomManagement::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& cha
   , rpcmethod_DischargePatient_(RoomManagement_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_TransferPatient_(RoomManagement_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_QuarantinePatient_(RoomManagement_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAvailableRoom_(RoomManagement_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_QuarantineRoom_(RoomManagement_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_LiftQuarantine_(RoomManagement_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetRoomInformation_(RoomManagement_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetResource_(RoomManagement_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ReleaseResource_(RoomManagement_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_TransferResource_(RoomManagement_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_Print_(RoomManagement_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RoomPing_(RoomManagement_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RetrieveResource_(RoomManagement_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ReleaseResource_(RoomManagement_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_TransferResource_(RoomManagement_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RetrieveStaff_(RoomManagement_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ReleaseStaff_(RoomManagement_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_TransferStaff_(RoomManagement_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_QuarantineRoom_(RoomManagement_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetRoomInformation_(RoomManagement_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status RoomManagement::Stub::AdmitPatient(::grpc::ClientContext* context, const ::RoomAdmissionRequest& request, ::RoomSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::RoomAdmissionRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AdmitPatient_, context, request, response);
+::grpc::Status RoomManagement::Stub::AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AdmitPatient_, context, request, response);
 }
 
-void RoomManagement::Stub::async::AdmitPatient(::grpc::ClientContext* context, const ::RoomAdmissionRequest* request, ::RoomSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::RoomAdmissionRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AdmitPatient_, context, request, response, std::move(f));
+void RoomManagement::Stub::async::AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AdmitPatient_, context, request, response, std::move(f));
 }
 
-void RoomManagement::Stub::async::AdmitPatient(::grpc::ClientContext* context, const ::RoomAdmissionRequest* request, ::RoomSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
+void RoomManagement::Stub::async::AdmitPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AdmitPatient_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::PrepareAsyncAdmitPatientRaw(::grpc::ClientContext* context, const ::RoomAdmissionRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomSuccess, ::RoomAdmissionRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_AdmitPatient_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncAdmitPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_AdmitPatient_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::AsyncAdmitPatientRaw(::grpc::ClientContext* context, const ::RoomAdmissionRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncAdmitPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncAdmitPatientRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status RoomManagement::Stub::DischargePatient(::grpc::ClientContext* context, const ::RoomDischargeRequest& request, ::RoomSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::RoomDischargeRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DischargePatient_, context, request, response);
+::grpc::Status RoomManagement::Stub::DischargePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DischargePatient_, context, request, response);
 }
 
-void RoomManagement::Stub::async::DischargePatient(::grpc::ClientContext* context, const ::RoomDischargeRequest* request, ::RoomSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::RoomDischargeRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DischargePatient_, context, request, response, std::move(f));
+void RoomManagement::Stub::async::DischargePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DischargePatient_, context, request, response, std::move(f));
 }
 
-void RoomManagement::Stub::async::DischargePatient(::grpc::ClientContext* context, const ::RoomDischargeRequest* request, ::RoomSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
+void RoomManagement::Stub::async::DischargePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DischargePatient_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::PrepareAsyncDischargePatientRaw(::grpc::ClientContext* context, const ::RoomDischargeRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomSuccess, ::RoomDischargeRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DischargePatient_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncDischargePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DischargePatient_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::AsyncDischargePatientRaw(::grpc::ClientContext* context, const ::RoomDischargeRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncDischargePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncDischargePatientRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status RoomManagement::Stub::TransferPatient(::grpc::ClientContext* context, const ::RoomTransferRequest& request, ::RoomSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::RoomTransferRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferPatient_, context, request, response);
+::grpc::Status RoomManagement::Stub::TransferPatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferPatient_, context, request, response);
 }
 
-void RoomManagement::Stub::async::TransferPatient(::grpc::ClientContext* context, const ::RoomTransferRequest* request, ::RoomSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::RoomTransferRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferPatient_, context, request, response, std::move(f));
+void RoomManagement::Stub::async::TransferPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferPatient_, context, request, response, std::move(f));
 }
 
-void RoomManagement::Stub::async::TransferPatient(::grpc::ClientContext* context, const ::RoomTransferRequest* request, ::RoomSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
+void RoomManagement::Stub::async::TransferPatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferPatient_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::PrepareAsyncTransferPatientRaw(::grpc::ClientContext* context, const ::RoomTransferRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomSuccess, ::RoomTransferRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferPatient_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferPatient_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::AsyncTransferPatientRaw(::grpc::ClientContext* context, const ::RoomTransferRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncTransferPatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncTransferPatientRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status RoomManagement::Stub::QuarantinePatient(::grpc::ClientContext* context, const ::Nothing& request, ::RoomSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::Nothing, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QuarantinePatient_, context, request, response);
+::grpc::Status RoomManagement::Stub::QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QuarantinePatient_, context, request, response);
 }
 
-void RoomManagement::Stub::async::QuarantinePatient(::grpc::ClientContext* context, const ::Nothing* request, ::RoomSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::Nothing, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuarantinePatient_, context, request, response, std::move(f));
+void RoomManagement::Stub::async::QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuarantinePatient_, context, request, response, std::move(f));
 }
 
-void RoomManagement::Stub::async::QuarantinePatient(::grpc::ClientContext* context, const ::Nothing* request, ::RoomSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
+void RoomManagement::Stub::async::QuarantinePatient(::grpc::ClientContext* context, const ::PatientQuarantine* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuarantinePatient_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::PrepareAsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomSuccess, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_QuarantinePatient_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::PatientQuarantine, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_QuarantinePatient_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::AsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncQuarantinePatientRaw(::grpc::ClientContext* context, const ::PatientQuarantine& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncQuarantinePatientRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status RoomManagement::Stub::GetAvailableRoom(::grpc::ClientContext* context, const ::RoomAvailabilityRequest& request, ::AvailableRoom* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::RoomAvailabilityRequest, ::AvailableRoom, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetAvailableRoom_, context, request, response);
+::grpc::Status RoomManagement::Stub::RetrieveResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RetrieveResource_, context, request, response);
 }
 
-void RoomManagement::Stub::async::GetAvailableRoom(::grpc::ClientContext* context, const ::RoomAvailabilityRequest* request, ::AvailableRoom* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::RoomAvailabilityRequest, ::AvailableRoom, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetAvailableRoom_, context, request, response, std::move(f));
+void RoomManagement::Stub::async::RetrieveResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RetrieveResource_, context, request, response, std::move(f));
 }
 
-void RoomManagement::Stub::async::GetAvailableRoom(::grpc::ClientContext* context, const ::RoomAvailabilityRequest* request, ::AvailableRoom* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetAvailableRoom_, context, request, response, reactor);
+void RoomManagement::Stub::async::RetrieveResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RetrieveResource_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::AvailableRoom>* RoomManagement::Stub::PrepareAsyncGetAvailableRoomRaw(::grpc::ClientContext* context, const ::RoomAvailabilityRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::AvailableRoom, ::RoomAvailabilityRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetAvailableRoom_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncRetrieveResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RetrieveResource_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::AvailableRoom>* RoomManagement::Stub::AsyncGetAvailableRoomRaw(::grpc::ClientContext* context, const ::RoomAvailabilityRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncRetrieveResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncGetAvailableRoomRaw(context, request, cq);
+    this->PrepareAsyncRetrieveResourceRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status RoomManagement::Stub::QuarantineRoom(::grpc::ClientContext* context, const ::RoomQuarantineRequest& request, ::RoomSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::RoomQuarantineRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QuarantineRoom_, context, request, response);
+::grpc::Status RoomManagement::Stub::ReleaseResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ReleaseResource_, context, request, response);
 }
 
-void RoomManagement::Stub::async::QuarantineRoom(::grpc::ClientContext* context, const ::RoomQuarantineRequest* request, ::RoomSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::RoomQuarantineRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuarantineRoom_, context, request, response, std::move(f));
+void RoomManagement::Stub::async::ReleaseResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ReleaseResource_, context, request, response, std::move(f));
 }
 
-void RoomManagement::Stub::async::QuarantineRoom(::grpc::ClientContext* context, const ::RoomQuarantineRequest* request, ::RoomSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuarantineRoom_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::PrepareAsyncQuarantineRoomRaw(::grpc::ClientContext* context, const ::RoomQuarantineRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomSuccess, ::RoomQuarantineRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_QuarantineRoom_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::AsyncQuarantineRoomRaw(::grpc::ClientContext* context, const ::RoomQuarantineRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncQuarantineRoomRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status RoomManagement::Stub::LiftQuarantine(::grpc::ClientContext* context, const ::RoomQuarantineRequest& request, ::RoomSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::RoomQuarantineRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_LiftQuarantine_, context, request, response);
-}
-
-void RoomManagement::Stub::async::LiftQuarantine(::grpc::ClientContext* context, const ::RoomQuarantineRequest* request, ::RoomSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::RoomQuarantineRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_LiftQuarantine_, context, request, response, std::move(f));
-}
-
-void RoomManagement::Stub::async::LiftQuarantine(::grpc::ClientContext* context, const ::RoomQuarantineRequest* request, ::RoomSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_LiftQuarantine_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::PrepareAsyncLiftQuarantineRaw(::grpc::ClientContext* context, const ::RoomQuarantineRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomSuccess, ::RoomQuarantineRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_LiftQuarantine_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::AsyncLiftQuarantineRaw(::grpc::ClientContext* context, const ::RoomQuarantineRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncLiftQuarantineRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status RoomManagement::Stub::GetRoomInformation(::grpc::ClientContext* context, const ::RoomInfoRequest& request, ::RoomInformation* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::RoomInfoRequest, ::RoomInformation, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetRoomInformation_, context, request, response);
-}
-
-void RoomManagement::Stub::async::GetRoomInformation(::grpc::ClientContext* context, const ::RoomInfoRequest* request, ::RoomInformation* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::RoomInfoRequest, ::RoomInformation, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetRoomInformation_, context, request, response, std::move(f));
-}
-
-void RoomManagement::Stub::async::GetRoomInformation(::grpc::ClientContext* context, const ::RoomInfoRequest* request, ::RoomInformation* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetRoomInformation_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::RoomInformation>* RoomManagement::Stub::PrepareAsyncGetRoomInformationRaw(::grpc::ClientContext* context, const ::RoomInfoRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomInformation, ::RoomInfoRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetRoomInformation_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::RoomInformation>* RoomManagement::Stub::AsyncGetRoomInformationRaw(::grpc::ClientContext* context, const ::RoomInfoRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncGetRoomInformationRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status RoomManagement::Stub::GetResource(::grpc::ClientContext* context, const ::ResourceInfo& request, ::RoomSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::ResourceInfo, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetResource_, context, request, response);
-}
-
-void RoomManagement::Stub::async::GetResource(::grpc::ClientContext* context, const ::ResourceInfo* request, ::RoomSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::ResourceInfo, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetResource_, context, request, response, std::move(f));
-}
-
-void RoomManagement::Stub::async::GetResource(::grpc::ClientContext* context, const ::ResourceInfo* request, ::RoomSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetResource_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::PrepareAsyncGetResourceRaw(::grpc::ClientContext* context, const ::ResourceInfo& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomSuccess, ::ResourceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetResource_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::AsyncGetResourceRaw(::grpc::ClientContext* context, const ::ResourceInfo& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncGetResourceRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status RoomManagement::Stub::ReleaseResource(::grpc::ClientContext* context, const ::ResourceInfo& request, ::RoomSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::ResourceInfo, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ReleaseResource_, context, request, response);
-}
-
-void RoomManagement::Stub::async::ReleaseResource(::grpc::ClientContext* context, const ::ResourceInfo* request, ::RoomSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::ResourceInfo, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ReleaseResource_, context, request, response, std::move(f));
-}
-
-void RoomManagement::Stub::async::ReleaseResource(::grpc::ClientContext* context, const ::ResourceInfo* request, ::RoomSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
+void RoomManagement::Stub::async::ReleaseResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ReleaseResource_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::PrepareAsyncReleaseResourceRaw(::grpc::ClientContext* context, const ::ResourceInfo& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomSuccess, ::ResourceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ReleaseResource_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncReleaseResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ReleaseResource_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::AsyncReleaseResourceRaw(::grpc::ClientContext* context, const ::ResourceInfo& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncReleaseResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncReleaseResourceRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status RoomManagement::Stub::TransferResource(::grpc::ClientContext* context, const ::ResourceInfo& request, ::RoomSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::ResourceInfo, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferResource_, context, request, response);
+::grpc::Status RoomManagement::Stub::TransferResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferResource_, context, request, response);
 }
 
-void RoomManagement::Stub::async::TransferResource(::grpc::ClientContext* context, const ::ResourceInfo* request, ::RoomSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::ResourceInfo, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferResource_, context, request, response, std::move(f));
+void RoomManagement::Stub::async::TransferResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferResource_, context, request, response, std::move(f));
 }
 
-void RoomManagement::Stub::async::TransferResource(::grpc::ClientContext* context, const ::ResourceInfo* request, ::RoomSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
+void RoomManagement::Stub::async::TransferResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferResource_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::PrepareAsyncTransferResourceRaw(::grpc::ClientContext* context, const ::ResourceInfo& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomSuccess, ::ResourceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferResource_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncTransferResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferResource_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::AsyncTransferResourceRaw(::grpc::ClientContext* context, const ::ResourceInfo& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncTransferResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncTransferResourceRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status RoomManagement::Stub::Print(::grpc::ClientContext* context, const ::Nothing& request, ::Nothing* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Print_, context, request, response);
+::grpc::Status RoomManagement::Stub::RetrieveStaff(::grpc::ClientContext* context, const ::StaffDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RetrieveStaff_, context, request, response);
 }
 
-void RoomManagement::Stub::async::Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Print_, context, request, response, std::move(f));
+void RoomManagement::Stub::async::RetrieveStaff(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RetrieveStaff_, context, request, response, std::move(f));
 }
 
-void RoomManagement::Stub::async::Print(::grpc::ClientContext* context, const ::Nothing* request, ::Nothing* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Print_, context, request, response, reactor);
+void RoomManagement::Stub::async::RetrieveStaff(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RetrieveStaff_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::Nothing>* RoomManagement::Stub::PrepareAsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_Print_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncRetrieveStaffRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::StaffDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RetrieveStaff_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::Nothing>* RoomManagement::Stub::AsyncPrintRaw(::grpc::ClientContext* context, const ::Nothing& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncRetrieveStaffRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncPrintRaw(context, request, cq);
+    this->PrepareAsyncRetrieveStaffRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status RoomManagement::Stub::RoomPing(::grpc::ClientContext* context, const ::RoomPingRequest& request, ::RoomSuccess* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::RoomPingRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RoomPing_, context, request, response);
+::grpc::Status RoomManagement::Stub::ReleaseStaff(::grpc::ClientContext* context, const ::StaffDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ReleaseStaff_, context, request, response);
 }
 
-void RoomManagement::Stub::async::RoomPing(::grpc::ClientContext* context, const ::RoomPingRequest* request, ::RoomSuccess* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::RoomPingRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RoomPing_, context, request, response, std::move(f));
+void RoomManagement::Stub::async::ReleaseStaff(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ReleaseStaff_, context, request, response, std::move(f));
 }
 
-void RoomManagement::Stub::async::RoomPing(::grpc::ClientContext* context, const ::RoomPingRequest* request, ::RoomSuccess* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RoomPing_, context, request, response, reactor);
+void RoomManagement::Stub::async::ReleaseStaff(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ReleaseStaff_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::PrepareAsyncRoomPingRaw(::grpc::ClientContext* context, const ::RoomPingRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomSuccess, ::RoomPingRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RoomPing_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncReleaseStaffRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::StaffDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ReleaseStaff_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::RoomSuccess>* RoomManagement::Stub::AsyncRoomPingRaw(::grpc::ClientContext* context, const ::RoomPingRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncReleaseStaffRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncRoomPingRaw(context, request, cq);
+    this->PrepareAsyncReleaseStaffRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status RoomManagement::Stub::TransferStaff(::grpc::ClientContext* context, const ::StaffDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferStaff_, context, request, response);
+}
+
+void RoomManagement::Stub::async::TransferStaff(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferStaff_, context, request, response, std::move(f));
+}
+
+void RoomManagement::Stub::async::TransferStaff(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferStaff_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncTransferStaffRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::StaffDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferStaff_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncTransferStaffRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncTransferStaffRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status RoomManagement::Stub::QuarantineRoom(::grpc::ClientContext* context, const ::RoomQuarantine& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::RoomQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_QuarantineRoom_, context, request, response);
+}
+
+void RoomManagement::Stub::async::QuarantineRoom(::grpc::ClientContext* context, const ::RoomQuarantine* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::RoomQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuarantineRoom_, context, request, response, std::move(f));
+}
+
+void RoomManagement::Stub::async::QuarantineRoom(::grpc::ClientContext* context, const ::RoomQuarantine* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_QuarantineRoom_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::PrepareAsyncQuarantineRoomRaw(::grpc::ClientContext* context, const ::RoomQuarantine& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::RoomQuarantine, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_QuarantineRoom_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* RoomManagement::Stub::AsyncQuarantineRoomRaw(::grpc::ClientContext* context, const ::RoomQuarantine& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncQuarantineRoomRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status RoomManagement::Stub::GetRoomInformation(::grpc::ClientContext* context, const ::RoomDTO& request, ::RoomInformation* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::RoomDTO, ::RoomInformation, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetRoomInformation_, context, request, response);
+}
+
+void RoomManagement::Stub::async::GetRoomInformation(::grpc::ClientContext* context, const ::RoomDTO* request, ::RoomInformation* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::RoomDTO, ::RoomInformation, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetRoomInformation_, context, request, response, std::move(f));
+}
+
+void RoomManagement::Stub::async::GetRoomInformation(::grpc::ClientContext* context, const ::RoomDTO* request, ::RoomInformation* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetRoomInformation_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::RoomInformation>* RoomManagement::Stub::PrepareAsyncGetRoomInformationRaw(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RoomInformation, ::RoomDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetRoomInformation_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::RoomInformation>* RoomManagement::Stub::AsyncGetRoomInformationRaw(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetRoomInformationRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -362,223 +337,206 @@ RoomManagement::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomAdmissionRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::RoomAdmissionRequest* req,
-             ::RoomSuccess* resp) {
+             const ::PatientDTO* req,
+             ::Success* resp) {
                return service->AdmitPatient(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomDischargeRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::RoomDischargeRequest* req,
-             ::RoomSuccess* resp) {
+             const ::PatientDTO* req,
+             ::Success* resp) {
                return service->DischargePatient(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomTransferRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::PatientDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::RoomTransferRequest* req,
-             ::RoomSuccess* resp) {
+             const ::PatientDTO* req,
+             ::Success* resp) {
                return service->TransferPatient(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::Nothing, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::PatientQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::Nothing* req,
-             ::RoomSuccess* resp) {
+             const ::PatientQuarantine* req,
+             ::Success* resp) {
                return service->QuarantinePatient(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomAvailabilityRequest, ::AvailableRoom, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::RoomAvailabilityRequest* req,
-             ::AvailableRoom* resp) {
-               return service->GetAvailableRoom(ctx, req, resp);
+             const ::ResourceDTO* req,
+             ::Success* resp) {
+               return service->RetrieveResource(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomQuarantineRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::RoomQuarantineRequest* req,
-             ::RoomSuccess* resp) {
-               return service->QuarantineRoom(ctx, req, resp);
+             const ::ResourceDTO* req,
+             ::Success* resp) {
+               return service->ReleaseResource(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomQuarantineRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::RoomQuarantineRequest* req,
-             ::RoomSuccess* resp) {
-               return service->LiftQuarantine(ctx, req, resp);
+             const ::ResourceDTO* req,
+             ::Success* resp) {
+               return service->TransferResource(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomInfoRequest, ::RoomInformation, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::RoomInfoRequest* req,
-             ::RoomInformation* resp) {
-               return service->GetRoomInformation(ctx, req, resp);
+             const ::StaffDTO* req,
+             ::Success* resp) {
+               return service->RetrieveStaff(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[8],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::ResourceInfo, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourceInfo* req,
-             ::RoomSuccess* resp) {
-               return service->GetResource(ctx, req, resp);
+             const ::StaffDTO* req,
+             ::Success* resp) {
+               return service->ReleaseStaff(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[9],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::ResourceInfo, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::StaffDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourceInfo* req,
-             ::RoomSuccess* resp) {
-               return service->ReleaseResource(ctx, req, resp);
+             const ::StaffDTO* req,
+             ::Success* resp) {
+               return service->TransferStaff(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::ResourceInfo, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomQuarantine, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::ResourceInfo* req,
-             ::RoomSuccess* resp) {
-               return service->TransferResource(ctx, req, resp);
+             const ::RoomQuarantine* req,
+             ::Success* resp) {
+               return service->QuarantineRoom(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoomManagement_method_names[11],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::Nothing, ::Nothing, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomDTO, ::RoomInformation, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoomManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::Nothing* req,
-             ::Nothing* resp) {
-               return service->Print(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      RoomManagement_method_names[12],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RoomManagement::Service, ::RoomPingRequest, ::RoomSuccess, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](RoomManagement::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::RoomPingRequest* req,
-             ::RoomSuccess* resp) {
-               return service->RoomPing(ctx, req, resp);
+             const ::RoomDTO* req,
+             ::RoomInformation* resp) {
+               return service->GetRoomInformation(ctx, req, resp);
              }, this)));
 }
 
 RoomManagement::Service::~Service() {
 }
 
-::grpc::Status RoomManagement::Service::AdmitPatient(::grpc::ServerContext* context, const ::RoomAdmissionRequest* request, ::RoomSuccess* response) {
+::grpc::Status RoomManagement::Service::AdmitPatient(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::DischargePatient(::grpc::ServerContext* context, const ::RoomDischargeRequest* request, ::RoomSuccess* response) {
+::grpc::Status RoomManagement::Service::DischargePatient(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::TransferPatient(::grpc::ServerContext* context, const ::RoomTransferRequest* request, ::RoomSuccess* response) {
+::grpc::Status RoomManagement::Service::TransferPatient(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::QuarantinePatient(::grpc::ServerContext* context, const ::Nothing* request, ::RoomSuccess* response) {
+::grpc::Status RoomManagement::Service::QuarantinePatient(::grpc::ServerContext* context, const ::PatientQuarantine* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::GetAvailableRoom(::grpc::ServerContext* context, const ::RoomAvailabilityRequest* request, ::AvailableRoom* response) {
+::grpc::Status RoomManagement::Service::RetrieveResource(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::QuarantineRoom(::grpc::ServerContext* context, const ::RoomQuarantineRequest* request, ::RoomSuccess* response) {
+::grpc::Status RoomManagement::Service::ReleaseResource(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::LiftQuarantine(::grpc::ServerContext* context, const ::RoomQuarantineRequest* request, ::RoomSuccess* response) {
+::grpc::Status RoomManagement::Service::TransferResource(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::GetRoomInformation(::grpc::ServerContext* context, const ::RoomInfoRequest* request, ::RoomInformation* response) {
+::grpc::Status RoomManagement::Service::RetrieveStaff(::grpc::ServerContext* context, const ::StaffDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::GetResource(::grpc::ServerContext* context, const ::ResourceInfo* request, ::RoomSuccess* response) {
+::grpc::Status RoomManagement::Service::ReleaseStaff(::grpc::ServerContext* context, const ::StaffDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::ReleaseResource(::grpc::ServerContext* context, const ::ResourceInfo* request, ::RoomSuccess* response) {
+::grpc::Status RoomManagement::Service::TransferStaff(::grpc::ServerContext* context, const ::StaffDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::TransferResource(::grpc::ServerContext* context, const ::ResourceInfo* request, ::RoomSuccess* response) {
+::grpc::Status RoomManagement::Service::QuarantineRoom(::grpc::ServerContext* context, const ::RoomQuarantine* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RoomManagement::Service::Print(::grpc::ServerContext* context, const ::Nothing* request, ::Nothing* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status RoomManagement::Service::RoomPing(::grpc::ServerContext* context, const ::RoomPingRequest* request, ::RoomSuccess* response) {
+::grpc::Status RoomManagement::Service::GetRoomInformation(::grpc::ServerContext* context, const ::RoomDTO* request, ::RoomInformation* response) {
   (void) context;
   (void) request;
   (void) response;

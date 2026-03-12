@@ -16,8 +16,6 @@ private:
       
 public:
     
-    static constexpr std::string_view SERVICE_NAME = "Front End Service";
-    
     /* Patient Management Service Functions */
     void add_patient();
     void remove_patient();
@@ -38,7 +36,7 @@ public:
     ReturnCode loadFromDB(std::string_view database_name) override;
     ReturnCode uploadToDB(std::string_view database_name) override;
     
-    std::string_view service_name() const override { return SERVICE_NAME; };
+    std::string_view service_name() const override { return service::front; };
     
     ReturnCode init() override;
     void HandleShutdown(int signal) override;

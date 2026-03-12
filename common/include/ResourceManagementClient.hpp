@@ -41,7 +41,7 @@ public:
     std::string_view name() override { return CLIENT_NAME; }
     bool Print() override;
     
-    void update();
+    void update(std::string_view service_name) override;
     
 };
 

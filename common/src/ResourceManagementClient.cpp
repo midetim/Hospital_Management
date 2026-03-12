@@ -29,7 +29,7 @@ bool ResourceManagementClient::Print() {
 
 
  
- void ResourceManagementClient::update() {
+ void ResourceManagementClient::update(std::string_view service_name) {
      // Nothing req, res;
      grpc::ClientContext context;
      

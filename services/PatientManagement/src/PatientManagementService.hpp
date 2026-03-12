@@ -11,100 +11,132 @@
 #include "PatientManagement.grpc.pb.h"
 #include "PatientManagement.pb.h"
 
+#include "Common.grpc.pb.h"
+#include "Common.pb.h"
+
 #define UNKNOWN_PATIENT_ERROR 0
 
-class PatientManagementService : public PatientManagement::Service, public IService {
+class PatientManagementService : public IService, public PatientManagement::Service, public Common::Service {
 private:
     
     std::unordered_map<uint64_t, Patient> hospital_patients;
     std::unique_ptr<RoomManagementClient> room_client;
     
+    /* ******************************************************************** */
+    /* ********************** Private Functions *************************** */
+    /* ******************************************************************** */
+    
     /**
-     * @brief Generates a new patient id that is completely unique
-     * @return Returns a 64-bit patient id
-     * @note **THREAD SAFE**
+     * @brief Generates the patient a new unique id
+     * @return Returns a 64 bit patient id
      */
     uint64_t generate_unique_patient_id();
     
     /**
-     * @brief Finds a patient using patient information
-     * @warning **NOT YET IMPLEMENTED**
+     * @brief Finds the patient id of an admitted patient
+     * @return Returns the id of the patient
+     * @warning Will return 0 if the patient is not found in the system
      */
     uint64_t find_patient(const Patient & p);
     
 public:
     
-    static constexpr std::string_view SERVICE_NAME =    "Patient Management Service";
-    static constexpr std::string_view DATABASE_NAME =   "No database yet";
+    /* ******************************************************************** */
+    /* ************************** Constructor ***************************** */
+    /* ******************************************************************** */
     
     /**
-     * @brief Patient Management Server constructor
-     * @param client Room management client
+     * @brief The service that manages the patients that have been admitted into the hospital
      */
     explicit PatientManagementService();
     
-    /**
-     * @brief Responds to a ping request from a client
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
-     */
-    grpc::Status PatientPing(grpc::ServerContext * context, const PatientPingRequest * request, PatientSuccess * response) override;
+    /* ******************************************************************** */
+    /* ************************** Common gRPC ***************************** */
+    /* ******************************************************************** */
     
     /**
-     * @brief Admits a patient into the hospital patients map
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
+     * @brief The ping to tell the client it has successfully reached the service
      */
-    grpc::Status PatientAdmission(grpc::ServerContext * context, const PatientAdmissionRequest * request, PatientSuccess * response) override;
+    grpc::Status ping(grpc::ServerContext * context, const Nothing * request, Nothing * response) override;
     
     /**
-     * @brief Removes a patient fro the hospital patients map
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
+     * @brief The ping to tell the service to print out all their data to the terminal
      */
-    grpc::Status PatientDischarge(grpc::ServerContext * context, const PatientDischargeRequest * request, PatientSuccess * response) override;
+    grpc::Status print(grpc::ServerContext * context, const Nothing * request, Nothing * response) override;
     
     /**
-     * @brief Moves a patient from one room to another
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
+     * @brief The update ping to tell the service to backup their contents to the database
      */
-    grpc::Status PatientTransfer(grpc::ServerContext * context, const PatientTransferRequest * request, PatientSuccess * response) override;
-     
-    /**
-     * @brief Gets the information on a patient
-     * @param context The server context containing the client context metadata
-     * @param request The incoming request from the client
-     * @param response The response that will get sent to the client
-     * @return Returns a gRPC status code
-     * @warning **NOT YET IMPLEMENTED**
-     */
-    grpc::Status GetPatientInformation(grpc::ServerContext * context, const PatientInfoRequest * request, PatientInformation * response) override;
+    grpc::Status update(grpc::ServerContext * context, const Nothing * request, Nothing * response) override;
     
     
+    /* ******************************************************************** */
+    /* ********************** PatientManagement gRPC ********************** */
+    /* ******************************************************************** */
     
     /**
-     * @brief Service initialization for debugging
-     * @note **DEBUG FUNCTION**
+     * @brief Admits a patient into the hospital
+     * @warning Will not allow you to admit a patient who has already been admitted
      */
-    void debug_setup();
+    grpc::Status AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) override;
     
-    std::string_view service_name() const override { return SERVICE_NAME; };
+    /**
+     * @brief Attempts to discharge a patient from the hospital
+     * @warning Cannot discharge quarantined patients
+     */
+    grpc::Status DischargePatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) override;
+    
+    /**
+     * @brief Attempts to transfer a patient into a new room
+     */
+    grpc::Status TransferPatient(grpc::ServerContext * context, const PatientTransfer * transfer_request, Success * success) override;
+    
+    /**
+     * @brief Attempts to quarantine a patient
+     * @note Can either quarantine a patient and move others in the room,  or quarantine a whole room
+     */
+    grpc::Status QuarantinePatient(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) override;
+    
+    /**
+     * @brief Attempts to lift the quarantine on a patient
+     */
+    grpc::Status LiftPatientQuarantine(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) override;
+    
+    /**
+     * @brief Gets the information on a patient that has been admitted
+     * @note Requires either a patient id or a patients name & sex
+     */
+    grpc::Status GetPatientInformation(grpc::ServerContext * context, const PatientDTO * patient_request, PatientDTO * patient_response) override;
+    
+    /**
+     * @brief Updates the patient object to match the patient sent in the request
+     */
+    grpc::Status UpdatePatientInformation(grpc::ServerContext * context, const PatientDTO * patient, Success * success) override;
+    
+    /**
+     * @brief Gets the information on every patient that has been admitted to a specified room
+     * @warning Will return a NOT FOUND status code if there are no patients in the designated room
+     */
+    grpc::Status GetPatientsInRoom(grpc::ServerContext * context, const RoomRequest * room, PatientList * patients) override;
+        
+    /* ******************************************************************** */
+    /* ****************************** IServer ***************************** */
+    /* ******************************************************************** */
+
+    std::string_view service_name() const override { return service::patient; };
+    ReturnCode connectToDB(std::string_view database_name) override;
     ReturnCode loadFromDB(std::string_view database_name) override;
     ReturnCode uploadToDB(std::string_view database_name) override;
     ReturnCode init() override;
-    void HandleShutdown(int signal) override;
     void print_internal() override;
     
-    grpc::Status Print(grpc::ServerContext * context, const Nothing * request, Nothing * response) override;
+    
+    /* ******************************************************************** */
+    /* ****************************** Other ******************************* */
+    /* ******************************************************************** */
+    
+    
+    
 };
 
 

@@ -42,8 +42,6 @@ private:
     uint32_t findAvailableRoom(const std::string type, bool quarantined) const;
 public:
     
-    static constexpr std::string_view SERVICE_NAME =    "Room Management Service";
-    static constexpr std::string_view DATABASE_NAME =   "No database yet";
     
     /**
      * @brief Responds to a ping request from a client
@@ -139,7 +137,7 @@ public:
      */
     void debug_setup();
     
-    std::string_view service_name() const override { return SERVICE_NAME; };
+    std::string_view service_name() const override { return service::room; };
     ReturnCode loadFromDB(std::string_view database_name) override;
     ReturnCode uploadToDB(std::string_view database_name) override;
     ReturnCode init() override;

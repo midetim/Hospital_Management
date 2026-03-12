@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+import "Common.proto";
+
+// Each one of these must be accessible by the front end
+service StaffManagement {
+    
+    // Staff Movement
+    rpc AddStaff(StaffDTO)               returns (Success);
+    rpc RemoveStaff(StaffDTO)            returns (Success);
+    
+    // Staff Information Updates
+    rpc ChangePosition(StaffDTO)         returns (Success);
+    rpc ChangeClearance(StaffDTO)        returns (Success);
+    rpc UpdateStaffInformation(StaffDTO) returns (Success);
+    
+    // Staff Scheduling
+    rpc AddShift(Shift)                  returns (Success);
+    rpc RemoveShift(Shift)               returns (Success);
+    rpc TransferShift(Shift)             returns (Success);
+    rpc BookTimeOff(TimeOff)             returns (Success);
+    
+    // Staff Information
+    rpc SeeStaffInformation(StaffDTO)    returns (StaffDTO);
+    rpc SeeSchedule(StaffDTO)            returns (ScheduleDTO);
+    
+    /* This call is not accessible to the front end */
+    rpc GetStaffInRoom(RoomRequest)      returns (StaffList);
+}
+
+message StaffDTO {
+    NameDTO staff_name   = 1;
+    uint64  staff_id     = 2;
+    string  staff_sex    = 3;
+    uint32  staff_room   = 4;
+    float   staff_salary = 5;
+}
+
+message Shift {
+    uint64  staff_id = 1;
+    uint32  room_id  = 2;
+    DateDTO day      = 3;
+    TimeDTO time     = 4;
+}
+
+message TimeOff {
+    DateDTO start_date = 1;
+    DateDTO end_date   = 2;
+}
+
+message ScheduleDTO {
+    repeated Shift shifts = 1;
+}
+
+message StaffList {
+    repeated StaffDTO staff = 1;
+}

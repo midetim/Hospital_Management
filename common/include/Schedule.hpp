@@ -12,6 +12,8 @@ struct Date {
     uint32_t minute = 0;
     
     static Date current_date();
+    static void to_end_of_day(Date & d);
+    static void to_start_of_day(Date & d);
     void print();
 };
 
@@ -76,6 +78,10 @@ public:
     uint64_t now();
     int64_t timeUntilNext();
     uint32_t check_schedule();
+    
+    std::map<Timestamp, uint32_t> getFrom(const Date & d) const;
+    std::map<Timestamp, uint32_t> getToday() const;
+    std::map<Timestamp, uint32_t> getTomorrow() const;
     
     void print();
 };
