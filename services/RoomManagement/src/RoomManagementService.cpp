@@ -386,158 +386,6 @@ grpc::Status RoomManagementService::LiftPatientQuarantine(grpc::ServerContext * 
 }
 
 
-grpc::Status RoomManagementService::GetAvailableRoom(grpc::ServerContext * context, const RoomAvailabilityRequest * request, AvailableRoom * response) {
-    
-    /* Mutex */
-    readMetadata(* context);
-    
-    // Get all the info from the request
-    std::string rtype = request->room_type();
-    bool q_status = request->quarantined();
-    
-    // Find an available room
-    uint32_t available_room = findAvailableRoom(rtype, q_status);
-    
-    // Determine success on if a room was found
-    bool success = !(available_room == NO_AVAILABLE_ROOM_FOUND);
-    
-    // Return success to client
-    response->set_success(success);
-    response->set_room_id(available_room);
-    
-    /* Mutex end */
-    
-    return grpc::Status::OK;
-}
-
-grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context, const RoomQuarantineRequest * request, RoomSuccess * response) {
-    
-    /* Mutex */
-    readMetadata(* context);
-    
-    // Get all the info from the request
-    uint32_t rid = request->room_id();
-    bool to_q = request->quarantine_patients();
-    
-    auto it = hospital_rooms.find(rid); // Search for the room in the normal room maps
-    if (it == hospital_rooms.end()) { // If room wasnt found
-        // Quarantine failure
-        response->set_success(false);
-        response->set_room_id(UNKNOWN_ROOM_ERROR);
-        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find room id");
-    }
-    
-    Room & r = it->second; // Create a temporary reference to the room to quarantine
-     
-    if (!to_q) { // If you do not want to quarantine patients
-        RoomType rtype = r.getRoomType(); // Get room type
-        auto & patients = r.getList(GET_ASSIGNED_PATIENTS); // Iterator at the start of the set
-        
-        for (uint64_t pid : patients) { // For each patient in the room put them into a new room
-            uint32_t new_rid = findAvailableRoom(rtype, false); // Do not want to quarantine
-            
-            auto new_room_it = hospital_rooms.find(new_rid); // Iterator to the new room
-            
-            // If the new room couldnt be found,    or adding the patient to the new room failed
-            if (new_room_it == hospital_rooms.end() || new_room_it->second.addPatient(pid) != ReturnCode::SUCCESS) {
-                // Quarantine failure
-                response->set_success(false);
-                response->set_room_id(UNKNOWN_ROOM_ERROR);
-                return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "Failed moving patient");
-            }
-        }
-        
-        // After moving all patients, reset the patient map
-        r.clearPatients();
-        
-    } // Otherwise, all patients in the room will also be quarantined
-    
-    auto node = hospital_rooms.extract(it); // Remove the selected room from normal room map
-    
-    auto [pos, success, remaining_node] = quarantined_rooms.insert(std::move(node)); // Insert the room into the quarantined room map
-
-    
-    if (!success) {
-        // Put room back
-        hospital_rooms.insert(std::move(remaining_node));
-        // Quarantine failure
-        response->set_success(false);
-        response->set_room_id(UNKNOWN_ROOM_ERROR);
-        return grpc::Status(grpc::StatusCode::ALREADY_EXISTS, "Room already quarantined");
-    }
-    
-    // Quarantine success
-    response->set_success(true);
-    response->set_room_id(rid);
-    
-    /* Mutex end */
-    
-    return grpc::Status::OK;
-}
-
-grpc::Status RoomManagementService::LiftQuarantine(grpc::ServerContext * context, const RoomQuarantineRequest * request, RoomSuccess * response) {
-    
-    /* Mutex */
-    readMetadata(* context);
-    
-    uint32_t rid = request->room_id();
-    bool to_q = request->quarantine_patients();
-    
-    auto it = quarantined_rooms.find(rid); // Find the quarantined room
-    if (it == quarantined_rooms.end()) { // If the room cannot be found
-        // Quarantine lift failure
-        response->set_success(false);
-        response->set_room_id(UNKNOWN_ROOM_ERROR);
-        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find room id");
-    }
-    
-    Room & r = it->second; // Get reference to the room
-     
-    if (to_q) { // If you want to keep patients quarantined
-        RoomType rtype = r.getRoomType();
-        auto & patients = r.getList(GET_ASSIGNED_PATIENTS); // Iterator at the start of the set
-        
-        for (uint64_t pid : patients) {
-            uint32_t new_rid = findAvailableRoom(rtype, true); // Want to quarantine
-            
-            auto new_room_it = quarantined_rooms.find(new_rid); // Find the new room
-            
-            // If the new room could not be found      or adding the patient to the new room failed
-            if (new_room_it == quarantined_rooms.end() || new_room_it->second.addPatient(pid) != ReturnCode::SUCCESS) {
-                // Quarantine lift failure
-                response->set_success(false);
-                response->set_room_id(UNKNOWN_ROOM_ERROR);
-                return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "Failed moving patient");
-            }
-        }
-        
-        // After moving all patients reset the map
-        r.clearPatients();
-        
-    } // Otherwise, all patients in the room will also be quarantined
-    
-    auto node = quarantined_rooms.extract(it); // Extract the room from the quarantined room map
-    
-    auto [pos, success, remaining_node] = hospital_rooms.insert(std::move(node)); // Insert the room into the normal room map
-
-    
-    if (!success) {
-        // Put room back
-        quarantined_rooms.insert(std::move(remaining_node));
-        // Quarantine lift failure
-        response->set_success(false);
-        response->set_room_id(0);
-        return grpc::Status(grpc::StatusCode::ALREADY_EXISTS, "Room already quarantined");
-    }
-    
-    // Quarantine lift success
-    response->set_success(true);
-    response->set_room_id(rid);
-    
-    
-    return grpc::Status::OK;
-}
-
 grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context, const RoomQuarantine * quarantine_request, Success * success) {
     
     readMetadata(* context); // Read request metadata
@@ -611,8 +459,29 @@ grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context
         
         // Clear out the room
         it->second.clearPatients();
+    } else { // Move the entire room
+        
+        // Extract the room and put it in the other map
+        auto node = patient_rooms.extract(it);
+        auto [position, insertion_success, remaining_node] = other_rooms.insert(std::move(node));
+        
+        // If insertion failed
+        if (!insertion_success) {
+            patient_rooms.insert(std::move(remaining_node)); // Put the room back
+            
+            success->set_successful(false); // Failed
+            std::string message = "";
+            if (quarantine) {
+                message = "Room already in quarantine";
+            } else {
+                message = "Room is not quarantined";
+            }
+            return grpc::Status(grpc::StatusCode::ALREADY_EXISTS, message);
+        }
     }
     
+    // Successfully (un) quarantined the room
+    success->set_successful(true);
     return grpc::Status::OK;
 }
 

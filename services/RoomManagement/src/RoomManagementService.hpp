@@ -127,6 +127,9 @@ public:
     
     grpc::Status TransferStaff(grpc::ServerContext * context, const StaffDTO * resource, Success * success) override;
     
+    /**
+     * @brief Can either quarantine a room, or lift the quarantine on a room
+     */
     grpc::Status QuarantineRoom(grpc::ServerContext * context, const RoomQuarantine * quarantine_request, Success * success) override;
     
     grpc::Status GetRoomInformation(grpc::ServerContext * context, const RoomDTO * room, RoomInformation * room_information) override;
