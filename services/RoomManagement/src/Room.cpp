@@ -32,6 +32,11 @@ std::vector<ReturnCode> Room::addPatients(const std::vector<uint64_t> & patient_
     return results;
 }
 
+bool Room::hasPatient(uint64_t patient_id) const {
+    auto it = assigned_patients.find(patient_id);
+    return !(it == assigned_staff.end()); // Returns false if the person was not found
+}
+
 ReturnCode Room::removePatient(uint64_t patient_id) {
     return assigned_patients.erase(patient_id) ? ReturnCode::SUCCESS : ReturnCode::WARNING; // Tries to erase the patient from the set
 }

@@ -27,7 +27,7 @@ public:
      * @return Returns a return code depending on if it was successful or not
      * @warning **NO DATABASES EXIST YET**
      */
-    virtual ReturnCode connectToDB();
+    virtual ReturnCode connectToDB() = 0;
     
     /**
      * @brief Load all data from the database into the service

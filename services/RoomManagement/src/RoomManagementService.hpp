@@ -12,6 +12,10 @@
 #include "Common.pb.h"
 #include "Common.grpc.pb.h"
 
+#include "PatientManagementClient.hpp"
+#include "ResourceManagementClient.hpp"
+//#include "StaffManagementClient.hpp"
+
 #define UNKNOWN_ROOM_ERROR 0
 #define NO_AVAILABLE_ROOM_FOUND 0
 #define ROOM_ID_NOT_PROVIDED 0 
@@ -22,8 +26,10 @@ class RoomManagementService final : public IService, public RoomManagement::Serv
 private:
     std::unordered_map<uint32_t, Room> hospital_rooms;
     std::unordered_map<uint32_t, Room> quarantined_rooms;
-    //std::unique_ptr<PatientManagementClient> patient_client;
-    //std::unique_ptr<ResourceManagementClient> resource_client;
+    
+    // gRPC Clients
+    std::unique_ptr<PatientManagementClient> patient_client;
+    std::unique_ptr<ResourceManagementClient> resource_client;
     //std::unique_ptr<StaffManagementClient> staff_client;
     
     /* Will need a mutex (or a few) */
@@ -97,8 +103,16 @@ public:
      */
     grpc::Status TransferPatient(grpc::ServerContext * context, const PatientTransfer * transfer_request, Success * success) override;
     
+    /**
+     * @brief Quarantines a patient in their room. Can either quarantine the entire room, or just the one patient
+     * @note Quarantining the one patient will move all other patients in the room to other rooms
+     */
     grpc::Status QuarantinePatient(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) override;
     
+    /**
+     * @brief Lifts the quarantine for a patient. Can either lift the quarantine to the entire room, or just the one patient
+     * @note Lifing the quarantine for just the one patient will move them to a new room
+     */
     grpc::Status LiftPatientQuarantine(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) override;
     
     grpc::Status RetrieveResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;

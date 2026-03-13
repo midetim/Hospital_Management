@@ -95,6 +95,12 @@ public:
     std::vector<ReturnCode> addPatients(const std::vector<uint64_t> & patient_ids);
     
     /**
+     * @brief Checks to see if the room has the patient with the corresponding id
+     * @return Returns true if the patient is assigned to the room
+     */
+    bool hasPatient(uint64_t patient_id) const;
+    
+    /**
      * @brief Remove a patient from a room
      * @param patient_id The id of the patient to remove
      * @return Returns a return code depending on success

@@ -40,6 +40,10 @@ uint32_t RoomManagementService::findAvailableRoom(const std::string type, bool q
 /* ******************************************************************** */
 
 RoomManagementService::RoomManagementService() {
+    patient_client = std::make_unique<PatientManagementClient>(service::patient_host);
+    resource_client = std::make_unique<ResourceManagementClient>(service::resource_host);
+    //staff_client = std::make_unique<StaffManagementClient>(service::staff_host);
+    
     this->name = service::room;
     this->database_name = service::room_db;
 }
@@ -63,7 +67,7 @@ grpc::Status RoomManagementService::print(grpc::ServerContext * context, const N
 
 grpc::Status RoomManagementService::update(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
     readMetadata(* context);
-    loadFromDB(service::room_db);
+    loadFromDB();
     std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
     response->set_error(false);
     return grpc::Status::OK;
@@ -189,14 +193,198 @@ grpc::Status RoomManagementService::QuarantinePatient(grpc::ServerContext * cont
     
     readMetadata(* context); // Read request metadata
     
+    // Extract the data from the request
     uint64_t patient_id = quarantine_request->patient_id();
     bool quarantine_entire_room = quarantine_request->quarantine_room();
     
+    // Search through the non-quarantined rooms to find the patients room
+    uint32_t room_id = 0;
+    for (const auto & [current_room_id, current_room] : hospital_rooms) {
+        if (current_room.hasPatient(patient_id)) {
+            room_id = current_room_id;
+            break;
+        }
+    }
     
+    // If the patient was not found in any non-quarantined rooms
+    if (room_id == 0) {
+        success->set_successful(false); // Quarantine was not successful
+        bool in_hospital = false;
+        
+        // Check to see if the patient is in any quarantined room
+        for (const auto & [current_room_id, current_room] : quarantined_rooms) {
+            if (current_room.hasPatient(patient_id)) {
+                in_hospital = true; // Patient is in a quarantined room
+                break;
+            }
+        }
+        
+        // Returns an error message depending on if the patient was found or not
+        return in_hospital ? grpc::Status(grpc::StatusCode::ABORTED, "Patient is already quarantined") : grpc::Status(grpc::StatusCode::NOT_FOUND, "Patient was not found in any room");
+    }
     
+    // Find the room in the system
+    auto it = hospital_rooms.find(room_id);
+    if (it == hospital_rooms.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::CANCELLED, "Something went wrong");
+    }
+    
+    if (quarantine_entire_room) { // Quarantine the entire room
+        auto node = hospital_rooms.extract(it); // Remove the selected room from normal room map
+        auto [pos, insertion_success, remaining_node] = quarantined_rooms.insert(std::move(node)); // Insert the room into the quarantined room map
+        
+        if (!insertion_success) { // Put room back
+            hospital_rooms.insert(std::move(remaining_node));
+            
+            // Quarantine failure
+            success->set_successful(false);
+            return grpc::Status(grpc::StatusCode::ALREADY_EXISTS, "Room already quarantined");
+        } else {
+            success->set_successful(true);
+            return grpc::Status::OK;
+        }
+    } else { // Quarantine just the one patient
+        
+        RoomType room_type = it->second.getRoomType(); // Get the room type
+        const std::unordered_set<uint64_t> & patients = it->second.getList(GET_ASSIGNED_PATIENTS); // Ge the list of patients
+        
+        // Iterate through each patient
+        for (uint64_t current_patient_id : patients) {
+            if (current_patient_id == patient_id) {
+                continue;
+            }
+            
+            // Find a new room for the patient
+            uint32_t new_room_id = findAvailableRoom(room_type, false);
+            auto new_room_it = hospital_rooms.find(new_room_id);
+            if (new_room_it == hospital_rooms.end()) {
+                success->set_successful(false);
+                return grpc::Status(grpc::StatusCode::ABORTED, "Something went critically wrong");
+            }
+            
+            // Add the patient to that room
+            ReturnCode successful_move = new_room_it->second.addPatient(current_patient_id);
+            if (successful_move != ReturnCode::SUCCESS) {
+                success->set_successful(false);
+                return grpc::Status(grpc::StatusCode::ABORTED, "Could not successfully move patients");
+            }
+            
+            patient_data update_package;
+            update_package.patient_id = current_patient_id;
+            update_package.room_id = new_room_id;
+            
+            bool update_status = patient_client->updatePatientinformation(update_package, service::room);
+            
+            if (!update_status) {
+                std::cout << Utils::timestamp() << ansi::yellow << "Unable to update patient records" << ansi::reset << std::endl;
+            }
+        }
+        
+        // Clear out all patients, except the quarantined one
+        it->second.clearPatients();
+        it->second.addPatient(patient_id);
+        
+    }
     
     return grpc::Status::OK;
 }
+
+grpc::Status RoomManagementService::LiftPatientQuarantine(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    // Extract the data from the request
+    uint64_t patient_id = quarantine_request->patient_id();
+    bool quarantine_entire_room = quarantine_request->quarantine_room();
+    
+    // Search through the quarantined rooms to find the patients room
+    uint32_t room_id = 0;
+    for (const auto & [current_room_id, current_room] : quarantined_rooms) {
+        if (current_room.hasPatient(patient_id)) {
+            room_id = current_room_id;
+            break;
+        }
+    }
+    
+    // If the patient was not found in any quarantined rooms
+    if (room_id == 0) {
+        success->set_successful(false); // Quarantine lift was not successful
+        bool in_hospital = false;
+        
+        // Check to see if the patient is in any quarantined room
+        for (const auto & [current_room_id, current_room] : hospital_rooms) {
+            if (current_room.hasPatient(patient_id)) {
+                in_hospital = true; // Patient is in a quarantined room
+                break;
+            }
+        }
+        
+        // Returns an error message depending on if the patient was found or not
+        return in_hospital ? grpc::Status(grpc::StatusCode::ABORTED, "Patient was not quarantined") : grpc::Status(grpc::StatusCode::NOT_FOUND, "Patient was not found in any room");
+    }
+    
+    // Find the room in the system
+    auto it = quarantined_rooms.find(room_id);
+    if (it == quarantined_rooms.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::CANCELLED, "Something went wrong");
+    }
+    
+    if (quarantine_entire_room) { // Lift the quarantine on the entire room
+        auto node = quarantined_rooms.extract(it); // Remove the selected room from normal room map
+        auto [pos, insertion_success, remaining_node] = hospital_rooms.insert(std::move(node)); // Insert the room into the quarantined room map
+        
+        if (!insertion_success) { // Put room back
+            quarantined_rooms.insert(std::move(remaining_node));
+            
+            // Quarantine failure
+            success->set_successful(false);
+            return grpc::Status(grpc::StatusCode::ALREADY_EXISTS, "Room was not quarantined");
+        } else {
+            success->set_successful(true);
+            return grpc::Status::OK;
+        }
+    } else { // Lift quarantine for just the one patient
+        
+        RoomType room_type = it->second.getRoomType(); // Get the room type
+        
+        // Find a new room for the patient
+        uint32_t new_room_id = findAvailableRoom(room_type, false);
+        auto new_room_it = hospital_rooms.find(new_room_id);
+        if (new_room_it == hospital_rooms.end()) {
+            success->set_successful(false);
+            return grpc::Status(grpc::StatusCode::ABORTED, "Something went critically wrong");
+        }
+        
+        // Add the patient to that room
+        ReturnCode successful_mode = new_room_it->second.addPatient(patient_id);
+        if (successful_mode != ReturnCode::SUCCESS) {
+            success->set_successful(false);
+            return grpc::Status(grpc::StatusCode::ABORTED, "Could not successfully move patients");
+        }
+        
+        patient_data update_package;
+        update_package.patient_id = patient_id;
+        update_package.room_id = new_room_id;
+        
+        bool update_status = patient_client->updatePatientinformation(update_package, service::room);
+        
+        if (!update_status) {
+            std::cout << Utils::timestamp() << ansi::yellow << "Unable to update patient records" << ansi::reset << std::endl;
+        }
+        
+        
+        // Clear out all patients, except the quarantined one
+        it->second.clearPatients();
+        it->second.addPatient(patient_id);
+        
+    }
+    
+    return grpc::Status::OK;
+    
+}
+
 
 grpc::Status RoomManagementService::GetAvailableRoom(grpc::ServerContext * context, const RoomAvailabilityRequest * request, AvailableRoom * response) {
     
@@ -350,121 +538,116 @@ grpc::Status RoomManagementService::LiftQuarantine(grpc::ServerContext * context
     return grpc::Status::OK;
 }
 
-
-grpc::Status RoomManagementService::GetRoomInformation(grpc::ServerContext * context, const RoomInfoRequest * request, RoomInformation * response) {
+grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context, const RoomQuarantine * quarantine_request, Success * success) {
     
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "Function not yet implemented");
-}
-
-grpc::Status RoomManagementService::GetResource(grpc::ServerContext * context, const ResourceInfo * request, RoomSuccess * response) {
+    readMetadata(* context); // Read request metadata
     
-    readMetadata(* context);
+    // Extract all info from the request
+    uint32_t room_id = quarantine_request->room_id();
+    bool quarantine = quarantine_request->quarantine();
+    bool move_patients = quarantine_request->move_patient();
     
-    uint64_t resid = request->resource_id();
-    uint32_t roomid = request->room_id();
+    // Get a reference to the proper room map
+    std::unordered_map<uint32_t, Room> & patient_rooms = quarantine ? hospital_rooms : quarantined_rooms;
+    std::unordered_map<uint32_t, Room> & other_rooms  = quarantine ? quarantined_rooms : hospital_rooms;
     
-    if (resid == 0 || roomid == 0) { // make sure theres actual values for the ids
-        response->set_success(false);
-        response->set_room_id(0);
-        return grpc::Status(grpc::StatusCode::ABORTED, "Something went wrong");
-    }
-    
-    auto it = hospital_rooms.find(roomid);
-    if (it == hospital_rooms.end()) {
-        it = quarantined_rooms.find(roomid);
-        if (it == quarantined_rooms.end()) {
-            response->set_success(false);
-            response->set_room_id(0);
-            return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Unable to find the desired room");
+    // Search the map for the room
+    auto it = patient_rooms.find(room_id);
+    if (it == patient_rooms.end()) { // If room was not found where it should be
+        success->set_successful(false);
+        
+        it = other_rooms.find(room_id); // Check the other map for the room
+        if (it == other_rooms.end()) { // Room was not found in hospital
+            return grpc::Status(grpc::StatusCode::NOT_FOUND, "Selected room was not found in the hospital");
         }
+        
+        // Create return message for the response
+        std::string message = "";
+        if (quarantine) {
+            message = "Selected room was already quarantined";
+        } else {
+            message = "Selected room is not currently quarantined";
+        }
+        
+        // Send the response
+        return grpc::Status(grpc::StatusCode::ABORTED, message);
     }
     
-    ReturnCode rc = it->second.addResource(resid);
-    if (rc != ReturnCode::SUCCESS) {
-        response->set_success(false);
-        response->set_room_id(0);
-        return grpc::Status(grpc::StatusCode::ABORTED, "Resource already exists in the room");
-    }
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "Function not yet implemented");
-}
-
-grpc::Status RoomManagementService::ReleaseResource(grpc::ServerContext * context, const ResourceInfo * request, RoomSuccess * response) {
-    
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "Function not yet implemented");
-}
-
-grpc::Status RoomManagementService::TransferResource(grpc::ServerContext * context, const ResourceInfo * request, RoomSuccess * response) {
-    
-    return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "Function not yet implemented");
-}
- 
-
-void RoomManagementService::debug_setup() {
-    // Clear existing rooms just in case
-    hospital_rooms.clear();
-    quarantined_rooms.clear();
-
-    // Add a few general rooms
-    Room room1(2, RoomType::General);
-    room1.quarantineRoom(); // optional, only if you want a test quarantined room
-
-    Room room2(1, RoomType::General);
-
-    // Add an operating room
-    Room room3(1, RoomType::Operating);
-
-    // Add an intensive care room
-    Room room4(2, RoomType::IntesiveCare);
-
-    // Add an emergency room
-    Room room5(1, RoomType::Emergency);
-
-    // Set room IDs
-    room1 = Room(2, RoomType::General);
-    room1.quarantineRoom();
-    room1.updateCurrentCapacity();
-    
-    room1 = Room(2, RoomType::General);
-    
-    // Insert rooms into hospital_rooms map
-    hospital_rooms[101] = room1;
-    hospital_rooms[102] = room2;
-    hospital_rooms[201] = room3;
-    hospital_rooms[301] = room4;
-    hospital_rooms[401] = room5;
-
-    std::cout << "[DEBUG] Hospital rooms initialized for testing:\n";
-    for (const auto & [rid, room] : hospital_rooms) {
-        std::cout << "  Room ID: " << rid
-                  << ", Type: " << static_cast<int>(room.getRoomType())
-                  << ", Capacity: " << room.getRoomCapacity()
-                  << ", Current: " << room.getCurrentCapacity()
-                  << "\n";
+    if (move_patients) { // If you want to move all the patients
+        RoomType room_type = it->second.getRoomType();
+        const std::unordered_set<uint64_t> & patients = it->second.getList(GET_ASSIGNED_PATIENTS);
+        
+        // For each patient inside of the room
+        for (uint64_t patient_id : patients) {
+            
+            // Find the patient a new room
+            uint32_t new_room_id = findAvailableRoom(room_type, !quarantine);
+            
+            // Find the room
+            auto new_room_it = other_rooms.find(new_room_id);
+            if (new_room_it == other_rooms.end()) {
+                success->set_successful(false);
+                return grpc::Status(grpc::StatusCode::ABORTED, "Failed to move patients to a new room");
+            }
+            
+            // Put the patient into that room
+            ReturnCode successful_move = new_room_it->second.addPatient(patient_id);
+            if (successful_move != ReturnCode::SUCCESS) {
+                success->set_successful(false);
+                return grpc::Status(grpc::StatusCode::ABORTED, "Failed to move the patient into a new room");
+            }
+            
+            // Create update package
+            patient_data update_package;
+            update_package.patient_id = patient_id;
+            update_package.room_id = new_room_id;
+            
+            // Send it to the client
+            bool update_status = patient_client->updatePatientinformation(update_package, service::room);
+            if (!update_status) {
+                std::cout << Utils::timestamp() << ansi::yellow << "Unable to update patient records" << ansi::reset << std::endl;
+            }
+        }
+        
+        // Clear out the room
+        it->second.clearPatients();
     }
     
+    return grpc::Status::OK;
 }
 
-ReturnCode RoomManagementService::loadFromDB(std::string_view database_name) {
+
+grpc::Status RoomManagementService::GetRoomInformation(grpc::ServerContext * context, const RoomDTO * room, RoomInformation * room_information) {
+    
+    return grpc::Status::OK;
+}
+
+
+/* ******************************************************************** */
+/* *************************** IServer ******************************** */
+/* ******************************************************************** */
+
+ReturnCode RoomManagementService::connectToDB() {
     
     return ReturnCode::SUCCESS;
 }
 
-ReturnCode RoomManagementService::uploadToDB(std::string_view database_name) {
+
+ReturnCode RoomManagementService::loadFromDB() {
+    
+    return ReturnCode::SUCCESS;
+}
+
+ReturnCode RoomManagementService::uploadToDB() {
     
     return ReturnCode::SUCCESS;
 }
 
 
 ReturnCode RoomManagementService::init() {
-    debug_setup();
     
     
     return ReturnCode::SUCCESS;
-} 
-
-void RoomManagementService::HandleShutdown(int signal) {
-    uploadToDB(service::room_db);
-    std::cout << Utils::timestamp() << "[ Backup ] Successfully backed up " << service_name() << " to database " << service::room_db << std::endl;
 }
 
 void RoomManagementService::print_internal() {
@@ -489,8 +672,6 @@ void RoomManagementService::print_internal() {
               << ansi::reset << '\n';
 }
 
-grpc::Status RoomManagementService::Print(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
-    readMetadata(* context);
-    print_internal();
-    return grpc::Status::OK;
-}
+/* ******************************************************************** */
+/* ****************************** Other ******************************* */
+/* ******************************************************************** */

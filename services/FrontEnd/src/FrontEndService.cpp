@@ -200,10 +200,10 @@ void FrontEndService::print_internal() {
     Nothing req, res;
     
     // Call Print PRC on Room Management
-    room_client->Print();
+    room_client->print(service::room);
     
     // Call Print RPC on Patient Management
-    patient_client->Print();
+    patient_client->print(service::patient);
     
     // Call Print RPC on Resource Management
     
