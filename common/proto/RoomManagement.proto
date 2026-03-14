@@ -9,27 +9,34 @@ service RoomManagement {
     /* These calls will not be accessible to the front end */
     
     // Patient Management Requests
-    rpc AdmitPatient(PatientDTO)                 returns (Success);
-    rpc DischargePatient(PatientDTO)             returns (Success);
-    rpc TransferPatient(PatientTransfer)         returns (Success);
-    rpc QuarantinePatient(PatientQuarantine)     returns (Success);
-    rpc LiftPatientQuarantine(PatientQuarantine) returns (Success);
+    rpc AdmitPatient(PatientDTO)                    returns (Success);
+    rpc DischargePatient(PatientDTO)                returns (Success);
+    rpc TransferPatient(PatientTransfer)            returns (Success);
+    rpc QuarantinePatient(PatientQuarantine)        returns (Success);
+    rpc LiftPatientQuarantine(PatientQuarantine)    returns (Success);
     
     // Resource Management Requests
-    rpc RetrieveResource(ResourceDTO)            returns (Success);
-    rpc ReleaseResource(ResourceDTO)             returns (Success);
-    rpc TransferResource(ResourceDTO)            returns (Success);
+    rpc RetrieveResource(ResourceDTO)               returns (Success);
+    rpc ReleaseResource(ResourceDTO)                returns (Success);
+    rpc TransferResource(ResourceDTO)               returns (Success);
     
     // Staff Management Requests
-    rpc RetrieveStaff(StaffDTO)                  returns (Success);
-    rpc ReleaseStaff(StaffDTO)                   returns (Success);
-    rpc TransferStaff(StaffDTO)                  returns (Success);
+    rpc RetrieveStaff(StaffDTO)                     returns (Success);
+    rpc ReleaseStaff(StaffDTO)                      returns (Success);
+    rpc TransferStaff(StaffDTO)                     returns (Success);
     
     /* These calls need to be accessable to the front end */
     
     // Front End Requests
-    rpc QuarantineRoom(RoomQuarantine)           returns (Success);
-    rpc GetRoomInformation(RoomDTO)              returns (RoomInformation); // Displays all the people and resources in a room
+    rpc QuarantineRoom(RoomQuarantine)              returns (Success);
+    rpc GetRoomInformation(RoomDTO)                 returns (RoomInformation); // Displays all the people and resources in a room
+    
+    // Consistency update calls
+    rpc UpdatePatient(PatientDTO)                   returns (Success);
+    rpc UpdateResource(ResourceDTO)                 returns (Success);
+    rpc UpdateStaff(StaffDTO)                       returns (Success);
+    rpc UpdateRoom(RoomDTO)                         returns (Success);
+    
 }
 
 message RoomDTO {

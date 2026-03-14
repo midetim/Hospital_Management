@@ -16,6 +16,10 @@
 
 #define UNKNOWN_PATIENT_ERROR 0
 
+/* ******************************************************************** */
+/* ****************** Patient Management Service ********************** */
+/* ******************************************************************** */
+
 /**
  * @brief The patient management service class
  * @note Handles all logic related to patients

@@ -191,7 +191,7 @@ const char descriptor_table_protodef_RoomManagement_2eproto[] ABSL_ATTRIBUTE_SEC
     ")\n\023patient_information\030\002 \001(\0132\014.PatientLi"
     "st\022+\n\024resource_information\030\003 \001(\0132\r.Resou"
     "rceList\022%\n\021staff_information\030\004 \001(\0132\n.Sta"
-    "ffList2\316\004\n\016RoomManagement\022%\n\014AdmitPatien"
+    "ffList2\346\005\n\016RoomManagement\022%\n\014AdmitPatien"
     "t\022\013.PatientDTO\032\010.Success\022)\n\020DischargePat"
     "ient\022\013.PatientDTO\032\010.Success\022-\n\017TransferP"
     "atient\022\020.PatientTransfer\032\010.Success\0221\n\021Qu"
@@ -205,8 +205,11 @@ const char descriptor_table_protodef_RoomManagement_2eproto[] ABSL_ATTRIBUTE_SEC
     "Staff\022\t.StaffDTO\032\010.Success\022$\n\rTransferSt"
     "aff\022\t.StaffDTO\032\010.Success\022+\n\016QuarantineRo"
     "om\022\017.RoomQuarantine\032\010.Success\0220\n\022GetRoom"
-    "Information\022\010.RoomDTO\032\020.RoomInformationb"
-    "\006proto3"
+    "Information\022\010.RoomDTO\032\020.RoomInformation\022"
+    "&\n\rUpdatePatient\022\013.PatientDTO\032\010.Success\022"
+    "(\n\016UpdateResource\022\014.ResourceDTO\032\010.Succes"
+    "s\022\"\n\013UpdateStaff\022\t.StaffDTO\032\010.Success\022 \n"
+    "\nUpdateRoom\022\010.RoomDTO\032\010.Successb\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_RoomManagement_2eproto_deps[4] = {
@@ -219,7 +222,7 @@ static ::absl::once_flag descriptor_table_RoomManagement_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_RoomManagement_2eproto = {
     false,
     false,
-    1167,
+    1319,
     descriptor_table_protodef_RoomManagement_2eproto,
     "RoomManagement.proto",
     &descriptor_table_RoomManagement_2eproto_once,

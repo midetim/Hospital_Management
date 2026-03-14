@@ -132,6 +132,35 @@ class RoomManagement final {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RoomInformation>>(PrepareAsyncGetRoomInformationRaw(context, request, cq));
     }
     // Displays all the people and resources in a room
+    // Consistency update calls
+    virtual ::grpc::Status UpdatePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncUpdatePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncUpdatePatientRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncUpdatePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncUpdatePatientRaw(context, request, cq));
+    }
+    virtual ::grpc::Status UpdateResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncUpdateResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncUpdateResourceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncUpdateResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncUpdateResourceRaw(context, request, cq));
+    }
+    virtual ::grpc::Status UpdateStaff(::grpc::ClientContext* context, const ::StaffDTO& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncUpdateStaff(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncUpdateStaffRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncUpdateStaff(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncUpdateStaffRaw(context, request, cq));
+    }
+    virtual ::grpc::Status UpdateRoom(::grpc::ClientContext* context, const ::RoomDTO& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncUpdateRoom(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncUpdateRoomRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncUpdateRoom(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncUpdateRoomRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -168,6 +197,15 @@ class RoomManagement final {
       virtual void GetRoomInformation(::grpc::ClientContext* context, const ::RoomDTO* request, ::RoomInformation* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetRoomInformation(::grpc::ClientContext* context, const ::RoomDTO* request, ::RoomInformation* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // Displays all the people and resources in a room
+      // Consistency update calls
+      virtual void UpdatePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void UpdatePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void UpdateResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void UpdateResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void UpdateStaff(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void UpdateStaff(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void UpdateRoom(::grpc::ClientContext* context, const ::RoomDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void UpdateRoom(::grpc::ClientContext* context, const ::RoomDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -199,6 +237,14 @@ class RoomManagement final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncQuarantineRoomRaw(::grpc::ClientContext* context, const ::RoomQuarantine& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::RoomInformation>* AsyncGetRoomInformationRaw(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::RoomInformation>* PrepareAsyncGetRoomInformationRaw(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncUpdatePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncUpdatePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncUpdateResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncUpdateResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncUpdateStaffRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncUpdateStaffRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncUpdateRoomRaw(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncUpdateRoomRaw(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -294,6 +340,34 @@ class RoomManagement final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RoomInformation>> PrepareAsyncGetRoomInformation(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RoomInformation>>(PrepareAsyncGetRoomInformationRaw(context, request, cq));
     }
+    ::grpc::Status UpdatePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncUpdatePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncUpdatePatientRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncUpdatePatient(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncUpdatePatientRaw(context, request, cq));
+    }
+    ::grpc::Status UpdateResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncUpdateResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncUpdateResourceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncUpdateResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncUpdateResourceRaw(context, request, cq));
+    }
+    ::grpc::Status UpdateStaff(::grpc::ClientContext* context, const ::StaffDTO& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncUpdateStaff(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncUpdateStaffRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncUpdateStaff(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncUpdateStaffRaw(context, request, cq));
+    }
+    ::grpc::Status UpdateRoom(::grpc::ClientContext* context, const ::RoomDTO& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncUpdateRoom(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncUpdateRoomRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncUpdateRoom(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncUpdateRoomRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -323,6 +397,14 @@ class RoomManagement final {
       void QuarantineRoom(::grpc::ClientContext* context, const ::RoomQuarantine* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetRoomInformation(::grpc::ClientContext* context, const ::RoomDTO* request, ::RoomInformation* response, std::function<void(::grpc::Status)>) override;
       void GetRoomInformation(::grpc::ClientContext* context, const ::RoomDTO* request, ::RoomInformation* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void UpdatePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void UpdatePatient(::grpc::ClientContext* context, const ::PatientDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void UpdateResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void UpdateResource(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void UpdateStaff(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void UpdateStaff(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void UpdateRoom(::grpc::ClientContext* context, const ::RoomDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void UpdateRoom(::grpc::ClientContext* context, const ::RoomDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -360,6 +442,14 @@ class RoomManagement final {
     ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncQuarantineRoomRaw(::grpc::ClientContext* context, const ::RoomQuarantine& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::RoomInformation>* AsyncGetRoomInformationRaw(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::RoomInformation>* PrepareAsyncGetRoomInformationRaw(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncUpdatePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncUpdatePatientRaw(::grpc::ClientContext* context, const ::PatientDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncUpdateResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncUpdateResourceRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncUpdateStaffRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncUpdateStaffRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncUpdateRoomRaw(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncUpdateRoomRaw(::grpc::ClientContext* context, const ::RoomDTO& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_AdmitPatient_;
     const ::grpc::internal::RpcMethod rpcmethod_DischargePatient_;
     const ::grpc::internal::RpcMethod rpcmethod_TransferPatient_;
@@ -373,6 +463,10 @@ class RoomManagement final {
     const ::grpc::internal::RpcMethod rpcmethod_TransferStaff_;
     const ::grpc::internal::RpcMethod rpcmethod_QuarantineRoom_;
     const ::grpc::internal::RpcMethod rpcmethod_GetRoomInformation_;
+    const ::grpc::internal::RpcMethod rpcmethod_UpdatePatient_;
+    const ::grpc::internal::RpcMethod rpcmethod_UpdateResource_;
+    const ::grpc::internal::RpcMethod rpcmethod_UpdateStaff_;
+    const ::grpc::internal::RpcMethod rpcmethod_UpdateRoom_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -400,6 +494,11 @@ class RoomManagement final {
     virtual ::grpc::Status QuarantineRoom(::grpc::ServerContext* context, const ::RoomQuarantine* request, ::Success* response);
     virtual ::grpc::Status GetRoomInformation(::grpc::ServerContext* context, const ::RoomDTO* request, ::RoomInformation* response);
     // Displays all the people and resources in a room
+    // Consistency update calls
+    virtual ::grpc::Status UpdatePatient(::grpc::ServerContext* context, const ::PatientDTO* request, ::Success* response);
+    virtual ::grpc::Status UpdateResource(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response);
+    virtual ::grpc::Status UpdateStaff(::grpc::ServerContext* context, const ::StaffDTO* request, ::Success* response);
+    virtual ::grpc::Status UpdateRoom(::grpc::ServerContext* context, const ::RoomDTO* request, ::Success* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_AdmitPatient : public BaseClass {
@@ -661,7 +760,87 @@ class RoomManagement final {
       ::grpc::Service::RequestAsyncUnary(12, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AdmitPatient<WithAsyncMethod_DischargePatient<WithAsyncMethod_TransferPatient<WithAsyncMethod_QuarantinePatient<WithAsyncMethod_LiftPatientQuarantine<WithAsyncMethod_RetrieveResource<WithAsyncMethod_ReleaseResource<WithAsyncMethod_TransferResource<WithAsyncMethod_RetrieveStaff<WithAsyncMethod_ReleaseStaff<WithAsyncMethod_TransferStaff<WithAsyncMethod_QuarantineRoom<WithAsyncMethod_GetRoomInformation<Service > > > > > > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_UpdatePatient : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_UpdatePatient() {
+      ::grpc::Service::MarkMethodAsync(13);
+    }
+    ~WithAsyncMethod_UpdatePatient() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdatePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUpdatePatient(::grpc::ServerContext* context, ::PatientDTO* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(13, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_UpdateResource : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_UpdateResource() {
+      ::grpc::Service::MarkMethodAsync(14);
+    }
+    ~WithAsyncMethod_UpdateResource() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUpdateResource(::grpc::ServerContext* context, ::ResourceDTO* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_UpdateStaff : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_UpdateStaff() {
+      ::grpc::Service::MarkMethodAsync(15);
+    }
+    ~WithAsyncMethod_UpdateStaff() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateStaff(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUpdateStaff(::grpc::ServerContext* context, ::StaffDTO* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(15, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_UpdateRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_UpdateRoom() {
+      ::grpc::Service::MarkMethodAsync(16);
+    }
+    ~WithAsyncMethod_UpdateRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateRoom(::grpc::ServerContext* /*context*/, const ::RoomDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUpdateRoom(::grpc::ServerContext* context, ::RoomDTO* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(16, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_AdmitPatient<WithAsyncMethod_DischargePatient<WithAsyncMethod_TransferPatient<WithAsyncMethod_QuarantinePatient<WithAsyncMethod_LiftPatientQuarantine<WithAsyncMethod_RetrieveResource<WithAsyncMethod_ReleaseResource<WithAsyncMethod_TransferResource<WithAsyncMethod_RetrieveStaff<WithAsyncMethod_ReleaseStaff<WithAsyncMethod_TransferStaff<WithAsyncMethod_QuarantineRoom<WithAsyncMethod_GetRoomInformation<WithAsyncMethod_UpdatePatient<WithAsyncMethod_UpdateResource<WithAsyncMethod_UpdateStaff<WithAsyncMethod_UpdateRoom<Service > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_AdmitPatient : public BaseClass {
    private:
@@ -1013,7 +1192,115 @@ class RoomManagement final {
     virtual ::grpc::ServerUnaryReactor* GetRoomInformation(
       ::grpc::CallbackServerContext* /*context*/, const ::RoomDTO* /*request*/, ::RoomInformation* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_AdmitPatient<WithCallbackMethod_DischargePatient<WithCallbackMethod_TransferPatient<WithCallbackMethod_QuarantinePatient<WithCallbackMethod_LiftPatientQuarantine<WithCallbackMethod_RetrieveResource<WithCallbackMethod_ReleaseResource<WithCallbackMethod_TransferResource<WithCallbackMethod_RetrieveStaff<WithCallbackMethod_ReleaseStaff<WithCallbackMethod_TransferStaff<WithCallbackMethod_QuarantineRoom<WithCallbackMethod_GetRoomInformation<Service > > > > > > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_UpdatePatient : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_UpdatePatient() {
+      ::grpc::Service::MarkMethodCallback(13,
+          new ::grpc::internal::CallbackUnaryHandler< ::PatientDTO, ::Success>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::PatientDTO* request, ::Success* response) { return this->UpdatePatient(context, request, response); }));}
+    void SetMessageAllocatorFor_UpdatePatient(
+        ::grpc::MessageAllocator< ::PatientDTO, ::Success>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(13);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::PatientDTO, ::Success>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_UpdatePatient() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdatePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* UpdatePatient(
+      ::grpc::CallbackServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_UpdateResource : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_UpdateResource() {
+      ::grpc::Service::MarkMethodCallback(14,
+          new ::grpc::internal::CallbackUnaryHandler< ::ResourceDTO, ::Success>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::ResourceDTO* request, ::Success* response) { return this->UpdateResource(context, request, response); }));}
+    void SetMessageAllocatorFor_UpdateResource(
+        ::grpc::MessageAllocator< ::ResourceDTO, ::Success>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(14);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ResourceDTO, ::Success>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_UpdateResource() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* UpdateResource(
+      ::grpc::CallbackServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_UpdateStaff : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_UpdateStaff() {
+      ::grpc::Service::MarkMethodCallback(15,
+          new ::grpc::internal::CallbackUnaryHandler< ::StaffDTO, ::Success>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::StaffDTO* request, ::Success* response) { return this->UpdateStaff(context, request, response); }));}
+    void SetMessageAllocatorFor_UpdateStaff(
+        ::grpc::MessageAllocator< ::StaffDTO, ::Success>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(15);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StaffDTO, ::Success>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_UpdateStaff() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateStaff(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* UpdateStaff(
+      ::grpc::CallbackServerContext* /*context*/, const ::StaffDTO* /*request*/, ::Success* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_UpdateRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_UpdateRoom() {
+      ::grpc::Service::MarkMethodCallback(16,
+          new ::grpc::internal::CallbackUnaryHandler< ::RoomDTO, ::Success>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::RoomDTO* request, ::Success* response) { return this->UpdateRoom(context, request, response); }));}
+    void SetMessageAllocatorFor_UpdateRoom(
+        ::grpc::MessageAllocator< ::RoomDTO, ::Success>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(16);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::RoomDTO, ::Success>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_UpdateRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateRoom(::grpc::ServerContext* /*context*/, const ::RoomDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* UpdateRoom(
+      ::grpc::CallbackServerContext* /*context*/, const ::RoomDTO* /*request*/, ::Success* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_AdmitPatient<WithCallbackMethod_DischargePatient<WithCallbackMethod_TransferPatient<WithCallbackMethod_QuarantinePatient<WithCallbackMethod_LiftPatientQuarantine<WithCallbackMethod_RetrieveResource<WithCallbackMethod_ReleaseResource<WithCallbackMethod_TransferResource<WithCallbackMethod_RetrieveStaff<WithCallbackMethod_ReleaseStaff<WithCallbackMethod_TransferStaff<WithCallbackMethod_QuarantineRoom<WithCallbackMethod_GetRoomInformation<WithCallbackMethod_UpdatePatient<WithCallbackMethod_UpdateResource<WithCallbackMethod_UpdateStaff<WithCallbackMethod_UpdateRoom<Service > > > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_AdmitPatient : public BaseClass {
@@ -1232,6 +1519,74 @@ class RoomManagement final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetRoomInformation(::grpc::ServerContext* /*context*/, const ::RoomDTO* /*request*/, ::RoomInformation* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_UpdatePatient : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_UpdatePatient() {
+      ::grpc::Service::MarkMethodGeneric(13);
+    }
+    ~WithGenericMethod_UpdatePatient() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdatePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_UpdateResource : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_UpdateResource() {
+      ::grpc::Service::MarkMethodGeneric(14);
+    }
+    ~WithGenericMethod_UpdateResource() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_UpdateStaff : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_UpdateStaff() {
+      ::grpc::Service::MarkMethodGeneric(15);
+    }
+    ~WithGenericMethod_UpdateStaff() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateStaff(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_UpdateRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_UpdateRoom() {
+      ::grpc::Service::MarkMethodGeneric(16);
+    }
+    ~WithGenericMethod_UpdateRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateRoom(::grpc::ServerContext* /*context*/, const ::RoomDTO* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1494,6 +1849,86 @@ class RoomManagement final {
     }
     void RequestGetRoomInformation(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(12, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_UpdatePatient : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_UpdatePatient() {
+      ::grpc::Service::MarkMethodRaw(13);
+    }
+    ~WithRawMethod_UpdatePatient() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdatePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUpdatePatient(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(13, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_UpdateResource : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_UpdateResource() {
+      ::grpc::Service::MarkMethodRaw(14);
+    }
+    ~WithRawMethod_UpdateResource() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUpdateResource(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_UpdateStaff : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_UpdateStaff() {
+      ::grpc::Service::MarkMethodRaw(15);
+    }
+    ~WithRawMethod_UpdateStaff() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateStaff(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUpdateStaff(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(15, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_UpdateRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_UpdateRoom() {
+      ::grpc::Service::MarkMethodRaw(16);
+    }
+    ~WithRawMethod_UpdateRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateRoom(::grpc::ServerContext* /*context*/, const ::RoomDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestUpdateRoom(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(16, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1780,6 +2215,94 @@ class RoomManagement final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetRoomInformation(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_UpdatePatient : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_UpdatePatient() {
+      ::grpc::Service::MarkMethodRawCallback(13,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->UpdatePatient(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_UpdatePatient() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdatePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* UpdatePatient(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_UpdateResource : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_UpdateResource() {
+      ::grpc::Service::MarkMethodRawCallback(14,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->UpdateResource(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_UpdateResource() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* UpdateResource(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_UpdateStaff : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_UpdateStaff() {
+      ::grpc::Service::MarkMethodRawCallback(15,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->UpdateStaff(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_UpdateStaff() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateStaff(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* UpdateStaff(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_UpdateRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_UpdateRoom() {
+      ::grpc::Service::MarkMethodRawCallback(16,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->UpdateRoom(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_UpdateRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status UpdateRoom(::grpc::ServerContext* /*context*/, const ::RoomDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* UpdateRoom(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -2133,9 +2656,117 @@ class RoomManagement final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetRoomInformation(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::RoomDTO,::RoomInformation>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_AdmitPatient<WithStreamedUnaryMethod_DischargePatient<WithStreamedUnaryMethod_TransferPatient<WithStreamedUnaryMethod_QuarantinePatient<WithStreamedUnaryMethod_LiftPatientQuarantine<WithStreamedUnaryMethod_RetrieveResource<WithStreamedUnaryMethod_ReleaseResource<WithStreamedUnaryMethod_TransferResource<WithStreamedUnaryMethod_RetrieveStaff<WithStreamedUnaryMethod_ReleaseStaff<WithStreamedUnaryMethod_TransferStaff<WithStreamedUnaryMethod_QuarantineRoom<WithStreamedUnaryMethod_GetRoomInformation<Service > > > > > > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_UpdatePatient : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_UpdatePatient() {
+      ::grpc::Service::MarkMethodStreamed(13,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::PatientDTO, ::Success>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::PatientDTO, ::Success>* streamer) {
+                       return this->StreamedUpdatePatient(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_UpdatePatient() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status UpdatePatient(::grpc::ServerContext* /*context*/, const ::PatientDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedUpdatePatient(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PatientDTO,::Success>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_UpdateResource : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_UpdateResource() {
+      ::grpc::Service::MarkMethodStreamed(14,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::ResourceDTO, ::Success>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::ResourceDTO, ::Success>* streamer) {
+                       return this->StreamedUpdateResource(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_UpdateResource() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status UpdateResource(::grpc::ServerContext* /*context*/, const ::ResourceDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedUpdateResource(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ResourceDTO,::Success>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_UpdateStaff : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_UpdateStaff() {
+      ::grpc::Service::MarkMethodStreamed(15,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::StaffDTO, ::Success>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::StaffDTO, ::Success>* streamer) {
+                       return this->StreamedUpdateStaff(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_UpdateStaff() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status UpdateStaff(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedUpdateStaff(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StaffDTO,::Success>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_UpdateRoom : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_UpdateRoom() {
+      ::grpc::Service::MarkMethodStreamed(16,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::RoomDTO, ::Success>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::RoomDTO, ::Success>* streamer) {
+                       return this->StreamedUpdateRoom(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_UpdateRoom() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status UpdateRoom(::grpc::ServerContext* /*context*/, const ::RoomDTO* /*request*/, ::Success* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedUpdateRoom(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::RoomDTO,::Success>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_AdmitPatient<WithStreamedUnaryMethod_DischargePatient<WithStreamedUnaryMethod_TransferPatient<WithStreamedUnaryMethod_QuarantinePatient<WithStreamedUnaryMethod_LiftPatientQuarantine<WithStreamedUnaryMethod_RetrieveResource<WithStreamedUnaryMethod_ReleaseResource<WithStreamedUnaryMethod_TransferResource<WithStreamedUnaryMethod_RetrieveStaff<WithStreamedUnaryMethod_ReleaseStaff<WithStreamedUnaryMethod_TransferStaff<WithStreamedUnaryMethod_QuarantineRoom<WithStreamedUnaryMethod_GetRoomInformation<WithStreamedUnaryMethod_UpdatePatient<WithStreamedUnaryMethod_UpdateResource<WithStreamedUnaryMethod_UpdateStaff<WithStreamedUnaryMethod_UpdateRoom<Service > > > > > > > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_AdmitPatient<WithStreamedUnaryMethod_DischargePatient<WithStreamedUnaryMethod_TransferPatient<WithStreamedUnaryMethod_QuarantinePatient<WithStreamedUnaryMethod_LiftPatientQuarantine<WithStreamedUnaryMethod_RetrieveResource<WithStreamedUnaryMethod_ReleaseResource<WithStreamedUnaryMethod_TransferResource<WithStreamedUnaryMethod_RetrieveStaff<WithStreamedUnaryMethod_ReleaseStaff<WithStreamedUnaryMethod_TransferStaff<WithStreamedUnaryMethod_QuarantineRoom<WithStreamedUnaryMethod_GetRoomInformation<Service > > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_AdmitPatient<WithStreamedUnaryMethod_DischargePatient<WithStreamedUnaryMethod_TransferPatient<WithStreamedUnaryMethod_QuarantinePatient<WithStreamedUnaryMethod_LiftPatientQuarantine<WithStreamedUnaryMethod_RetrieveResource<WithStreamedUnaryMethod_ReleaseResource<WithStreamedUnaryMethod_TransferResource<WithStreamedUnaryMethod_RetrieveStaff<WithStreamedUnaryMethod_ReleaseStaff<WithStreamedUnaryMethod_TransferStaff<WithStreamedUnaryMethod_QuarantineRoom<WithStreamedUnaryMethod_GetRoomInformation<WithStreamedUnaryMethod_UpdatePatient<WithStreamedUnaryMethod_UpdateResource<WithStreamedUnaryMethod_UpdateStaff<WithStreamedUnaryMethod_UpdateRoom<Service > > > > > > > > > > > > > > > > > StreamedService;
 };
 // These calls will not be accessible to the front end 
 

@@ -232,8 +232,8 @@ const char descriptor_table_protodef_ResourceManagement_2eproto[] ABSL_ATTRIBUTE
     "urce_id\030\001 \001(\004\022\025\n\rresource_type\030\002 \001(\t\022\024\n\014"
     "stock_amount\030\003 \001(\r\"/\n\014ResourceList\022\037\n\tre"
     "sources\030\001 \003(\0132\014.ResourceDTO\"1\n\020ResourceS"
-    "chedule\022\035\n\005dates\030\001 \003(\0132\016.ResourceShift2\371"
-    "\005\n\022ResourceManagement\022*\n\020RegisterResourc"
+    "chedule\022\035\n\005dates\030\001 \003(\0132\016.ResourceShift2\256"
+    "\006\n\022ResourceManagement\022*\n\020RegisterResourc"
     "e\022\014.ResourceDTO\032\010.Success\022,\n\022DeregisterR"
     "esource\022\014.ResourceDTO\032\010.Success\022,\n\022SendF"
     "orMaintenance\022\014.ResourceDTO\032\010.Success\022)\n"
@@ -250,9 +250,10 @@ const char descriptor_table_protodef_ResourceManagement_2eproto[] ABSL_ATTRIBUTE
     "\014.StockUpdate\032\010.Success\022\"\n\010UseStock\022\014.St"
     "ockUpdate\032\010.Success\022$\n\nEmptyStock\022\014.Stoc"
     "kUpdate\032\010.Success\0224\n\026GetResourceInformat"
-    "ion\022\014.ResourceDTO\032\014.ResourceDTO\0221\n\022GetRe"
-    "sourcesInRoom\022\014.RoomRequest\032\r.ResourceLi"
-    "stb\006proto3"
+    "ion\022\014.ResourceDTO\032\014.ResourceDTO\0223\n\031Updat"
+    "eResourceInformation\022\014.ResourceDTO\032\010.Suc"
+    "cess\0221\n\022GetResourcesInRoom\022\014.RoomRequest"
+    "\032\r.ResourceListb\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_ResourceManagement_2eproto_deps[1] = {
@@ -262,7 +263,7 @@ static ::absl::once_flag descriptor_table_ResourceManagement_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_ResourceManagement_2eproto = {
     false,
     false,
-    1210,
+    1263,
     descriptor_table_protodef_ResourceManagement_2eproto,
     "ResourceManagement.proto",
     &descriptor_table_ResourceManagement_2eproto_once,

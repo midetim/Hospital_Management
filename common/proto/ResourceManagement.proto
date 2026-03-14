@@ -6,32 +6,33 @@ import "Common.proto";
 service ResourceManagement {
     
     // Machine Resource Movement
-    rpc RegisterResource(ResourceDTO)       returns (Success);
-    rpc DeregisterResource(ResourceDTO)     returns (Success);
-    rpc SendForMaintenance(ResourceDTO)     returns (Success);
+    rpc RegisterResource(ResourceDTO)           returns (Success);
+    rpc DeregisterResource(ResourceDTO)         returns (Success);
+    rpc SendForMaintenance(ResourceDTO)         returns (Success);
     
     // Machine Resource Scheduling
-    rpc AddToSchedule(ResourceShift)        returns (Success);
-    rpc RemoveFromSchedule(ResourceShift)   returns (Success);
-    rpc RemoveResourceFromRoom(ResourceDTO) returns (Success);
-    rpc ChangeSchedule(ResourceShift)       returns (Success);
+    rpc AddToSchedule(ResourceShift)            returns (Success);
+    rpc RemoveFromSchedule(ResourceShift)       returns (Success);
+    rpc RemoveResourceFromRoom(ResourceDTO)     returns (Success);
+    rpc ChangeSchedule(ResourceShift)           returns (Success);
     
     // Schedule viewing
-    rpc SeeTodaysSchedule(ResourceDTO)      returns (ResourceSchedule);
-    rpc SeeTomorrowsSchedule(ResourceDTO)   returns (ResourceSchedule);
-    rpc SeeScheduleRange(ResourceShift)     returns (ResourceSchedule);
+    rpc SeeTodaysSchedule(ResourceDTO)          returns (ResourceSchedule);
+    rpc SeeTomorrowsSchedule(ResourceDTO)       returns (ResourceSchedule);
+    rpc SeeScheduleRange(ResourceShift)         returns (ResourceSchedule);
     
     // Consumable Resource Updates
-    rpc AddStock(StockUpdate)               returns (Success);
-    rpc RemoveStock(StockUpdate)            returns (Success);
-    rpc UseStock(StockUpdate)               returns (Success);
-    rpc EmptyStock(StockUpdate)             returns (Success);
+    rpc AddStock(StockUpdate)                   returns (Success);
+    rpc RemoveStock(StockUpdate)                returns (Success);
+    rpc UseStock(StockUpdate)                   returns (Success);
+    rpc EmptyStock(StockUpdate)                 returns (Success);
     
     // Resource Information
-    rpc GetResourceInformation(ResourceDTO) returns (ResourceDTO);
+    rpc GetResourceInformation(ResourceDTO)     returns (ResourceDTO);
+    rpc UpdateResourceInformation(ResourceDTO)  returns (Success);
     
     /* This call is not accessible to the front end */
-    rpc GetResourcesInRoom(RoomRequest)     returns (ResourceList);
+    rpc GetResourcesInRoom(RoomRequest)         returns (ResourceList);
 }
 
 message ResourceDTO {

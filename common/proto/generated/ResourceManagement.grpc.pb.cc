@@ -37,6 +37,7 @@ static const char* ResourceManagement_method_names[] = {
   "/ResourceManagement/UseStock",
   "/ResourceManagement/EmptyStock",
   "/ResourceManagement/GetResourceInformation",
+  "/ResourceManagement/UpdateResourceInformation",
   "/ResourceManagement/GetResourcesInRoom",
 };
 
@@ -62,7 +63,8 @@ ResourceManagement::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>&
   , rpcmethod_UseStock_(ResourceManagement_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_EmptyStock_(ResourceManagement_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetResourceInformation_(ResourceManagement_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetResourcesInRoom_(ResourceManagement_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_UpdateResourceInformation_(ResourceManagement_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetResourcesInRoom_(ResourceManagement_method_names[16], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status ResourceManagement::Stub::RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) {
@@ -410,6 +412,29 @@ void ResourceManagement::Stub::async::GetResourceInformation(::grpc::ClientConte
   return result;
 }
 
+::grpc::Status ResourceManagement::Stub::UpdateResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_UpdateResourceInformation_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::UpdateResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_UpdateResourceInformation_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::UpdateResourceInformation(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_UpdateResourceInformation_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncUpdateResourceInformationRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_UpdateResourceInformation_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncUpdateResourceInformationRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncUpdateResourceInformationRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::Status ResourceManagement::Stub::GetResourcesInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::ResourceList* response) {
   return ::grpc::internal::BlockingUnaryCall< ::RoomRequest, ::ResourceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetResourcesInRoom_, context, request, response);
 }
@@ -587,6 +612,16 @@ ResourceManagement::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[15],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ResourceManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::ResourceDTO* req,
+             ::Success* resp) {
+               return service->UpdateResourceInformation(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ResourceManagement_method_names[16],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::RoomRequest, ::ResourceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
@@ -698,6 +733,13 @@ ResourceManagement::Service::~Service() {
 }
 
 ::grpc::Status ResourceManagement::Service::GetResourceInformation(::grpc::ServerContext* context, const ::ResourceDTO* request, ::ResourceDTO* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ResourceManagement::Service::UpdateResourceInformation(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;

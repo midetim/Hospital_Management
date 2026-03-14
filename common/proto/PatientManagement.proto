@@ -6,18 +6,18 @@ import "Common.proto";
 service PatientManagement {
     
     // Patient movement
-    rpc AdmitPatient(PatientDTO)                 returns (Success);
-    rpc DischargePatient(PatientDTO)             returns (Success);
-    rpc TransferPatient(PatientTransfer)         returns (Success);
-    rpc QuarantinePatient(PatientQuarantine)     returns (Success);
-    rpc LiftPatientQuarantine(PatientQuarantine) returns (Success);
+    rpc AdmitPatient(PatientDTO)                    returns (Success);
+    rpc DischargePatient(PatientDTO)                returns (Success);
+    rpc TransferPatient(PatientTransfer)            returns (Success);
+    rpc QuarantinePatient(PatientQuarantine)        returns (Success);
+    rpc LiftPatientQuarantine(PatientQuarantine)    returns (Success);
     
     // Patient information
-    rpc GetPatientInformation(PatientDTO)        returns (PatientDTO);
-    rpc UpdatePatientInformation(PatientDTO)     returns (Success);
+    rpc GetPatientInformation(PatientDTO)           returns (PatientDTO);
+    rpc UpdatePatientInformation(PatientDTO)        returns (Success);
     
     /* This call is not accessible to the front end */
-    rpc GetPatientsInRoom(RoomRequest)           returns (PatientList);
+    rpc GetPatientsInRoom(RoomRequest)              returns (PatientList);
 }
 
 message PatientDTO { // Basic Patient DTO

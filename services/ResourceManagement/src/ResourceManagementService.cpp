@@ -5,6 +5,9 @@
 #include <random>
 #include "grpc_utils.hpp"
 
+/* ******************************************************************** */
+/* ********************** Private Functions *************************** */
+/* ******************************************************************** */
 
 uint64_t ResourceManagementService::generate_unique_resource_id() {
     /* Resource ID format
@@ -26,64 +29,39 @@ std::unordered_map<uint64_t, Resource *> * ResourceManagementService::getMapRef(
     }
 }
 
-Resource * ResourceManagementService::findResource(uint64_t & resource_id, std::string_view resource_type, option o) {
-    if (o == option::Total) { // If you search through total resources
-        if (resource_id != 0) { // Resource id is provided --> find by id
-            auto it = total_resources.find(resource_id);
-            if (it == total_resources.end()) {
-                return nullptr;
-            }
-            
-            return it->second.get(); // Return a raw pointer to the resource
-        } else if (!resource_type.empty()) { // If resource type is provided
-            ResourceType r = Resource::stringToResourceType(resource_type);
-            for (auto & [rid, res] : total_resources) { // Search for resource by type
-                if (res->getResourceType() == r) {
-                    resource_id = rid;
-                    return res.get(); // Return raw ptr
-                }
-            }
-        }
-        return nullptr; // No provided inputs == nullptr;
-    }
+Resource * ResourceManagementService::findResource(uint64_t & resource_id, std::string_view resource_type) {
     
-    // Not looking through total resources
-    
-    std::unordered_map<uint64_t, Resource *> * map_ptr = getMapRef(o); // Find correct map reference
-    
-    if (map_ptr == nullptr) { // No reference
-        return nullptr; // Return nullptr
-    }
-    
-    if (resource_id != 0) { // Find the resource using the
-        auto it = map_ptr->find(resource_id);
-        if (it == map_ptr->end()) {
-            return nullptr; // Cannot find the resource
-        }
-        return it->second; // return a pointer to the resource
-    } else if (!resource_type.empty()) {
+    if (resource_id != 0) { // Resource id is provided --> find by id
+        auto it = total_resources.find(resource_id);
+        if (it == total_resources.end()) { return nullptr; } // Resource was not found with provided id
+        return it->second.get(); // Return a raw pointer to the resource
+        
+    } else if (!resource_type.empty()) { // If resource type is provided
         ResourceType r = Resource::stringToResourceType(resource_type);
-        for (auto & [rid, res] : * map_ptr) {
+        for (auto & [rid, res] : total_resources) { // Search for resource by type
             if (res->getResourceType() == r) {
-                resource_id = rid;
-                return res;
+                resource_id = rid; // Sets the resource id to the resource's id
+                return res.get(); // Return raw ptr
             }
         }
     }
-    return nullptr;
+    return nullptr; // No provided inputs == nullptr;
 }
 
 
 ReturnCode ResourceManagementService::moveResource(uint64_t resource_id, option source, option destination) {
-    if (source == option::Total || destination == option::Total) {
+    if (source == destination) { // If source and dest are the same
+        return ReturnCode::WARNING; // This would do nothing so break early
+    } else if (source == option::Total || destination == option::Total) {
         return ReturnCode::FAILURE; // Cannot modify total resources
     }
+    
     
     // Get map references
     std::unordered_map<uint64_t, Resource *> * source_ptr = getMapRef(source);
     std::unordered_map<uint64_t, Resource *> * dest_ptr   = getMapRef(destination);
     
-    if (source_ptr == nullptr || dest_ptr == nullptr) {
+    if (source_ptr == nullptr || dest_ptr == nullptr) { // If getMapRef failed somehow
         return ReturnCode::FAILURE;
     }
     
@@ -103,8 +81,70 @@ ReturnCode ResourceManagementService::moveResource(uint64_t resource_id, option 
     return ReturnCode::SUCCESS; // Successful
 }
 
+
+bool ResourceManagementService::sendResources() {
+    for (const auto & [resource_id, resource_ptr] : available_resources) {
+        uint32_t new_room = resource_ptr->access_schedule()->check_schedule();
+        if (new_room == 0) { continue; }
+        /* TODO: need to complete this part once the room_client is done
+        room_client->update_resource(resource_id, new_room, service::resource);
+        */
+        resource_ptr->setRoomId(new_room);
+    }
+    return true;
+}
+
+bool ResourceManagementService::retrieveResources() {
+    for (const auto & [resource_id, resource_ptr] : busy_resources) {
+        uint32_t new_room = resource_ptr->access_schedule()->check_schedule();
+        if (new_room == 0) {
+            continue;
+        }
+        /* TODO: Complete after room_client
+        room_client->update_resource(resource_id, new_room, service::resource);
+        */
+        resource_ptr->setRoomId(new_room);
+    }
+    return true;
+}
+
+/* ******************************************************************** */
+/* ************************** Constructor ***************************** */
+/* ******************************************************************** */
+
 ResourceManagementService::ResourceManagementService()
 : room_client(std::make_unique<RoomManagementClient>(service::room_host)) {}
+
+/* ******************************************************************** */
+/* ************************** Common gRPC ***************************** */
+/* ******************************************************************** */
+
+grpc::Status ResourceManagementService::ping(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
+    readMetadata(* context);
+    response->set_error(false);
+    return grpc::Status::OK;
+}
+
+grpc::Status ResourceManagementService::print(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
+    readMetadata(* context);
+    print_internal();
+    response->set_error(false);
+    return grpc::Status::OK;
+}
+
+grpc::Status ResourceManagementService::update(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
+    readMetadata(* context);
+    sendResources();
+    loadFromDB();
+    std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
+    response->set_error(false);
+    return grpc::Status::OK;
+}
+
+/* ******************************************************************** */
+/* ********************* ResourceManagement gRPC ********************** */
+/* ******************************************************************** */
+
 
 grpc::Status ResourceManagementService::ResourcePing(grpc::ServerContext * context, const ResourcePingRequest * request, ResourceSuccess * response) {
     readMetadata(* context);

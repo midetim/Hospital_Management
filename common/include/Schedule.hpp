@@ -1,7 +1,7 @@
 #ifndef SCHEDULE_HPP
 #define SCHEDULE_HPP
 
-#include <map>
+#include <set>
 #include <limits>
 #include "utils.hpp"
 
@@ -95,82 +95,26 @@ struct Timestamp {
     /* *************** Timestamp Operation Overrides ********************** */
     /* ******************************************************************** */
     
-    /**
-     * @brief Overrides the equivalency operator
-     */
     bool operator==(const Timestamp & other) const { return time == other.time; }
-    
-    /**
-     * @brief Overrides the not equal to operator
-     */
     bool operator!=(const Timestamp & other) const { return time != other.time; }
     
-    /**
-     * @brief Overrides the less than comparitor operator
-     */
-    bool operator<(const Timestamp & other) const { return this->time < other.time; }
-    
-    /**
-     * @brief Overrides the less than or equal to comparitor operator
-     */
+    bool operator< (const Timestamp & other) const { return this->time <  other.time; }
     bool operator<=(const Timestamp & other) const { return this->time <= other.time; }
     
-    /**
-     * @brief Overrides the greater than comparitor operator
-     */
-    bool operator>(const Timestamp & other) const { return this->time > other.time; }
-    
-    /**
-     * @brief Overrides the greater than or equal to comparitor operator
-     */
+    bool operator> (const Timestamp & other) const { return this->time >  other.time; }
     bool operator>=(const Timestamp & other) const { return this->time >= other.time; }
     
-    /**
-     * @brief Overrides the add and assign operator
-     * @param amt A uint64  is added to the timestamp
-     */
-    Timestamp & operator+=(uint64_t amt);
     
-    /**
-     * @brief Overrides the add and assign operator
-     * @param ts A timestamp is added to the current timestamp
-     */
+    Timestamp & operator+=(uint64_t amt);
     Timestamp & operator+=(const Timestamp & ts);
     
-    /**
-     * @brief Overrides the addition operator
-     * @param amt Adds a uint64 to the current timestamp
-     */
     Timestamp operator+(uint64_t amt) const;
-    
-    /**
-     * @brief Overrides the addition operator
-     * @param ts Adds a timestamp to another
-     */
     Timestamp operator+(const Timestamp & ts) const;
     
-    /**
-     * @brief Overrides the add and assign operator
-     * @param amt A uint64  is added to the timestamp
-     */
     Timestamp & operator-=(uint64_t amt);
-    
-    /**
-     * @brief Overrides the add and assign operator
-     * @param ts A timestamp is added to the current timestamp
-     */
     Timestamp & operator-=(const Timestamp & ts);
     
-    /**
-     * @brief Overrides the addition operator
-     * @param amt Adds a uint64 to the current timestamp
-     */
     Timestamp operator-(uint64_t amt) const;
-    
-    /**
-     * @brief Overrides the addition operator
-     * @param ts Adds a timestamp to another
-     */
     Timestamp operator-(const Timestamp & ts) const;
     
 };
@@ -229,6 +173,68 @@ inline Timestamp date_to_timestamp(const Date & d) {
 }
 
 /* ******************************************************************** */
+/* ************************* Shift Struct ***************************** */
+/* ******************************************************************** */
+
+struct Shift {
+    Timestamp shift_start{0};
+    Timestamp shift_end{0};
+    uint64_t duration = 0;
+    uint32_t room_id;
+    
+    /* ******************************************************************** */
+    /* ******************** Shift Constructor ***************************** */
+    /* ******************************************************************** */
+    
+    /**
+     * @brief Shift constructor using two timestamps
+     * @param start The start time of the shift
+     * @param end The end time of the shift
+     * @param room_id The room to go to
+     * @warning If the start is before now, it will get set to now
+     */
+    Shift(const Timestamp & start, const Timestamp & end, uint32_t room_id);
+    
+    /**
+     * @brief Shift constructor using a start time and a duration
+     * @param start The start time of the shift
+     * @param duration The duration of the shift
+     * @param room_id The room to go to
+     * @warning If the start is before now, it will get set to now
+     */
+    Shift(const Timestamp & start, uint64_t duration, uint32_t room_id);
+    
+    /* ******************************************************************** */
+    /* ********************* Shift Operations ***************************** */
+    /* ******************************************************************** */
+    
+    bool operator==(const Shift & other) const { return this->shift_start == other.shift_start; }
+    bool operator!=(const Shift & other) const { return !(* this == other); }
+    
+    bool operator> (const Shift & other) const { return this->shift_start >  other.shift_start; }
+    bool operator>=(const Shift & other) const { return this->shift_start >= other.shift_start; }
+    
+    bool operator< (const Shift & other) const { return this->shift_start <  other.shift_start; }
+    bool operator<=(const Shift & other) const { return this->shift_start <= other.shift_start; }
+    
+    Shift & operator+=(const Timestamp & ts);
+    Shift & operator+=(uint64_t duration);
+    
+    Shift & operator-=(const Timestamp & ts);
+    Shift & operator-=(uint64_t duration);
+    
+    /* ******************************************************************** */
+    /* ********************** Shift Functions ***************************** */
+    /* ******************************************************************** */
+    
+    static void shift_duration_change(Shift & shift, const Timestamp & duration, bool extend);
+    
+    static void move_shift(Shift & shift, const Timestamp & move_amount, bool push_back);
+    
+    
+};
+
+/* ******************************************************************** */
 /* *********************** Schedule Class ***************************** */
 /* ******************************************************************** */
 
@@ -243,7 +249,7 @@ private:
     /* ********************** Private Variables *************************** */
     /* ******************************************************************** */
     
-    std::map<Timestamp, uint32_t> times; // <timestamp, room_id>
+    std::set<Shift> shifts;
     
     /* ******************************************************************** */
     /* ********************** Private Functions *************************** */
@@ -256,8 +262,14 @@ private:
      * @return Returns a timestamp containing the time difference between the two Timestamps
      */
     Timestamp get_timestamp_offset(const Timestamp & start, const Timestamp & end);
-public:
     
+    /**
+     * @brief Checks to see if two shifts are overlapping
+     */
+    Timestamp check_shift_overlap(const Shift & first, const Shift & second);
+    
+    
+public:
     
     /* ******************************************************************** */
     /* ************************** Constructor ***************************** */
@@ -272,37 +284,19 @@ public:
     
     /**
      * @brief Adds a time to the schedule
-     * @param ts The timestamp to add
-     * @param room The room id to add
+     * @param new_shift The new shift to add
      * @return Returns true on successful addition
-     * @note Will round the timestamp to the next interval
+     * @note Will round the timestamps to the next interval
      */
-    bool addToSchedule(Timestamp ts, uint32_t room);
-    
-    /**
-     * @brief Adds a date to the schedule
-     * @param d The date to add
-     * @pararm room The room id to add
-     * @return Returns true on successful addition
-     * @note Will convert the date into a timestamp
-     */
-    bool addToSchedule(const Date & d, uint32_t room);
+    bool addToSchedule(Shift new_shift);
     
     /**
      * @brief Remove a Timestamp from the schedule
-     * @pararm ts The timestamp to remove
+     * @param old_shift The old shift to remove
      * @return Returns true on a successful removal
-     * @note Will round the timestamp to the next interval
+     * @note Will round the timestamps to the next interval
      */
-    bool removeFromSchedule(Timestamp ts);
-    
-    /**
-     * @brief Removes a date from the schedule
-     * @param d The date to remove
-     * @return Returns true on a successful removal
-     * @note Will convert the date into a timestamp
-     */
-    bool removeFromSchedule(const Date & d);
+    bool removeFromSchedule(const Shift & old_shift);
     
     /**
      * @brief Removes all timestamps with the corresponding room from the schedule
@@ -338,25 +332,25 @@ public:
      * @param end The end date
      * @return Returns a sub map containing the schedule between the two dates
      */
-    std::map<Timestamp, uint32_t> getBetween(const Date & start, const Date & end) const;
+    std::set<Shift> getBetween(const Date & start, const Date & end) const;
     
     /**
      * @brief Gets the schedule from a specific date
      * @return Returns a sub-map containing the schedule up to that point
      */
-    std::map<Timestamp, uint32_t> getFrom(const Date & d) const;
+    std::set<Shift> getFrom(const Date & d) const;
     
     /**
      * @brief Get the current days schedule
      * @return Returns a sub map containing the schedule for today
      */
-    std::map<Timestamp, uint32_t> getToday() const;
+    std::set<Shift> getToday() const;
     
     /**
      * @brief Gets tomorrows schedule
      * @return Returns a sub map containing the schedule for tomorrow
      */
-    std::map<Timestamp, uint32_t> getTomorrow() const;
+    std::set<Shift> getTomorrow() const;
     
     /* ******************************************************************** */
     /* ****************************** Other ******************************* */
