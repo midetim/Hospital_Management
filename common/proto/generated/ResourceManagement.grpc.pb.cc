@@ -27,7 +27,11 @@ static const char* ResourceManagement_method_names[] = {
   "/ResourceManagement/SendForMaintenance",
   "/ResourceManagement/AddToSchedule",
   "/ResourceManagement/RemoveFromSchedule",
+  "/ResourceManagement/RemoveResourceFromRoom",
   "/ResourceManagement/ChangeSchedule",
+  "/ResourceManagement/SeeTodaysSchedule",
+  "/ResourceManagement/SeeTomorrowsSchedule",
+  "/ResourceManagement/SeeScheduleRange",
   "/ResourceManagement/AddStock",
   "/ResourceManagement/RemoveStock",
   "/ResourceManagement/UseStock",
@@ -48,13 +52,17 @@ ResourceManagement::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>&
   , rpcmethod_SendForMaintenance_(ResourceManagement_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_AddToSchedule_(ResourceManagement_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RemoveFromSchedule_(ResourceManagement_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ChangeSchedule_(ResourceManagement_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AddStock_(ResourceManagement_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RemoveStock_(ResourceManagement_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_UseStock_(ResourceManagement_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_EmptyStock_(ResourceManagement_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetResourceInformation_(ResourceManagement_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetResourcesInRoom_(ResourceManagement_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RemoveResourceFromRoom_(ResourceManagement_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ChangeSchedule_(ResourceManagement_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SeeTodaysSchedule_(ResourceManagement_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SeeTomorrowsSchedule_(ResourceManagement_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SeeScheduleRange_(ResourceManagement_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AddStock_(ResourceManagement_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RemoveStock_(ResourceManagement_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_UseStock_(ResourceManagement_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_EmptyStock_(ResourceManagement_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetResourceInformation_(ResourceManagement_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetResourcesInRoom_(ResourceManagement_method_names[15], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status ResourceManagement::Stub::RegisterResource(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) {
@@ -172,6 +180,29 @@ void ResourceManagement::Stub::async::RemoveFromSchedule(::grpc::ClientContext* 
   return result;
 }
 
+::grpc::Status ResourceManagement::Stub::RemoveResourceFromRoom(::grpc::ClientContext* context, const ::ResourceDTO& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RemoveResourceFromRoom_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::RemoveResourceFromRoom(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveResourceFromRoom_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::RemoveResourceFromRoom(::grpc::ClientContext* context, const ::ResourceDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveResourceFromRoom_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::PrepareAsyncRemoveResourceFromRoomRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RemoveResourceFromRoom_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncRemoveResourceFromRoomRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncRemoveResourceFromRoomRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::Status ResourceManagement::Stub::ChangeSchedule(::grpc::ClientContext* context, const ::ResourceShift& request, ::Success* response) {
   return ::grpc::internal::BlockingUnaryCall< ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ChangeSchedule_, context, request, response);
 }
@@ -191,6 +222,75 @@ void ResourceManagement::Stub::async::ChangeSchedule(::grpc::ClientContext* cont
 ::grpc::ClientAsyncResponseReader< ::Success>* ResourceManagement::Stub::AsyncChangeScheduleRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncChangeScheduleRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::SeeTodaysSchedule(::grpc::ClientContext* context, const ::ResourceDTO& request, ::ResourceSchedule* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::ResourceSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SeeTodaysSchedule_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::SeeTodaysSchedule(::grpc::ClientContext* context, const ::ResourceDTO* request, ::ResourceSchedule* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::ResourceSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeTodaysSchedule_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::SeeTodaysSchedule(::grpc::ClientContext* context, const ::ResourceDTO* request, ::ResourceSchedule* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeTodaysSchedule_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::ResourceSchedule>* ResourceManagement::Stub::PrepareAsyncSeeTodaysScheduleRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceSchedule, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SeeTodaysSchedule_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::ResourceSchedule>* ResourceManagement::Stub::AsyncSeeTodaysScheduleRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSeeTodaysScheduleRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::ResourceDTO& request, ::ResourceSchedule* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceDTO, ::ResourceSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SeeTomorrowsSchedule_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::ResourceDTO* request, ::ResourceSchedule* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceDTO, ::ResourceSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeTomorrowsSchedule_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::ResourceDTO* request, ::ResourceSchedule* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeTomorrowsSchedule_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::ResourceSchedule>* ResourceManagement::Stub::PrepareAsyncSeeTomorrowsScheduleRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceSchedule, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SeeTomorrowsSchedule_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::ResourceSchedule>* ResourceManagement::Stub::AsyncSeeTomorrowsScheduleRaw(::grpc::ClientContext* context, const ::ResourceDTO& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSeeTomorrowsScheduleRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ResourceManagement::Stub::SeeScheduleRange(::grpc::ClientContext* context, const ::ResourceShift& request, ::ResourceSchedule* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ResourceShift, ::ResourceSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SeeScheduleRange_, context, request, response);
+}
+
+void ResourceManagement::Stub::async::SeeScheduleRange(::grpc::ClientContext* context, const ::ResourceShift* request, ::ResourceSchedule* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ResourceShift, ::ResourceSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeScheduleRange_, context, request, response, std::move(f));
+}
+
+void ResourceManagement::Stub::async::SeeScheduleRange(::grpc::ClientContext* context, const ::ResourceShift* request, ::ResourceSchedule* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeScheduleRange_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::ResourceSchedule>* ResourceManagement::Stub::PrepareAsyncSeeScheduleRangeRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ResourceSchedule, ::ResourceShift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SeeScheduleRange_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::ResourceSchedule>* ResourceManagement::Stub::AsyncSeeScheduleRangeRaw(::grpc::ClientContext* context, const ::ResourceShift& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSeeScheduleRangeRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -387,6 +487,16 @@ ResourceManagement::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ResourceManagement_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceDTO, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ResourceManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::ResourceDTO* req,
+             ::Success* resp) {
+               return service->RemoveResourceFromRoom(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ResourceManagement_method_names[6],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
              ::grpc::ServerContext* ctx,
@@ -395,7 +505,37 @@ ResourceManagement::Service::Service() {
                return service->ChangeSchedule(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      ResourceManagement_method_names[6],
+      ResourceManagement_method_names[7],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceDTO, ::ResourceSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ResourceManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::ResourceDTO* req,
+             ::ResourceSchedule* resp) {
+               return service->SeeTodaysSchedule(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ResourceManagement_method_names[8],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceDTO, ::ResourceSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ResourceManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::ResourceDTO* req,
+             ::ResourceSchedule* resp) {
+               return service->SeeTomorrowsSchedule(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ResourceManagement_method_names[9],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceShift, ::ResourceSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ResourceManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::ResourceShift* req,
+             ::ResourceSchedule* resp) {
+               return service->SeeScheduleRange(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ResourceManagement_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
@@ -405,7 +545,7 @@ ResourceManagement::Service::Service() {
                return service->AddStock(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      ResourceManagement_method_names[7],
+      ResourceManagement_method_names[11],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
@@ -415,7 +555,7 @@ ResourceManagement::Service::Service() {
                return service->RemoveStock(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      ResourceManagement_method_names[8],
+      ResourceManagement_method_names[12],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
@@ -425,7 +565,7 @@ ResourceManagement::Service::Service() {
                return service->UseStock(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      ResourceManagement_method_names[9],
+      ResourceManagement_method_names[13],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::StockUpdate, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
@@ -435,7 +575,7 @@ ResourceManagement::Service::Service() {
                return service->EmptyStock(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      ResourceManagement_method_names[10],
+      ResourceManagement_method_names[14],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::ResourceDTO, ::ResourceDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
@@ -445,7 +585,7 @@ ResourceManagement::Service::Service() {
                return service->GetResourceInformation(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      ResourceManagement_method_names[11],
+      ResourceManagement_method_names[15],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ResourceManagement::Service, ::RoomRequest, ::ResourceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ResourceManagement::Service* service,
@@ -494,7 +634,35 @@ ResourceManagement::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
+::grpc::Status ResourceManagement::Service::RemoveResourceFromRoom(::grpc::ServerContext* context, const ::ResourceDTO* request, ::Success* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
 ::grpc::Status ResourceManagement::Service::ChangeSchedule(::grpc::ServerContext* context, const ::ResourceShift* request, ::Success* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ResourceManagement::Service::SeeTodaysSchedule(::grpc::ServerContext* context, const ::ResourceDTO* request, ::ResourceSchedule* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ResourceManagement::Service::SeeTomorrowsSchedule(::grpc::ServerContext* context, const ::ResourceDTO* request, ::ResourceSchedule* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ResourceManagement::Service::SeeScheduleRange(::grpc::ServerContext* context, const ::ResourceShift* request, ::ResourceSchedule* response) {
   (void) context;
   (void) request;
   (void) response;

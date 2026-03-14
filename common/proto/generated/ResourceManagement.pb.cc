@@ -113,8 +113,9 @@ inline constexpr ResourceShift::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
         resource_{nullptr},
-        date_{nullptr},
-        new_date_{nullptr} {}
+        start_{nullptr},
+        other_{nullptr},
+        duration_{::uint64_t{0u}} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR ResourceShift::ResourceShift(::_pbi::ConstantInitialized)
@@ -135,6 +136,31 @@ struct ResourceShiftDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ResourceShiftDefaultTypeInternal _ResourceShift_default_instance_;
+
+inline constexpr ResourceSchedule::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : dates_{},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR ResourceSchedule::ResourceSchedule(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(ResourceSchedule_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct ResourceScheduleDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ResourceScheduleDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ResourceScheduleDefaultTypeInternal() {}
+  union {
+    ResourceSchedule _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ResourceScheduleDefaultTypeInternal _ResourceSchedule_default_instance_;
 static constexpr const ::_pb::EnumDescriptor *PROTOBUF_NONNULL *PROTOBUF_NULLABLE
     file_level_enum_descriptors_ResourceManagement_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor *PROTOBUF_NONNULL *PROTOBUF_NULLABLE
@@ -155,13 +181,15 @@ const ::uint32_t
         3,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ResourceShift, _impl_._has_bits_),
-        6, // hasbit index offset
+        7, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::ResourceShift, _impl_.resource_),
-        PROTOBUF_FIELD_OFFSET(::ResourceShift, _impl_.date_),
-        PROTOBUF_FIELD_OFFSET(::ResourceShift, _impl_.new_date_),
+        PROTOBUF_FIELD_OFFSET(::ResourceShift, _impl_.start_),
+        PROTOBUF_FIELD_OFFSET(::ResourceShift, _impl_.other_),
+        PROTOBUF_FIELD_OFFSET(::ResourceShift, _impl_.duration_),
         0,
         1,
         2,
+        3,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::StockUpdate, _impl_._has_bits_),
         6, // hasbit index offset
@@ -173,47 +201,58 @@ const ::uint32_t
         2,
         0x000, // bitmap
         PROTOBUF_FIELD_OFFSET(::ResourceList, _impl_.resources_),
+        0x000, // bitmap
+        PROTOBUF_FIELD_OFFSET(::ResourceSchedule, _impl_.dates_),
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, sizeof(::ResourceDTO)},
         {11, sizeof(::ResourceShift)},
-        {20, sizeof(::StockUpdate)},
-        {29, sizeof(::ResourceList)},
+        {22, sizeof(::StockUpdate)},
+        {31, sizeof(::ResourceList)},
+        {33, sizeof(::ResourceSchedule)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::_ResourceDTO_default_instance_._instance,
     &::_ResourceShift_default_instance_._instance,
     &::_StockUpdate_default_instance_._instance,
     &::_ResourceList_default_instance_._instance,
+    &::_ResourceSchedule_default_instance_._instance,
 };
 const char descriptor_table_protodef_ResourceManagement_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
     "\n\030ResourceManagement.proto\032\014Common.proto"
     "\"b\n\013ResourceDTO\022\023\n\013resource_id\030\001 \001(\004\022\017\n\007"
     "room_id\030\002 \001(\r\022\025\n\rresource_type\030\003 \001(\t\022\026\n\016"
-    "resource_stock\030\004 \001(\r\"c\n\rResourceShift\022\036\n"
-    "\010resource\030\001 \001(\0132\014.ResourceDTO\022\026\n\004date\030\002 "
-    "\001(\0132\010.DateDTO\022\032\n\010new_date\030\003 \001(\0132\010.DateDT"
-    "O\"O\n\013StockUpdate\022\023\n\013resource_id\030\001 \001(\004\022\025\n"
-    "\rresource_type\030\002 \001(\t\022\024\n\014stock_amount\030\003 \001"
-    "(\r\"/\n\014ResourceList\022\037\n\tresources\030\001 \003(\0132\014."
-    "ResourceDTO2\241\004\n\022ResourceManagement\022*\n\020Re"
-    "gisterResource\022\014.ResourceDTO\032\010.Success\022,"
-    "\n\022DeregisterResource\022\014.ResourceDTO\032\010.Suc"
-    "cess\022,\n\022SendForMaintenance\022\014.ResourceDTO"
-    "\032\010.Success\022)\n\rAddToSchedule\022\016.ResourceSh"
-    "ift\032\010.Success\022.\n\022RemoveFromSchedule\022\016.Re"
-    "sourceShift\032\010.Success\022*\n\016ChangeSchedule\022"
-    "\016.ResourceShift\032\010.Success\022\"\n\010AddStock\022\014."
-    "StockUpdate\032\010.Success\022%\n\013RemoveStock\022\014.S"
-    "tockUpdate\032\010.Success\022\"\n\010UseStock\022\014.Stock"
-    "Update\032\010.Success\022$\n\nEmptyStock\022\014.StockUp"
-    "date\032\010.Success\0224\n\026GetResourceInformation"
-    "\022\014.ResourceDTO\032\014.ResourceDTO\0221\n\022GetResou"
-    "rcesInRoom\022\014.RoomRequest\032\r.ResourceListb"
-    "\006proto3"
+    "resource_stock\030\004 \001(\r\"s\n\rResourceShift\022\036\n"
+    "\010resource\030\001 \001(\0132\014.ResourceDTO\022\027\n\005start\030\002"
+    " \001(\0132\010.DateDTO\022\027\n\005other\030\003 \001(\0132\010.DateDTO\022"
+    "\020\n\010duration\030\004 \001(\004\"O\n\013StockUpdate\022\023\n\013reso"
+    "urce_id\030\001 \001(\004\022\025\n\rresource_type\030\002 \001(\t\022\024\n\014"
+    "stock_amount\030\003 \001(\r\"/\n\014ResourceList\022\037\n\tre"
+    "sources\030\001 \003(\0132\014.ResourceDTO\"1\n\020ResourceS"
+    "chedule\022\035\n\005dates\030\001 \003(\0132\016.ResourceShift2\371"
+    "\005\n\022ResourceManagement\022*\n\020RegisterResourc"
+    "e\022\014.ResourceDTO\032\010.Success\022,\n\022DeregisterR"
+    "esource\022\014.ResourceDTO\032\010.Success\022,\n\022SendF"
+    "orMaintenance\022\014.ResourceDTO\032\010.Success\022)\n"
+    "\rAddToSchedule\022\016.ResourceShift\032\010.Success"
+    "\022.\n\022RemoveFromSchedule\022\016.ResourceShift\032\010"
+    ".Success\0220\n\026RemoveResourceFromRoom\022\014.Res"
+    "ourceDTO\032\010.Success\022*\n\016ChangeSchedule\022\016.R"
+    "esourceShift\032\010.Success\0224\n\021SeeTodaysSched"
+    "ule\022\014.ResourceDTO\032\021.ResourceSchedule\0227\n\024"
+    "SeeTomorrowsSchedule\022\014.ResourceDTO\032\021.Res"
+    "ourceSchedule\0225\n\020SeeScheduleRange\022\016.Reso"
+    "urceShift\032\021.ResourceSchedule\022\"\n\010AddStock"
+    "\022\014.StockUpdate\032\010.Success\022%\n\013RemoveStock\022"
+    "\014.StockUpdate\032\010.Success\022\"\n\010UseStock\022\014.St"
+    "ockUpdate\032\010.Success\022$\n\nEmptyStock\022\014.Stoc"
+    "kUpdate\032\010.Success\0224\n\026GetResourceInformat"
+    "ion\022\014.ResourceDTO\032\014.ResourceDTO\0221\n\022GetRe"
+    "sourcesInRoom\022\014.RoomRequest\032\r.ResourceLi"
+    "stb\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_ResourceManagement_2eproto_deps[1] = {
@@ -223,13 +262,13 @@ static ::absl::once_flag descriptor_table_ResourceManagement_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_ResourceManagement_2eproto = {
     false,
     false,
-    927,
+    1210,
     descriptor_table_protodef_ResourceManagement_2eproto,
     "ResourceManagement.proto",
     &descriptor_table_ResourceManagement_2eproto_once,
     descriptor_table_ResourceManagement_2eproto_deps,
     1,
-    4,
+    5,
     schemas,
     file_default_instances,
     TableStruct_ResourceManagement_2eproto::offsets,
@@ -616,14 +655,14 @@ class ResourceShift::_Internal {
       8 * PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_._has_bits_);
 };
 
-void ResourceShift::clear_date() {
+void ResourceShift::clear_start() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.date_ != nullptr) _impl_.date_->Clear();
+  if (_impl_.start_ != nullptr) _impl_.start_->Clear();
   _impl_._has_bits_[0] &= ~0x00000002u;
 }
-void ResourceShift::clear_new_date() {
+void ResourceShift::clear_other() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.new_date_ != nullptr) _impl_.new_date_->Clear();
+  if (_impl_.other_ != nullptr) _impl_.other_->Clear();
   _impl_._has_bits_[0] &= ~0x00000004u;
 }
 ResourceShift::ResourceShift(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
@@ -659,12 +698,13 @@ ResourceShift::ResourceShift(
   _impl_.resource_ = ((cached_has_bits & 0x00000001u) != 0)
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.resource_)
                 : nullptr;
-  _impl_.date_ = ((cached_has_bits & 0x00000002u) != 0)
-                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.date_)
+  _impl_.start_ = ((cached_has_bits & 0x00000002u) != 0)
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.start_)
                 : nullptr;
-  _impl_.new_date_ = ((cached_has_bits & 0x00000004u) != 0)
-                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.new_date_)
+  _impl_.other_ = ((cached_has_bits & 0x00000004u) != 0)
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.other_)
                 : nullptr;
+  _impl_.duration_ = from._impl_.duration_;
 
   // @@protoc_insertion_point(copy_constructor:ResourceShift)
 }
@@ -678,9 +718,9 @@ inline void ResourceShift::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   ::memset(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, resource_),
            0,
-           offsetof(Impl_, new_date_) -
+           offsetof(Impl_, duration_) -
                offsetof(Impl_, resource_) +
-               sizeof(Impl_::new_date_));
+               sizeof(Impl_::duration_));
 }
 ResourceShift::~ResourceShift() {
   // @@protoc_insertion_point(destructor:ResourceShift)
@@ -691,8 +731,8 @@ inline void ResourceShift::SharedDtor(MessageLite& self) {
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
   delete this_._impl_.resource_;
-  delete this_._impl_.date_;
-  delete this_._impl_.new_date_;
+  delete this_._impl_.start_;
+  delete this_._impl_.other_;
   this_._impl_.~Impl_();
 }
 
@@ -739,16 +779,16 @@ ResourceShift::GetClassData() const {
   return ResourceShift_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 3, 0, 2>
+const ::_pbi::TcParseTable<2, 4, 3, 0, 2>
 ResourceShift::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_._has_bits_),
     0, // no _extensions_
-    3, 24,  // max_field_number, fast_idx_mask
+    4, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967288,  // skipmap
+    4294967280,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    3,  // num_field_entries
+    4,  // num_field_entries
     3,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     ResourceShift_class_data_.base(),
@@ -758,28 +798,33 @@ ResourceShift::_table_ = {
     ::_pbi::TcParser::GetTable<::ResourceShift>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    {::_pbi::TcParser::MiniParse, {}},
+    // uint64 duration = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(ResourceShift, _impl_.duration_), 3>(),
+     {32, 3, 0, PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.duration_)}},
     // .ResourceDTO resource = 1;
     {::_pbi::TcParser::FastMtS1,
      {10, 0, 0, PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.resource_)}},
-    // .DateDTO date = 2;
+    // .DateDTO start = 2;
     {::_pbi::TcParser::FastMtS1,
-     {18, 1, 1, PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.date_)}},
-    // .DateDTO new_date = 3;
+     {18, 1, 1, PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.start_)}},
+    // .DateDTO other = 3;
     {::_pbi::TcParser::FastMtS1,
-     {26, 2, 2, PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.new_date_)}},
+     {26, 2, 2, PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.other_)}},
   }}, {{
     65535, 65535
   }}, {{
     // .ResourceDTO resource = 1;
     {PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.resource_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .DateDTO date = 2;
-    {PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.date_), _Internal::kHasBitsOffset + 1, 1,
+    // .DateDTO start = 2;
+    {PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.start_), _Internal::kHasBitsOffset + 1, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .DateDTO new_date = 3;
-    {PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.new_date_), _Internal::kHasBitsOffset + 2, 2,
+    // .DateDTO other = 3;
+    {PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.other_), _Internal::kHasBitsOffset + 2, 2,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // uint64 duration = 4;
+    {PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.duration_), _Internal::kHasBitsOffset + 3, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::ResourceDTO>()},
@@ -803,14 +848,15 @@ PROTOBUF_NOINLINE void ResourceShift::Clear() {
       _impl_.resource_->Clear();
     }
     if ((cached_has_bits & 0x00000002u) != 0) {
-      ABSL_DCHECK(_impl_.date_ != nullptr);
-      _impl_.date_->Clear();
+      ABSL_DCHECK(_impl_.start_ != nullptr);
+      _impl_.start_->Clear();
     }
     if ((cached_has_bits & 0x00000004u) != 0) {
-      ABSL_DCHECK(_impl_.new_date_ != nullptr);
-      _impl_.new_date_->Clear();
+      ABSL_DCHECK(_impl_.other_ != nullptr);
+      _impl_.other_->Clear();
     }
   }
+  _impl_.duration_ = ::uint64_t{0u};
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -838,18 +884,27 @@ PROTOBUF_NOINLINE void ResourceShift::Clear() {
         stream);
   }
 
-  // .DateDTO date = 2;
+  // .DateDTO start = 2;
   if ((cached_has_bits & 0x00000002u) != 0) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        2, *this_._impl_.date_, this_._impl_.date_->GetCachedSize(), target,
+        2, *this_._impl_.start_, this_._impl_.start_->GetCachedSize(), target,
         stream);
   }
 
-  // .DateDTO new_date = 3;
+  // .DateDTO other = 3;
   if ((cached_has_bits & 0x00000004u) != 0) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        3, *this_._impl_.new_date_, this_._impl_.new_date_->GetCachedSize(), target,
+        3, *this_._impl_.other_, this_._impl_.other_->GetCachedSize(), target,
         stream);
+  }
+
+  // uint64 duration = 4;
+  if ((cached_has_bits & 0x00000008u) != 0) {
+    if (this_._internal_duration() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          4, this_._internal_duration(), target);
+    }
   }
 
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
@@ -877,21 +932,28 @@ PROTOBUF_NOINLINE void ResourceShift::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000007u) != 0) {
+  if ((cached_has_bits & 0x0000000fu) != 0) {
     // .ResourceDTO resource = 1;
     if ((cached_has_bits & 0x00000001u) != 0) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.resource_);
     }
-    // .DateDTO date = 2;
+    // .DateDTO start = 2;
     if ((cached_has_bits & 0x00000002u) != 0) {
       total_size += 1 +
-                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.date_);
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.start_);
     }
-    // .DateDTO new_date = 3;
+    // .DateDTO other = 3;
     if ((cached_has_bits & 0x00000004u) != 0) {
       total_size += 1 +
-                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.new_date_);
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.other_);
+    }
+    // uint64 duration = 4;
+    if ((cached_has_bits & 0x00000008u) != 0) {
+      if (this_._internal_duration() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_duration());
+      }
     }
   }
   return this_.MaybeComputeUnknownFieldsSize(total_size,
@@ -908,7 +970,7 @@ void ResourceShift::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::g
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000007u) != 0) {
+  if ((cached_has_bits & 0x0000000fu) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
       ABSL_DCHECK(from._impl_.resource_ != nullptr);
       if (_this->_impl_.resource_ == nullptr) {
@@ -918,19 +980,24 @@ void ResourceShift::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::g
       }
     }
     if ((cached_has_bits & 0x00000002u) != 0) {
-      ABSL_DCHECK(from._impl_.date_ != nullptr);
-      if (_this->_impl_.date_ == nullptr) {
-        _this->_impl_.date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.date_);
+      ABSL_DCHECK(from._impl_.start_ != nullptr);
+      if (_this->_impl_.start_ == nullptr) {
+        _this->_impl_.start_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.start_);
       } else {
-        _this->_impl_.date_->MergeFrom(*from._impl_.date_);
+        _this->_impl_.start_->MergeFrom(*from._impl_.start_);
       }
     }
     if ((cached_has_bits & 0x00000004u) != 0) {
-      ABSL_DCHECK(from._impl_.new_date_ != nullptr);
-      if (_this->_impl_.new_date_ == nullptr) {
-        _this->_impl_.new_date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.new_date_);
+      ABSL_DCHECK(from._impl_.other_ != nullptr);
+      if (_this->_impl_.other_ == nullptr) {
+        _this->_impl_.other_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.other_);
       } else {
-        _this->_impl_.new_date_->MergeFrom(*from._impl_.new_date_);
+        _this->_impl_.other_->MergeFrom(*from._impl_.other_);
+      }
+    }
+    if ((cached_has_bits & 0x00000008u) != 0) {
+      if (from._internal_duration() != 0) {
+        _this->_impl_.duration_ = from._impl_.duration_;
       }
     }
   }
@@ -951,8 +1018,8 @@ void ResourceShift::InternalSwap(ResourceShift* PROTOBUF_RESTRICT PROTOBUF_NONNU
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.new_date_)
-      + sizeof(ResourceShift::_impl_.new_date_)
+      PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.duration_)
+      + sizeof(ResourceShift::_impl_.duration_)
       - PROTOBUF_FIELD_OFFSET(ResourceShift, _impl_.resource_)>(
           reinterpret_cast<char*>(&_impl_.resource_),
           reinterpret_cast<char*>(&other->_impl_.resource_));
@@ -1555,6 +1622,258 @@ void ResourceList::InternalSwap(ResourceList* PROTOBUF_RESTRICT PROTOBUF_NONNULL
 }
 
 ::google::protobuf::Metadata ResourceList::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class ResourceSchedule::_Internal {
+ public:
+};
+
+ResourceSchedule::ResourceSchedule(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ResourceSchedule_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:ResourceSchedule)
+}
+PROTOBUF_NDEBUG_INLINE ResourceSchedule::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    const ::ResourceSchedule& from_msg)
+      : dates_{visibility, arena, from.dates_},
+        _cached_size_{0} {}
+
+ResourceSchedule::ResourceSchedule(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const ResourceSchedule& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ResourceSchedule_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  ResourceSchedule* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+
+  // @@protoc_insertion_point(copy_constructor:ResourceSchedule)
+}
+PROTOBUF_NDEBUG_INLINE ResourceSchedule::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : dates_{visibility, arena},
+        _cached_size_{0} {}
+
+inline void ResourceSchedule::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+ResourceSchedule::~ResourceSchedule() {
+  // @@protoc_insertion_point(destructor:ResourceSchedule)
+  SharedDtor(*this);
+}
+inline void ResourceSchedule::SharedDtor(MessageLite& self) {
+  ResourceSchedule& this_ = static_cast<ResourceSchedule&>(self);
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL ResourceSchedule::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) ResourceSchedule(arena);
+}
+constexpr auto ResourceSchedule::InternalNewImpl_() {
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(ResourceSchedule, _impl_.dates_) +
+          decltype(ResourceSchedule::_impl_.dates_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::ZeroInit(
+        sizeof(ResourceSchedule), alignof(ResourceSchedule), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&ResourceSchedule::PlacementNew_,
+                                 sizeof(ResourceSchedule),
+                                 alignof(ResourceSchedule));
+  }
+}
+constexpr auto ResourceSchedule::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_ResourceSchedule_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &ResourceSchedule::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<ResourceSchedule>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &ResourceSchedule::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<ResourceSchedule>(), &ResourceSchedule::ByteSizeLong,
+              &ResourceSchedule::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(ResourceSchedule, _impl_._cached_size_),
+          false,
+      },
+      &ResourceSchedule::kDescriptorMethods,
+      &descriptor_table_ResourceManagement_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull ResourceSchedule_class_data_ =
+        ResourceSchedule::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+ResourceSchedule::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&ResourceSchedule_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(ResourceSchedule_class_data_.tc_table);
+  return ResourceSchedule_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2>
+ResourceSchedule::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    ResourceSchedule_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::ResourceSchedule>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // repeated .ResourceShift dates = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(ResourceSchedule, _impl_.dates_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated .ResourceShift dates = 1;
+    {PROTOBUF_FIELD_OFFSET(ResourceSchedule, _impl_.dates_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::ResourceShift>()},
+  }},
+  {{
+  }},
+};
+PROTOBUF_NOINLINE void ResourceSchedule::Clear() {
+// @@protoc_insertion_point(message_clear_start:ResourceSchedule)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.dates_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL ResourceSchedule::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const ResourceSchedule& this_ = static_cast<const ResourceSchedule&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL ResourceSchedule::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const ResourceSchedule& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(serialize_to_array_start:ResourceSchedule)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // repeated .ResourceShift dates = 1;
+  for (unsigned i = 0, n = static_cast<unsigned>(
+                           this_._internal_dates_size());
+       i < n; i++) {
+    const auto& repfield = this_._internal_dates().Get(i);
+    target =
+        ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+            1, repfield, repfield.GetCachedSize(),
+            target, stream);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ResourceSchedule)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t ResourceSchedule::ByteSizeLong(const MessageLite& base) {
+  const ResourceSchedule& this_ = static_cast<const ResourceSchedule&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t ResourceSchedule::ByteSizeLong() const {
+  const ResourceSchedule& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:ResourceSchedule)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+   {
+    // repeated .ResourceShift dates = 1;
+    {
+      total_size += 1UL * this_._internal_dates_size();
+      for (const auto& msg : this_._internal_dates()) {
+        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void ResourceSchedule::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<ResourceSchedule*>(&to_msg);
+  auto& from = static_cast<const ResourceSchedule&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ResourceSchedule)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_internal_mutable_dates()->MergeFrom(
+      from._internal_dates());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ResourceSchedule::CopyFrom(const ResourceSchedule& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ResourceSchedule)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void ResourceSchedule::InternalSwap(ResourceSchedule* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.dates_.InternalSwap(&other->_impl_.dates_);
+}
+
+::google::protobuf::Metadata ResourceSchedule::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // @@protoc_insertion_point(namespace_scope)

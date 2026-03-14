@@ -179,7 +179,7 @@ bool Schedule::removeFromSchedule(uint32_t room) { // Delete all schedules to a 
 
 
 
-Timestamp Schedule::timeUntilNext() {
+Timestamp Schedule::timeUntilNext() const {
     if (times.empty()) { return times::max; }
     return times.begin()->first - Timestamp::current_time();
 }
@@ -244,9 +244,9 @@ std::map<Timestamp, uint32_t> Schedule::getTomorrow() const {
 /* ****************************** Other ******************************* */
 /* ******************************************************************** */
 
-void Schedule::print() {
+void Schedule::print() const {
     if (times.empty()) {
-        std::cout << "Schedule is empty.\n";
+        std::cout << "Schedule is empty." << std::endl;
         return;
     }
 

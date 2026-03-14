@@ -1,6 +1,12 @@
 #include "Resource.hpp"
 
+/* ******************************************************************** */
+/* ********************** Private Functions *************************** */
+/* ******************************************************************** */
 
+/* ******************************************************************** */
+/* *********************** Static Functions *************************** */
+/* ******************************************************************** */
 
 std::string Resource::resourceTypeToString(const Resource & r) {
     const ResourceType & rt = r.getResourceType();
@@ -102,15 +108,32 @@ ResourceType Resource::stringToResourceType(std::string_view s) {
     return std::monostate{};
 }
 
-Resource::Resource(MachineryType m)  : type(m) {}
-Resource::Resource(ConsumableType c) : type(c) {}
-Resource::Resource(ResourceType r) : type(std::move(r)) {}
+/* ******************************************************************** */
+/* ************************* Constructors ***************************** */
+/* ******************************************************************** */
 
+Resource::Resource(MachineryType m)  : Resource() { type = m; }
+Resource::Resource(ConsumableType c) : Resource() { type = c; }
+Resource::Resource(ResourceType r)   : Resource() { type = std::move(r); }
 
-Resource::Resource(MachineryType m, uint64_t id)  : type(m), resource_id(id) {}
-Resource::Resource(ConsumableType c, uint64_t id) : type(c), resource_id(id) {}
-Resource::Resource(ResourceType r, uint64_t id) : type(std::move(r)), resource_id(id) {}
+Resource::Resource(MachineryType m, uint64_t resource_id)   : Resource() {
+    this->type = m;
+    this->resource_id = resource_id;
+}
 
+Resource::Resource(ConsumableType c, uint64_t resource_id)  : Resource() {
+    this->type = c;
+    this->resource_id = resource_id;
+}
+
+Resource::Resource(ResourceType r, uint64_t resource_id)    : Resource() {
+    this->type = std::move(r);
+    this->resource_id = resource_id;
+}
+
+/* ******************************************************************** */
+/* ****************************** Other ******************************* */
+/* ******************************************************************** */
 
 std::ostream & operator<<(std::ostream & os, const Resource & r) {
     os << ansi::bcyan

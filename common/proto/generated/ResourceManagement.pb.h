@@ -61,6 +61,10 @@ class ResourceList;
 struct ResourceListDefaultTypeInternal;
 extern ResourceListDefaultTypeInternal _ResourceList_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull ResourceList_class_data_;
+class ResourceSchedule;
+struct ResourceScheduleDefaultTypeInternal;
+extern ResourceScheduleDefaultTypeInternal _ResourceSchedule_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ResourceSchedule_class_data_;
 class ResourceShift;
 struct ResourceShiftDefaultTypeInternal;
 extern ResourceShiftDefaultTypeInternal _ResourceShift_default_instance_;
@@ -873,8 +877,9 @@ class ResourceShift final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kResourceFieldNumber = 1,
-    kDateFieldNumber = 2,
-    kNewDateFieldNumber = 3,
+    kStartFieldNumber = 2,
+    kOtherFieldNumber = 3,
+    kDurationFieldNumber = 4,
   };
   // .ResourceDTO resource = 1;
   bool has_resource() const;
@@ -891,41 +896,51 @@ class ResourceShift final : public ::google::protobuf::Message
   ::ResourceDTO* PROTOBUF_NONNULL _internal_mutable_resource();
 
   public:
-  // .DateDTO date = 2;
-  bool has_date() const;
-  void clear_date() ;
-  const ::DateDTO& date() const;
-  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_date();
-  ::DateDTO* PROTOBUF_NONNULL mutable_date();
-  void set_allocated_date(::DateDTO* PROTOBUF_NULLABLE value);
-  void unsafe_arena_set_allocated_date(::DateDTO* PROTOBUF_NULLABLE value);
-  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_date();
+  // .DateDTO start = 2;
+  bool has_start() const;
+  void clear_start() ;
+  const ::DateDTO& start() const;
+  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_start();
+  ::DateDTO* PROTOBUF_NONNULL mutable_start();
+  void set_allocated_start(::DateDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_start(::DateDTO* PROTOBUF_NULLABLE value);
+  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_start();
 
   private:
-  const ::DateDTO& _internal_date() const;
-  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_date();
+  const ::DateDTO& _internal_start() const;
+  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_start();
 
   public:
-  // .DateDTO new_date = 3;
-  bool has_new_date() const;
-  void clear_new_date() ;
-  const ::DateDTO& new_date() const;
-  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_new_date();
-  ::DateDTO* PROTOBUF_NONNULL mutable_new_date();
-  void set_allocated_new_date(::DateDTO* PROTOBUF_NULLABLE value);
-  void unsafe_arena_set_allocated_new_date(::DateDTO* PROTOBUF_NULLABLE value);
-  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_new_date();
+  // .DateDTO other = 3;
+  bool has_other() const;
+  void clear_other() ;
+  const ::DateDTO& other() const;
+  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_other();
+  ::DateDTO* PROTOBUF_NONNULL mutable_other();
+  void set_allocated_other(::DateDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_other(::DateDTO* PROTOBUF_NULLABLE value);
+  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_other();
 
   private:
-  const ::DateDTO& _internal_new_date() const;
-  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_new_date();
+  const ::DateDTO& _internal_other() const;
+  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_other();
+
+  public:
+  // uint64 duration = 4;
+  void clear_duration() ;
+  ::uint64_t duration() const;
+  void set_duration(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_duration() const;
+  void _internal_set_duration(::uint64_t value);
 
   public:
   // @@protoc_insertion_point(class_scope:ResourceShift)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
+  static const ::google::protobuf::internal::TcParseTable<2, 4,
                                    3, 0,
                                    2>
       _table_;
@@ -948,8 +963,9 @@ class ResourceShift final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::ResourceDTO* PROTOBUF_NULLABLE resource_;
-    ::DateDTO* PROTOBUF_NULLABLE date_;
-    ::DateDTO* PROTOBUF_NULLABLE new_date_;
+    ::DateDTO* PROTOBUF_NULLABLE start_;
+    ::DateDTO* PROTOBUF_NULLABLE other_;
+    ::uint64_t duration_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -957,6 +973,203 @@ class ResourceShift final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull ResourceShift_class_data_;
+// -------------------------------------------------------------------
+
+class ResourceSchedule final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:ResourceSchedule) */ {
+ public:
+  inline ResourceSchedule() : ResourceSchedule(nullptr) {}
+  ~ResourceSchedule() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(ResourceSchedule* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceSchedule));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR ResourceSchedule(::google::protobuf::internal::ConstantInitialized);
+
+  inline ResourceSchedule(const ResourceSchedule& from) : ResourceSchedule(nullptr, from) {}
+  inline ResourceSchedule(ResourceSchedule&& from) noexcept
+      : ResourceSchedule(nullptr, ::std::move(from)) {}
+  inline ResourceSchedule& operator=(const ResourceSchedule& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ResourceSchedule& operator=(ResourceSchedule&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ResourceSchedule& default_instance() {
+    return *reinterpret_cast<const ResourceSchedule*>(
+        &_ResourceSchedule_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 4;
+  friend void swap(ResourceSchedule& a, ResourceSchedule& b) { a.Swap(&b); }
+  inline void Swap(ResourceSchedule* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ResourceSchedule* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ResourceSchedule* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ResourceSchedule>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const ResourceSchedule& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const ResourceSchedule& from) { ResourceSchedule::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(ResourceSchedule* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "ResourceSchedule"; }
+
+ protected:
+  explicit ResourceSchedule(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  ResourceSchedule(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceSchedule& from);
+  ResourceSchedule(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceSchedule&& from) noexcept
+      : ResourceSchedule(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kDatesFieldNumber = 1,
+  };
+  // repeated .ResourceShift dates = 1;
+  int dates_size() const;
+  private:
+  int _internal_dates_size() const;
+
+  public:
+  void clear_dates() ;
+  ::ResourceShift* PROTOBUF_NONNULL mutable_dates(int index);
+  ::google::protobuf::RepeatedPtrField<::ResourceShift>* PROTOBUF_NONNULL mutable_dates();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::ResourceShift>& _internal_dates() const;
+  ::google::protobuf::RepeatedPtrField<::ResourceShift>* PROTOBUF_NONNULL _internal_mutable_dates();
+  public:
+  const ::ResourceShift& dates(int index) const;
+  ::ResourceShift* PROTOBUF_NONNULL add_dates();
+  const ::google::protobuf::RepeatedPtrField<::ResourceShift>& dates() const;
+  // @@protoc_insertion_point(class_scope:ResourceSchedule)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1,
+                                   1, 0,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const ResourceSchedule& from_msg);
+    ::google::protobuf::RepeatedPtrField< ::ResourceShift > dates_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_ResourceManagement_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull ResourceSchedule_class_data_;
 
 // ===================================================================
 
@@ -1213,41 +1426,41 @@ inline void ResourceShift::set_allocated_resource(::ResourceDTO* PROTOBUF_NULLAB
   // @@protoc_insertion_point(field_set_allocated:ResourceShift.resource)
 }
 
-// .DateDTO date = 2;
-inline bool ResourceShift::has_date() const {
+// .DateDTO start = 2;
+inline bool ResourceShift::has_start() const {
   bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.date_ != nullptr);
+  PROTOBUF_ASSUME(!value || _impl_.start_ != nullptr);
   return value;
 }
-inline const ::DateDTO& ResourceShift::_internal_date() const {
+inline const ::DateDTO& ResourceShift::_internal_start() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::DateDTO* p = _impl_.date_;
+  const ::DateDTO* p = _impl_.start_;
   return p != nullptr ? *p : reinterpret_cast<const ::DateDTO&>(::_DateDTO_default_instance_);
 }
-inline const ::DateDTO& ResourceShift::date() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:ResourceShift.date)
-  return _internal_date();
+inline const ::DateDTO& ResourceShift::start() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ResourceShift.start)
+  return _internal_start();
 }
-inline void ResourceShift::unsafe_arena_set_allocated_date(
+inline void ResourceShift::unsafe_arena_set_allocated_start(
     ::DateDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.date_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.start_);
   }
-  _impl_.date_ = reinterpret_cast<::DateDTO*>(value);
+  _impl_.start_ = reinterpret_cast<::DateDTO*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000002u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ResourceShift.date)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ResourceShift.start)
 }
-inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_date() {
+inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_start() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000002u;
-  ::DateDTO* released = _impl_.date_;
-  _impl_.date_ = nullptr;
+  ::DateDTO* released = _impl_.start_;
+  _impl_.start_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
     released = ::google::protobuf::internal::DuplicateIfNonNull(released);
@@ -1261,35 +1474,35 @@ inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_date() {
   }
   return released;
 }
-inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::unsafe_arena_release_date() {
+inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::unsafe_arena_release_start() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:ResourceShift.date)
+  // @@protoc_insertion_point(field_release:ResourceShift.start)
 
   _impl_._has_bits_[0] &= ~0x00000002u;
-  ::DateDTO* temp = _impl_.date_;
-  _impl_.date_ = nullptr;
+  ::DateDTO* temp = _impl_.start_;
+  _impl_.start_ = nullptr;
   return temp;
 }
-inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::_internal_mutable_date() {
+inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::_internal_mutable_start() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.date_ == nullptr) {
+  if (_impl_.start_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::DateDTO>(GetArena());
-    _impl_.date_ = reinterpret_cast<::DateDTO*>(p);
+    _impl_.start_ = reinterpret_cast<::DateDTO*>(p);
   }
-  return _impl_.date_;
+  return _impl_.start_;
 }
-inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::mutable_date()
+inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::mutable_start()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000002u;
-  ::DateDTO* _msg = _internal_mutable_date();
-  // @@protoc_insertion_point(field_mutable:ResourceShift.date)
+  ::DateDTO* _msg = _internal_mutable_start();
+  // @@protoc_insertion_point(field_mutable:ResourceShift.start)
   return _msg;
 }
-inline void ResourceShift::set_allocated_date(::DateDTO* PROTOBUF_NULLABLE value) {
+inline void ResourceShift::set_allocated_start(::DateDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.date_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.start_);
   }
 
   if (value != nullptr) {
@@ -1302,45 +1515,45 @@ inline void ResourceShift::set_allocated_date(::DateDTO* PROTOBUF_NULLABLE value
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
 
-  _impl_.date_ = reinterpret_cast<::DateDTO*>(value);
-  // @@protoc_insertion_point(field_set_allocated:ResourceShift.date)
+  _impl_.start_ = reinterpret_cast<::DateDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:ResourceShift.start)
 }
 
-// .DateDTO new_date = 3;
-inline bool ResourceShift::has_new_date() const {
+// .DateDTO other = 3;
+inline bool ResourceShift::has_other() const {
   bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.new_date_ != nullptr);
+  PROTOBUF_ASSUME(!value || _impl_.other_ != nullptr);
   return value;
 }
-inline const ::DateDTO& ResourceShift::_internal_new_date() const {
+inline const ::DateDTO& ResourceShift::_internal_other() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::DateDTO* p = _impl_.new_date_;
+  const ::DateDTO* p = _impl_.other_;
   return p != nullptr ? *p : reinterpret_cast<const ::DateDTO&>(::_DateDTO_default_instance_);
 }
-inline const ::DateDTO& ResourceShift::new_date() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:ResourceShift.new_date)
-  return _internal_new_date();
+inline const ::DateDTO& ResourceShift::other() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ResourceShift.other)
+  return _internal_other();
 }
-inline void ResourceShift::unsafe_arena_set_allocated_new_date(
+inline void ResourceShift::unsafe_arena_set_allocated_other(
     ::DateDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.new_date_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.other_);
   }
-  _impl_.new_date_ = reinterpret_cast<::DateDTO*>(value);
+  _impl_.other_ = reinterpret_cast<::DateDTO*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000004u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000004u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ResourceShift.new_date)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ResourceShift.other)
 }
-inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_new_date() {
+inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_other() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000004u;
-  ::DateDTO* released = _impl_.new_date_;
-  _impl_.new_date_ = nullptr;
+  ::DateDTO* released = _impl_.other_;
+  _impl_.other_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
     released = ::google::protobuf::internal::DuplicateIfNonNull(released);
@@ -1354,35 +1567,35 @@ inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_new_date() {
   }
   return released;
 }
-inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::unsafe_arena_release_new_date() {
+inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::unsafe_arena_release_other() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:ResourceShift.new_date)
+  // @@protoc_insertion_point(field_release:ResourceShift.other)
 
   _impl_._has_bits_[0] &= ~0x00000004u;
-  ::DateDTO* temp = _impl_.new_date_;
-  _impl_.new_date_ = nullptr;
+  ::DateDTO* temp = _impl_.other_;
+  _impl_.other_ = nullptr;
   return temp;
 }
-inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::_internal_mutable_new_date() {
+inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::_internal_mutable_other() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.new_date_ == nullptr) {
+  if (_impl_.other_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::DateDTO>(GetArena());
-    _impl_.new_date_ = reinterpret_cast<::DateDTO*>(p);
+    _impl_.other_ = reinterpret_cast<::DateDTO*>(p);
   }
-  return _impl_.new_date_;
+  return _impl_.other_;
 }
-inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::mutable_new_date()
+inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::mutable_other()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000004u;
-  ::DateDTO* _msg = _internal_mutable_new_date();
-  // @@protoc_insertion_point(field_mutable:ResourceShift.new_date)
+  ::DateDTO* _msg = _internal_mutable_other();
+  // @@protoc_insertion_point(field_mutable:ResourceShift.other)
   return _msg;
 }
-inline void ResourceShift::set_allocated_new_date(::DateDTO* PROTOBUF_NULLABLE value) {
+inline void ResourceShift::set_allocated_other(::DateDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.new_date_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.other_);
   }
 
   if (value != nullptr) {
@@ -1395,8 +1608,32 @@ inline void ResourceShift::set_allocated_new_date(::DateDTO* PROTOBUF_NULLABLE v
     _impl_._has_bits_[0] &= ~0x00000004u;
   }
 
-  _impl_.new_date_ = reinterpret_cast<::DateDTO*>(value);
-  // @@protoc_insertion_point(field_set_allocated:ResourceShift.new_date)
+  _impl_.other_ = reinterpret_cast<::DateDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:ResourceShift.other)
+}
+
+// uint64 duration = 4;
+inline void ResourceShift::clear_duration() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.duration_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000008u;
+}
+inline ::uint64_t ResourceShift::duration() const {
+  // @@protoc_insertion_point(field_get:ResourceShift.duration)
+  return _internal_duration();
+}
+inline void ResourceShift::set_duration(::uint64_t value) {
+  _internal_set_duration(value);
+  _impl_._has_bits_[0] |= 0x00000008u;
+  // @@protoc_insertion_point(field_set:ResourceShift.duration)
+}
+inline ::uint64_t ResourceShift::_internal_duration() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.duration_;
+}
+inline void ResourceShift::_internal_set_duration(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.duration_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -1568,6 +1805,60 @@ inline ::google::protobuf::RepeatedPtrField<::ResourceDTO>* PROTOBUF_NONNULL
 ResourceList::_internal_mutable_resources() {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return &_impl_.resources_;
+}
+
+// -------------------------------------------------------------------
+
+// ResourceSchedule
+
+// repeated .ResourceShift dates = 1;
+inline int ResourceSchedule::_internal_dates_size() const {
+  return _internal_dates().size();
+}
+inline int ResourceSchedule::dates_size() const {
+  return _internal_dates_size();
+}
+inline void ResourceSchedule::clear_dates() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.dates_.Clear();
+}
+inline ::ResourceShift* PROTOBUF_NONNULL ResourceSchedule::mutable_dates(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:ResourceSchedule.dates)
+  return _internal_mutable_dates()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::ResourceShift>* PROTOBUF_NONNULL ResourceSchedule::mutable_dates()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:ResourceSchedule.dates)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_dates();
+}
+inline const ::ResourceShift& ResourceSchedule::dates(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ResourceSchedule.dates)
+  return _internal_dates().Get(index);
+}
+inline ::ResourceShift* PROTOBUF_NONNULL ResourceSchedule::add_dates()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::ResourceShift* _add = _internal_mutable_dates()->Add();
+  // @@protoc_insertion_point(field_add:ResourceSchedule.dates)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::ResourceShift>& ResourceSchedule::dates() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:ResourceSchedule.dates)
+  return _internal_dates();
+}
+inline const ::google::protobuf::RepeatedPtrField<::ResourceShift>&
+ResourceSchedule::_internal_dates() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.dates_;
+}
+inline ::google::protobuf::RepeatedPtrField<::ResourceShift>* PROTOBUF_NONNULL
+ResourceSchedule::_internal_mutable_dates() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.dates_;
 }
 
 #ifdef __GNUC__

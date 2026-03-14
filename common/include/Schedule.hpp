@@ -238,6 +238,11 @@ inline Timestamp date_to_timestamp(const Date & d) {
  */
 class Schedule {
 private:
+    
+    /* ******************************************************************** */
+    /* ********************** Private Variables *************************** */
+    /* ******************************************************************** */
+    
     std::map<Timestamp, uint32_t> times; // <timestamp, room_id>
     
     /* ******************************************************************** */
@@ -315,7 +320,7 @@ public:
      * @return Returns a timestamp containing the time until the next timestamp
      * @note If the schedule is empty, will return times::max
      */
-    Timestamp timeUntilNext();
+    Timestamp timeUntilNext() const;
     
     /**
      * @brief Checks the schedule to see which room the schedule holder should be at
@@ -360,7 +365,7 @@ public:
     /**
      * @brief Prints the schedule to stdout
      */
-    void print();
+    void print() const;
 };
 
 

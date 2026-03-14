@@ -16,8 +16,16 @@
 
 #define UNKNOWN_PATIENT_ERROR 0
 
-class PatientManagementService : public IService, public PatientManagement::Service, public Common::Service {
+/**
+ * @brief The patient management service class
+ * @note Handles all logic related to patients
+ */
+class PatientManagementService final : public IService, public PatientManagement::Service, public Common::Service {
 private:
+    
+    /* ******************************************************************** */
+    /* ********************** Private Variables *************************** */
+    /* ******************************************************************** */
     
     std::unordered_map<uint64_t, Patient> hospital_patients;
     std::unique_ptr<RoomManagementClient> room_client;
@@ -120,7 +128,7 @@ public:
     grpc::Status GetPatientsInRoom(grpc::ServerContext * context, const RoomRequest * room, PatientList * patients) override;
         
     /* ******************************************************************** */
-    /* ****************************** IServer ***************************** */
+    /* *************************** IServer ******************************** */
     /* ******************************************************************** */
 
     ReturnCode connectToDB() override;

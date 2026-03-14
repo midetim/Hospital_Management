@@ -13,7 +13,13 @@ service ResourceManagement {
     // Machine Resource Scheduling
     rpc AddToSchedule(ResourceShift)        returns (Success);
     rpc RemoveFromSchedule(ResourceShift)   returns (Success);
+    rpc RemoveResourceFromRoom(ResourceDTO) returns (Success);
     rpc ChangeSchedule(ResourceShift)       returns (Success);
+    
+    // Schedule viewing
+    rpc SeeTodaysSchedule(ResourceDTO)      returns (ResourceSchedule);
+    rpc SeeTomorrowsSchedule(ResourceDTO)   returns (ResourceSchedule);
+    rpc SeeScheduleRange(ResourceShift)     returns (ResourceSchedule);
     
     // Consumable Resource Updates
     rpc AddStock(StockUpdate)               returns (Success);
@@ -37,8 +43,9 @@ message ResourceDTO {
 
 message ResourceShift {
     ResourceDTO resource = 1;
-    DateDTO     date     = 2;
-    DateDTO     new_date = 3;
+    DateDTO     start    = 2;
+    DateDTO     other    = 3;
+    uint64      duration = 4;
 }
 
 message StockUpdate {
@@ -49,4 +56,8 @@ message StockUpdate {
 
 message ResourceList {
     repeated ResourceDTO resources = 1;
+}
+
+message ResourceSchedule {
+    repeated ResourceShift dates = 1;
 }
