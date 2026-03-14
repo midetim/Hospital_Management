@@ -1,6 +1,10 @@
 #include "Schedule.hpp"
 #include <iostream>
 
+/* ******************************************************************** */
+/* ************************* Date Functions *************************** */
+/* ******************************************************************** */
+
 Date Date::current_date() {
     std::time_t now = std::time(nullptr);
 
@@ -30,6 +34,10 @@ void Date::print() {
     std::cout << ansi::bblack << " [ " << year << "-" << month << "-" << day << " " << hour << ":" << minute << " ] "<< ansi::reset << std::endl;
 }
 
+/* ******************************************************************** */
+/* ********************* Timestamp Functions ************************** */
+/* ******************************************************************** */
+
 void Timestamp::print() {
     std::cout << "Minutes since epoch : " << ansi::bblack << "[ " << time << " ]" << ansi::reset << std::endl;
 }
@@ -40,7 +48,6 @@ Timestamp Timestamp::current_time() {
     uint64_t minutes_since_epoch = std::chrono::duration_cast<std::chrono::minutes>(duration).count();
     return Timestamp{ .time = minutes_since_epoch };
 }
-
 
 void Timestamp::to_next_interval(Timestamp & ts) {
     uint64_t amt = ts.time % 15;
@@ -53,14 +60,79 @@ void Timestamp::to_prev_interval(Timestamp & ts) {
     ts.time -= remainder;
 }
 
-uint64_t Schedule::get_timestamp_offset(const Timestamp & start, const Timestamp & end) {
-    if (start.time > end.time) { return start.time - end.time; }
-    else { return end.time - start.time; }
+/* ******************************************************************** */
+/* *************** Timestamp Operation Overrides ********************** */
+/* ******************************************************************** */
+
+Timestamp & Timestamp::operator+=(uint64_t amt) {
+    this->time += amt;
+    return * this;
+}
+
+Timestamp & Timestamp::operator+=(const Timestamp & ts) {
+    return (* this -= ts.time);
+}
+
+Timestamp Timestamp::operator+(uint64_t amt) const {
+    Timestamp ts = * this;
+    ts += amt;
+    return ts;
+}
+
+Timestamp Timestamp::operator+(const Timestamp & ts) const {
+    return (* this - ts.time);
+}
+
+Timestamp & Timestamp::operator-=(uint64_t amt) {
+    if (amt > this->time) {
+        this->time = 0;
+        return * this;
+    }
+    this->time -= amt;
+    return * this;
+}
+
+Timestamp & Timestamp::operator-=(const Timestamp & ts) {
+    return (* this -= ts.time);
+}
+
+Timestamp Timestamp::operator-(uint64_t amt) const {
+    Timestamp ts = * this;
+    ts -= amt;
+    return ts;
+}
+
+Timestamp Timestamp::operator-(const Timestamp & ts) const {
+    return (* this - ts.time);
 }
 
 
+/* ******************************************************************** */
+/* *********************** Schedule Class ***************************** */
+/* ******************************************************************** */
+
+/* ******************************************************************** */
+/* ********************** Private Functions *************************** */
+/* ******************************************************************** */
+
+Timestamp Schedule::get_timestamp_offset(const Timestamp & start, const Timestamp & end) {
+    if (start > end) {
+        return start - end;
+    } else {
+        return end - start;
+    }
+}
+
+/* ******************************************************************** */
+/* ************************** Constructor ***************************** */
+/* ******************************************************************** */
+
 Schedule::Schedule() {}
 Schedule::~Schedule() {}
+
+/* ******************************************************************** */
+/* ********************* Schedule Modification ************************ */
+/* ******************************************************************** */
 
 bool Schedule::addToSchedule(Timestamp ts, uint32_t room) {
     Timestamp::to_next_interval(ts);
@@ -89,6 +161,7 @@ bool Schedule::removeFromSchedule(const Date & d) {
 bool Schedule::removeFromSchedule(uint32_t room) { // Delete all schedules to a room
     bool removed = false;
 
+    // Times is an ordered map, so this will go in order of recency
     for (auto it = times.begin(); it != times.end(); ) {
         if (it->second == room) {
             it = times.erase(it);
@@ -97,22 +170,22 @@ bool Schedule::removeFromSchedule(uint32_t room) { // Delete all schedules to a 
             ++it;
         }
     }
-
     return removed;
 }
 
+/* ******************************************************************** */
+/* *********************** Schedule Utility *************************** */
+/* ******************************************************************** */
 
-uint64_t Schedule::now() {
-    return Timestamp::current_time().time;
-}
 
-int64_t Schedule::timeUntilNext() {
-    if (times.empty()) { return 0; }
-    return static_cast<int64_t>(times.begin()->first.time) - static_cast<int64_t>(now());
+
+Timestamp Schedule::timeUntilNext() {
+    if (times.empty()) { return times::max; }
+    return times.begin()->first - Timestamp::current_time();
 }
 
 uint32_t Schedule::check_schedule() {
-    if (timeUntilNext() <= 0) {
+    if (timeUntilNext() <= times::zero) {
         auto it = times.begin();
         uint32_t rid = it->second;
         times.erase(it); // remove from schedule
@@ -122,17 +195,26 @@ uint32_t Schedule::check_schedule() {
     }
 }
 
+/* ******************************************************************** */
+/* ******************** Sub-Schedule Retrieval ************************ */
+/* ******************************************************************** */
+
+std::map<Timestamp, uint32_t> Schedule::getBetween(const Date & start, const Date & end) const {
+    Timestamp start_ts = date_to_timestamp(start); // Convert the first date into a timestamp
+    Timestamp end_ts = date_to_timestamp(end); // Convert the last date into a timestamp
+    
+    if (start_ts > end_ts) { // Swaps the timestamps if the end is earlier than the start
+        std::swap(start_ts, end_ts);
+    }
+    
+    auto begin = times.lower_bound(start_ts); // Get an iterator to the first date
+    auto finish = times.upper_bound(end_ts); // Get an iterator to the last date
+    
+    return std::map<Timestamp, uint32_t>(begin, finish); // Create a submap using the iterators
+}
 
 std::map<Timestamp, uint32_t> Schedule::getFrom(const Date & d) const {
-    std::map<Timestamp, uint32_t> sub_map;
-    for (const auto & [ts, rid] : times) {
-        if (ts < date_to_timestamp(d)) {
-            sub_map.emplace(ts, rid);
-        } else {
-            break;
-        }
-    }
-    return sub_map;
+    return getBetween(Date::current_date(), d);
 }
 
 std::map<Timestamp, uint32_t> Schedule::getToday() const {
@@ -142,18 +224,12 @@ std::map<Timestamp, uint32_t> Schedule::getToday() const {
     Date end = start;
     Date::to_end_of_day(end);
 
-    Timestamp start_ts = date_to_timestamp(start);
-    Timestamp end_ts = date_to_timestamp(end);
-
-    auto begin = times.lower_bound(start_ts);
-    auto finish = times.upper_bound(end_ts);
-
-    return std::map<Timestamp, uint32_t>(begin, finish);
+    return getBetween(start, end);
 }
 
 std::map<Timestamp, uint32_t> Schedule::getTomorrow() const {
     Timestamp now = Timestamp::current_time();
-    now += 1440;
+    now += times::day;
 
     Date start = timestamp_to_date(now);
     Date::to_start_of_day(start);
@@ -161,16 +237,12 @@ std::map<Timestamp, uint32_t> Schedule::getTomorrow() const {
     Date end = start;
     Date::to_end_of_day(end);
 
-    Timestamp start_ts = date_to_timestamp(start);
-    Timestamp end_ts = date_to_timestamp(end);
-
-    auto begin = times.lower_bound(start_ts);
-    auto finish = times.upper_bound(end_ts);
-
-    return std::map<Timestamp, uint32_t>(begin, finish);
+    return getBetween(start, end);
 }
 
-
+/* ******************************************************************** */
+/* ****************************** Other ******************************* */
+/* ******************************************************************** */
 
 void Schedule::print() {
     if (times.empty()) {
