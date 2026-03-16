@@ -743,26 +743,62 @@ grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext *
     
     uint32_t room_id = room->room_id();
     
-    if (busy_resources.empty() && (room_id != rooms::maintenance)) { // If there are no busy resources exit early
+    if (busy_resources.empty() && (room_id != rooms::idle)) { // If there are no busy resources exit early
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "There are no resources assigned to any rooms at the moment");
     }
     
     // Get relevant information from request
     bool any_resources_in_room = false;
-    
-    for (const auto & [resource_id, resource_ptr] : busy_resources) {
-        if (resource_ptr->getRoomId() != room_id) { continue; }
-        any_resources_in_room = true;
-        
-        
-        
-        
-        
+    if (room_id != rooms::maintenance) {
+        for (const auto & [resource_id, resource_ptr] : busy_resources) {
+            if (resource_ptr->getRoomId() != room_id) { continue; }
+            any_resources_in_room = true;
+            
+            // Create new resource to add to list
+            ResourceDTO * new_resource = list->add_resources();
+            
+            // Add resource information
+            new_resource->set_room_id(room_id);
+            new_resource->set_resource_id(resource_id);
+            new_resource->set_allocated_resource_type(Resource::resourceTypeToString(resource_ptr->getResourceType()));
+        }
+    } else if (room_id == rooms::maintenance) {
+        for (const auto & [resource_id, resource_ptr] : total_resources) {
+            if (resource_ptr->getRoomId() != room_id) { continue; }
+            any_resources_in_room = true;
+            
+            // Create new resource to add to list
+            ResourceDTO * new_resource = list->add_resources();
+            
+            // Add resource information
+            new_resource->set_room_id(room_id);
+            new_resource->set_resource_id(resource_id);
+            new_resource->set_allocated_resource_type(Resource::resourceTypeToString(resource_ptr->getResourceType()));
+        }
+    } else {
+        return grpc::Status(grpc::StatusCode::UNKNOWN, "An unknown error occurred");
     }
-    
-    
+    return grpc::Status::OK;
 }
 
+/* ******************************************************************** */
+/* *************************** IServer ******************************** */
+/* ******************************************************************** */
+
+ReturnCode ResourceManagementService::connectToDB() {
+    /* Not yet implemented */
+    return ReturnCode::SUCCESS;
+}
+
+ReturnCode ResourceManagementService::loadFromDB() {
+    /* Not yet implemented */
+    return ReturnCode::SUCCESS;
+}
+
+ReturnCode ResourceManagementService::uploadToDB() {
+    /* Not yet implemented */
+    return ReturnCode::SUCCESS;
+}
 
 ReturnCode ResourceManagementService::init() {
     total_resources.clear();
