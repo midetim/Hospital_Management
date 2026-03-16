@@ -36,6 +36,31 @@ void Date::print() {
     std::cout << ansi::bblack << " [ " << year << "-" << month << "-" << day << " " << hour << ":" << minute << " ] "<< ansi::reset << std::endl;
 }
 
+
+void Date::fillDTO(DateDTO * dto) {
+    if (dto == nullptr) { return; }
+    TimeDTO * time = dto->mutable_time();
+    
+    dto->set_year(this->year);
+    dto->set_month(this->month);
+    dto->set_day(this->day);
+    
+    time->set_hour(this->hour);
+    time->set_minute(this->minute);
+}
+
+/* ******************************************************************** */
+/* ************************ Date Constructor ************************** */
+/* ******************************************************************** */
+
+Date::Date(const DateDTO & date_ptr) { // No loner needs a nullptr check
+    this->year   = date_ptr.year();
+    this->month  = date_ptr.month();
+    this->day    = date_ptr.day();
+    this->hour   = date_ptr.time().hour();
+    this->minute = date_ptr.time().minute();
+}
+
 /* ******************************************************************** */
 /* ********************* Timestamp Functions ************************** */
 /* ******************************************************************** */
@@ -48,7 +73,7 @@ Timestamp Timestamp::current_time() {
     auto ts = std::chrono::system_clock::now();
     auto duration = ts.time_since_epoch();
     uint64_t minutes_since_epoch = std::chrono::duration_cast<std::chrono::minutes>(duration).count();
-    return Timestamp{ .time = minutes_since_epoch };
+    return Timestamp{minutes_since_epoch};
 }
 
 void Timestamp::to_next_interval(Timestamp & ts) {
@@ -109,7 +134,7 @@ Timestamp Timestamp::operator-(const Timestamp & ts) const {
 }
 
 /* ******************************************************************** */
-/* ******************** Shift Constructor ***************************** */
+/* ************************ Shift Constructor ************************* */
 /* ******************************************************************** */
 
 Shift::Shift(const Timestamp & start, const Timestamp & end, uint32_t room_id)
@@ -220,7 +245,7 @@ Timestamp Schedule::check_shift_overlap(const Shift & existing_shift, const Shif
 /* ************************** Constructor ***************************** */
 /* ******************************************************************** */
 
-Schedule::Schedule() {}
+Schedule::Schedule()  {}
 Schedule::~Schedule() {}
 
 /* ******************************************************************** */
@@ -274,27 +299,50 @@ bool Schedule::removeFromSchedule(const Shift & old_shift) {
 /* *********************** Schedule Utility *************************** */
 /* ******************************************************************** */
 
-
-
 Timestamp Schedule::timeUntilNext() const {
     if (shifts.empty()) { return times::max; }
     return shifts.begin()->shift_start - Timestamp::current_time();
 }
 
+Timestamp Schedule::timeUntilEnd() const {
+    if (shifts.empty()) { return times::max; }
+    return shifts.begin()->shift_end - Timestamp::current_time();
+}
+
 uint32_t Schedule::check_schedule() {
-    if (timeUntilNext() <= times::zero) {
-        auto it = shifts.begin();
-        uint32_t room_id = it->room_id;
-        shifts.erase(it); // remove from schedule
-        return room_id; // Send out room id
-    } else {
-        return 0; // Otherwise send nothing
+    if (shifts.empty()) { return rooms::idle; } // Exit early if no scheduled shifts
+    
+    auto it = shifts.begin(); // Get the iterator to the start of the set
+    
+    if (timeUntilEnd() <= times::zero) { // If the current shift needs to end
+        shifts.erase(it); // Erase that shift from the set
+        it = shifts.begin(); // Get an iterator to the new shift
     }
+    
+    // If it == shifts.end(), timeUntilNext() will return times::max --> returns 0
+    if (timeUntilNext() <= times::zero) { // If the next shift needs to start
+        return it->room_id; // Send out the room id
+    } else {
+        return rooms::idle;
+    }
+}
+
+
+const Shift & Schedule::getCurrentShift() const {
+    if (shifts.empty()) { return empty; } // If schedule is empty return an empty shift
+    return * shifts.begin(); // Return the shift at the start
+}
+
+Shift Schedule::copyShift(const Shift & shift) const {
+    if (shifts.empty()) { return empty; }
+    auto it = shifts.find(shift);
+    if (it == shifts.end()) { return empty; } else { return * it; }
 }
 
 /* ******************************************************************** */
 /* ******************** Sub-Schedule Retrieval ************************ */
 /* ******************************************************************** */
+
 
 std::set<Shift> Schedule::getBetween(const Date & start, const Date & end) const {
     Timestamp start_ts = date_to_timestamp(start); // Convert the first date into a timestamp
@@ -304,8 +352,8 @@ std::set<Shift> Schedule::getBetween(const Date & start, const Date & end) const
         std::swap(start_ts, end_ts);
     }
     
-    Shift start_shift(start_ts, 0, 0);
-    Shift end_shift(end_ts, 0, 0);
+    Shift start_shift(start_ts, duration::none, rooms::idle);
+    Shift end_shift(end_ts, duration::none, rooms::idle);
     
     auto begin = shifts.lower_bound(start_shift); // Get an iterator to the first date
     auto finish = shifts.upper_bound(end_shift); // Get an iterator to the last date

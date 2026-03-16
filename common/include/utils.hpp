@@ -73,9 +73,10 @@ namespace ansi {
     inline constexpr const char * bwhite =      "\033[97m";
 }
 
-// Message delimiters
-inline constexpr char delim = '|';
-
+namespace rooms {
+    inline constexpr uint32_t idle = 0;
+    inline constexpr uint32_t maintenance = 1;
+}
 /**
  * @brief Name struct for people
  * @param first The first name

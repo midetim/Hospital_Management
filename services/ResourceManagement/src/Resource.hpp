@@ -146,7 +146,7 @@ public:
      * @brief General Contructor that initializes the schedule
      * @note All other constructors call this one
      */
-    Resource() : resource_schedule(std::make_unique<Schedule>()) {}
+    Resource();
     
     /**
      * @brief Machinery type resource constructor
@@ -227,6 +227,9 @@ public:
     /* ****************************** Other ******************************* */
     /* ******************************************************************** */
     
+    /**
+     * @brief Overrides the the stream addition operation to allow for cout printing of the 
+     */
     friend std::ostream & operator<<(std::ostream& os, const Resource & p);
 };
 

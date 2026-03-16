@@ -4,6 +4,8 @@
 #include <set>
 #include <limits>
 #include "utils.hpp"
+#include <Common.pb.h>
+#include <Common.grpc.pb.h>
 
 /* ******************************************************************** */
 /* **************************** Date Struct *************************** */
@@ -48,6 +50,29 @@ struct Date {
      * @brief Print out the date in human readable format
      */
     void print();
+    
+    /**
+     * @brief Fills out a DateDTO with the date parameters
+     * @param dto The data transfer object to fill out
+     */
+    void fillDTO(DateDTO * dto);
+    
+    /* ******************************************************************** */
+    /* *********************** Date Constructors ************************** */
+    /* ******************************************************************** */
+    
+    /**
+     * @brief Default constructor
+     */
+    Date() = default;
+    
+    /**
+     * @brief General date constructor
+     */
+    Date(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t minute) :
+    year(year), month(month), day(day), hour(hour), minute(minute) {}
+    
+    explicit Date(const DateDTO & date_ptr);
 };
 
 /* ******************************************************************** */
@@ -117,6 +142,19 @@ struct Timestamp {
     Timestamp operator-(uint64_t amt) const;
     Timestamp operator-(const Timestamp & ts) const;
     
+    /* ******************************************************************** */
+    /* ******************** Timestamp Constructor ************************* */
+    /* ******************************************************************** */
+    
+    /**
+     * @brief Default constructor
+     */
+    Timestamp() = default;
+    
+    /**
+     * @brief Constexpr constructor for the times namespace constants
+     */
+    constexpr Timestamp(uint64_t minutes) : time(minutes) {}
 };
 
 /* ******************************************************************** */
@@ -124,12 +162,21 @@ struct Timestamp {
 /* ******************************************************************** */
 
 namespace times {
-    inline constexpr Timestamp minute{1};
-    inline constexpr Timestamp hour{60};
-    inline constexpr Timestamp day{1440};
-    inline constexpr Timestamp week{10080};
-    inline constexpr Timestamp zero{0};
+    inline constexpr Timestamp minute{1ULL};
+    inline constexpr Timestamp hour{60ULL};
+    inline constexpr Timestamp day{1440ULL};
+    inline constexpr Timestamp week{10080ULL};
+    inline constexpr Timestamp zero{0ULL};
     inline constexpr Timestamp max{std::numeric_limits<uint64_t>::max()};
+}
+
+/* ******************************************************************** */
+/* ********************* Duration Namespace *************************** */
+/* ******************************************************************** */
+
+namespace duration {
+    inline constexpr uint64_t none = 0;
+    inline constexpr uint64_t max = std::numeric_limits<uint64_t>::max();
 }
 
 /* ******************************************************************** */
@@ -177,14 +224,19 @@ inline Timestamp date_to_timestamp(const Date & d) {
 /* ******************************************************************** */
 
 struct Shift {
-    Timestamp shift_start{0};
-    Timestamp shift_end{0};
-    uint64_t duration = 0;
-    uint32_t room_id;
+    Timestamp shift_start = times::zero;
+    Timestamp shift_end   = times::zero;
+    uint64_t duration = duration::none;
+    uint32_t room_id  = rooms::idle;
     
     /* ******************************************************************** */
     /* ******************** Shift Constructor ***************************** */
     /* ******************************************************************** */
+    
+    /**
+     * @brief The default shift constructor
+     */
+    Shift() = default;
     
     /**
      * @brief Shift constructor using two timestamps
@@ -233,6 +285,8 @@ struct Shift {
     
     
 };
+
+inline static const Shift empty{};
 
 /* ******************************************************************** */
 /* *********************** Schedule Class ***************************** */
@@ -311,16 +365,36 @@ public:
     
     /**
      * @brief Gets the time until the next timestamp in the schedule
-     * @return Returns a timestamp containing the time until the next timestamp
+     * @return Returns a timestamp containing the time until the next shift starts
      * @note If the schedule is empty, will return times::max
      */
     Timestamp timeUntilNext() const;
+    
+    /**
+     * @brief Gets the time until the next timestamp ends in the schedule
+     * @return Returns a timestamp containing the time until the next shift end
+     * @note If the schedule is empty, will return times::max
+     */
+    Timestamp timeUntilEnd() const;
     
     /**
      * @brief Checks the schedule to see which room the schedule holder should be at
      * @return Returns a room id if the holder needs to be at a specific room
      */
     uint32_t check_schedule();
+    
+    /**
+     * @brief Gets the current shift
+     * @return Returns a constant shift reference
+     */
+    const Shift & getCurrentShift() const;
+    
+    /**
+     * @brief Get the shift that starts at the specified time
+     * @return Returns a constant shift reference
+     * @note Shift is read-only
+     */
+    Shift copyShift(const Shift & shift) const;
     
     /* ******************************************************************** */
     /* ******************** Sub-Schedule Retrieval ************************ */

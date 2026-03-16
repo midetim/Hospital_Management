@@ -28,8 +28,9 @@ public:
     
     // Inherited from IClient
     bool ping(std::string_view service_name) override;       // Connection ping test
-    std::string_view name() override { return CLIENT_NAME; }         // Service name function
-    void print(std::string_view service_name) override;
+    std::string_view name() override { return service::room_client; }         // Service name function
+    bool print(std::string_view service_name) override;
+    bool update(std::string_view service_name) override;
     
     /**
      * @brief Takes a patient to admit along with a requested room type, and whether the patient needs to be quarantined

@@ -86,9 +86,23 @@ private:
      */
     ReturnCode moveResource(uint64_t resource_id, option source, option destination);
     
+    /**
+     * @brief Sends all resources to their designated rooms
+     */
     bool sendResources();
     
+    /**
+     * @brief Retrieves all resources from their rooms
+     */
     bool retrieveResources();
+    
+    /**
+     * @brief Converts a set of shifts into a resource schedule
+     * @param scheduled_shifts The set of shifts
+     * @param schedule The resource schedule to add to
+     * @param resource The resource DTO to add to each resource shift
+     */
+    void convertToSchedule(const std::set<Shift> & scheduled_shifts, ResourceSchedule * schedule, ResourceDTO * resource) const;
     
 public:
     
@@ -122,36 +136,92 @@ public:
     /* ********************* ResourceManagement gRPC ********************** */
     /* ******************************************************************** */
     
+    /**
+     * @brief Registers a resource with the service
+     * @note If no resource id is provided, it will generate a new one for the resource
+     * @warning Giving a resource id that is already in use will cause a failure
+     */
     grpc::Status RegisterResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
     
+    /**
+     * @brief Deregisters a resource from the service
+     * @warning Cannot deregister a resource that is busy
+     */
     grpc::Status DeregisterResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
     
+    /**
+     * @brief Schedules a resource for a 24-hour maintenance in the next available moment
+     * @note The maintentance shift is 24-hours, so the resource will schedule it for the next free 24-hour period
+     */
     grpc::Status SendForMaintenance(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
     
+    /**
+     * @brief Adds a shift to the resources schedule
+     * @warning If the current time is not available, will push the shift back until it is
+     */
     grpc::Status AddToSchedule(grpc::ServerContext * context, const ResourceShift * shift, Success * success) override;
     
+    /**
+     * @brief Removes a shift from a resources schedule
+     */
     grpc::Status RemoveFromSchedule(grpc::ServerContext * context, const ResourceShift * shift, Success * success) override;
     
+    /**
+     * @brief Removes all shifts that a resource has in a selected room
+     */
     grpc::Status RemoveResourceFromRoom(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
     
+    /**
+     * @brief Removes a shift and adds a new one
+     */
     grpc::Status ChangeSchedule(grpc::ServerContext * context, const ResourceShift * shift, Success * success) override;
     
+    /**
+     * @brief Gets the specified resource's schedule for today
+     */
     grpc::Status SeeTodaysSchedule(grpc::ServerContext * context, const ResourceDTO * resource, ResourceSchedule * schedule) override;
     
+    /**
+     * @brief Gets the specified resource's schedule for tomorrow
+     */
     grpc::Status SeeTomorrowsSchedule(grpc::ServerContext * context, const ResourceDTO * resource, ResourceSchedule * schedule) override;
     
+    /**
+     * @brief Gets the specified resource's schedule for a specific range of dates
+     */
     grpc::Status SeeScheduleRange(grpc::ServerContext * context, const ResourceShift * range, ResourceSchedule * schedule) override;
     
+    /**
+     * @brief Adds stock amount to existing stock, and creates a new stock resource if the stock does not exist (DNE)
+     */
     grpc::Status AddStock(grpc::ServerContext * context, const StockUpdate * stock, Success * success) override;
     
+    /**
+     * @brief Removes stock amounts from existing stock
+     * @warning Cannot remove stock from a machine resource
+     * @warning Cannot remove stock below zero
+     */
     grpc::Status RemoveStock(grpc::ServerContext * context, const StockUpdate * stock, Success * success) override;
     
+    /**
+     * @brief Syntatically identical to RemoveStock, but semantically for when a room wants to use some stock
+     */
     grpc::Status UseStock(grpc::ServerContext * context, const StockUpdate * stock, Success * success) override;
     
+    /**
+     * @brief Sets the stock amount to zero
+     */
     grpc::Status EmptyStock(grpc::ServerContext * context, const StockUpdate * stock, Success * success) override;
     
+    /**
+     * @brief Get the information on a resource
+     * @note Can either pass a resource id, or a resource type
+     */
     grpc::Status GetResourceInformation(grpc::ServerContext * context, const ResourceDTO * resource_request, ResourceDTO * resource_response) override;
     
+    /**
+     * @brief Updates the resource to match the incoming resource DTO
+     */
     grpc::Status UpdateResourceInformation(grpc::ServerContext * context, const ResourceDTO * update_request, Success * success) override;
     
     grpc::Status GetResourcesInRoom(grpc::ServerContext * context, const RoomRequest * room, ResourceList * list) override;

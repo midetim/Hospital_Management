@@ -68,10 +68,9 @@ public:
      * @brief Function to run the service
      * @param address Host address of the service to run on
      * @param service The service to run
-     * @param db_name The name of the database that the service uses
      * @warning **NO DATABASES EXISTS YET**
      */
-    static void Run(std::string_view address, IService & service, std::string_view db_name);
+    static void Run(std::string_view address, IService & service);
     
 };
 

@@ -5,6 +5,8 @@
 #include <random>
 #include "grpc_utils.hpp"
 
+
+
 /* ******************************************************************** */
 /* ********************** Private Functions *************************** */
 /* ******************************************************************** */
@@ -84,8 +86,8 @@ ReturnCode ResourceManagementService::moveResource(uint64_t resource_id, option 
 
 bool ResourceManagementService::sendResources() {
     for (const auto & [resource_id, resource_ptr] : available_resources) {
-        uint32_t new_room = resource_ptr->access_schedule()->check_schedule();
-        if (new_room == 0) { continue; }
+        uint32_t new_room = resource_ptr->access_schedule()->check_schedule(); // Will return a room id if the resource needs to go to a new room
+        if (new_room == rooms::idle) { continue; }
         /* TODO: need to complete this part once the room_client is done
         room_client->update_resource(resource_id, new_room, service::resource);
         */
@@ -97,7 +99,7 @@ bool ResourceManagementService::sendResources() {
 bool ResourceManagementService::retrieveResources() {
     for (const auto & [resource_id, resource_ptr] : busy_resources) {
         uint32_t new_room = resource_ptr->access_schedule()->check_schedule();
-        if (new_room == 0) {
+        if (new_room == rooms::idle) {
             continue;
         }
         /* TODO: Complete after room_client
@@ -108,12 +110,40 @@ bool ResourceManagementService::retrieveResources() {
     return true;
 }
 
+void ResourceManagementService::convertToSchedule(const std::set<Shift> & scheduled_shifts, ResourceSchedule * schedule, ResourceDTO * resource) const {
+    if (schedule == nullptr)      { return ReturnCode::FAILURE; }
+    if (scheduled_shifts.empty()) { return ReturnCode::WARNING; }
+    
+    for (const Shift & shift : scheduled_shifts) {
+        // Create the ResourceShift
+        ResourceShift * resource_shift = schedule->add_dates();
+        
+        // Copy the ResourceDTO into the ResourceShift
+        resource_shift->mutable_resource()->CopyFrom(* resource);
+        
+        // Get the dates
+        DateDTO * start_date = resource_shift->mutable_start();
+        DateDTO * end_date = resource_shift->mutable_other();
+        
+        // Fill them out
+        timestamp_to_date(shift.shift_start).fillDTO(start_date);
+        timestamp_to_date(shift.shift_end).fillDTO(end_date);
+        
+        // Get the shift duration
+        resource_shift->set_duration(shift.duration);
+    }
+}
+
+
 /* ******************************************************************** */
 /* ************************** Constructor ***************************** */
 /* ******************************************************************** */
 
 ResourceManagementService::ResourceManagementService()
-: room_client(std::make_unique<RoomManagementClient>(service::room_host)) {}
+: room_client(std::make_unique<RoomManagementClient>(service::room_host)) {
+    this->name = service::room;
+    this->database_name = service::room_db;
+}
 
 /* ******************************************************************** */
 /* ************************** Common gRPC ***************************** */
@@ -145,367 +175,604 @@ grpc::Status ResourceManagementService::update(grpc::ServerContext * context, co
 /* ********************* ResourceManagement gRPC ********************** */
 /* ******************************************************************** */
 
-
-grpc::Status ResourceManagementService::ResourcePing(grpc::ServerContext * context, const ResourcePingRequest * request, ResourceSuccess * response) {
-    readMetadata(* context);
-    response->set_success(true);
-    return grpc::Status::OK;
-}
+grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
  
-grpc::Status ResourceManagementService::FindResources(grpc::ServerContext * context, const ResourceAvailabilityRequest * request, ResourceAvailabilityResponse * response) {
-    readMetadata(* context); // read metadata
+    // Extract information from request
+    uint64_t resource_id = resource->resource_id();
+    ResourceType resource_type = Resource::stringToResourceType(resource->resource_type());
+    uint32_t stock_amount = resource->resource_stock();
     
-    // Get info from request -- Will either use the resource id or the resource type
-    uint64_t rid = request->resource_id(); // Id is more specific, so
-    std::string rtype = request->resource_type();
-     
-    Resource * r = findResource(rid, rtype, option::Available);
-    if (r == nullptr) {
-        /// **Do a check in total to see if resource even exists**
-        r = findResource(rid, rtype, option::Total);
-        
-        if (r == nullptr) { // Resource DNE --> empty rid for return
-            rid = 0;
+    std::unique_ptr<Resource> new_resource; // The new resource to add to the system
+    
+    if (resource_id != 0) { // If an id was provided, use in constructor
+        auto it = total_resources.find(resource_id);
+        if (it == total_resources.end()) {
+            new_resource = std::make_unique<Resource>(resource_type, resource_id);
+        } else {
+            success->set_successful(false);
+            return grpc::Status(grpc::StatusCode::ABORTED, "Resource id already in use");
         }
-        
-        response->set_available(false);
-        response->set_resource_id(rid); // Provide user the resource id if it exists, but is just busy
-        response->set_stock(OUT_OF_STOCK);
-        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "The requested resource is not available at the moment");
+    } else { // Otherwise make normally
+        new_resource = std::make_unique<Resource>(resource_type);
+        resource_id = generate_unique_resource_id(); // Make a unique resource id
+        new_resource->setResourceId(resource_id); // Assign the resource that id
     }
     
-    uint64_t resource_id = r->getResourceId(); // Get the resources id
-    
-    // Setup response
-    response->set_available(true);
-    response->set_resource_id(resource_id);
-    
-    if (r->isConsumable()) { // If the resource is a consumable
-        
-        auto it = resource_stock.find(resource_id); // Find its stock
-        if (it == resource_stock.end()) { // If its not in the stock map
-            resource_stock.emplace(resource_id, OUT_OF_STOCK); // Add the consumable resource to the stock map
-            response->set_stock(OUT_OF_STOCK); // Respond with out of stock
-        } else { // Resource was found in stock map
-            response->set_stock(it->second); // Respond with stock amount
-        }
+    // Check if the resource is a consumable
+    bool is_consumable = new_resource->isConsumable();
+    if (!(new_resource->isMachinery() || is_consumable)) { // If the resource has no type
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not determine resource type");
     }
-        
+    
+    if (is_consumable) { // If the resource is a consumeable
+        resource_stock.emplace(resource_id, stock_amount);
+    }
+
+    // Add the resource to the maps
+    available_resources.emplace(resource_id, new_resource.get());
+    total_resources.emplace(resource_id, std::move(new_resource));
+    
+    success->set_successful(true);
     return grpc::Status::OK;
 }
 
-grpc::Status ResourceManagementService::ShowResources(grpc::ServerContext * context, const Nothing * request, Resources * response) {
+grpc::Status ResourceManagementService::DeregisterResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
     
-    readMetadata(* context); // read metadata
+    readMetadata(* context); // Read the request metadata
+ 
+    uint64_t resource_id = resource->resource_id(); // Get the resource id
     
-    if (total_resources.empty()) { // No registered resources in map
-        return grpc::Status(grpc::StatusCode::CANCELLED, "There are no registered resources at this moment");
+    // Get an iterator to the resource inside the total_resource map
+    auto total_iterator = total_resources.find(resource_id);
+    if (total_iterator == total_resources.end()) { // Resource not found in map
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource");
     }
     
-    for (const auto & [rid, res] : total_resources) {
-        ResourceDTO* dto = response->add_resource(); // Add new DTO to the response
-
-        // Fill out the dto
-        dto->set_resource_id(rid);
-        dto->set_room_id(res->getRoomId());
-        dto->set_resource_type(Resource::resourceTypeToString(res->getResourceType()));
+    // Get an iterator to the resource inside the available_resource map
+    auto available_iterator = available_resources.find(resource_id);
+    if (available_iterator == available_resources.end()) { // Resource is in use
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot deregister resources that are in use");
     }
     
+    // Try to get an iterator to the stock amount map
+    auto stock_iterator = resource_stock.find(resource_id);
+    if (stock_iterator == resource_stock.end() && total_iterator->second->isConsumable()) { // Consumable without stock
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the consumable stock to deregister");
+    }
+    
+    // Erase the resources from all maps they are in
+    if (stock_iterator != resource_stock.end()) { resource_stock.erase(stock_iterator); }
+    available_resources.erase(available_iterator);
+    total_resources.erase(total_iterator);
+    
+    // Returns success
+    success->set_successful(true);
     return grpc::Status::OK;
 }
 
-grpc::Status ResourceManagementService::SendResource(grpc::ServerContext * context, const ResourceSendRequest * request, ResourceSuccess * response) {
+grpc::Status ResourceManagementService::SendForMaintenance(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
     
-    readMetadata(* context); // read metadata
+    readMetadata(* context); // Read request metadata
     
-    uint64_t rid = request->resource_id();
-    std::string rtype = request->resource_type();
-    uint32_t room_id = request->room_id();
+    // Extract all relavant data
+    uint64_t resource_id = resource->resource_id();
     
-    Resource * r = findResource(rid, rtype, option::Available);
-    if (r == nullptr) {
-        response->set_success(false);
-        response->set_resource_id(0);
-        response->set_success_message("No available resource of specific type");
-        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "No available resource");
-    }
-    
-    //room_client->sendresource(resource id, room id);
-    // if failure
-    
-    // on success -->
-    r->setRoomId(room_id); // Change the room id to the new room
-    
-    moveResource(rid, option::Available, option::Busy); // Move the room from free to busy
-    
-    response->set_success(true);
-    response->set_resource_id(r->getResourceId());
-    response->set_success_message("Successful move");
-    
-    return grpc::Status::OK;
-}
-
-grpc::Status ResourceManagementService::RetrieveResource(grpc::ServerContext * context, const ResourceRetrievalRequest * request, ResourceSuccess* response) {
-    
-    readMetadata(* context); // read metadata
-    
-    uint64_t rid = request->resource_id();
-    
-    //room_client->retrieveresource(resource id);
-    // if failure
-    
-    // on success -->
-    Resource * r = findResource(rid, "", option::Busy);
-    r->setRoomId(NO_ASSIGNED_ROOM);
-    moveResource(rid, option::Busy, option::Available);
-    
-    response->set_success(true);
-    response->set_resource_id(rid);
-    response->set_success_message("");
-    
-    return grpc::Status::OK;
-}
-
-grpc::Status ResourceManagementService::TransferResource(grpc::ServerContext * context, const ResourceSendRequest * request, ResourceSuccess * response) {
-    
-    readMetadata(* context); // read metadata
-    
-    uint64_t rid = request->resource_id();
-    std::string rtype = request->resource_type();
-    uint32_t room_id = request->room_id();
-    
-    Resource * r = findResource(rid, rtype, option::Available);
-    if (r == nullptr) {
-        response->set_success(false);
-        response->set_resource_id(0);
-        response->set_success_message("No available resource of specific type");
-        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "No available resource");
-    }
-    
-    //room_client->transferresource(resource id, room id);
-    // if failure
-    
-    // on success -->
-    r->setRoomId(room_id); // Change the room id to the new room
-    
-    moveResource(rid, option::Available, option::Busy); // Move the room from free to busy
-    
-    response->set_success(true);
-    response->set_resource_id(r->getResourceId());
-    response->set_success_message("Successful transfer");
-    
-    return grpc::Status::OK;
-}
-
-grpc::Status ResourceManagementService::AddStock(grpc::ServerContext * context, const StockIncreaseRequest * request, StockAmount * response) {
-    
-    readMetadata(* context); // read metadata
-    
-    uint64_t rid = request->resource_id();
-    std::string rtype = request->resource_type();
-    uint32_t amt = request->increase_amount();
-    
-    if (rid == 0){ // No specific id is provided --> search for resource with matching type
-        Resource * r = findResource(rid, rtype, option::Total);
-        if (r == nullptr) {
-            response->set_resource_id(0);
-            response->set_resource_type("");
-            response->set_current_stock(OUT_OF_STOCK);
-            return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not find a resource of that type");
-        }
-    }
-    
-    auto it = resource_stock.find(rid);
-    if (it == resource_stock.end()) { // Cannot find stock
-        auto [new_it, inserted] = resource_stock.emplace(rid, OUT_OF_STOCK);
-        it = new_it;   // now use it normally
-    }
-    
-    it->second += amt; // Add the stock amount to the value
-    
-    // Fill out response
-    response->set_resource_id(rid);
-    response->set_resource_type(rtype);
-    response->set_current_stock(it->second);
-    
-    return grpc::Status::OK;
-}
-
-grpc::Status ResourceManagementService::RemoveStock(grpc::ServerContext * context, const StockDecreaseRequest * request, StockAmount * response) {
-    
-    readMetadata(* context); // read metadata
-    
-    uint64_t rid = request->resource_id();
-    std::string rtype = request->resource_type();
-    uint32_t amt = request->decrease_amount();
-    
-    if (rid == 0){ // No specific id is provided --> search for resource with matching type
-        Resource * r = findResource(rid, rtype, option::Total);
-        if (r == nullptr) {
-            response->set_resource_id(0);
-            response->set_resource_type("");
-            response->set_current_stock(OUT_OF_STOCK);
-            return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not find a resource of that type");
-        }
-    }
-    
-    auto it = resource_stock.find(rid);
-    if (it == resource_stock.end())
-        response->set_resource_id(rid);
-        response->set_resource_type(rtype);
-        response->set_current_stock(OUT_OF_STOCK);
-        return grpc::Status(grpc::StatusCode::NOT_FOUND, "No stock entry");
-
-    if (it->second < amt) { // If the current stock is less than the amount wanted to remove
-        response->set_resource_id(rid);
-        response->set_resource_type(rtype);
-        response->set_current_stock(it->second);
-        return grpc::Status(grpc::StatusCode::ABORTED, "Cannot remove more items than what currently exists in the stock");
-    }
-    
-    it->second -= amt; // Remove amount from stock
-    
-    // Fill out response
-    response->set_resource_id(rid);
-    response->set_resource_type(rtype);
-    response->set_current_stock(it->second);
-    
-    return grpc::Status::OK;
-}
-
-grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * context, const ResourceRegistrationRequest * request, RegistrationSuccess * response) {
-    
-    readMetadata(* context); // read metadata
-    
-    std::string rtype = request->resource_type();
-    uint64_t rid = generate_unique_resource_id();
-    
-
-    ResourceDTO * dto = response->mutable_resource(); // Create data transfer object
-    
-    auto type = Resource::stringToResourceType(rtype); // Convert the string to a ResourceType
-    if (std::holds_alternative<std::monostate>(type)) { // Invalid resource type
-        dto->set_resource_id(0);
-        dto->set_room_id(0);
-        dto->set_resource_type(rtype);
-        return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,"Unknown resource type");
-    }
-    
-    // Make a new resource
-    std::unique_ptr<Resource> resource = std::make_unique<Resource>(type, rid);
-    Resource * raw = resource.get(); // Get the raw pointer
-    
-    total_resources.emplace(rid, std::move(resource));
-    available_resources.emplace(rid, raw);
-    
-    // Fill out the response with the new resource
-    dto->set_resource_id(rid);
-    dto->set_room_id(NO_ASSIGNED_ROOM);
-    dto->set_resource_type(rtype);
-    
-    return grpc::Status::OK;
-}
-
-grpc::Status ResourceManagementService::DeregisterResource(grpc::ServerContext * context, const ResourceDeregistrationRequest * request, ResourceSuccess * response) {
-    
-    readMetadata(* context); // read metadata
-    
-    uint64_t rid = request->resource_id();
-    if (rid == 0) {
-        response->set_success(false);
-        response->set_resource_id(0);
-        response->set_success_message("Deregistration failed, No resource id provided");
-        return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "No resource id provided");
-    }
-    
-    auto it = total_resources.find(rid);
+    auto it = total_resources.find(resource_id);
     if (it == total_resources.end()) {
-        response->set_success(false);
-        response->set_resource_id(0);
-        response->set_success_message("Deregistration failed, Could not find resource");
-        return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "Could not find resource");
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource to send for maintenance");
+    } else if (it->second->isConsumable()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot send consumable resources for maintenance");
     }
     
+    // Get the current date
+    Timestamp maintenance_start = Timestamp::current_time();
+    Timestamp maintenance_end   = maintenance_start + times::day;
     
-    auto busy_it = busy_resources.find(rid); // Check if the resource is busy
-    if (busy_it != busy_resources.end()) { // If the resource is busy right now
-        response->set_success(false);
-        response->set_resource_id(rid);
-        response->set_success_message("Deregistration failed, Resource is in use");
-        return grpc::Status(grpc::StatusCode::ABORTED, "Resource is in use at this point");
+    // Make the maintenance shift
+    Shift maintenance_shift(maintenance_start, maintenance_end, rooms::idle);
+    
+    // Add the shift to the resources schedule
+    bool successful_addition = it->second->access_schedule()->addToSchedule(maintenance_shift);
+    success->set_successful(successful_addition);
+    
+    if (!successful_addition) { // If addition was not successful
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully send the resource for maintenance");
+    } else { return grpc::Status::OK; }
+}
+
+grpc::Status ResourceManagementService::AddToSchedule(grpc::ServerContext * context, const ResourceShift * shift, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    uint64_t resource_id = shift->resource().resource_id();
+    uint32_t room_id     = shift->resource().room_id();
+    
+    // Find the resource pointer
+    auto it = total_resources.find(resource_id);
+    if (it == total_resources.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource");
     }
     
-    /** **Non busy resources do not have a room id --> can safely delete them and wont affect other services** */
+    // Get pointers to the dates
+    const DateDTO & start_date_ptr = shift->start();
+    const DateDTO & end_date_ptr   = shift->other();
+    uint64_t shift_duration = shift->duration();
     
-    auto stock_it = resource_stock.find(rid);
-    auto av_it = available_resources.find(rid);
+    // Get the dates as timestamps
+    Timestamp start_ts = date_to_timestamp(Date(start_date_ptr));
+    Timestamp end_ts   = date_to_timestamp(Date(end_date_ptr));
     
-    if (stock_it != resource_stock.end()) { // If the resource has a correlated stock value
-        resource_stock.erase(stock_it);
+    // If starting timestamp is empty
+    if (start_ts == times::zero) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "Must provide a shift start date");
     }
     
-    if (av_it != available_resources.end()) { // If the resource has a correlated available resource entry
-        available_resources.erase(av_it);
+    // Create the shifts depending on the information passed in the request
+    bool addition_success = false;
+    if (end_ts != times::zero)  { // An end timestamp has been provided
+        Shift new_shift(start_ts, end_ts, room_id);
+        addition_success = it->second->access_schedule->addToSchedule(new_shift);
+    } else if (shift_duration > duration::none) { // A shift duration has been provided
+        Shift new_shift(start_ts, shift_duration, room_id);
+        addition_success = it->second->access_schedule->addToSchedule(new_shift);
+    } else { // Neither have been provided
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "Must provide either an end time, or a shift duration");
     }
     
-    total_resources.erase(it);
+    success->set_successful(addition_success); // Report success depending on if the shift was added successfully
+    
+    if (!addition_success) {
+        return grpc::Status(grpc::StatusCode::UNKNOWN, "Unknown error occurred when adding to schedule");
+    } else { return grpc::Status::OK; }
+}
  
-    response->set_success(true);
-    response->set_resource_id(rid);
-    response->set_success_message("Deregistration succeeded");
+grpc::Status ResourceManagementService::RemoveFromSchedule(grpc::ServerContext * context, const ResourceShift * shift, Success * success) {
     
+    readMetadata(* context); // Read request metadata
+    
+    // Find the resource in the total map
+    uint64_t resource_id = shift->resource().resource_id();
+    auto it = total_resources.find(resource_id);
+    if (it == total_resources.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource");
+    }
+    
+    const DateDTO & start_date = shift->start(); // Only the start time is required
+    
+    Timestamp shift_start_time = date_to_timestamp(Date(start_date)); // Convert the date to a timestamp
+    
+    // Remove the shift from the schedule
+    Shift shift_to_remove(shift_start_time, duration::none, rooms::idle);
+    bool removal_success = it->second->access_schedule()->removeFromSchedule(shift_to_remove);
+    success->set_successful(removal_success);
+    
+    if (!removal_success) {
+        return grpc::Status(grpc::StatusCode::CANCELLED, "Specified shift does not exist");
+    } else { return grpc::Status::OK; }
+}
+
+grpc::Status ResourceManagementService::RemoveResourceFromRoom(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    uint64_t resource_id = resource->resource_id();
+    uint32_t room_id = resource->room_id();
+    
+    if (room_id == rooms::idle) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "No room id provided");
+    }
+    
+    auto it = total_resources.find(resource_id);
+    if (it == total_resources.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource to access");
+    }
+    
+    bool removal_success = it->second->access_schedule()->removeFromSchedule(room_id);
+    success->set_successful(removal_success);
+    
+    if (!removal_success) {
+        return grpc::Status(grpc::StatusCode::CANCELLED, "Selected resource does not have a shift in the designated room");
+    } else { return grpc::Status::OK; }
+}
+
+grpc::Status ResourceManagementService::ChangeSchedule(grpc::ServerContext * context, const ResourceShift * shift, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    // Extract request information
+    uint64_t resource_id = shift->resource().resource_id();
+    uint32_t room_id     = shift->resource().room_id();
+    
+    if (room_id == rooms::idle) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "No room id provided");
+    }
+    
+    // Find the resource
+    auto it = total_resources.find(resource_id);
+    if (it == total_resources.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource");
+    }
+    
+    // Extract shift information
+    const DateDTO & this_shift_date = shift->start(); // 'This' is the shift to change
+    const DateDTO & new_shift_date  = shift->other(); // 'New' is the new shift 'This' is changed to
+    uint64_t new_shift_duration     = shift->duration();
+    
+    // Convert dates to timestamps
+    Timestamp this_shift_ts = date_to_timestamp(Date(this_shift_date));
+    Timestamp new_shift_ts  = date_to_timestamp(Date(new_shift_date));
+    
+    // If any of the timestamps are empty
+    if (this_shift_ts == times::zero || new_shift_ts == times::zero || new_shift_duration == duration::none) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::CANCELLED, "Missing input arguments");
+    }
+    
+    // Get the shifts
+    Shift this_shift(this_shift_ts, duration::none, rooms::idle);
+    Shift backup = it->second->access_schedule()->copyShift(this_shift); // Just in case insertion fails but deletion succeeds
+    Shift new_shift(new_shift_ts, new_shift_duration, room_id);
+
+    // Try to remove 'This' shift
+    bool removal_success = it->second->access_schedule()->removeFromSchedule(this_shift);
+    if (!removal_success) { // Could not remove
+        success->set_successful(removal_success);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Shift to modify not found");
+    }
+
+    // Try to add 'New' shift
+    bool successfully_added = it->second->access_schedule()->addToSchedule(new_shift);
+    if (!successfully_added) { // Could not add
+        it->second->access_schedule()->addToSchedule(backup); // Put old shift back
+
+        success->set_successful(successfully_added);
+        return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "New shift conflicts with schedule");
+    }
+
+    // Removal and Addition must succeed
+    success->set_successful(successfully_added && removal_success);
     return grpc::Status::OK;
 }
 
-grpc::Status ResourceManagementService::Print(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
-    readMetadata(* context); // read metadata
-    print_internal();
+grpc::Status ResourceManagementService::SeeTodaysSchedule(grpc::ServerContext * context, const ResourceDTO * resource, ResourceSchedule * schedule) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    uint64_t resource_id = resource->resource_id(); // Extract the resource id
+    
+    auto it = total_resources.find(resource_id); // Get the iterator to the resource id
+    if (it == total_resources.end()) {
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Selected resource is not found");
+    }
+    
+    // Get the shift schedule
+    std::set<Shift> resource_schedule = it->second->access_schedule()->getToday();
+    if (resource_schedule.empty()) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Selected resource does not have any shifts");
+    }
+    
+    // Convert the set into a schedule
+    convertToSchedule(resource_schedule, schedule, resource);
     return grpc::Status::OK;
 }
 
-// Inherited from IService
-ReturnCode ResourceManagementService::loadFromDB(std::string_view database_name) {
+grpc::Status ResourceManagementService::SeeTomorrowsSchedule(grpc::ServerContext * context, const ResourceDTO * resource, ResourceSchedule * schedule) {
     
-    return ReturnCode::SUCCESS;
-}
-ReturnCode ResourceManagementService::uploadToDB(std::string_view database_name) {
+    readMetadata(* context); // Read request metadata
     
-    return ReturnCode::SUCCESS;
+    uint64_t resource_id = resource->resource_id(); // Extract the resource id
+    
+    auto it = total_resources.find(resource_id); // Get the iterator to the resource id
+    if (it == total_resources.end()) {
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Selected resource is not found");
+    }
+    
+    // Get the shift schedule
+    std::set<Shift> resource_schedule = it->second->access_schedule()->getTomorrow();
+    if (resource_schedule.empty()) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Selected resource does not have any shifts");
+    }
+    
+    // Convert the set into a schedule
+    convertToSchedule(resource_schedule, schedule, resource);
+    return grpc::Status::OK;
 }
+
+grpc::Status ResourceManagementService::SeeScheduleRange(grpc::ServerContext * context, const ResourceShift * range, ResourceSchedule * schedule) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    // Extract information
+    uint64_t resource_id = range->resource().resource_id();
+    const DateDTO & start_date = range->start();
+    const DateDTO & end_date   = range->other();
+    
+    // Find the resource in the map
+    auto it = total_resources.find(resource_id);
+    if (it == total_resources.end()) {
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Selected resource is not found");
+    }
+    
+    // Get the shift schedule
+    std::set<Shift> resource_schedule = it->second->access_schedule()->getBetween(Date(start_date), Date(end_date));
+    if (resource_schedule.empty()) {
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Selected resource does not have any shifts");
+    }
+    
+    // Convert the set into a schedule
+    convertToSchedule(resource_schedule, schedule, range->resource());
+    return grpc::Status::OK;
+}
+
+grpc::Status ResourceManagementService::AddStock(grpc::ServerContext * context, const StockUpdate * stock, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    uint64_t stock_id = stock->resource_id();
+    ResourceType stock_type = Resource::stringToResourceType(stock->resource_type());
+    uint32_t stock_amount = stock->stock_amount();
+    
+    // If the resource type is not a consumable
+    if (!std::holds_alternative<ConsumableType>(stock_type)) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot add stock for machinery resources");
+    }
+    
+    // Get an iterator to the resource
+    auto resource_iterator = total_resources.find(stock_id);
+    if (resource_iterator == total_resources.end()) {
+        total_resources.emplace(stock_id, std::make_unique<Resource>(stock_type));
+    }
+    
+    // Add the amount to stock -- Creates new <key,value> if it DNE
+    resource_stock[stock_id] += stock_amount;
+    success->set_successful(true);
+    return grpc::Status::OK;
+}
+
+grpc::Status ResourceManagementService::RemoveStock(grpc::ServerContext * context, const StockUpdate * stock, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    // Extract relevant information
+    uint64_t stock_id = stock->resource_id();
+    ResourceType stock_type = Resource::stringToResourceType(stock->resource_type());
+    uint32_t stock_amount = stock->stock_amount();
+    
+    // If the resource type is not a consumable
+    if (!std::holds_alternative<ConsumableType>(stock_type)) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot remove stock for machinery resources");
+    }
+    
+    // Get an iterator to the resource
+    auto resource_iterator = total_resources.find(stock_id);
+    if (resource_iterator == total_resources.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Cannot find the stock to remove amounts from");
+    }
+    
+    // Get iterator to the stock resource
+    auto stock_iterator = resource_stock.find(stock_id);
+    if (stock_iterator == resource_stock.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::ABORTED, "There is no stock for the selected resource");
+    }
+    
+    // If the stock to remove is greater than the current amount
+    if (stock_iterator->second < stock_amount) {
+        stock_iterator->second = 0;
+    } else { // The amount to remove is less than the total amount
+        stock_iterator->second -= stock_amount;
+    }
+    
+    // Report success
+    success->set_successful(true);
+    return grpc::Status::OK;
+}
+
+grpc::Status ResourceManagementService::UseStock(grpc::ServerContext * context, const StockUpdate * stock, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    // Extract relevant information
+    uint64_t stock_id = stock->resource_id();
+    ResourceType stock_type = Resource::stringToResourceType(stock->resource_type());
+    uint32_t stock_amount = stock->stock_amount();
+    
+    // If the resource type is not a consumable
+    if (!std::holds_alternative<ConsumableType>(stock_type)) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot remove stock for machinery resources");
+    }
+    
+    // Get an iterator to the resource
+    auto resource_iterator = total_resources.find(stock_id);
+    if (resource_iterator == total_resources.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Cannot find the stock to remove amounts from");
+    }
+    
+    // Get iterator to the stock resource
+    auto stock_iterator = resource_stock.find(stock_id);
+    if (stock_iterator == resource_stock.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::ABORTED, "There is no stock for the selected resource");
+    }
+    
+    // If the stock to remove is greater than the current amount
+    if (stock_iterator->second < stock_amount) {
+        stock_iterator->second = 0;
+    } else { // The amount to remove is less than the total amount
+        stock_iterator->second -= stock_amount;
+    }
+    
+    // Report success
+    success->set_successful(true);
+    return grpc::Status::OK;
+}
+
+grpc::Status ResourceManagementService::EmptyStock(grpc::ServerContext * context, const StockUpdate * stock, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    // Extract relevant information
+    uint64_t stock_id = stock->resource_id();
+    ResourceType stock_type = Resource::stringToResourceType(stock->resource_type());
+    uint32_t stock_amount = stock->stock_amount();
+    
+    // If the resource type is not a consumable
+    if (!std::holds_alternative<ConsumableType>(stock_type)) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot remove stock for machinery resources");
+    }
+    
+    // Get an iterator to the resource
+    auto resource_iterator = total_resources.find(stock_id);
+    if (resource_iterator == total_resources.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Cannot find the stock to remove amounts from");
+    }
+    
+    // Get iterator to the stock resource
+    auto stock_iterator = resource_stock.find(stock_id);
+    if (stock_iterator == resource_stock.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::ABORTED, "There is no stock for the selected resource");
+    }
+    
+    // Remove all stock
+    stock_iterator->second = 0;
+    
+    // Report success
+    success->set_successful(true);
+    return grpc::Status::OK;
+    
+}
+
+grpc::Status ResourceManagementService::GetResourceInformation(grpc::ServerContext * context, const ResourceDTO * resource_request, ResourceDTO * resource_response) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    // Extract relevant information
+    uint64_t resource_id = resource_request->resource_id();
+    std::string_view resource_type = resource_request->resource_type();
+    ResourceType type = Resource::stringToResourceType(resource_request->resource_type());
+    
+    const Resource * resource_ptr; // Read-only resource ptr
+    
+    if (resource_id == 0) { // No resource id provided
+        resource_ptr = findResource(resource_id, resource_type);
+    } else { // Resource id is provided
+        auto it = total_resources.find(resource_id);
+        if (it == total_resources.end()) {
+            return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not successfully find the resource");
+        } else { resource_ptr = it->second->get(); } // Set the resource pointer to the resource
+    }
+    
+    if (resource_ptr == nullptr) { // Nullptr check
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not successfully find the resource");
+    }
+    
+    // Get the resources type
+    resource_type = Resource::resourceTypeToString(resource_ptr->getResourceType());
+    
+    // Fill out the response
+    resource_response->set_resource_id(resource_ptr->getResourceId());
+    resource_response->set_room_id(resource_ptr->getRoomId());
+    resource_response->set_resource_type(resource_type);
+    
+    if (resource_ptr->isConsumable()) {
+        auto it = resource_stock.find(resource_id);
+        if (it == resource_stock.end()) {
+            return grpc::Status(grpc::StatusCode::ABORTED, "Something went wrong when trying to get stock amounts");
+        } else {
+            resource_response->set_resource_stock(it->second);
+        }
+    }
+    return grpc::Status::OK;
+}
+
+grpc::Status ResourceManagementService::UpdateResourceInformation(grpc::ServerContext * context, const ResourceDTO * update_request, Success * success) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    uint64_t resource_id = update_request->resource_id(); // Get resource id
+    
+    auto it = total_resources.find(resource_id);
+    if (it == total_resources.end()) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource to update");
+    }
+    
+    it->second->setRoomId(update_request->room_id());
+    it->second->setResourceType(Resource::stringToResourceType(update_request->resource_type()));
+    
+    if (it->second->isConsumable) { // If the resource is a consumabe
+        auto stock_it = resource_stock.find(resource_id); // Find the resource in the stock map
+        if (stock_it == resource_stock.end()) { // If the stock can not be found
+            resource_stock.emplace(resource_id, update_request->resource_stock()); // Create the stock
+        } else { // If the stock can be found
+            stock_it->second = update_request->resource_stock(); // Set the stock amount
+        }
+    }
+    
+    success->set_successful(true);
+    return grpc::Status::OK;
+}
+
+grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext * context, const RoomRequest * room, ResourceList * list) {
+    
+    readMetadata(* context); // Read request metadata
+    
+    uint32_t room_id = room->room_id();
+    
+    if (busy_resources.empty() && (room_id != rooms::maintenance)) { // If there are no busy resources exit early
+        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "There are no resources assigned to any rooms at the moment");
+    }
+    
+    // Get relevant information from request
+    bool any_resources_in_room = false;
+    
+    for (const auto & [resource_id, resource_ptr] : busy_resources) {
+        if (resource_ptr->getRoomId() != room_id) { continue; }
+        any_resources_in_room = true;
+        
+        
+        
+        
+        
+    }
+    
+    
+}
+
+
 ReturnCode ResourceManagementService::init() {
     total_resources.clear();
     available_resources.clear();
     busy_resources.clear();
     resource_stock.clear();
 
-    // Add some resources
-    auto addResource = [&](uint64_t id, const std::string& type, uint32_t stock) {
-        // Create the Resource in total_resources (unique_ptr)
-        auto res = std::make_unique<Resource>(Resource::stringToResourceType(type), id);
-
-        // Get a raw pointer for available_resources / busy_resources
-        Resource* raw_ptr = res.get();
-
-        // Insert into total_resources
-        total_resources.emplace(id, std::move(res));
-
-        // Insert into available_resources
-        available_resources.emplace(id, raw_ptr);
-
-        // Initialize stock
-        resource_stock.emplace(id, stock);
-    };
-
-    addResource(1, "Ventilator", 10);
-    addResource(2, "MRI", 2);
-    addResource(3, "PPE", 500);
-    addResource(4, "Ultrasound", 3);
-
-    // busy_resources is empty for now
-
     return ReturnCode::SUCCESS;
 }
-void ResourceManagementService::HandleShutdown(int signal) {}
+
 void ResourceManagementService::print_internal() {
     using namespace std;
 

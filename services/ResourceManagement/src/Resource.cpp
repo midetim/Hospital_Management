@@ -112,6 +112,8 @@ ResourceType Resource::stringToResourceType(std::string_view s) {
 /* ************************* Constructors ***************************** */
 /* ******************************************************************** */
 
+Resource::Resource() : resource_schedule(std::make_unique<Schedule>()) {}
+
 Resource::Resource(MachineryType m)  : Resource() { type = m; }
 Resource::Resource(ConsumableType c) : Resource() { type = c; }
 Resource::Resource(ResourceType r)   : Resource() { type = std::move(r); }
