@@ -2,54 +2,7 @@
 #define RESOURCE_HPP
 
 #include "utils.hpp"
-#include <variant>
 #include "Schedule.hpp"
-
-/* ******************************************************************** */
-/* ******************** Resource Enumerations ************************* */
-/* ******************************************************************** */
-
-/**
- * @brief Hospital Machinery Types
- */
-enum class MachineryType {
-    Unknown,
-    XRay,
-    Ultrasound,
-    MRI,
-    CTScanner,
-    Ventilator,
-    ECGMachine,
-    Defibrillator,
-    AnesthesiaMachine,
-    DialysisMachine,
-    InfusionPump,
-    SurgicalRobot,
-    PatientMonitor,
-    OxygenGenerator
-};
-
-/**
- * @brief Hospital Consumable Types
- */
-enum class ConsumableType {
-    Unknown,
-    PPE,
-    Medication,
-    Syringes,
-    IVFluids,
-    Bandages,
-    Gloves,
-    Masks,
-    TestKits,
-    BloodBags,
-    Saline,
-    Disinfectant,
-    Sutures
-};
-
-// Resource Type must be either Machinery or Consumable
-using ResourceType = std::variant<std::monostate, MachineryType, ConsumableType>;
 
 /* ******************************************************************** */
 /* *********************** Resource Class ***************************** */
@@ -67,7 +20,7 @@ private:
     
     uint64_t resource_id = 0;
     uint32_t room_id = 0;
-    ResourceType type;
+    resources::ResourceType type;
     std::unique_ptr<Schedule> resource_schedule;
     
     /* ******************************************************************** */
@@ -81,6 +34,11 @@ public:
     /* ******************************************************************** */
     
     /**
+     * @brief Coverts a resourceType into a string
+     */
+    static std::string resourceTypeToString(const resources::ResourceType & r);
+    
+    /**
      * @brief Converts a resource into a string
      * @return Returns the resource's type as a string
      * @warning Will return "Unknown" if type is not assigned
@@ -92,51 +50,35 @@ public:
      * @return Returns the machines type as a string
      * @warning Will return "Unknown" if type is not assigned
      */
-    static std::string machineryToString(MachineryType m);
+    static std::string machineryToString(resources::MachineryType m);
     
     /**
      * @brief Converts a consumable's type into a string
      * @return Returns the consumable type as a string
      * @warning Will return "Unknown" if type is not assigned
      */
-    static std::string consumableToString(ConsumableType c);
+    static std::string consumableToString(resources::ConsumableType c);
     
     /**
      * @brief Converts a string into a machine type enumeration
      * @param s The string to convert
      * @warning Will return "Unknown" if type cannot be found
      */
-    static MachineryType stringToMachinery(std::string_view s);
+    static resources::MachineryType stringToMachinery(std::string_view s);
     
     /**
      * @brief Converts a string into a consumable type enumeration
      * @param s The string to convert
      * @warning Will return "Unknown" if type cannot be found
      */
-    static ConsumableType stringToConsumable(std::string_view s);
+    static resources::ConsumableType stringToConsumable(std::string_view s);
     
     /**
      * @brief Converts a string into a resource type enumeration
      * @param s The string to convert
      * @warning Will return std::monostate{} if type cannot be found
      */
-    static ResourceType stringToResourceType(std::string_view s);
-    
-    /* ******************************************************************** */
-    /* ********************** Type Verification *************************** */
-    /* ******************************************************************** */
-    
-    /**
-     * @brief Verifies that the resource is a machine
-     * @return Returns true if the resource is a machine
-     */
-    bool isMachinery() const { return std::holds_alternative<MachineryType>(type); }
-    
-    /**
-     * @brief Verifies that the resource is a consumable
-     * @return Returns true if the resource is a machine
-     */
-    bool isConsumable() const { return std::holds_alternative<ConsumableType>(type); }
+    static resources::ResourceType stringToResourceType(std::string_view s);
     
     /* ******************************************************************** */
     /* ************************* Constructors ***************************** */
@@ -153,21 +95,21 @@ public:
      * @param m Machinery type enumeration
      * @note Calls the general constructor
      */
-    Resource(MachineryType m);
+    Resource(resources::MachineryType m);
     
     /**
      * @brief Consumable type resource constructor
      * @param c Consumable type enumeration
      * @note Calls the general constructor
      */
-    Resource(ConsumableType c);
+    Resource(resources::ConsumableType c);
     
     /**
      * @brief General typed resource constructor
      * @param r The resource type
      * @note Calls the general constructor
      */
-    Resource(ResourceType r);
+    Resource(resources::ResourceType r);
     
     /**
      * @brief Machinery type resource constructor
@@ -175,7 +117,7 @@ public:
      * @param resource_id The id of the resource
      * @note Calls the general constructor
      */
-    Resource(MachineryType m, uint64_t resource_id);
+    Resource(resources::MachineryType m, uint64_t resource_id);
     
     /**
      * @brief Consumable type resource constructor
@@ -183,7 +125,7 @@ public:
      * @param resource_id The id of the resource
      * @note Calls the general constructor
      */
-    Resource(ConsumableType c, uint64_t resource_id);
+    Resource(resources::ConsumableType c, uint64_t resource_id);
     
     /**
      * @brief General typed resource constructor
@@ -191,7 +133,7 @@ public:
      * @param resource_id The id of the resource
      * @note Calls the general constructor
      */
-    Resource(ResourceType r, uint64_t resource_id);
+    Resource(resources::ResourceType r, uint64_t resource_id);
   
     /* ******************************************************************** */
     /* ********************** Getters and Setters ************************* */
@@ -203,9 +145,10 @@ public:
     uint32_t getRoomId() const { return this->room_id; }
     void setRoomId(uint32_t rid) { this->room_id = rid; }
     
-    const ResourceType & getResourceType() const { return this->type; }
-    void setResourceType(MachineryType m) { this->type = m; }
-    void setResourceType(ConsumableType c) { this->type = c; }
+    const resources::ResourceType & getResourceType() const { return this->type; }
+    void setResourceType(resources::MachineryType m) { this->type = m; }
+    void setResourceType(resources::ConsumableType c) { this->type = c; }
+    void setResourceType(resources::ResourceType r) { this->type = r; }
     
     /* ******************************************************************** */
     /* ************************* Schedule Access ************************** */

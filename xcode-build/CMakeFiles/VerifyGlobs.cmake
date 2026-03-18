@@ -11,6 +11,7 @@ set(OLD_GLOB
   "/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/common/include/Schedule.hpp"
   "/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/common/include/Service.hpp"
   "/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/common/include/grpc_utils.hpp"
+  "/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/common/include/time_utils.hpp"
   "/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/common/include/utils.hpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
@@ -42,6 +43,7 @@ set(OLD_GLOB
   "/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/common/src/RoomManagementClient.cpp"
   "/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/common/src/Schedule.cpp"
   "/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/common/src/Service.cpp"
+  "/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/common/src/time_utils.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

@@ -3,45 +3,65 @@
 
 #include "Client.hpp"
 #include "ResourceManagement.grpc.pb.h"
+#include "Common.grpc.pb.h"
 
-struct StockWrapper {
+/* ******************************************************************** */
+/* ******************* Resource Management Client ********************* */
+/* ******************************************************************** */
+
+struct resource_data {
     uint64_t resource_id = 0;
-    std::string resource_type = "";
-    uint32_t stock = 0;
+    uint32_t room_id = rooms::idle;
+    std::string resource_type = "Unknown";
+    uint32_t resource_stock = 0;
 };
 
 class ResourceManagementClient : public IClient {
 private:
+    
+    /* ******************************************************************** */
+    /* ********************** Private Variables *************************** */
+    /* ******************************************************************** */
+    
     std::unique_ptr<ResourceManagement::Stub> stub;
+    std::unique_ptr<Common::Stub> common;
     std::string_view target_hostport;
     
+    /* ******************************************************************** */
+    /* ********************** Private Functions *************************** */
+    /* ******************************************************************** */
+    
 public:
-    static constexpr std::string_view CLIENT_NAME = "Resource Management Client";
+    
+    /* ******************************************************************** */
+    /* ************************** Constructor ***************************** */
+    /* ******************************************************************** */
     
     explicit ResourceManagementClient(std::string_view target);
-    
-    ReturnCode findResource(uint64_t resource_id);
-    ReturnCode findResource(std::string resource_type);
-    
-    ReturnCode showAllResources();
 
-    uint64_t sendResource(uint64_t resource_id, std::string resource_type, uint32_t room_id);
-    
-    ReturnCode retrieveResource(uint64_t resource_id);
-    
-    uint64_t transferResource(uint64_t resource_id, std::string resource_type, uint32_t room_id);
-    
-    StockWrapper addStock(uint64_t resource_id, std::string resource_type, uint32_t increase_amount);
-    StockWrapper removeStock(uint64_t resource_id, std::string resource_type, uint32_t decrease_amount);
-    
-    uint64_t registerResource(std::string resource_type);
-    ReturnCode deregisterResource(uint64_t resource_id);
+    /* ******************************************************************** */
+    /* ********************* Common gRPC | ICLient ************************ */
+    /* ******************************************************************** */
     
     bool ping(std::string_view service_name) override;
-    std::string_view name() override { return CLIENT_NAME; }
-    bool Print() override;
+    bool print(std::string_view service_name) override;
+    bool update(std::string_view service_name) override;
     
-    void update(std::string_view service_name) override;
+    /* ******************************************************************** */
+    /* ******************** ResourceManagement gRPC *********************** */
+    /* ******************************************************************** */
+    
+    bool registerResource(std::string_view resource_type, uint32_t resource_stock, std::string_view service_name);
+    
+    bool deregisterResource(uint64_t resource_id, std::string_view service_name);
+    
+    bool sendResourceForMaintenance(uint64_t resource_id, std::string_view service_name);
+    
+    bool addToSchedule(uint64_t resource_id, uint32_t room_id, const Date & start_date, const Date & end_date, std::string_view service_name);
+    
+    /* ******************************************************************** */
+    /* **************************** Other ********************************* */
+    /* ******************************************************************** */
     
 };
 

@@ -10,11 +10,9 @@
 #include <unordered_map>
 #include "Resource.hpp"
 #include "Service.hpp"
+#include "time_utils.hpp"
 
 #include "RoomManagementClient.hpp"
-
-constexpr uint32_t OUT_OF_STOCK = 0;
-constexpr uint32_t NO_ASSIGNED_ROOM = 0;
 
 /* ******************************************************************** */
 /* ****************** Resource Management Service ********************* */
@@ -102,7 +100,7 @@ private:
      * @param schedule The resource schedule to add to
      * @param resource The resource DTO to add to each resource shift
      */
-    void convertToSchedule(const std::set<Shift> & scheduled_shifts, ResourceSchedule * schedule, ResourceDTO * resource) const;
+    ReturnCode convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, ResourceSchedule * schedule, const ResourceDTO * resource) const;
     
 public:
     

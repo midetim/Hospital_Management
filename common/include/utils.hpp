@@ -8,6 +8,12 @@
 #include <iomanip>
 #include <sstream>
 #include <ctime>
+#include <variant>
+
+
+/* ******************************************************************** */
+/* ********************** Service Namespace *************************** */
+/* ******************************************************************** */
 
 /* DEBUG / LOCAL TESTING COMPILER MACROS*/
 namespace service {
@@ -49,6 +55,11 @@ namespace service {
 
 }
 
+
+/* ******************************************************************** */
+/* ********************** ANSI Color Codes **************************** */
+/* ******************************************************************** */
+
 /**
  * @brief ANSI Colour codes for flavourful text
  */
@@ -73,10 +84,21 @@ namespace ansi {
     inline constexpr const char * bwhite =      "\033[97m";
 }
 
+
+/* ******************************************************************** */
+/* *********************** Room Namespace ***************************** */
+/* ******************************************************************** */
+
 namespace rooms {
+    inline constexpr uint32_t none = 0;
     inline constexpr uint32_t idle = 0;
     inline constexpr uint32_t maintenance = 1;
 }
+
+/* ******************************************************************** */
+/* ************************* Name Struct ****************************** */
+/* ******************************************************************** */
+
 /**
  * @brief Name struct for people
  * @param first The first name
@@ -89,6 +111,10 @@ struct Name {
     std::string middle;
     std::string last;
 };
+
+/* ******************************************************************** */
+/* *********************** Sex Enumeration **************************** */
+/* ******************************************************************** */
 
 /**
  * @brief Sex enumeration for people
@@ -131,6 +157,10 @@ inline Sex stringToSex(const std::string & s) {
     else if (s == "Other")      return Sex::Other;
     else                        return Sex::Unknown;
 }
+
+/* ******************************************************************** */
+/* ******************** Condition Enumeration ************************* */
+/* ******************************************************************** */
 
 /**
  * @brief Patient Condition enumeration
@@ -186,6 +216,59 @@ enum class ReturnCode : int32_t {
     FAILURE = -1,
     NOT_YET_IMPLEMENTED = -2
 };
+
+/* ******************************************************************** */
+/* ********************** Resources Namespace ************************* */
+/* ******************************************************************** */
+
+namespace resources {
+
+    /**
+     * @brief Hospital Machinery Types
+     */
+    enum class MachineryType {
+        Unknown,
+        XRay,
+        Ultrasound,
+        MRI,
+        CTScanner,
+        Ventilator,
+        ECGMachine,
+        Defibrillator,
+        AnesthesiaMachine,
+        DialysisMachine,
+        InfusionPump,
+        SurgicalRobot,
+        PatientMonitor,
+        OxygenGenerator
+    };
+
+    /**
+     * @brief Hospital Consumable Types
+     */
+    enum class ConsumableType {
+        Unknown,
+        PPE,
+        Medication,
+        Syringes,
+        IVFluids,
+        Bandages,
+        Gloves,
+        Masks,
+        TestKits,
+        BloodBags,
+        Saline,
+        Disinfectant,
+        Sutures
+    };
+
+    // Resource Type must be either Machinery or Consumable
+    using ResourceType = std::variant<std::monostate, MachineryType, ConsumableType>;
+
+    inline bool isMachinery (const ResourceType & t) { return std::holds_alternative<MachineryType>(t); }
+    inline bool isConsumable(const ResourceType & t) { return std::holds_alternative<ConsumableType>(t); }
+    inline constexpr std::string_view unknown = "Unknown";
+}
 
 /**
  * @brief Util class to contain static utility functions

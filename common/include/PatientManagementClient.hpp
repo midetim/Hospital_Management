@@ -5,7 +5,9 @@
 #include "PatientManagement.grpc.pb.h"
 #include "Common.grpc.pb.h"
 
-constexpr uint64_t INVALID_PID = 0;
+/* ******************************************************************** */
+/* ******************** Patient Management Client ********************* */
+/* ******************************************************************** */
 
 /**
  * @brief Patient data transfer object for modular passing of patient information
@@ -15,11 +17,16 @@ struct patient_data {
     uint64_t patient_id = 0;
     Sex patient_sex = Sex::Unknown;
     Condition patient_condition = Condition::Unknown;
-    uint32_t room_id = 0;
+    uint32_t room_id = rooms::none;
 };
 
 class PatientManagementClient : public IClient {
 private:
+    
+    /* ******************************************************************** */
+    /* ********************** Private Variables *************************** */
+    /* ******************************************************************** */
+    
     std::unique_ptr<PatientManagement::Stub> stub; // Stub for calling the Patient Management service
     std::unique_ptr<Common::Stub> common; // Stub for calling common service
     std::string_view target_hostport; // Host name of the patient management service
