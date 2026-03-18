@@ -3,23 +3,14 @@
 #include <grpcpp/grpcpp.h>
 #include "grpc_utils.hpp"
 
-#include <ctime>
-#include <random>
+
+using namespace general;
+using namespace person;
+using namespace patient;
 
 /* ******************************************************************** */
 /* ********************** Private Functions *************************** */
 /* ******************************************************************** */
-
-uint64_t PatientManagementService::generate_unique_patient_id() {
-    /* Patient ID format
-     0x0000000000000000 ->
-     |000000000000|0000|
-     | TIMESTAMP  |RAND|
-     */
-    static thread_local std::mt19937 rng(std::random_device{}());
-    static std::uniform_int_distribution<uint16_t> dist(0, 0xFFFF);
-    return ((uint64_t) time(nullptr) << 16) | dist(rng);
-}
  
 uint64_t PatientManagementService::find_patient(const Patient & p) {
     for (const auto & [pid, patient] : hospital_patients) {
@@ -99,7 +90,7 @@ grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * contex
     bool is_quarantined = patient->is_quarantined();
     
     // Generate a patient id
-    patient_id = generate_unique_patient_id();
+    patient_id = generate_id();
     new_patient.setPatientId(patient_id);
     
     // Attempt to admit patient to the room service

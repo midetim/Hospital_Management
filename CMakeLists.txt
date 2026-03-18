@@ -21,7 +21,8 @@ find_package(gRPC CONFIG REQUIRED PATHS ${GRPC_INSTALL_DIR}/lib/cmake/grpc)
 add_subdirectory(${COMMON_DIR})
 
 # Adding each microservice as its own subdir
-add_subdirectory(${SERVICE_DIR}/FrontEnd)
+add_subdirectory(${SERVICE_DIR}/FrontEnd_CLI)
+add_subdirectory(${SERVICE_DIR}/FrontEnd_GUI)
 add_subdirectory(${SERVICE_DIR}/PatientManagement)
 add_subdirectory(${SERVICE_DIR}/ResourceManagement)
 add_subdirectory(${SERVICE_DIR}/RoomManagement)

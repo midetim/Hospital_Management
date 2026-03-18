@@ -26,7 +26,8 @@ TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Deskto
 TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/external/grpc/local/lib/cmake/utf8_range/utf8_range-config.cmake))
 TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/external/grpc/local/lib/cmake/utf8_range/utf8_range-targets-noconfig.cmake))
 TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/external/grpc/local/lib/cmake/utf8_range/utf8_range-targets.cmake))
-TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/services/FrontEnd/CMakeLists.txt))
+TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/services/FrontEnd_CLI/CMakeLists.txt))
+TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/services/FrontEnd_GUI/CMakeLists.txt))
 TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/services/PatientManagement/CMakeLists.txt))
 TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/services/ResourceManagement/CMakeLists.txt))
 TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/services/RoomManagement/CMakeLists.txt))
@@ -127,16 +128,6 @@ TARGETS += $(subst $(space),$(spaceplus),$(wildcard /opt/homebrew/share/cmake/Mo
 TARGETS += $(subst $(space),$(spaceplus),$(wildcard /opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang-CXX.cmake))
 TARGETS += $(subst $(space),$(spaceplus),$(wildcard /opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang.cmake))
 TARGETS += $(subst $(space),$(spaceplus),$(wildcard /opt/homebrew/share/cmake/Modules/Platform/UnixPaths.cmake))
-TARGETS += $(subst $(space),$(spaceplus),$(wildcard /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/CMakeFiles/cmake.verify_globs))
-
-.NOTPARALLEL:
-
-.PHONY: all VERIFY_GLOBS
-
-all: VERIFY_GLOBS /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/CMakeFiles/cmake.check_cache
-
-VERIFY_GLOBS:
-	/opt/homebrew/bin/cmake -P /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/CMakeFiles/VerifyGlobs.cmake
 
 /Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/CMakeFiles/cmake.check_cache: $(TARGETS)
 	/opt/homebrew/bin/cmake -S/Users/matthewhvizdos/Desktop/COE892/Hospital_Management -B/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build

@@ -27,7 +27,7 @@ public:
      * @return Returns a return code depending on if it was successful or not
      * @warning **NO DATABASES EXIST YET**
      */
-    virtual ReturnCode connectToDB() = 0;
+    virtual general::ReturnCode connectToDB() = 0;
     
     /**
      * @brief Load all data from the database into the service
@@ -35,7 +35,7 @@ public:
      * @return Returns a return code depending on if it was successful or not
      * @warning **NO DATABASES EXIST YET**
      */
-    virtual ReturnCode loadFromDB() = 0;
+    virtual general::ReturnCode loadFromDB() = 0;
     
     /**
      * @brief Upload all data from the service into the database
@@ -43,7 +43,7 @@ public:
      * @return Returns a return code depending on if it was successful or not
      * @warning **NO DATABASES EXIST YET**
      */
-    virtual ReturnCode uploadToDB() = 0;
+    virtual general::ReturnCode uploadToDB() = 0;
     
     /**
      * @brief Service initialization function
@@ -51,7 +51,7 @@ public:
      * @note Initialization function is run after the data is loaded from the database
      * @warning Will be called before running the service
      */
-    virtual ReturnCode init() = 0;
+    virtual general::ReturnCode init() = 0;
     
     /**
      * @brief Prints all stored information to terminal

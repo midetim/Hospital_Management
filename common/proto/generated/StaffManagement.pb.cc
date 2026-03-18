@@ -31,6 +31,12 @@ inline constexpr StaffDTO::Impl_::Impl_(
         staff_sex_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
+        staff_pos_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        staff_clear_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
         staff_name_{nullptr},
         staff_id_{::uint64_t{0u}},
         staff_room_{0u},
@@ -59,6 +65,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 inline constexpr TimeOff::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
+        staff_{nullptr},
         start_date_{nullptr},
         end_date_{nullptr} {}
 
@@ -107,58 +114,56 @@ struct StaffListDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StaffListDefaultTypeInternal _StaffList_default_instance_;
 
-inline constexpr Shift::Impl_::Impl_(
+inline constexpr StaffShift::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
-        day_{nullptr},
-        time_{nullptr},
-        staff_id_{::uint64_t{0u}},
-        room_id_{0u} {}
+        staff_{nullptr},
+        shift_{nullptr} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR Shift::Shift(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR StaffShift::StaffShift(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(Shift_class_data_.base()),
+    : ::google::protobuf::Message(StaffShift_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct ShiftDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ShiftDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ShiftDefaultTypeInternal() {}
+struct StaffShiftDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR StaffShiftDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~StaffShiftDefaultTypeInternal() {}
   union {
-    Shift _instance;
+    StaffShift _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ShiftDefaultTypeInternal _Shift_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StaffShiftDefaultTypeInternal _StaffShift_default_instance_;
 
-inline constexpr ScheduleDTO::Impl_::Impl_(
+inline constexpr StaffSchedule::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : shifts_{},
         _cached_size_{0} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR ScheduleDTO::ScheduleDTO(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR StaffSchedule::StaffSchedule(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(ScheduleDTO_class_data_.base()),
+    : ::google::protobuf::Message(StaffSchedule_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct ScheduleDTODefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ScheduleDTODefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ScheduleDTODefaultTypeInternal() {}
+struct StaffScheduleDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR StaffScheduleDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~StaffScheduleDefaultTypeInternal() {}
   union {
-    ScheduleDTO _instance;
+    StaffSchedule _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ScheduleDTODefaultTypeInternal _ScheduleDTO_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StaffScheduleDefaultTypeInternal _StaffSchedule_default_instance_;
 static constexpr const ::_pb::EnumDescriptor *PROTOBUF_NONNULL *PROTOBUF_NULLABLE
     file_level_enum_descriptors_StaffManagement_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor *PROTOBUF_NONNULL *PROTOBUF_NULLABLE
@@ -168,37 +173,39 @@ const ::uint32_t
         protodesc_cold) = {
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::StaffDTO, _impl_._has_bits_),
-        8, // hasbit index offset
+        10, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::StaffDTO, _impl_.staff_name_),
         PROTOBUF_FIELD_OFFSET(::StaffDTO, _impl_.staff_id_),
         PROTOBUF_FIELD_OFFSET(::StaffDTO, _impl_.staff_sex_),
         PROTOBUF_FIELD_OFFSET(::StaffDTO, _impl_.staff_room_),
         PROTOBUF_FIELD_OFFSET(::StaffDTO, _impl_.staff_salary_),
-        1,
-        2,
-        0,
+        PROTOBUF_FIELD_OFFSET(::StaffDTO, _impl_.staff_pos_),
+        PROTOBUF_FIELD_OFFSET(::StaffDTO, _impl_.staff_clear_),
         3,
         4,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::Shift, _impl_._has_bits_),
-        7, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::Shift, _impl_.staff_id_),
-        PROTOBUF_FIELD_OFFSET(::Shift, _impl_.room_id_),
-        PROTOBUF_FIELD_OFFSET(::Shift, _impl_.day_),
-        PROTOBUF_FIELD_OFFSET(::Shift, _impl_.time_),
+        0,
+        5,
+        6,
+        1,
         2,
-        3,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::StaffShift, _impl_._has_bits_),
+        5, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::StaffShift, _impl_.staff_),
+        PROTOBUF_FIELD_OFFSET(::StaffShift, _impl_.shift_),
         0,
         1,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::TimeOff, _impl_._has_bits_),
-        5, // hasbit index offset
+        6, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::TimeOff, _impl_.staff_),
         PROTOBUF_FIELD_OFFSET(::TimeOff, _impl_.start_date_),
         PROTOBUF_FIELD_OFFSET(::TimeOff, _impl_.end_date_),
         0,
         1,
+        2,
         0x000, // bitmap
-        PROTOBUF_FIELD_OFFSET(::ScheduleDTO, _impl_.shifts_),
+        PROTOBUF_FIELD_OFFSET(::StaffSchedule, _impl_.shifts_),
         0x000, // bitmap
         PROTOBUF_FIELD_OFFSET(::StaffList, _impl_.staff_),
 };
@@ -206,43 +213,47 @@ const ::uint32_t
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, sizeof(::StaffDTO)},
-        {13, sizeof(::Shift)},
+        {17, sizeof(::StaffShift)},
         {24, sizeof(::TimeOff)},
-        {31, sizeof(::ScheduleDTO)},
-        {33, sizeof(::StaffList)},
+        {33, sizeof(::StaffSchedule)},
+        {35, sizeof(::StaffList)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::_StaffDTO_default_instance_._instance,
-    &::_Shift_default_instance_._instance,
+    &::_StaffShift_default_instance_._instance,
     &::_TimeOff_default_instance_._instance,
-    &::_ScheduleDTO_default_instance_._instance,
+    &::_StaffSchedule_default_instance_._instance,
     &::_StaffList_default_instance_._instance,
 };
 const char descriptor_table_protodef_StaffManagement_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\025StaffManagement.proto\032\014Common.proto\"w\n"
-    "\010StaffDTO\022\034\n\nstaff_name\030\001 \001(\0132\010.NameDTO\022"
-    "\020\n\010staff_id\030\002 \001(\004\022\021\n\tstaff_sex\030\003 \001(\t\022\022\n\n"
-    "staff_room\030\004 \001(\r\022\024\n\014staff_salary\030\005 \001(\002\"Y"
-    "\n\005Shift\022\020\n\010staff_id\030\001 \001(\004\022\017\n\007room_id\030\002 \001"
-    "(\r\022\025\n\003day\030\003 \001(\0132\010.DateDTO\022\026\n\004time\030\004 \001(\0132"
-    "\010.TimeDTO\"C\n\007TimeOff\022\034\n\nstart_date\030\001 \001(\013"
-    "2\010.DateDTO\022\032\n\010end_date\030\002 \001(\0132\010.DateDTO\"%"
-    "\n\013ScheduleDTO\022\026\n\006shifts\030\001 \003(\0132\006.Shift\"%\n"
-    "\tStaffList\022\030\n\005staff\030\001 \003(\0132\t.StaffDTO2\332\003\n"
-    "\017StaffManagement\022\037\n\010AddStaff\022\t.StaffDTO\032"
-    "\010.Success\022\"\n\013RemoveStaff\022\t.StaffDTO\032\010.Su"
-    "ccess\022%\n\016ChangePosition\022\t.StaffDTO\032\010.Suc"
-    "cess\022&\n\017ChangeClearance\022\t.StaffDTO\032\010.Suc"
-    "cess\022-\n\026UpdateStaffInformation\022\t.StaffDT"
-    "O\032\010.Success\022\034\n\010AddShift\022\006.Shift\032\010.Succes"
-    "s\022\037\n\013RemoveShift\022\006.Shift\032\010.Success\022!\n\rTr"
-    "ansferShift\022\006.Shift\032\010.Success\022!\n\013BookTim"
-    "eOff\022\010.TimeOff\032\010.Success\022+\n\023SeeStaffInfo"
-    "rmation\022\t.StaffDTO\032\t.StaffDTO\022&\n\013SeeSche"
-    "dule\022\t.StaffDTO\032\014.ScheduleDTO\022*\n\016GetStaf"
-    "fInRoom\022\014.RoomRequest\032\n.StaffListb\006proto"
-    "3"
+    "\n\025StaffManagement.proto\032\014Common.proto\"\237\001"
+    "\n\010StaffDTO\022\034\n\nstaff_name\030\001 \001(\0132\010.NameDTO"
+    "\022\020\n\010staff_id\030\002 \001(\004\022\021\n\tstaff_sex\030\003 \001(\t\022\022\n"
+    "\nstaff_room\030\004 \001(\r\022\024\n\014staff_salary\030\005 \001(\002\022"
+    "\021\n\tstaff_pos\030\006 \001(\t\022\023\n\013staff_clear\030\007 \001(\t\""
+    "@\n\nStaffShift\022\030\n\005staff\030\001 \001(\0132\t.StaffDTO\022"
+    "\030\n\005shift\030\002 \001(\0132\t.ShiftDTO\"]\n\007TimeOff\022\030\n\005"
+    "staff\030\001 \001(\0132\t.StaffDTO\022\034\n\nstart_date\030\002 \001"
+    "(\0132\010.DateDTO\022\032\n\010end_date\030\003 \001(\0132\010.DateDTO"
+    "\",\n\rStaffSchedule\022\033\n\006shifts\030\001 \003(\0132\013.Staf"
+    "fShift\"%\n\tStaffList\022\030\n\005staff\030\001 \003(\0132\t.Sta"
+    "ffDTO2\325\004\n\017StaffManagement\022\037\n\010AddStaff\022\t."
+    "StaffDTO\032\010.Success\022\"\n\013RemoveStaff\022\t.Staf"
+    "fDTO\032\010.Success\022%\n\016ChangePosition\022\t.Staff"
+    "DTO\032\010.Success\022&\n\017ChangeClearance\022\t.Staff"
+    "DTO\032\010.Success\022-\n\026UpdateStaffInformation\022"
+    "\t.StaffDTO\032\010.Success\022!\n\010AddShift\022\013.Staff"
+    "Shift\032\010.Success\022$\n\013RemoveShift\022\013.StaffSh"
+    "ift\032\010.Success\022&\n\rTransferShift\022\013.StaffSh"
+    "ift\032\010.Success\022!\n\013BookTimeOff\022\010.TimeOff\032\010"
+    ".Success\022+\n\023SeeStaffInformation\022\t.StaffD"
+    "TO\032\t.StaffDTO\022.\n\021SeeTodaysSchedule\022\t.Sta"
+    "ffDTO\032\016.StaffSchedule\0221\n\024SeeTomorrowsSch"
+    "edule\022\t.StaffDTO\032\016.StaffSchedule\022/\n\020SeeS"
+    "cheduleRange\022\013.StaffShift\032\016.StaffSchedul"
+    "e\022*\n\016GetStaffInRoom\022\014.RoomRequest\032\n.Staf"
+    "fListb\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_StaffManagement_2eproto_deps[1] = {
@@ -252,7 +263,7 @@ static ::absl::once_flag descriptor_table_StaffManagement_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_StaffManagement_2eproto = {
     false,
     false,
-    881,
+    1053,
     descriptor_table_protodef_StaffManagement_2eproto,
     "StaffManagement.proto",
     &descriptor_table_StaffManagement_2eproto_once,
@@ -278,7 +289,7 @@ class StaffDTO::_Internal {
 void StaffDTO::clear_staff_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.staff_name_ != nullptr) _impl_.staff_name_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000002u;
+  _impl_._has_bits_[0] &= ~0x00000008u;
 }
 StaffDTO::StaffDTO(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
@@ -295,7 +306,9 @@ PROTOBUF_NDEBUG_INLINE StaffDTO::Impl_::Impl_(
     const ::StaffDTO& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
-        staff_sex_(arena, from.staff_sex_) {}
+        staff_sex_(arena, from.staff_sex_),
+        staff_pos_(arena, from.staff_pos_),
+        staff_clear_(arena, from.staff_clear_) {}
 
 StaffDTO::StaffDTO(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
@@ -311,7 +324,7 @@ StaffDTO::StaffDTO(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.staff_name_ = ((cached_has_bits & 0x00000002u) != 0)
+  _impl_.staff_name_ = ((cached_has_bits & 0x00000008u) != 0)
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.staff_name_)
                 : nullptr;
   ::memcpy(reinterpret_cast<char *>(&_impl_) +
@@ -328,7 +341,9 @@ PROTOBUF_NDEBUG_INLINE StaffDTO::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
-        staff_sex_(arena) {}
+        staff_sex_(arena),
+        staff_pos_(arena),
+        staff_clear_(arena) {}
 
 inline void StaffDTO::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
@@ -348,6 +363,8 @@ inline void StaffDTO::SharedDtor(MessageLite& self) {
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.staff_sex_.Destroy();
+  this_._impl_.staff_pos_.Destroy();
+  this_._impl_.staff_clear_.Destroy();
   delete this_._impl_.staff_name_;
   this_._impl_.~Impl_();
 }
@@ -395,16 +412,16 @@ StaffDTO::GetClassData() const {
   return StaffDTO_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 5, 1, 26, 2>
+const ::_pbi::TcParseTable<3, 7, 1, 46, 2>
 StaffDTO::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_._has_bits_),
     0, // no _extensions_
-    5, 56,  // max_field_number, fast_idx_mask
+    7, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967264,  // skipmap
+    4294967168,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    5,  // num_field_entries
+    7,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     StaffDTO_class_data_.base(),
@@ -417,47 +434,59 @@ StaffDTO::_table_ = {
     {::_pbi::TcParser::MiniParse, {}},
     // .NameDTO staff_name = 1;
     {::_pbi::TcParser::FastMtS1,
-     {10, 1, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_name_)}},
+     {10, 3, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_name_)}},
     // uint64 staff_id = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(StaffDTO, _impl_.staff_id_), 2>(),
-     {16, 2, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_id_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(StaffDTO, _impl_.staff_id_), 4>(),
+     {16, 4, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_id_)}},
     // string staff_sex = 3;
     {::_pbi::TcParser::FastUS1,
      {26, 0, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_sex_)}},
     // uint32 staff_room = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(StaffDTO, _impl_.staff_room_), 3>(),
-     {32, 3, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_room_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(StaffDTO, _impl_.staff_room_), 5>(),
+     {32, 5, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_room_)}},
     // float staff_salary = 5;
     {::_pbi::TcParser::FastF32S1,
-     {45, 4, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_salary_)}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
+     {45, 6, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_salary_)}},
+    // string staff_pos = 6;
+    {::_pbi::TcParser::FastUS1,
+     {50, 1, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_pos_)}},
+    // string staff_clear = 7;
+    {::_pbi::TcParser::FastUS1,
+     {58, 2, 0, PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_clear_)}},
   }}, {{
     65535, 65535
   }}, {{
     // .NameDTO staff_name = 1;
-    {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_name_), _Internal::kHasBitsOffset + 1, 0,
+    {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_name_), _Internal::kHasBitsOffset + 3, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // uint64 staff_id = 2;
-    {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_id_), _Internal::kHasBitsOffset + 2, 0,
+    {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_id_), _Internal::kHasBitsOffset + 4, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
     // string staff_sex = 3;
     {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_sex_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // uint32 staff_room = 4;
-    {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_room_), _Internal::kHasBitsOffset + 3, 0,
+    {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_room_), _Internal::kHasBitsOffset + 5, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // float staff_salary = 5;
-    {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_salary_), _Internal::kHasBitsOffset + 4, 0,
+    {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_salary_), _Internal::kHasBitsOffset + 6, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // string staff_pos = 6;
+    {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_pos_), _Internal::kHasBitsOffset + 1, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string staff_clear = 7;
+    {PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_clear_), _Internal::kHasBitsOffset + 2, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::NameDTO>()},
   }},
   {{
-    "\10\0\0\11\0\0\0\0"
+    "\10\0\0\11\0\0\11\13"
     "StaffDTO"
     "staff_sex"
+    "staff_pos"
+    "staff_clear"
   }},
 };
 PROTOBUF_NOINLINE void StaffDTO::Clear() {
@@ -468,16 +497,22 @@ PROTOBUF_NOINLINE void StaffDTO::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000003u) != 0) {
+  if ((cached_has_bits & 0x0000000fu) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
       _impl_.staff_sex_.ClearNonDefaultToEmpty();
     }
     if ((cached_has_bits & 0x00000002u) != 0) {
+      _impl_.staff_pos_.ClearNonDefaultToEmpty();
+    }
+    if ((cached_has_bits & 0x00000004u) != 0) {
+      _impl_.staff_clear_.ClearNonDefaultToEmpty();
+    }
+    if ((cached_has_bits & 0x00000008u) != 0) {
       ABSL_DCHECK(_impl_.staff_name_ != nullptr);
       _impl_.staff_name_->Clear();
     }
   }
-  if ((cached_has_bits & 0x0000001cu) != 0) {
+  if ((cached_has_bits & 0x00000070u) != 0) {
     ::memset(&_impl_.staff_id_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.staff_salary_) -
         reinterpret_cast<char*>(&_impl_.staff_id_)) + sizeof(_impl_.staff_salary_));
@@ -503,14 +538,14 @@ PROTOBUF_NOINLINE void StaffDTO::Clear() {
 
   cached_has_bits = this_._impl_._has_bits_[0];
   // .NameDTO staff_name = 1;
-  if ((cached_has_bits & 0x00000002u) != 0) {
+  if ((cached_has_bits & 0x00000008u) != 0) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         1, *this_._impl_.staff_name_, this_._impl_.staff_name_->GetCachedSize(), target,
         stream);
   }
 
   // uint64 staff_id = 2;
-  if ((cached_has_bits & 0x00000004u) != 0) {
+  if ((cached_has_bits & 0x00000010u) != 0) {
     if (this_._internal_staff_id() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
@@ -529,7 +564,7 @@ PROTOBUF_NOINLINE void StaffDTO::Clear() {
   }
 
   // uint32 staff_room = 4;
-  if ((cached_has_bits & 0x00000008u) != 0) {
+  if ((cached_has_bits & 0x00000020u) != 0) {
     if (this_._internal_staff_room() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
@@ -538,11 +573,31 @@ PROTOBUF_NOINLINE void StaffDTO::Clear() {
   }
 
   // float staff_salary = 5;
-  if ((cached_has_bits & 0x00000010u) != 0) {
+  if ((cached_has_bits & 0x00000040u) != 0) {
     if (::absl::bit_cast<::uint32_t>(this_._internal_staff_salary()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
           5, this_._internal_staff_salary(), target);
+    }
+  }
+
+  // string staff_pos = 6;
+  if ((cached_has_bits & 0x00000002u) != 0) {
+    if (!this_._internal_staff_pos().empty()) {
+      const ::std::string& _s = this_._internal_staff_pos();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "StaffDTO.staff_pos");
+      target = stream->WriteStringMaybeAliased(6, _s, target);
+    }
+  }
+
+  // string staff_clear = 7;
+  if ((cached_has_bits & 0x00000004u) != 0) {
+    if (!this_._internal_staff_clear().empty()) {
+      const ::std::string& _s = this_._internal_staff_clear();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "StaffDTO.staff_clear");
+      target = stream->WriteStringMaybeAliased(7, _s, target);
     }
   }
 
@@ -571,7 +626,7 @@ PROTOBUF_NOINLINE void StaffDTO::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000001fu) != 0) {
+  if ((cached_has_bits & 0x0000007fu) != 0) {
     // string staff_sex = 3;
     if ((cached_has_bits & 0x00000001u) != 0) {
       if (!this_._internal_staff_sex().empty()) {
@@ -579,27 +634,41 @@ PROTOBUF_NOINLINE void StaffDTO::Clear() {
                                         this_._internal_staff_sex());
       }
     }
-    // .NameDTO staff_name = 1;
+    // string staff_pos = 6;
     if ((cached_has_bits & 0x00000002u) != 0) {
+      if (!this_._internal_staff_pos().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_staff_pos());
+      }
+    }
+    // string staff_clear = 7;
+    if ((cached_has_bits & 0x00000004u) != 0) {
+      if (!this_._internal_staff_clear().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_staff_clear());
+      }
+    }
+    // .NameDTO staff_name = 1;
+    if ((cached_has_bits & 0x00000008u) != 0) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.staff_name_);
     }
     // uint64 staff_id = 2;
-    if ((cached_has_bits & 0x00000004u) != 0) {
+    if ((cached_has_bits & 0x00000010u) != 0) {
       if (this_._internal_staff_id() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_staff_id());
       }
     }
     // uint32 staff_room = 4;
-    if ((cached_has_bits & 0x00000008u) != 0) {
+    if ((cached_has_bits & 0x00000020u) != 0) {
       if (this_._internal_staff_room() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_staff_room());
       }
     }
     // float staff_salary = 5;
-    if ((cached_has_bits & 0x00000010u) != 0) {
+    if ((cached_has_bits & 0x00000040u) != 0) {
       if (::absl::bit_cast<::uint32_t>(this_._internal_staff_salary()) != 0) {
         total_size += 5;
       }
@@ -619,7 +688,7 @@ void StaffDTO::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000001fu) != 0) {
+  if ((cached_has_bits & 0x0000007fu) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
       if (!from._internal_staff_sex().empty()) {
         _this->_internal_set_staff_sex(from._internal_staff_sex());
@@ -630,6 +699,24 @@ void StaffDTO::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google
       }
     }
     if ((cached_has_bits & 0x00000002u) != 0) {
+      if (!from._internal_staff_pos().empty()) {
+        _this->_internal_set_staff_pos(from._internal_staff_pos());
+      } else {
+        if (_this->_impl_.staff_pos_.IsDefault()) {
+          _this->_internal_set_staff_pos("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000004u) != 0) {
+      if (!from._internal_staff_clear().empty()) {
+        _this->_internal_set_staff_clear(from._internal_staff_clear());
+      } else {
+        if (_this->_impl_.staff_clear_.IsDefault()) {
+          _this->_internal_set_staff_clear("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000008u) != 0) {
       ABSL_DCHECK(from._impl_.staff_name_ != nullptr);
       if (_this->_impl_.staff_name_ == nullptr) {
         _this->_impl_.staff_name_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.staff_name_);
@@ -637,17 +724,17 @@ void StaffDTO::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google
         _this->_impl_.staff_name_->MergeFrom(*from._impl_.staff_name_);
       }
     }
-    if ((cached_has_bits & 0x00000004u) != 0) {
+    if ((cached_has_bits & 0x00000010u) != 0) {
       if (from._internal_staff_id() != 0) {
         _this->_impl_.staff_id_ = from._impl_.staff_id_;
       }
     }
-    if ((cached_has_bits & 0x00000008u) != 0) {
+    if ((cached_has_bits & 0x00000020u) != 0) {
       if (from._internal_staff_room() != 0) {
         _this->_impl_.staff_room_ = from._impl_.staff_room_;
       }
     }
-    if ((cached_has_bits & 0x00000010u) != 0) {
+    if ((cached_has_bits & 0x00000040u) != 0) {
       if (::absl::bit_cast<::uint32_t>(from._internal_staff_salary()) != 0) {
         _this->_impl_.staff_salary_ = from._impl_.staff_salary_;
       }
@@ -672,6 +759,8 @@ void StaffDTO::InternalSwap(StaffDTO* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) 
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.staff_sex_, &other->_impl_.staff_sex_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.staff_pos_, &other->_impl_.staff_pos_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.staff_clear_, &other->_impl_.staff_clear_, arena);
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(StaffDTO, _impl_.staff_salary_)
       + sizeof(StaffDTO::_impl_.staff_salary_)
@@ -685,196 +774,172 @@ void StaffDTO::InternalSwap(StaffDTO* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) 
 }
 // ===================================================================
 
-class Shift::_Internal {
+class StaffShift::_Internal {
  public:
   using HasBits =
-      decltype(::std::declval<Shift>()._impl_._has_bits_);
+      decltype(::std::declval<StaffShift>()._impl_._has_bits_);
   static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(Shift, _impl_._has_bits_);
+      8 * PROTOBUF_FIELD_OFFSET(StaffShift, _impl_._has_bits_);
 };
 
-void Shift::clear_day() {
+void StaffShift::clear_shift() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.day_ != nullptr) _impl_.day_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000001u;
-}
-void Shift::clear_time() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.time_ != nullptr) _impl_.time_->Clear();
+  if (_impl_.shift_ != nullptr) _impl_.shift_->Clear();
   _impl_._has_bits_[0] &= ~0x00000002u;
 }
-Shift::Shift(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+StaffShift::StaffShift(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, Shift_class_data_.base()) {
+    : ::google::protobuf::Message(arena, StaffShift_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:Shift)
+  // @@protoc_insertion_point(arena_constructor:StaffShift)
 }
-PROTOBUF_NDEBUG_INLINE Shift::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE StaffShift::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    const ::Shift& from_msg)
+    const ::StaffShift& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0} {}
 
-Shift::Shift(
+StaffShift::StaffShift(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const Shift& from)
+    const StaffShift& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, Shift_class_data_.base()) {
+    : ::google::protobuf::Message(arena, StaffShift_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  Shift* const _this = this;
+  StaffShift* const _this = this;
   (void)_this;
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.day_ = ((cached_has_bits & 0x00000001u) != 0)
-                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.day_)
+  _impl_.staff_ = ((cached_has_bits & 0x00000001u) != 0)
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.staff_)
                 : nullptr;
-  _impl_.time_ = ((cached_has_bits & 0x00000002u) != 0)
-                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.time_)
+  _impl_.shift_ = ((cached_has_bits & 0x00000002u) != 0)
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.shift_)
                 : nullptr;
-  ::memcpy(reinterpret_cast<char *>(&_impl_) +
-               offsetof(Impl_, staff_id_),
-           reinterpret_cast<const char *>(&from._impl_) +
-               offsetof(Impl_, staff_id_),
-           offsetof(Impl_, room_id_) -
-               offsetof(Impl_, staff_id_) +
-               sizeof(Impl_::room_id_));
 
-  // @@protoc_insertion_point(copy_constructor:Shift)
+  // @@protoc_insertion_point(copy_constructor:StaffShift)
 }
-PROTOBUF_NDEBUG_INLINE Shift::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE StaffShift::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0} {}
 
-inline void Shift::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+inline void StaffShift::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   ::memset(reinterpret_cast<char *>(&_impl_) +
-               offsetof(Impl_, day_),
+               offsetof(Impl_, staff_),
            0,
-           offsetof(Impl_, room_id_) -
-               offsetof(Impl_, day_) +
-               sizeof(Impl_::room_id_));
+           offsetof(Impl_, shift_) -
+               offsetof(Impl_, staff_) +
+               sizeof(Impl_::shift_));
 }
-Shift::~Shift() {
-  // @@protoc_insertion_point(destructor:Shift)
+StaffShift::~StaffShift() {
+  // @@protoc_insertion_point(destructor:StaffShift)
   SharedDtor(*this);
 }
-inline void Shift::SharedDtor(MessageLite& self) {
-  Shift& this_ = static_cast<Shift&>(self);
+inline void StaffShift::SharedDtor(MessageLite& self) {
+  StaffShift& this_ = static_cast<StaffShift&>(self);
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
-  delete this_._impl_.day_;
-  delete this_._impl_.time_;
+  delete this_._impl_.staff_;
+  delete this_._impl_.shift_;
   this_._impl_.~Impl_();
 }
 
-inline void* PROTOBUF_NONNULL Shift::PlacementNew_(
+inline void* PROTOBUF_NONNULL StaffShift::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) Shift(arena);
+  return ::new (mem) StaffShift(arena);
 }
-constexpr auto Shift::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(Shift),
-                                            alignof(Shift));
+constexpr auto StaffShift::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(StaffShift),
+                                            alignof(StaffShift));
 }
-constexpr auto Shift::InternalGenerateClassData_() {
+constexpr auto StaffShift::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_Shift_default_instance_._instance,
+          &_StaffShift_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &Shift::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<Shift>(),
+          &StaffShift::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<StaffShift>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &Shift::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<Shift>(), &Shift::ByteSizeLong,
-              &Shift::_InternalSerialize,
+          &StaffShift::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<StaffShift>(), &StaffShift::ByteSizeLong,
+              &StaffShift::_InternalSerialize,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(Shift, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(StaffShift, _impl_._cached_size_),
           false,
       },
-      &Shift::kDescriptorMethods,
+      &StaffShift::kDescriptorMethods,
       &descriptor_table_StaffManagement_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull Shift_class_data_ =
-        Shift::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull StaffShift_class_data_ =
+        StaffShift::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-Shift::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&Shift_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(Shift_class_data_.tc_table);
-  return Shift_class_data_.base();
+StaffShift::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&StaffShift_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(StaffShift_class_data_.tc_table);
+  return StaffShift_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 2, 0, 2>
-Shift::_table_ = {
+const ::_pbi::TcParseTable<1, 2, 2, 0, 2>
+StaffShift::_table_ = {
   {
-    PROTOBUF_FIELD_OFFSET(Shift, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(StaffShift, _impl_._has_bits_),
     0, // no _extensions_
-    4, 24,  // max_field_number, fast_idx_mask
+    2, 8,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967280,  // skipmap
+    4294967292,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    4,  // num_field_entries
+    2,  // num_field_entries
     2,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
-    Shift_class_data_.base(),
+    StaffShift_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::Shift>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::StaffShift>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // .TimeDTO time = 4;
+    // .ShiftDTO shift = 2;
     {::_pbi::TcParser::FastMtS1,
-     {34, 1, 1, PROTOBUF_FIELD_OFFSET(Shift, _impl_.time_)}},
-    // uint64 staff_id = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(Shift, _impl_.staff_id_), 2>(),
-     {8, 2, 0, PROTOBUF_FIELD_OFFSET(Shift, _impl_.staff_id_)}},
-    // uint32 room_id = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Shift, _impl_.room_id_), 3>(),
-     {16, 3, 0, PROTOBUF_FIELD_OFFSET(Shift, _impl_.room_id_)}},
-    // .DateDTO day = 3;
+     {18, 1, 1, PROTOBUF_FIELD_OFFSET(StaffShift, _impl_.shift_)}},
+    // .StaffDTO staff = 1;
     {::_pbi::TcParser::FastMtS1,
-     {26, 0, 0, PROTOBUF_FIELD_OFFSET(Shift, _impl_.day_)}},
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(StaffShift, _impl_.staff_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // uint64 staff_id = 1;
-    {PROTOBUF_FIELD_OFFSET(Shift, _impl_.staff_id_), _Internal::kHasBitsOffset + 2, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint32 room_id = 2;
-    {PROTOBUF_FIELD_OFFSET(Shift, _impl_.room_id_), _Internal::kHasBitsOffset + 3, 0,
-    (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // .DateDTO day = 3;
-    {PROTOBUF_FIELD_OFFSET(Shift, _impl_.day_), _Internal::kHasBitsOffset + 0, 0,
+    // .StaffDTO staff = 1;
+    {PROTOBUF_FIELD_OFFSET(StaffShift, _impl_.staff_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .TimeDTO time = 4;
-    {PROTOBUF_FIELD_OFFSET(Shift, _impl_.time_), _Internal::kHasBitsOffset + 1, 1,
+    // .ShiftDTO shift = 2;
+    {PROTOBUF_FIELD_OFFSET(StaffShift, _impl_.shift_), _Internal::kHasBitsOffset + 1, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
-      {::_pbi::TcParser::GetTable<::DateDTO>()},
-      {::_pbi::TcParser::GetTable<::TimeDTO>()},
+      {::_pbi::TcParser::GetTable<::StaffDTO>()},
+      {::_pbi::TcParser::GetTable<::ShiftDTO>()},
   }},
   {{
   }},
 };
-PROTOBUF_NOINLINE void Shift::Clear() {
-// @@protoc_insertion_point(message_clear_start:Shift)
+PROTOBUF_NOINLINE void StaffShift::Clear() {
+// @@protoc_insertion_point(message_clear_start:StaffShift)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -883,68 +948,45 @@ PROTOBUF_NOINLINE void Shift::Clear() {
   cached_has_bits = _impl_._has_bits_[0];
   if ((cached_has_bits & 0x00000003u) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
-      ABSL_DCHECK(_impl_.day_ != nullptr);
-      _impl_.day_->Clear();
+      ABSL_DCHECK(_impl_.staff_ != nullptr);
+      _impl_.staff_->Clear();
     }
     if ((cached_has_bits & 0x00000002u) != 0) {
-      ABSL_DCHECK(_impl_.time_ != nullptr);
-      _impl_.time_->Clear();
+      ABSL_DCHECK(_impl_.shift_ != nullptr);
+      _impl_.shift_->Clear();
     }
-  }
-  if ((cached_has_bits & 0x0000000cu) != 0) {
-    ::memset(&_impl_.staff_id_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.room_id_) -
-        reinterpret_cast<char*>(&_impl_.staff_id_)) + sizeof(_impl_.room_id_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL Shift::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL StaffShift::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const Shift& this_ = static_cast<const Shift&>(base);
+  const StaffShift& this_ = static_cast<const StaffShift&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL Shift::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL StaffShift::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const Shift& this_ = *this;
+  const StaffShift& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:Shift)
+  // @@protoc_insertion_point(serialize_to_array_start:StaffShift)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // uint64 staff_id = 1;
-  if ((this_._impl_._has_bits_[0] & 0x00000004u) != 0) {
-    if (this_._internal_staff_id() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          1, this_._internal_staff_id(), target);
-    }
-  }
-
-  // uint32 room_id = 2;
-  if ((this_._impl_._has_bits_[0] & 0x00000008u) != 0) {
-    if (this_._internal_room_id() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          2, this_._internal_room_id(), target);
-    }
-  }
-
   cached_has_bits = this_._impl_._has_bits_[0];
-  // .DateDTO day = 3;
+  // .StaffDTO staff = 1;
   if ((cached_has_bits & 0x00000001u) != 0) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        3, *this_._impl_.day_, this_._impl_.day_->GetCachedSize(), target,
+        1, *this_._impl_.staff_, this_._impl_.staff_->GetCachedSize(), target,
         stream);
   }
 
-  // .TimeDTO time = 4;
+  // .ShiftDTO shift = 2;
   if ((cached_has_bits & 0x00000002u) != 0) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        4, *this_._impl_.time_, this_._impl_.time_->GetCachedSize(), target,
+        2, *this_._impl_.shift_, this_._impl_.shift_->GetCachedSize(), target,
         stream);
   }
 
@@ -953,18 +995,18 @@ PROTOBUF_NOINLINE void Shift::Clear() {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Shift)
+  // @@protoc_insertion_point(serialize_to_array_end:StaffShift)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t Shift::ByteSizeLong(const MessageLite& base) {
-  const Shift& this_ = static_cast<const Shift&>(base);
+::size_t StaffShift::ByteSizeLong(const MessageLite& base) {
+  const StaffShift& this_ = static_cast<const StaffShift&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t Shift::ByteSizeLong() const {
-  const Shift& this_ = *this;
+::size_t StaffShift::ByteSizeLong() const {
+  const StaffShift& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:Shift)
+  // @@protoc_insertion_point(message_byte_size_start:StaffShift)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -973,71 +1015,47 @@ PROTOBUF_NOINLINE void Shift::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000000fu) != 0) {
-    // .DateDTO day = 3;
+  if ((cached_has_bits & 0x00000003u) != 0) {
+    // .StaffDTO staff = 1;
     if ((cached_has_bits & 0x00000001u) != 0) {
       total_size += 1 +
-                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.day_);
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.staff_);
     }
-    // .TimeDTO time = 4;
+    // .ShiftDTO shift = 2;
     if ((cached_has_bits & 0x00000002u) != 0) {
       total_size += 1 +
-                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.time_);
-    }
-    // uint64 staff_id = 1;
-    if ((cached_has_bits & 0x00000004u) != 0) {
-      if (this_._internal_staff_id() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
-            this_._internal_staff_id());
-      }
-    }
-    // uint32 room_id = 2;
-    if ((cached_has_bits & 0x00000008u) != 0) {
-      if (this_._internal_room_id() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_room_id());
-      }
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.shift_);
     }
   }
   return this_.MaybeComputeUnknownFieldsSize(total_size,
                                              &this_._impl_._cached_size_);
 }
 
-void Shift::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<Shift*>(&to_msg);
-  auto& from = static_cast<const Shift&>(from_msg);
+void StaffShift::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<StaffShift*>(&to_msg);
+  auto& from = static_cast<const StaffShift&>(from_msg);
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:Shift)
+  // @@protoc_insertion_point(class_specific_merge_from_start:StaffShift)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000000fu) != 0) {
+  if ((cached_has_bits & 0x00000003u) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
-      ABSL_DCHECK(from._impl_.day_ != nullptr);
-      if (_this->_impl_.day_ == nullptr) {
-        _this->_impl_.day_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.day_);
+      ABSL_DCHECK(from._impl_.staff_ != nullptr);
+      if (_this->_impl_.staff_ == nullptr) {
+        _this->_impl_.staff_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.staff_);
       } else {
-        _this->_impl_.day_->MergeFrom(*from._impl_.day_);
+        _this->_impl_.staff_->MergeFrom(*from._impl_.staff_);
       }
     }
     if ((cached_has_bits & 0x00000002u) != 0) {
-      ABSL_DCHECK(from._impl_.time_ != nullptr);
-      if (_this->_impl_.time_ == nullptr) {
-        _this->_impl_.time_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.time_);
+      ABSL_DCHECK(from._impl_.shift_ != nullptr);
+      if (_this->_impl_.shift_ == nullptr) {
+        _this->_impl_.shift_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.shift_);
       } else {
-        _this->_impl_.time_->MergeFrom(*from._impl_.time_);
-      }
-    }
-    if ((cached_has_bits & 0x00000004u) != 0) {
-      if (from._internal_staff_id() != 0) {
-        _this->_impl_.staff_id_ = from._impl_.staff_id_;
-      }
-    }
-    if ((cached_has_bits & 0x00000008u) != 0) {
-      if (from._internal_room_id() != 0) {
-        _this->_impl_.room_id_ = from._impl_.room_id_;
+        _this->_impl_.shift_->MergeFrom(*from._impl_.shift_);
       }
     }
   }
@@ -1045,27 +1063,27 @@ void Shift::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::p
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void Shift::CopyFrom(const Shift& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Shift)
+void StaffShift::CopyFrom(const StaffShift& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:StaffShift)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 
-void Shift::InternalSwap(Shift* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+void StaffShift::InternalSwap(StaffShift* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Shift, _impl_.room_id_)
-      + sizeof(Shift::_impl_.room_id_)
-      - PROTOBUF_FIELD_OFFSET(Shift, _impl_.day_)>(
-          reinterpret_cast<char*>(&_impl_.day_),
-          reinterpret_cast<char*>(&other->_impl_.day_));
+      PROTOBUF_FIELD_OFFSET(StaffShift, _impl_.shift_)
+      + sizeof(StaffShift::_impl_.shift_)
+      - PROTOBUF_FIELD_OFFSET(StaffShift, _impl_.staff_)>(
+          reinterpret_cast<char*>(&_impl_.staff_),
+          reinterpret_cast<char*>(&other->_impl_.staff_));
 }
 
-::google::protobuf::Metadata Shift::GetMetadata() const {
+::google::protobuf::Metadata StaffShift::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
@@ -1081,12 +1099,12 @@ class TimeOff::_Internal {
 void TimeOff::clear_start_date() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.start_date_ != nullptr) _impl_.start_date_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000001u;
+  _impl_._has_bits_[0] &= ~0x00000002u;
 }
 void TimeOff::clear_end_date() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.end_date_ != nullptr) _impl_.end_date_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000002u;
+  _impl_._has_bits_[0] &= ~0x00000004u;
 }
 TimeOff::TimeOff(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
@@ -1118,10 +1136,13 @@ TimeOff::TimeOff(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.start_date_ = ((cached_has_bits & 0x00000001u) != 0)
+  _impl_.staff_ = ((cached_has_bits & 0x00000001u) != 0)
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.staff_)
+                : nullptr;
+  _impl_.start_date_ = ((cached_has_bits & 0x00000002u) != 0)
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.start_date_)
                 : nullptr;
-  _impl_.end_date_ = ((cached_has_bits & 0x00000002u) != 0)
+  _impl_.end_date_ = ((cached_has_bits & 0x00000004u) != 0)
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.end_date_)
                 : nullptr;
 
@@ -1135,10 +1156,10 @@ PROTOBUF_NDEBUG_INLINE TimeOff::Impl_::Impl_(
 inline void TimeOff::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   ::memset(reinterpret_cast<char *>(&_impl_) +
-               offsetof(Impl_, start_date_),
+               offsetof(Impl_, staff_),
            0,
            offsetof(Impl_, end_date_) -
-               offsetof(Impl_, start_date_) +
+               offsetof(Impl_, staff_) +
                sizeof(Impl_::end_date_));
 }
 TimeOff::~TimeOff() {
@@ -1149,6 +1170,7 @@ inline void TimeOff::SharedDtor(MessageLite& self) {
   TimeOff& this_ = static_cast<TimeOff&>(self);
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
+  delete this_._impl_.staff_;
   delete this_._impl_.start_date_;
   delete this_._impl_.end_date_;
   this_._impl_.~Impl_();
@@ -1197,17 +1219,17 @@ TimeOff::GetClassData() const {
   return TimeOff_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 2, 0, 2>
+const ::_pbi::TcParseTable<2, 3, 3, 0, 2>
 TimeOff::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(TimeOff, _impl_._has_bits_),
     0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
+    3, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
+    4294967288,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
-    2,  // num_aux_entries
+    3,  // num_field_entries
+    3,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     TimeOff_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -1216,23 +1238,31 @@ TimeOff::_table_ = {
     ::_pbi::TcParser::GetTable<::TimeOff>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // .DateDTO end_date = 2;
+    {::_pbi::TcParser::MiniParse, {}},
+    // .StaffDTO staff = 1;
     {::_pbi::TcParser::FastMtS1,
-     {18, 1, 1, PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.end_date_)}},
-    // .DateDTO start_date = 1;
+     {10, 0, 0, PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.staff_)}},
+    // .DateDTO start_date = 2;
     {::_pbi::TcParser::FastMtS1,
-     {10, 0, 0, PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.start_date_)}},
+     {18, 1, 1, PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.start_date_)}},
+    // .DateDTO end_date = 3;
+    {::_pbi::TcParser::FastMtS1,
+     {26, 2, 2, PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.end_date_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // .DateDTO start_date = 1;
-    {PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.start_date_), _Internal::kHasBitsOffset + 0, 0,
+    // .StaffDTO staff = 1;
+    {PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.staff_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .DateDTO end_date = 2;
-    {PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.end_date_), _Internal::kHasBitsOffset + 1, 1,
+    // .DateDTO start_date = 2;
+    {PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.start_date_), _Internal::kHasBitsOffset + 1, 1,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .DateDTO end_date = 3;
+    {PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.end_date_), _Internal::kHasBitsOffset + 2, 2,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
+      {::_pbi::TcParser::GetTable<::StaffDTO>()},
       {::_pbi::TcParser::GetTable<::DateDTO>()},
       {::_pbi::TcParser::GetTable<::DateDTO>()},
   }},
@@ -1247,12 +1277,16 @@ PROTOBUF_NOINLINE void TimeOff::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000003u) != 0) {
+  if ((cached_has_bits & 0x00000007u) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
+      ABSL_DCHECK(_impl_.staff_ != nullptr);
+      _impl_.staff_->Clear();
+    }
+    if ((cached_has_bits & 0x00000002u) != 0) {
       ABSL_DCHECK(_impl_.start_date_ != nullptr);
       _impl_.start_date_->Clear();
     }
-    if ((cached_has_bits & 0x00000002u) != 0) {
+    if ((cached_has_bits & 0x00000004u) != 0) {
       ABSL_DCHECK(_impl_.end_date_ != nullptr);
       _impl_.end_date_->Clear();
     }
@@ -1277,17 +1311,24 @@ PROTOBUF_NOINLINE void TimeOff::Clear() {
   (void)cached_has_bits;
 
   cached_has_bits = this_._impl_._has_bits_[0];
-  // .DateDTO start_date = 1;
+  // .StaffDTO staff = 1;
   if ((cached_has_bits & 0x00000001u) != 0) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        1, *this_._impl_.start_date_, this_._impl_.start_date_->GetCachedSize(), target,
+        1, *this_._impl_.staff_, this_._impl_.staff_->GetCachedSize(), target,
         stream);
   }
 
-  // .DateDTO end_date = 2;
+  // .DateDTO start_date = 2;
   if ((cached_has_bits & 0x00000002u) != 0) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        2, *this_._impl_.end_date_, this_._impl_.end_date_->GetCachedSize(), target,
+        2, *this_._impl_.start_date_, this_._impl_.start_date_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .DateDTO end_date = 3;
+  if ((cached_has_bits & 0x00000004u) != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        3, *this_._impl_.end_date_, this_._impl_.end_date_->GetCachedSize(), target,
         stream);
   }
 
@@ -1316,14 +1357,19 @@ PROTOBUF_NOINLINE void TimeOff::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000003u) != 0) {
-    // .DateDTO start_date = 1;
+  if ((cached_has_bits & 0x00000007u) != 0) {
+    // .StaffDTO staff = 1;
     if ((cached_has_bits & 0x00000001u) != 0) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.staff_);
+    }
+    // .DateDTO start_date = 2;
+    if ((cached_has_bits & 0x00000002u) != 0) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.start_date_);
     }
-    // .DateDTO end_date = 2;
-    if ((cached_has_bits & 0x00000002u) != 0) {
+    // .DateDTO end_date = 3;
+    if ((cached_has_bits & 0x00000004u) != 0) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.end_date_);
     }
@@ -1342,8 +1388,16 @@ void TimeOff::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google:
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000003u) != 0) {
+  if ((cached_has_bits & 0x00000007u) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
+      ABSL_DCHECK(from._impl_.staff_ != nullptr);
+      if (_this->_impl_.staff_ == nullptr) {
+        _this->_impl_.staff_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.staff_);
+      } else {
+        _this->_impl_.staff_->MergeFrom(*from._impl_.staff_);
+      }
+    }
+    if ((cached_has_bits & 0x00000002u) != 0) {
       ABSL_DCHECK(from._impl_.start_date_ != nullptr);
       if (_this->_impl_.start_date_ == nullptr) {
         _this->_impl_.start_date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.start_date_);
@@ -1351,7 +1405,7 @@ void TimeOff::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google:
         _this->_impl_.start_date_->MergeFrom(*from._impl_.start_date_);
       }
     }
-    if ((cached_has_bits & 0x00000002u) != 0) {
+    if ((cached_has_bits & 0x00000004u) != 0) {
       ABSL_DCHECK(from._impl_.end_date_ != nullptr);
       if (_this->_impl_.end_date_ == nullptr) {
         _this->_impl_.end_date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.end_date_);
@@ -1379,9 +1433,9 @@ void TimeOff::InternalSwap(TimeOff* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.end_date_)
       + sizeof(TimeOff::_impl_.end_date_)
-      - PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.start_date_)>(
-          reinterpret_cast<char*>(&_impl_.start_date_),
-          reinterpret_cast<char*>(&other->_impl_.start_date_));
+      - PROTOBUF_FIELD_OFFSET(TimeOff, _impl_.staff_)>(
+          reinterpret_cast<char*>(&_impl_.staff_),
+          reinterpret_cast<char*>(&other->_impl_.staff_));
 }
 
 ::google::protobuf::Metadata TimeOff::GetMetadata() const {
@@ -1389,119 +1443,119 @@ void TimeOff::InternalSwap(TimeOff* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
 }
 // ===================================================================
 
-class ScheduleDTO::_Internal {
+class StaffSchedule::_Internal {
  public:
 };
 
-ScheduleDTO::ScheduleDTO(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+StaffSchedule::StaffSchedule(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, ScheduleDTO_class_data_.base()) {
+    : ::google::protobuf::Message(arena, StaffSchedule_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:ScheduleDTO)
+  // @@protoc_insertion_point(arena_constructor:StaffSchedule)
 }
-PROTOBUF_NDEBUG_INLINE ScheduleDTO::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE StaffSchedule::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    const ::ScheduleDTO& from_msg)
+    const ::StaffSchedule& from_msg)
       : shifts_{visibility, arena, from.shifts_},
         _cached_size_{0} {}
 
-ScheduleDTO::ScheduleDTO(
+StaffSchedule::StaffSchedule(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const ScheduleDTO& from)
+    const StaffSchedule& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, ScheduleDTO_class_data_.base()) {
+    : ::google::protobuf::Message(arena, StaffSchedule_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  ScheduleDTO* const _this = this;
+  StaffSchedule* const _this = this;
   (void)_this;
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:ScheduleDTO)
+  // @@protoc_insertion_point(copy_constructor:StaffSchedule)
 }
-PROTOBUF_NDEBUG_INLINE ScheduleDTO::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE StaffSchedule::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : shifts_{visibility, arena},
         _cached_size_{0} {}
 
-inline void ScheduleDTO::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+inline void StaffSchedule::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
-ScheduleDTO::~ScheduleDTO() {
-  // @@protoc_insertion_point(destructor:ScheduleDTO)
+StaffSchedule::~StaffSchedule() {
+  // @@protoc_insertion_point(destructor:StaffSchedule)
   SharedDtor(*this);
 }
-inline void ScheduleDTO::SharedDtor(MessageLite& self) {
-  ScheduleDTO& this_ = static_cast<ScheduleDTO&>(self);
+inline void StaffSchedule::SharedDtor(MessageLite& self) {
+  StaffSchedule& this_ = static_cast<StaffSchedule&>(self);
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.~Impl_();
 }
 
-inline void* PROTOBUF_NONNULL ScheduleDTO::PlacementNew_(
+inline void* PROTOBUF_NONNULL StaffSchedule::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) ScheduleDTO(arena);
+  return ::new (mem) StaffSchedule(arena);
 }
-constexpr auto ScheduleDTO::InternalNewImpl_() {
+constexpr auto StaffSchedule::InternalNewImpl_() {
   constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
-      PROTOBUF_FIELD_OFFSET(ScheduleDTO, _impl_.shifts_) +
-          decltype(ScheduleDTO::_impl_.shifts_)::
+      PROTOBUF_FIELD_OFFSET(StaffSchedule, _impl_.shifts_) +
+          decltype(StaffSchedule::_impl_.shifts_)::
               InternalGetArenaOffset(
                   ::google::protobuf::Message::internal_visibility()),
   });
   if (arena_bits.has_value()) {
     return ::google::protobuf::internal::MessageCreator::ZeroInit(
-        sizeof(ScheduleDTO), alignof(ScheduleDTO), *arena_bits);
+        sizeof(StaffSchedule), alignof(StaffSchedule), *arena_bits);
   } else {
-    return ::google::protobuf::internal::MessageCreator(&ScheduleDTO::PlacementNew_,
-                                 sizeof(ScheduleDTO),
-                                 alignof(ScheduleDTO));
+    return ::google::protobuf::internal::MessageCreator(&StaffSchedule::PlacementNew_,
+                                 sizeof(StaffSchedule),
+                                 alignof(StaffSchedule));
   }
 }
-constexpr auto ScheduleDTO::InternalGenerateClassData_() {
+constexpr auto StaffSchedule::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_ScheduleDTO_default_instance_._instance,
+          &_StaffSchedule_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &ScheduleDTO::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<ScheduleDTO>(),
+          &StaffSchedule::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<StaffSchedule>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &ScheduleDTO::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<ScheduleDTO>(), &ScheduleDTO::ByteSizeLong,
-              &ScheduleDTO::_InternalSerialize,
+          &StaffSchedule::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<StaffSchedule>(), &StaffSchedule::ByteSizeLong,
+              &StaffSchedule::_InternalSerialize,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(ScheduleDTO, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(StaffSchedule, _impl_._cached_size_),
           false,
       },
-      &ScheduleDTO::kDescriptorMethods,
+      &StaffSchedule::kDescriptorMethods,
       &descriptor_table_StaffManagement_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull ScheduleDTO_class_data_ =
-        ScheduleDTO::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull StaffSchedule_class_data_ =
+        StaffSchedule::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-ScheduleDTO::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&ScheduleDTO_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(ScheduleDTO_class_data_.tc_table);
-  return ScheduleDTO_class_data_.base();
+StaffSchedule::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&StaffSchedule_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(StaffSchedule_class_data_.tc_table);
+  return StaffSchedule_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
 const ::_pbi::TcParseTable<0, 1, 1, 0, 2>
-ScheduleDTO::_table_ = {
+StaffSchedule::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
@@ -1512,31 +1566,31 @@ ScheduleDTO::_table_ = {
     1,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
-    ScheduleDTO_class_data_.base(),
+    StaffSchedule_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::ScheduleDTO>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::StaffSchedule>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // repeated .Shift shifts = 1;
+    // repeated .StaffShift shifts = 1;
     {::_pbi::TcParser::FastMtR1,
-     {10, 63, 0, PROTOBUF_FIELD_OFFSET(ScheduleDTO, _impl_.shifts_)}},
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(StaffSchedule, _impl_.shifts_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // repeated .Shift shifts = 1;
-    {PROTOBUF_FIELD_OFFSET(ScheduleDTO, _impl_.shifts_), 0, 0,
+    // repeated .StaffShift shifts = 1;
+    {PROTOBUF_FIELD_OFFSET(StaffSchedule, _impl_.shifts_), 0, 0,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
-      {::_pbi::TcParser::GetTable<::Shift>()},
+      {::_pbi::TcParser::GetTable<::StaffShift>()},
   }},
   {{
   }},
 };
-PROTOBUF_NOINLINE void ScheduleDTO::Clear() {
-// @@protoc_insertion_point(message_clear_start:ScheduleDTO)
+PROTOBUF_NOINLINE void StaffSchedule::Clear() {
+// @@protoc_insertion_point(message_clear_start:StaffSchedule)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1547,21 +1601,21 @@ PROTOBUF_NOINLINE void ScheduleDTO::Clear() {
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL ScheduleDTO::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL StaffSchedule::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const ScheduleDTO& this_ = static_cast<const ScheduleDTO&>(base);
+  const StaffSchedule& this_ = static_cast<const StaffSchedule&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL ScheduleDTO::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL StaffSchedule::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const ScheduleDTO& this_ = *this;
+  const StaffSchedule& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:ScheduleDTO)
+  // @@protoc_insertion_point(serialize_to_array_start:StaffSchedule)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // repeated .Shift shifts = 1;
+  // repeated .StaffShift shifts = 1;
   for (unsigned i = 0, n = static_cast<unsigned>(
                            this_._internal_shifts_size());
        i < n; i++) {
@@ -1577,18 +1631,18 @@ PROTOBUF_NOINLINE void ScheduleDTO::Clear() {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:ScheduleDTO)
+  // @@protoc_insertion_point(serialize_to_array_end:StaffSchedule)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t ScheduleDTO::ByteSizeLong(const MessageLite& base) {
-  const ScheduleDTO& this_ = static_cast<const ScheduleDTO&>(base);
+::size_t StaffSchedule::ByteSizeLong(const MessageLite& base) {
+  const StaffSchedule& this_ = static_cast<const StaffSchedule&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t ScheduleDTO::ByteSizeLong() const {
-  const ScheduleDTO& this_ = *this;
+::size_t StaffSchedule::ByteSizeLong() const {
+  const StaffSchedule& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:ScheduleDTO)
+  // @@protoc_insertion_point(message_byte_size_start:StaffSchedule)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -1597,7 +1651,7 @@ PROTOBUF_NOINLINE void ScheduleDTO::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
    {
-    // repeated .Shift shifts = 1;
+    // repeated .StaffShift shifts = 1;
     {
       total_size += 1UL * this_._internal_shifts_size();
       for (const auto& msg : this_._internal_shifts()) {
@@ -1609,10 +1663,10 @@ PROTOBUF_NOINLINE void ScheduleDTO::Clear() {
                                              &this_._impl_._cached_size_);
 }
 
-void ScheduleDTO::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<ScheduleDTO*>(&to_msg);
-  auto& from = static_cast<const ScheduleDTO&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:ScheduleDTO)
+void StaffSchedule::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<StaffSchedule*>(&to_msg);
+  auto& from = static_cast<const StaffSchedule&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:StaffSchedule)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1622,21 +1676,21 @@ void ScheduleDTO::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::goo
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void ScheduleDTO::CopyFrom(const ScheduleDTO& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:ScheduleDTO)
+void StaffSchedule::CopyFrom(const StaffSchedule& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:StaffSchedule)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 
-void ScheduleDTO::InternalSwap(ScheduleDTO* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+void StaffSchedule::InternalSwap(StaffSchedule* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   _impl_.shifts_.InternalSwap(&other->_impl_.shifts_);
 }
 
-::google::protobuf::Metadata ScheduleDTO::GetMetadata() const {
+::google::protobuf::Metadata StaffSchedule::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================

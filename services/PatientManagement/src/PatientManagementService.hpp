@@ -39,12 +39,6 @@ private:
     /* ******************************************************************** */
     
     /**
-     * @brief Generates the patient a new unique id
-     * @return Returns a 64 bit patient id
-     */
-    uint64_t generate_unique_patient_id();
-    
-    /**
      * @brief Finds the patient id of an admitted patient
      * @return Returns the id of the patient
      * @warning Will return 0 if the patient is not found in the system
@@ -135,10 +129,10 @@ public:
     /* *************************** IServer ******************************** */
     /* ******************************************************************** */
 
-    ReturnCode connectToDB() override;
-    ReturnCode loadFromDB() override;
-    ReturnCode uploadToDB() override;
-    ReturnCode init() override;
+    general::ReturnCode connectToDB() override;
+    general::ReturnCode loadFromDB() override;
+    general::ReturnCode uploadToDB() override;
+    general::ReturnCode init() override;
     void print_internal() override;
     
     

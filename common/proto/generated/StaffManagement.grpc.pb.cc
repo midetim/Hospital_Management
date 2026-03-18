@@ -32,7 +32,9 @@ static const char* StaffManagement_method_names[] = {
   "/StaffManagement/TransferShift",
   "/StaffManagement/BookTimeOff",
   "/StaffManagement/SeeStaffInformation",
-  "/StaffManagement/SeeSchedule",
+  "/StaffManagement/SeeTodaysSchedule",
+  "/StaffManagement/SeeTomorrowsSchedule",
+  "/StaffManagement/SeeScheduleRange",
   "/StaffManagement/GetStaffInRoom",
 };
 
@@ -53,8 +55,10 @@ StaffManagement::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& ch
   , rpcmethod_TransferShift_(StaffManagement_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_BookTimeOff_(StaffManagement_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_SeeStaffInformation_(StaffManagement_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_SeeSchedule_(StaffManagement_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetStaffInRoom_(StaffManagement_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SeeTodaysSchedule_(StaffManagement_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SeeTomorrowsSchedule_(StaffManagement_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SeeScheduleRange_(StaffManagement_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetStaffInRoom_(StaffManagement_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status StaffManagement::Stub::AddStaff(::grpc::ClientContext* context, const ::StaffDTO& request, ::Success* response) {
@@ -172,69 +176,69 @@ void StaffManagement::Stub::async::UpdateStaffInformation(::grpc::ClientContext*
   return result;
 }
 
-::grpc::Status StaffManagement::Stub::AddShift(::grpc::ClientContext* context, const ::Shift& request, ::Success* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::Shift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AddShift_, context, request, response);
+::grpc::Status StaffManagement::Stub::AddShift(::grpc::ClientContext* context, const ::StaffShift& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StaffShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AddShift_, context, request, response);
 }
 
-void StaffManagement::Stub::async::AddShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::Shift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddShift_, context, request, response, std::move(f));
+void StaffManagement::Stub::async::AddShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StaffShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddShift_, context, request, response, std::move(f));
 }
 
-void StaffManagement::Stub::async::AddShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+void StaffManagement::Stub::async::AddShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddShift_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::PrepareAsyncAddShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::Shift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_AddShift_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::PrepareAsyncAddShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::StaffShift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_AddShift_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::AsyncAddShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::AsyncAddShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncAddShiftRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status StaffManagement::Stub::RemoveShift(::grpc::ClientContext* context, const ::Shift& request, ::Success* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::Shift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RemoveShift_, context, request, response);
+::grpc::Status StaffManagement::Stub::RemoveShift(::grpc::ClientContext* context, const ::StaffShift& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StaffShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RemoveShift_, context, request, response);
 }
 
-void StaffManagement::Stub::async::RemoveShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::Shift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveShift_, context, request, response, std::move(f));
+void StaffManagement::Stub::async::RemoveShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StaffShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveShift_, context, request, response, std::move(f));
 }
 
-void StaffManagement::Stub::async::RemoveShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+void StaffManagement::Stub::async::RemoveShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveShift_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::PrepareAsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::Shift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RemoveShift_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::PrepareAsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::StaffShift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RemoveShift_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::AsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::AsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncRemoveShiftRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status StaffManagement::Stub::TransferShift(::grpc::ClientContext* context, const ::Shift& request, ::Success* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::Shift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferShift_, context, request, response);
+::grpc::Status StaffManagement::Stub::TransferShift(::grpc::ClientContext* context, const ::StaffShift& request, ::Success* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StaffShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_TransferShift_, context, request, response);
 }
 
-void StaffManagement::Stub::async::TransferShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::Shift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferShift_, context, request, response, std::move(f));
+void StaffManagement::Stub::async::TransferShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StaffShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferShift_, context, request, response, std::move(f));
 }
 
-void StaffManagement::Stub::async::TransferShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
+void StaffManagement::Stub::async::TransferShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_TransferShift_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::PrepareAsyncTransferShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::Shift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferShift_, context, request);
+::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::PrepareAsyncTransferShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::Success, ::StaffShift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_TransferShift_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::AsyncTransferShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::Success>* StaffManagement::Stub::AsyncTransferShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncTransferShiftRaw(context, request, cq);
   result->StartCall();
@@ -287,25 +291,71 @@ void StaffManagement::Stub::async::SeeStaffInformation(::grpc::ClientContext* co
   return result;
 }
 
-::grpc::Status StaffManagement::Stub::SeeSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::ScheduleDTO* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::StaffDTO, ::ScheduleDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SeeSchedule_, context, request, response);
+::grpc::Status StaffManagement::Stub::SeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::StaffSchedule* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StaffDTO, ::StaffSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SeeTodaysSchedule_, context, request, response);
 }
 
-void StaffManagement::Stub::async::SeeSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::ScheduleDTO* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::StaffDTO, ::ScheduleDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeSchedule_, context, request, response, std::move(f));
+void StaffManagement::Stub::async::SeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StaffDTO, ::StaffSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeTodaysSchedule_, context, request, response, std::move(f));
 }
 
-void StaffManagement::Stub::async::SeeSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::ScheduleDTO* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeSchedule_, context, request, response, reactor);
+void StaffManagement::Stub::async::SeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeTodaysSchedule_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::ScheduleDTO>* StaffManagement::Stub::PrepareAsyncSeeScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ScheduleDTO, ::StaffDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SeeSchedule_, context, request);
+::grpc::ClientAsyncResponseReader< ::StaffSchedule>* StaffManagement::Stub::PrepareAsyncSeeTodaysScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::StaffSchedule, ::StaffDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SeeTodaysSchedule_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::ScheduleDTO>* StaffManagement::Stub::AsyncSeeScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::StaffSchedule>* StaffManagement::Stub::AsyncSeeTodaysScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncSeeScheduleRaw(context, request, cq);
+    this->PrepareAsyncSeeTodaysScheduleRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status StaffManagement::Stub::SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::StaffSchedule* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StaffDTO, ::StaffSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SeeTomorrowsSchedule_, context, request, response);
+}
+
+void StaffManagement::Stub::async::SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StaffDTO, ::StaffSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeTomorrowsSchedule_, context, request, response, std::move(f));
+}
+
+void StaffManagement::Stub::async::SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeTomorrowsSchedule_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::StaffSchedule>* StaffManagement::Stub::PrepareAsyncSeeTomorrowsScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::StaffSchedule, ::StaffDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SeeTomorrowsSchedule_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::StaffSchedule>* StaffManagement::Stub::AsyncSeeTomorrowsScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSeeTomorrowsScheduleRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status StaffManagement::Stub::SeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift& request, ::StaffSchedule* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::StaffShift, ::StaffSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SeeScheduleRange_, context, request, response);
+}
+
+void StaffManagement::Stub::async::SeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift* request, ::StaffSchedule* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::StaffShift, ::StaffSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeScheduleRange_, context, request, response, std::move(f));
+}
+
+void StaffManagement::Stub::async::SeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift* request, ::StaffSchedule* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SeeScheduleRange_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::StaffSchedule>* StaffManagement::Stub::PrepareAsyncSeeScheduleRangeRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::StaffSchedule, ::StaffShift, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SeeScheduleRange_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::StaffSchedule>* StaffManagement::Stub::AsyncSeeScheduleRangeRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSeeScheduleRangeRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -387,30 +437,30 @@ StaffManagement::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       StaffManagement_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::Shift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::StaffShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](StaffManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::Shift* req,
+             const ::StaffShift* req,
              ::Success* resp) {
                return service->AddShift(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       StaffManagement_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::Shift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::StaffShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](StaffManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::Shift* req,
+             const ::StaffShift* req,
              ::Success* resp) {
                return service->RemoveShift(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       StaffManagement_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::Shift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::StaffShift, ::Success, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](StaffManagement::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::Shift* req,
+             const ::StaffShift* req,
              ::Success* resp) {
                return service->TransferShift(ctx, req, resp);
              }, this)));
@@ -437,15 +487,35 @@ StaffManagement::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       StaffManagement_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::StaffDTO, ::ScheduleDTO, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::StaffDTO, ::StaffSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](StaffManagement::Service* service,
              ::grpc::ServerContext* ctx,
              const ::StaffDTO* req,
-             ::ScheduleDTO* resp) {
-               return service->SeeSchedule(ctx, req, resp);
+             ::StaffSchedule* resp) {
+               return service->SeeTodaysSchedule(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       StaffManagement_method_names[11],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::StaffDTO, ::StaffSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](StaffManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::StaffDTO* req,
+             ::StaffSchedule* resp) {
+               return service->SeeTomorrowsSchedule(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      StaffManagement_method_names[12],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::StaffShift, ::StaffSchedule, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](StaffManagement::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::StaffShift* req,
+             ::StaffSchedule* resp) {
+               return service->SeeScheduleRange(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      StaffManagement_method_names[13],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< StaffManagement::Service, ::RoomRequest, ::StaffList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](StaffManagement::Service* service,
@@ -494,21 +564,21 @@ StaffManagement::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status StaffManagement::Service::AddShift(::grpc::ServerContext* context, const ::Shift* request, ::Success* response) {
+::grpc::Status StaffManagement::Service::AddShift(::grpc::ServerContext* context, const ::StaffShift* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status StaffManagement::Service::RemoveShift(::grpc::ServerContext* context, const ::Shift* request, ::Success* response) {
+::grpc::Status StaffManagement::Service::RemoveShift(::grpc::ServerContext* context, const ::StaffShift* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status StaffManagement::Service::TransferShift(::grpc::ServerContext* context, const ::Shift* request, ::Success* response) {
+::grpc::Status StaffManagement::Service::TransferShift(::grpc::ServerContext* context, const ::StaffShift* request, ::Success* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -529,7 +599,21 @@ StaffManagement::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status StaffManagement::Service::SeeSchedule(::grpc::ServerContext* context, const ::StaffDTO* request, ::ScheduleDTO* response) {
+::grpc::Status StaffManagement::Service::SeeTodaysSchedule(::grpc::ServerContext* context, const ::StaffDTO* request, ::StaffSchedule* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status StaffManagement::Service::SeeTomorrowsSchedule(::grpc::ServerContext* context, const ::StaffDTO* request, ::StaffSchedule* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status StaffManagement::Service::SeeScheduleRange(::grpc::ServerContext* context, const ::StaffShift* request, ::StaffSchedule* response) {
   (void) context;
   (void) request;
   (void) response;

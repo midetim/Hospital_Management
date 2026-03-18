@@ -53,14 +53,6 @@ struct TableStruct_StaffManagement_2eproto {
 extern "C" {
 extern const ::google::protobuf::internal::DescriptorTable descriptor_table_StaffManagement_2eproto;
 }  // extern "C"
-class ScheduleDTO;
-struct ScheduleDTODefaultTypeInternal;
-extern ScheduleDTODefaultTypeInternal _ScheduleDTO_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ScheduleDTO_class_data_;
-class Shift;
-struct ShiftDefaultTypeInternal;
-extern ShiftDefaultTypeInternal _Shift_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull Shift_class_data_;
 class StaffDTO;
 struct StaffDTODefaultTypeInternal;
 extern StaffDTODefaultTypeInternal _StaffDTO_default_instance_;
@@ -69,6 +61,14 @@ class StaffList;
 struct StaffListDefaultTypeInternal;
 extern StaffListDefaultTypeInternal _StaffList_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull StaffList_class_data_;
+class StaffSchedule;
+struct StaffScheduleDefaultTypeInternal;
+extern StaffScheduleDefaultTypeInternal _StaffSchedule_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull StaffSchedule_class_data_;
+class StaffShift;
+struct StaffShiftDefaultTypeInternal;
+extern StaffShiftDefaultTypeInternal _StaffShift_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull StaffShift_class_data_;
 class TimeOff;
 struct TimeOffDefaultTypeInternal;
 extern TimeOffDefaultTypeInternal _TimeOff_default_instance_;
@@ -228,6 +228,8 @@ class StaffDTO final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kStaffSexFieldNumber = 3,
+    kStaffPosFieldNumber = 6,
+    kStaffClearFieldNumber = 7,
     kStaffNameFieldNumber = 1,
     kStaffIdFieldNumber = 2,
     kStaffRoomFieldNumber = 4,
@@ -246,6 +248,36 @@ class StaffDTO final : public ::google::protobuf::Message
   const ::std::string& _internal_staff_sex() const;
   PROTOBUF_ALWAYS_INLINE void _internal_set_staff_sex(const ::std::string& value);
   ::std::string* PROTOBUF_NONNULL _internal_mutable_staff_sex();
+
+  public:
+  // string staff_pos = 6;
+  void clear_staff_pos() ;
+  const ::std::string& staff_pos() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_staff_pos(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_staff_pos();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_staff_pos();
+  void set_allocated_staff_pos(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_staff_pos() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_staff_pos(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_staff_pos();
+
+  public:
+  // string staff_clear = 7;
+  void clear_staff_clear() ;
+  const ::std::string& staff_clear() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_staff_clear(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_staff_clear();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_staff_clear();
+  void set_allocated_staff_clear(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_staff_clear() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_staff_clear(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_staff_clear();
 
   public:
   // .NameDTO staff_name = 1;
@@ -297,8 +329,8 @@ class StaffDTO final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 5,
-                                   1, 26,
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
+                                   1, 46,
                                    2>
       _table_;
 
@@ -320,6 +352,8 @@ class StaffDTO final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr staff_sex_;
+    ::google::protobuf::internal::ArenaStringPtr staff_pos_;
+    ::google::protobuf::internal::ArenaStringPtr staff_clear_;
     ::NameDTO* PROTOBUF_NULLABLE staff_name_;
     ::uint64_t staff_id_;
     ::uint32_t staff_room_;
@@ -476,10 +510,26 @@ class TimeOff final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kStartDateFieldNumber = 1,
-    kEndDateFieldNumber = 2,
+    kStaffFieldNumber = 1,
+    kStartDateFieldNumber = 2,
+    kEndDateFieldNumber = 3,
   };
-  // .DateDTO start_date = 1;
+  // .StaffDTO staff = 1;
+  bool has_staff() const;
+  void clear_staff() ;
+  const ::StaffDTO& staff() const;
+  [[nodiscard]] ::StaffDTO* PROTOBUF_NULLABLE release_staff();
+  ::StaffDTO* PROTOBUF_NONNULL mutable_staff();
+  void set_allocated_staff(::StaffDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_staff(::StaffDTO* PROTOBUF_NULLABLE value);
+  ::StaffDTO* PROTOBUF_NULLABLE unsafe_arena_release_staff();
+
+  private:
+  const ::StaffDTO& _internal_staff() const;
+  ::StaffDTO* PROTOBUF_NONNULL _internal_mutable_staff();
+
+  public:
+  // .DateDTO start_date = 2;
   bool has_start_date() const;
   void clear_start_date() ;
   const ::DateDTO& start_date() const;
@@ -494,7 +544,7 @@ class TimeOff final : public ::google::protobuf::Message
   ::DateDTO* PROTOBUF_NONNULL _internal_mutable_start_date();
 
   public:
-  // .DateDTO end_date = 2;
+  // .DateDTO end_date = 3;
   bool has_end_date() const;
   void clear_end_date() ;
   const ::DateDTO& end_date() const;
@@ -513,8 +563,8 @@ class TimeOff final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2,
-                                   2, 0,
+  static const ::google::protobuf::internal::TcParseTable<2, 3,
+                                   3, 0,
                                    2>
       _table_;
 
@@ -535,6 +585,7 @@ class TimeOff final : public ::google::protobuf::Message
         const TimeOff& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
+    ::StaffDTO* PROTOBUF_NULLABLE staff_;
     ::DateDTO* PROTOBUF_NULLABLE start_date_;
     ::DateDTO* PROTOBUF_NULLABLE end_date_;
     PROTOBUF_TSAN_DECLARE_MEMBER
@@ -743,30 +794,30 @@ class StaffList final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull StaffList_class_data_;
 // -------------------------------------------------------------------
 
-class Shift final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:Shift) */ {
+class StaffShift final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:StaffShift) */ {
  public:
-  inline Shift() : Shift(nullptr) {}
-  ~Shift() PROTOBUF_FINAL;
+  inline StaffShift() : StaffShift(nullptr) {}
+  ~StaffShift() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(Shift* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+  void operator delete(StaffShift* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(Shift));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(StaffShift));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR Shift(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR StaffShift(::google::protobuf::internal::ConstantInitialized);
 
-  inline Shift(const Shift& from) : Shift(nullptr, from) {}
-  inline Shift(Shift&& from) noexcept
-      : Shift(nullptr, ::std::move(from)) {}
-  inline Shift& operator=(const Shift& from) {
+  inline StaffShift(const StaffShift& from) : StaffShift(nullptr, from) {}
+  inline StaffShift(StaffShift&& from) noexcept
+      : StaffShift(nullptr, ::std::move(from)) {}
+  inline StaffShift& operator=(const StaffShift& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Shift& operator=(Shift&& from) noexcept {
+  inline StaffShift& operator=(StaffShift&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -794,13 +845,13 @@ class Shift final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const Shift& default_instance() {
-    return *reinterpret_cast<const Shift*>(
-        &_Shift_default_instance_);
+  static const StaffShift& default_instance() {
+    return *reinterpret_cast<const StaffShift*>(
+        &_StaffShift_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 1;
-  friend void swap(Shift& a, Shift& b) { a.Swap(&b); }
-  inline void Swap(Shift* PROTOBUF_NONNULL other) {
+  friend void swap(StaffShift& a, StaffShift& b) { a.Swap(&b); }
+  inline void Swap(StaffShift* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -808,7 +859,7 @@ class Shift final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Shift* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(StaffShift* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -816,13 +867,13 @@ class Shift final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  Shift* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<Shift>(arena);
+  StaffShift* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<StaffShift>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const Shift& from);
+  void CopyFrom(const StaffShift& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const Shift& from) { Shift::MergeImpl(*this, from); }
+  void MergeFrom(const StaffShift& from) { StaffShift::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -858,18 +909,18 @@ class Shift final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(Shift* PROTOBUF_NONNULL other);
+  void InternalSwap(StaffShift* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "Shift"; }
+  static ::absl::string_view FullMessageName() { return "StaffShift"; }
 
  protected:
-  explicit Shift(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  Shift(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Shift& from);
-  Shift(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, Shift&& from) noexcept
-      : Shift(arena) {
+  explicit StaffShift(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  StaffShift(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const StaffShift& from);
+  StaffShift(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, StaffShift&& from) noexcept
+      : StaffShift(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -886,66 +937,44 @@ class Shift final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kDayFieldNumber = 3,
-    kTimeFieldNumber = 4,
-    kStaffIdFieldNumber = 1,
-    kRoomIdFieldNumber = 2,
+    kStaffFieldNumber = 1,
+    kShiftFieldNumber = 2,
   };
-  // .DateDTO day = 3;
-  bool has_day() const;
-  void clear_day() ;
-  const ::DateDTO& day() const;
-  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_day();
-  ::DateDTO* PROTOBUF_NONNULL mutable_day();
-  void set_allocated_day(::DateDTO* PROTOBUF_NULLABLE value);
-  void unsafe_arena_set_allocated_day(::DateDTO* PROTOBUF_NULLABLE value);
-  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_day();
+  // .StaffDTO staff = 1;
+  bool has_staff() const;
+  void clear_staff() ;
+  const ::StaffDTO& staff() const;
+  [[nodiscard]] ::StaffDTO* PROTOBUF_NULLABLE release_staff();
+  ::StaffDTO* PROTOBUF_NONNULL mutable_staff();
+  void set_allocated_staff(::StaffDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_staff(::StaffDTO* PROTOBUF_NULLABLE value);
+  ::StaffDTO* PROTOBUF_NULLABLE unsafe_arena_release_staff();
 
   private:
-  const ::DateDTO& _internal_day() const;
-  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_day();
+  const ::StaffDTO& _internal_staff() const;
+  ::StaffDTO* PROTOBUF_NONNULL _internal_mutable_staff();
 
   public:
-  // .TimeDTO time = 4;
-  bool has_time() const;
-  void clear_time() ;
-  const ::TimeDTO& time() const;
-  [[nodiscard]] ::TimeDTO* PROTOBUF_NULLABLE release_time();
-  ::TimeDTO* PROTOBUF_NONNULL mutable_time();
-  void set_allocated_time(::TimeDTO* PROTOBUF_NULLABLE value);
-  void unsafe_arena_set_allocated_time(::TimeDTO* PROTOBUF_NULLABLE value);
-  ::TimeDTO* PROTOBUF_NULLABLE unsafe_arena_release_time();
+  // .ShiftDTO shift = 2;
+  bool has_shift() const;
+  void clear_shift() ;
+  const ::ShiftDTO& shift() const;
+  [[nodiscard]] ::ShiftDTO* PROTOBUF_NULLABLE release_shift();
+  ::ShiftDTO* PROTOBUF_NONNULL mutable_shift();
+  void set_allocated_shift(::ShiftDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_shift(::ShiftDTO* PROTOBUF_NULLABLE value);
+  ::ShiftDTO* PROTOBUF_NULLABLE unsafe_arena_release_shift();
 
   private:
-  const ::TimeDTO& _internal_time() const;
-  ::TimeDTO* PROTOBUF_NONNULL _internal_mutable_time();
+  const ::ShiftDTO& _internal_shift() const;
+  ::ShiftDTO* PROTOBUF_NONNULL _internal_mutable_shift();
 
   public:
-  // uint64 staff_id = 1;
-  void clear_staff_id() ;
-  ::uint64_t staff_id() const;
-  void set_staff_id(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_staff_id() const;
-  void _internal_set_staff_id(::uint64_t value);
-
-  public:
-  // uint32 room_id = 2;
-  void clear_room_id() ;
-  ::uint32_t room_id() const;
-  void set_room_id(::uint32_t value);
-
-  private:
-  ::uint32_t _internal_room_id() const;
-  void _internal_set_room_id(::uint32_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:Shift)
+  // @@protoc_insertion_point(class_scope:StaffShift)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 4,
+  static const ::google::protobuf::internal::TcParseTable<1, 2,
                                    2, 0,
                                    2>
       _table_;
@@ -964,46 +993,44 @@ class Shift final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const Shift& from_msg);
+        const StaffShift& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
-    ::DateDTO* PROTOBUF_NULLABLE day_;
-    ::TimeDTO* PROTOBUF_NULLABLE time_;
-    ::uint64_t staff_id_;
-    ::uint32_t room_id_;
+    ::StaffDTO* PROTOBUF_NULLABLE staff_;
+    ::ShiftDTO* PROTOBUF_NULLABLE shift_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_StaffManagement_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull Shift_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull StaffShift_class_data_;
 // -------------------------------------------------------------------
 
-class ScheduleDTO final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:ScheduleDTO) */ {
+class StaffSchedule final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:StaffSchedule) */ {
  public:
-  inline ScheduleDTO() : ScheduleDTO(nullptr) {}
-  ~ScheduleDTO() PROTOBUF_FINAL;
+  inline StaffSchedule() : StaffSchedule(nullptr) {}
+  ~StaffSchedule() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ScheduleDTO* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+  void operator delete(StaffSchedule* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ScheduleDTO));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(StaffSchedule));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ScheduleDTO(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR StaffSchedule(::google::protobuf::internal::ConstantInitialized);
 
-  inline ScheduleDTO(const ScheduleDTO& from) : ScheduleDTO(nullptr, from) {}
-  inline ScheduleDTO(ScheduleDTO&& from) noexcept
-      : ScheduleDTO(nullptr, ::std::move(from)) {}
-  inline ScheduleDTO& operator=(const ScheduleDTO& from) {
+  inline StaffSchedule(const StaffSchedule& from) : StaffSchedule(nullptr, from) {}
+  inline StaffSchedule(StaffSchedule&& from) noexcept
+      : StaffSchedule(nullptr, ::std::move(from)) {}
+  inline StaffSchedule& operator=(const StaffSchedule& from) {
     CopyFrom(from);
     return *this;
   }
-  inline ScheduleDTO& operator=(ScheduleDTO&& from) noexcept {
+  inline StaffSchedule& operator=(StaffSchedule&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -1031,13 +1058,13 @@ class ScheduleDTO final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const ScheduleDTO& default_instance() {
-    return *reinterpret_cast<const ScheduleDTO*>(
-        &_ScheduleDTO_default_instance_);
+  static const StaffSchedule& default_instance() {
+    return *reinterpret_cast<const StaffSchedule*>(
+        &_StaffSchedule_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 3;
-  friend void swap(ScheduleDTO& a, ScheduleDTO& b) { a.Swap(&b); }
-  inline void Swap(ScheduleDTO* PROTOBUF_NONNULL other) {
+  friend void swap(StaffSchedule& a, StaffSchedule& b) { a.Swap(&b); }
+  inline void Swap(StaffSchedule* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -1045,7 +1072,7 @@ class ScheduleDTO final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(ScheduleDTO* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(StaffSchedule* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -1053,13 +1080,13 @@ class ScheduleDTO final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  ScheduleDTO* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ScheduleDTO>(arena);
+  StaffSchedule* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<StaffSchedule>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ScheduleDTO& from);
+  void CopyFrom(const StaffSchedule& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ScheduleDTO& from) { ScheduleDTO::MergeImpl(*this, from); }
+  void MergeFrom(const StaffSchedule& from) { StaffSchedule::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -1095,18 +1122,18 @@ class ScheduleDTO final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(ScheduleDTO* PROTOBUF_NONNULL other);
+  void InternalSwap(StaffSchedule* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "ScheduleDTO"; }
+  static ::absl::string_view FullMessageName() { return "StaffSchedule"; }
 
  protected:
-  explicit ScheduleDTO(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ScheduleDTO(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ScheduleDTO& from);
-  ScheduleDTO(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ScheduleDTO&& from) noexcept
-      : ScheduleDTO(arena) {
+  explicit StaffSchedule(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  StaffSchedule(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const StaffSchedule& from);
+  StaffSchedule(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, StaffSchedule&& from) noexcept
+      : StaffSchedule(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -1125,24 +1152,24 @@ class ScheduleDTO final : public ::google::protobuf::Message
   enum : int {
     kShiftsFieldNumber = 1,
   };
-  // repeated .Shift shifts = 1;
+  // repeated .StaffShift shifts = 1;
   int shifts_size() const;
   private:
   int _internal_shifts_size() const;
 
   public:
   void clear_shifts() ;
-  ::Shift* PROTOBUF_NONNULL mutable_shifts(int index);
-  ::google::protobuf::RepeatedPtrField<::Shift>* PROTOBUF_NONNULL mutable_shifts();
+  ::StaffShift* PROTOBUF_NONNULL mutable_shifts(int index);
+  ::google::protobuf::RepeatedPtrField<::StaffShift>* PROTOBUF_NONNULL mutable_shifts();
 
   private:
-  const ::google::protobuf::RepeatedPtrField<::Shift>& _internal_shifts() const;
-  ::google::protobuf::RepeatedPtrField<::Shift>* PROTOBUF_NONNULL _internal_mutable_shifts();
+  const ::google::protobuf::RepeatedPtrField<::StaffShift>& _internal_shifts() const;
+  ::google::protobuf::RepeatedPtrField<::StaffShift>* PROTOBUF_NONNULL _internal_mutable_shifts();
   public:
-  const ::Shift& shifts(int index) const;
-  ::Shift* PROTOBUF_NONNULL add_shifts();
-  const ::google::protobuf::RepeatedPtrField<::Shift>& shifts() const;
-  // @@protoc_insertion_point(class_scope:ScheduleDTO)
+  const ::StaffShift& shifts(int index) const;
+  ::StaffShift* PROTOBUF_NONNULL add_shifts();
+  const ::google::protobuf::RepeatedPtrField<::StaffShift>& shifts() const;
+  // @@protoc_insertion_point(class_scope:StaffSchedule)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -1165,8 +1192,8 @@ class ScheduleDTO final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ScheduleDTO& from_msg);
-    ::google::protobuf::RepeatedPtrField< ::Shift > shifts_;
+        const StaffSchedule& from_msg);
+    ::google::protobuf::RepeatedPtrField< ::StaffShift > shifts_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -1174,7 +1201,7 @@ class ScheduleDTO final : public ::google::protobuf::Message
   friend struct ::TableStruct_StaffManagement_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull ScheduleDTO_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull StaffSchedule_class_data_;
 
 // ===================================================================
 
@@ -1194,7 +1221,7 @@ extern const ::google::protobuf::internal::ClassDataFull ScheduleDTO_class_data_
 
 // .NameDTO staff_name = 1;
 inline bool StaffDTO::has_staff_name() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.staff_name_ != nullptr);
   return value;
 }
@@ -1215,16 +1242,16 @@ inline void StaffDTO::unsafe_arena_set_allocated_staff_name(
   }
   _impl_.staff_name_ = reinterpret_cast<::NameDTO*>(value);
   if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000002u;
+    _impl_._has_bits_[0] |= 0x00000008u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000002u;
+    _impl_._has_bits_[0] &= ~0x00000008u;
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:StaffDTO.staff_name)
 }
 inline ::NameDTO* PROTOBUF_NULLABLE StaffDTO::release_staff_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  _impl_._has_bits_[0] &= ~0x00000002u;
+  _impl_._has_bits_[0] &= ~0x00000008u;
   ::NameDTO* released = _impl_.staff_name_;
   _impl_.staff_name_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
@@ -1244,7 +1271,7 @@ inline ::NameDTO* PROTOBUF_NULLABLE StaffDTO::unsafe_arena_release_staff_name() 
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:StaffDTO.staff_name)
 
-  _impl_._has_bits_[0] &= ~0x00000002u;
+  _impl_._has_bits_[0] &= ~0x00000008u;
   ::NameDTO* temp = _impl_.staff_name_;
   _impl_.staff_name_ = nullptr;
   return temp;
@@ -1259,7 +1286,7 @@ inline ::NameDTO* PROTOBUF_NONNULL StaffDTO::_internal_mutable_staff_name() {
 }
 inline ::NameDTO* PROTOBUF_NONNULL StaffDTO::mutable_staff_name()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000002u;
+  _impl_._has_bits_[0] |= 0x00000008u;
   ::NameDTO* _msg = _internal_mutable_staff_name();
   // @@protoc_insertion_point(field_mutable:StaffDTO.staff_name)
   return _msg;
@@ -1276,9 +1303,9 @@ inline void StaffDTO::set_allocated_staff_name(::NameDTO* PROTOBUF_NULLABLE valu
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    _impl_._has_bits_[0] |= 0x00000002u;
+    _impl_._has_bits_[0] |= 0x00000008u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000002u;
+    _impl_._has_bits_[0] &= ~0x00000008u;
   }
 
   _impl_.staff_name_ = reinterpret_cast<::NameDTO*>(value);
@@ -1289,7 +1316,7 @@ inline void StaffDTO::set_allocated_staff_name(::NameDTO* PROTOBUF_NULLABLE valu
 inline void StaffDTO::clear_staff_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.staff_id_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000004u;
+  _impl_._has_bits_[0] &= ~0x00000010u;
 }
 inline ::uint64_t StaffDTO::staff_id() const {
   // @@protoc_insertion_point(field_get:StaffDTO.staff_id)
@@ -1297,7 +1324,7 @@ inline ::uint64_t StaffDTO::staff_id() const {
 }
 inline void StaffDTO::set_staff_id(::uint64_t value) {
   _internal_set_staff_id(value);
-  _impl_._has_bits_[0] |= 0x00000004u;
+  _impl_._has_bits_[0] |= 0x00000010u;
   // @@protoc_insertion_point(field_set:StaffDTO.staff_id)
 }
 inline ::uint64_t StaffDTO::_internal_staff_id() const {
@@ -1378,7 +1405,7 @@ inline void StaffDTO::set_allocated_staff_sex(::std::string* PROTOBUF_NULLABLE v
 inline void StaffDTO::clear_staff_room() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.staff_room_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000008u;
+  _impl_._has_bits_[0] &= ~0x00000020u;
 }
 inline ::uint32_t StaffDTO::staff_room() const {
   // @@protoc_insertion_point(field_get:StaffDTO.staff_room)
@@ -1386,7 +1413,7 @@ inline ::uint32_t StaffDTO::staff_room() const {
 }
 inline void StaffDTO::set_staff_room(::uint32_t value) {
   _internal_set_staff_room(value);
-  _impl_._has_bits_[0] |= 0x00000008u;
+  _impl_._has_bits_[0] |= 0x00000020u;
   // @@protoc_insertion_point(field_set:StaffDTO.staff_room)
 }
 inline ::uint32_t StaffDTO::_internal_staff_room() const {
@@ -1402,7 +1429,7 @@ inline void StaffDTO::_internal_set_staff_room(::uint32_t value) {
 inline void StaffDTO::clear_staff_salary() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.staff_salary_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000010u;
+  _impl_._has_bits_[0] &= ~0x00000040u;
 }
 inline float StaffDTO::staff_salary() const {
   // @@protoc_insertion_point(field_get:StaffDTO.staff_salary)
@@ -1410,7 +1437,7 @@ inline float StaffDTO::staff_salary() const {
 }
 inline void StaffDTO::set_staff_salary(float value) {
   _internal_set_staff_salary(value);
-  _impl_._has_bits_[0] |= 0x00000010u;
+  _impl_._has_bits_[0] |= 0x00000040u;
   // @@protoc_insertion_point(field_set:StaffDTO.staff_salary)
 }
 inline float StaffDTO::_internal_staff_salary() const {
@@ -1422,93 +1449,180 @@ inline void StaffDTO::_internal_set_staff_salary(float value) {
   _impl_.staff_salary_ = value;
 }
 
-// -------------------------------------------------------------------
-
-// Shift
-
-// uint64 staff_id = 1;
-inline void Shift::clear_staff_id() {
+// string staff_pos = 6;
+inline void StaffDTO::clear_staff_pos() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.staff_id_ = ::uint64_t{0u};
+  _impl_.staff_pos_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000002u;
+}
+inline const ::std::string& StaffDTO::staff_pos() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:StaffDTO.staff_pos)
+  return _internal_staff_pos();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void StaffDTO::set_staff_pos(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  _impl_.staff_pos_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:StaffDTO.staff_pos)
+}
+inline ::std::string* PROTOBUF_NONNULL StaffDTO::mutable_staff_pos()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_staff_pos();
+  // @@protoc_insertion_point(field_mutable:StaffDTO.staff_pos)
+  return _s;
+}
+inline const ::std::string& StaffDTO::_internal_staff_pos() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.staff_pos_.Get();
+}
+inline void StaffDTO::_internal_set_staff_pos(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  _impl_.staff_pos_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL StaffDTO::_internal_mutable_staff_pos() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  return _impl_.staff_pos_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE StaffDTO::release_staff_pos() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:StaffDTO.staff_pos)
+  if ((_impl_._has_bits_[0] & 0x00000002u) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  auto* released = _impl_.staff_pos_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.staff_pos_.Set("", GetArena());
+  }
+  return released;
+}
+inline void StaffDTO::set_allocated_staff_pos(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+  _impl_.staff_pos_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.staff_pos_.IsDefault()) {
+    _impl_.staff_pos_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:StaffDTO.staff_pos)
+}
+
+// string staff_clear = 7;
+inline void StaffDTO::clear_staff_clear() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.staff_clear_.ClearToEmpty();
   _impl_._has_bits_[0] &= ~0x00000004u;
 }
-inline ::uint64_t Shift::staff_id() const {
-  // @@protoc_insertion_point(field_get:Shift.staff_id)
-  return _internal_staff_id();
+inline const ::std::string& StaffDTO::staff_clear() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:StaffDTO.staff_clear)
+  return _internal_staff_clear();
 }
-inline void Shift::set_staff_id(::uint64_t value) {
-  _internal_set_staff_id(value);
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void StaffDTO::set_staff_clear(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000004u;
-  // @@protoc_insertion_point(field_set:Shift.staff_id)
+  _impl_.staff_clear_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:StaffDTO.staff_clear)
 }
-inline ::uint64_t Shift::_internal_staff_id() const {
+inline ::std::string* PROTOBUF_NONNULL StaffDTO::mutable_staff_clear()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::std::string* _s = _internal_mutable_staff_clear();
+  // @@protoc_insertion_point(field_mutable:StaffDTO.staff_clear)
+  return _s;
+}
+inline const ::std::string& StaffDTO::_internal_staff_clear() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.staff_id_;
+  return _impl_.staff_clear_.Get();
 }
-inline void Shift::_internal_set_staff_id(::uint64_t value) {
+inline void StaffDTO::_internal_set_staff_clear(const ::std::string& value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.staff_id_ = value;
+  _impl_._has_bits_[0] |= 0x00000004u;
+  _impl_.staff_clear_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL StaffDTO::_internal_mutable_staff_clear() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  return _impl_.staff_clear_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE StaffDTO::release_staff_clear() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:StaffDTO.staff_clear)
+  if ((_impl_._has_bits_[0] & 0x00000004u) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000004u;
+  auto* released = _impl_.staff_clear_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.staff_clear_.Set("", GetArena());
+  }
+  return released;
+}
+inline void StaffDTO::set_allocated_staff_clear(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000004u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000004u;
+  }
+  _impl_.staff_clear_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.staff_clear_.IsDefault()) {
+    _impl_.staff_clear_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:StaffDTO.staff_clear)
 }
 
-// uint32 room_id = 2;
-inline void Shift::clear_room_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.room_id_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000008u;
-}
-inline ::uint32_t Shift::room_id() const {
-  // @@protoc_insertion_point(field_get:Shift.room_id)
-  return _internal_room_id();
-}
-inline void Shift::set_room_id(::uint32_t value) {
-  _internal_set_room_id(value);
-  _impl_._has_bits_[0] |= 0x00000008u;
-  // @@protoc_insertion_point(field_set:Shift.room_id)
-}
-inline ::uint32_t Shift::_internal_room_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.room_id_;
-}
-inline void Shift::_internal_set_room_id(::uint32_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.room_id_ = value;
-}
+// -------------------------------------------------------------------
 
-// .DateDTO day = 3;
-inline bool Shift::has_day() const {
+// StaffShift
+
+// .StaffDTO staff = 1;
+inline bool StaffShift::has_staff() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.day_ != nullptr);
+  PROTOBUF_ASSUME(!value || _impl_.staff_ != nullptr);
   return value;
 }
-inline const ::DateDTO& Shift::_internal_day() const {
+inline void StaffShift::clear_staff() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.staff_ != nullptr) _impl_.staff_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::StaffDTO& StaffShift::_internal_staff() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::DateDTO* p = _impl_.day_;
-  return p != nullptr ? *p : reinterpret_cast<const ::DateDTO&>(::_DateDTO_default_instance_);
+  const ::StaffDTO* p = _impl_.staff_;
+  return p != nullptr ? *p : reinterpret_cast<const ::StaffDTO&>(::_StaffDTO_default_instance_);
 }
-inline const ::DateDTO& Shift::day() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:Shift.day)
-  return _internal_day();
+inline const ::StaffDTO& StaffShift::staff() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:StaffShift.staff)
+  return _internal_staff();
 }
-inline void Shift::unsafe_arena_set_allocated_day(
-    ::DateDTO* PROTOBUF_NULLABLE value) {
+inline void StaffShift::unsafe_arena_set_allocated_staff(
+    ::StaffDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.day_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.staff_);
   }
-  _impl_.day_ = reinterpret_cast<::DateDTO*>(value);
+  _impl_.staff_ = reinterpret_cast<::StaffDTO*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000001u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Shift.day)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:StaffShift.staff)
 }
-inline ::DateDTO* PROTOBUF_NULLABLE Shift::release_day() {
+inline ::StaffDTO* PROTOBUF_NULLABLE StaffShift::release_staff() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000001u;
-  ::DateDTO* released = _impl_.day_;
-  _impl_.day_ = nullptr;
+  ::StaffDTO* released = _impl_.staff_;
+  _impl_.staff_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
     released = ::google::protobuf::internal::DuplicateIfNonNull(released);
@@ -1522,39 +1636,39 @@ inline ::DateDTO* PROTOBUF_NULLABLE Shift::release_day() {
   }
   return released;
 }
-inline ::DateDTO* PROTOBUF_NULLABLE Shift::unsafe_arena_release_day() {
+inline ::StaffDTO* PROTOBUF_NULLABLE StaffShift::unsafe_arena_release_staff() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:Shift.day)
+  // @@protoc_insertion_point(field_release:StaffShift.staff)
 
   _impl_._has_bits_[0] &= ~0x00000001u;
-  ::DateDTO* temp = _impl_.day_;
-  _impl_.day_ = nullptr;
+  ::StaffDTO* temp = _impl_.staff_;
+  _impl_.staff_ = nullptr;
   return temp;
 }
-inline ::DateDTO* PROTOBUF_NONNULL Shift::_internal_mutable_day() {
+inline ::StaffDTO* PROTOBUF_NONNULL StaffShift::_internal_mutable_staff() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.day_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::DateDTO>(GetArena());
-    _impl_.day_ = reinterpret_cast<::DateDTO*>(p);
+  if (_impl_.staff_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::StaffDTO>(GetArena());
+    _impl_.staff_ = reinterpret_cast<::StaffDTO*>(p);
   }
-  return _impl_.day_;
+  return _impl_.staff_;
 }
-inline ::DateDTO* PROTOBUF_NONNULL Shift::mutable_day()
+inline ::StaffDTO* PROTOBUF_NONNULL StaffShift::mutable_staff()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000001u;
-  ::DateDTO* _msg = _internal_mutable_day();
-  // @@protoc_insertion_point(field_mutable:Shift.day)
+  ::StaffDTO* _msg = _internal_mutable_staff();
+  // @@protoc_insertion_point(field_mutable:StaffShift.staff)
   return _msg;
 }
-inline void Shift::set_allocated_day(::DateDTO* PROTOBUF_NULLABLE value) {
+inline void StaffShift::set_allocated_staff(::StaffDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.day_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.staff_);
   }
 
   if (value != nullptr) {
-    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
@@ -1563,45 +1677,45 @@ inline void Shift::set_allocated_day(::DateDTO* PROTOBUF_NULLABLE value) {
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
 
-  _impl_.day_ = reinterpret_cast<::DateDTO*>(value);
-  // @@protoc_insertion_point(field_set_allocated:Shift.day)
+  _impl_.staff_ = reinterpret_cast<::StaffDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:StaffShift.staff)
 }
 
-// .TimeDTO time = 4;
-inline bool Shift::has_time() const {
+// .ShiftDTO shift = 2;
+inline bool StaffShift::has_shift() const {
   bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.time_ != nullptr);
+  PROTOBUF_ASSUME(!value || _impl_.shift_ != nullptr);
   return value;
 }
-inline const ::TimeDTO& Shift::_internal_time() const {
+inline const ::ShiftDTO& StaffShift::_internal_shift() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::TimeDTO* p = _impl_.time_;
-  return p != nullptr ? *p : reinterpret_cast<const ::TimeDTO&>(::_TimeDTO_default_instance_);
+  const ::ShiftDTO* p = _impl_.shift_;
+  return p != nullptr ? *p : reinterpret_cast<const ::ShiftDTO&>(::_ShiftDTO_default_instance_);
 }
-inline const ::TimeDTO& Shift::time() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:Shift.time)
-  return _internal_time();
+inline const ::ShiftDTO& StaffShift::shift() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:StaffShift.shift)
+  return _internal_shift();
 }
-inline void Shift::unsafe_arena_set_allocated_time(
-    ::TimeDTO* PROTOBUF_NULLABLE value) {
+inline void StaffShift::unsafe_arena_set_allocated_shift(
+    ::ShiftDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.time_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.shift_);
   }
-  _impl_.time_ = reinterpret_cast<::TimeDTO*>(value);
+  _impl_.shift_ = reinterpret_cast<::ShiftDTO*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000002u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Shift.time)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:StaffShift.shift)
 }
-inline ::TimeDTO* PROTOBUF_NULLABLE Shift::release_time() {
+inline ::ShiftDTO* PROTOBUF_NULLABLE StaffShift::release_shift() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000002u;
-  ::TimeDTO* released = _impl_.time_;
-  _impl_.time_ = nullptr;
+  ::ShiftDTO* released = _impl_.shift_;
+  _impl_.shift_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
     released = ::google::protobuf::internal::DuplicateIfNonNull(released);
@@ -1615,35 +1729,35 @@ inline ::TimeDTO* PROTOBUF_NULLABLE Shift::release_time() {
   }
   return released;
 }
-inline ::TimeDTO* PROTOBUF_NULLABLE Shift::unsafe_arena_release_time() {
+inline ::ShiftDTO* PROTOBUF_NULLABLE StaffShift::unsafe_arena_release_shift() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:Shift.time)
+  // @@protoc_insertion_point(field_release:StaffShift.shift)
 
   _impl_._has_bits_[0] &= ~0x00000002u;
-  ::TimeDTO* temp = _impl_.time_;
-  _impl_.time_ = nullptr;
+  ::ShiftDTO* temp = _impl_.shift_;
+  _impl_.shift_ = nullptr;
   return temp;
 }
-inline ::TimeDTO* PROTOBUF_NONNULL Shift::_internal_mutable_time() {
+inline ::ShiftDTO* PROTOBUF_NONNULL StaffShift::_internal_mutable_shift() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.time_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::TimeDTO>(GetArena());
-    _impl_.time_ = reinterpret_cast<::TimeDTO*>(p);
+  if (_impl_.shift_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::ShiftDTO>(GetArena());
+    _impl_.shift_ = reinterpret_cast<::ShiftDTO*>(p);
   }
-  return _impl_.time_;
+  return _impl_.shift_;
 }
-inline ::TimeDTO* PROTOBUF_NONNULL Shift::mutable_time()
+inline ::ShiftDTO* PROTOBUF_NONNULL StaffShift::mutable_shift()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000002u;
-  ::TimeDTO* _msg = _internal_mutable_time();
-  // @@protoc_insertion_point(field_mutable:Shift.time)
+  ::ShiftDTO* _msg = _internal_mutable_shift();
+  // @@protoc_insertion_point(field_mutable:StaffShift.shift)
   return _msg;
 }
-inline void Shift::set_allocated_time(::TimeDTO* PROTOBUF_NULLABLE value) {
+inline void StaffShift::set_allocated_shift(::ShiftDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.time_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.shift_);
   }
 
   if (value != nullptr) {
@@ -1656,17 +1770,115 @@ inline void Shift::set_allocated_time(::TimeDTO* PROTOBUF_NULLABLE value) {
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
 
-  _impl_.time_ = reinterpret_cast<::TimeDTO*>(value);
-  // @@protoc_insertion_point(field_set_allocated:Shift.time)
+  _impl_.shift_ = reinterpret_cast<::ShiftDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:StaffShift.shift)
 }
 
 // -------------------------------------------------------------------
 
 // TimeOff
 
-// .DateDTO start_date = 1;
-inline bool TimeOff::has_start_date() const {
+// .StaffDTO staff = 1;
+inline bool TimeOff::has_staff() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.staff_ != nullptr);
+  return value;
+}
+inline void TimeOff::clear_staff() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.staff_ != nullptr) _impl_.staff_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::StaffDTO& TimeOff::_internal_staff() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::StaffDTO* p = _impl_.staff_;
+  return p != nullptr ? *p : reinterpret_cast<const ::StaffDTO&>(::_StaffDTO_default_instance_);
+}
+inline const ::StaffDTO& TimeOff::staff() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:TimeOff.staff)
+  return _internal_staff();
+}
+inline void TimeOff::unsafe_arena_set_allocated_staff(
+    ::StaffDTO* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.staff_);
+  }
+  _impl_.staff_ = reinterpret_cast<::StaffDTO*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:TimeOff.staff)
+}
+inline ::StaffDTO* PROTOBUF_NULLABLE TimeOff::release_staff() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::StaffDTO* released = _impl_.staff_;
+  _impl_.staff_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::StaffDTO* PROTOBUF_NULLABLE TimeOff::unsafe_arena_release_staff() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:TimeOff.staff)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::StaffDTO* temp = _impl_.staff_;
+  _impl_.staff_ = nullptr;
+  return temp;
+}
+inline ::StaffDTO* PROTOBUF_NONNULL TimeOff::_internal_mutable_staff() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.staff_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::StaffDTO>(GetArena());
+    _impl_.staff_ = reinterpret_cast<::StaffDTO*>(p);
+  }
+  return _impl_.staff_;
+}
+inline ::StaffDTO* PROTOBUF_NONNULL TimeOff::mutable_staff()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  ::StaffDTO* _msg = _internal_mutable_staff();
+  // @@protoc_insertion_point(field_mutable:TimeOff.staff)
+  return _msg;
+}
+inline void TimeOff::set_allocated_staff(::StaffDTO* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.staff_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.staff_ = reinterpret_cast<::StaffDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:TimeOff.staff)
+}
+
+// .DateDTO start_date = 2;
+inline bool TimeOff::has_start_date() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.start_date_ != nullptr);
   return value;
 }
@@ -1687,16 +1899,16 @@ inline void TimeOff::unsafe_arena_set_allocated_start_date(
   }
   _impl_.start_date_ = reinterpret_cast<::DateDTO*>(value);
   if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000001u;
+    _impl_._has_bits_[0] |= 0x00000002u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
+    _impl_._has_bits_[0] &= ~0x00000002u;
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:TimeOff.start_date)
 }
 inline ::DateDTO* PROTOBUF_NULLABLE TimeOff::release_start_date() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  _impl_._has_bits_[0] &= ~0x00000001u;
+  _impl_._has_bits_[0] &= ~0x00000002u;
   ::DateDTO* released = _impl_.start_date_;
   _impl_.start_date_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
@@ -1716,7 +1928,7 @@ inline ::DateDTO* PROTOBUF_NULLABLE TimeOff::unsafe_arena_release_start_date() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:TimeOff.start_date)
 
-  _impl_._has_bits_[0] &= ~0x00000001u;
+  _impl_._has_bits_[0] &= ~0x00000002u;
   ::DateDTO* temp = _impl_.start_date_;
   _impl_.start_date_ = nullptr;
   return temp;
@@ -1731,7 +1943,7 @@ inline ::DateDTO* PROTOBUF_NONNULL TimeOff::_internal_mutable_start_date() {
 }
 inline ::DateDTO* PROTOBUF_NONNULL TimeOff::mutable_start_date()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000001u;
+  _impl_._has_bits_[0] |= 0x00000002u;
   ::DateDTO* _msg = _internal_mutable_start_date();
   // @@protoc_insertion_point(field_mutable:TimeOff.start_date)
   return _msg;
@@ -1748,18 +1960,18 @@ inline void TimeOff::set_allocated_start_date(::DateDTO* PROTOBUF_NULLABLE value
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    _impl_._has_bits_[0] |= 0x00000001u;
+    _impl_._has_bits_[0] |= 0x00000002u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000001u;
+    _impl_._has_bits_[0] &= ~0x00000002u;
   }
 
   _impl_.start_date_ = reinterpret_cast<::DateDTO*>(value);
   // @@protoc_insertion_point(field_set_allocated:TimeOff.start_date)
 }
 
-// .DateDTO end_date = 2;
+// .DateDTO end_date = 3;
 inline bool TimeOff::has_end_date() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.end_date_ != nullptr);
   return value;
 }
@@ -1780,16 +1992,16 @@ inline void TimeOff::unsafe_arena_set_allocated_end_date(
   }
   _impl_.end_date_ = reinterpret_cast<::DateDTO*>(value);
   if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000002u;
+    _impl_._has_bits_[0] |= 0x00000004u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000002u;
+    _impl_._has_bits_[0] &= ~0x00000004u;
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:TimeOff.end_date)
 }
 inline ::DateDTO* PROTOBUF_NULLABLE TimeOff::release_end_date() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  _impl_._has_bits_[0] &= ~0x00000002u;
+  _impl_._has_bits_[0] &= ~0x00000004u;
   ::DateDTO* released = _impl_.end_date_;
   _impl_.end_date_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
@@ -1809,7 +2021,7 @@ inline ::DateDTO* PROTOBUF_NULLABLE TimeOff::unsafe_arena_release_end_date() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:TimeOff.end_date)
 
-  _impl_._has_bits_[0] &= ~0x00000002u;
+  _impl_._has_bits_[0] &= ~0x00000004u;
   ::DateDTO* temp = _impl_.end_date_;
   _impl_.end_date_ = nullptr;
   return temp;
@@ -1824,7 +2036,7 @@ inline ::DateDTO* PROTOBUF_NONNULL TimeOff::_internal_mutable_end_date() {
 }
 inline ::DateDTO* PROTOBUF_NONNULL TimeOff::mutable_end_date()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000002u;
+  _impl_._has_bits_[0] |= 0x00000004u;
   ::DateDTO* _msg = _internal_mutable_end_date();
   // @@protoc_insertion_point(field_mutable:TimeOff.end_date)
   return _msg;
@@ -1841,9 +2053,9 @@ inline void TimeOff::set_allocated_end_date(::DateDTO* PROTOBUF_NULLABLE value) 
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    _impl_._has_bits_[0] |= 0x00000002u;
+    _impl_._has_bits_[0] |= 0x00000004u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000002u;
+    _impl_._has_bits_[0] &= ~0x00000004u;
   }
 
   _impl_.end_date_ = reinterpret_cast<::DateDTO*>(value);
@@ -1852,54 +2064,54 @@ inline void TimeOff::set_allocated_end_date(::DateDTO* PROTOBUF_NULLABLE value) 
 
 // -------------------------------------------------------------------
 
-// ScheduleDTO
+// StaffSchedule
 
-// repeated .Shift shifts = 1;
-inline int ScheduleDTO::_internal_shifts_size() const {
+// repeated .StaffShift shifts = 1;
+inline int StaffSchedule::_internal_shifts_size() const {
   return _internal_shifts().size();
 }
-inline int ScheduleDTO::shifts_size() const {
+inline int StaffSchedule::shifts_size() const {
   return _internal_shifts_size();
 }
-inline void ScheduleDTO::clear_shifts() {
+inline void StaffSchedule::clear_shifts() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.shifts_.Clear();
 }
-inline ::Shift* PROTOBUF_NONNULL ScheduleDTO::mutable_shifts(int index)
+inline ::StaffShift* PROTOBUF_NONNULL StaffSchedule::mutable_shifts(int index)
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:ScheduleDTO.shifts)
+  // @@protoc_insertion_point(field_mutable:StaffSchedule.shifts)
   return _internal_mutable_shifts()->Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField<::Shift>* PROTOBUF_NONNULL ScheduleDTO::mutable_shifts()
+inline ::google::protobuf::RepeatedPtrField<::StaffShift>* PROTOBUF_NONNULL StaffSchedule::mutable_shifts()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:ScheduleDTO.shifts)
+  // @@protoc_insertion_point(field_mutable_list:StaffSchedule.shifts)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   return _internal_mutable_shifts();
 }
-inline const ::Shift& ScheduleDTO::shifts(int index) const
+inline const ::StaffShift& StaffSchedule::shifts(int index) const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:ScheduleDTO.shifts)
+  // @@protoc_insertion_point(field_get:StaffSchedule.shifts)
   return _internal_shifts().Get(index);
 }
-inline ::Shift* PROTOBUF_NONNULL ScheduleDTO::add_shifts()
+inline ::StaffShift* PROTOBUF_NONNULL StaffSchedule::add_shifts()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::Shift* _add = _internal_mutable_shifts()->Add();
-  // @@protoc_insertion_point(field_add:ScheduleDTO.shifts)
+  ::StaffShift* _add = _internal_mutable_shifts()->Add();
+  // @@protoc_insertion_point(field_add:StaffSchedule.shifts)
   return _add;
 }
-inline const ::google::protobuf::RepeatedPtrField<::Shift>& ScheduleDTO::shifts() const
+inline const ::google::protobuf::RepeatedPtrField<::StaffShift>& StaffSchedule::shifts() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:ScheduleDTO.shifts)
+  // @@protoc_insertion_point(field_list:StaffSchedule.shifts)
   return _internal_shifts();
 }
-inline const ::google::protobuf::RepeatedPtrField<::Shift>&
-ScheduleDTO::_internal_shifts() const {
+inline const ::google::protobuf::RepeatedPtrField<::StaffShift>&
+StaffSchedule::_internal_shifts() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.shifts_;
 }
-inline ::google::protobuf::RepeatedPtrField<::Shift>* PROTOBUF_NONNULL
-ScheduleDTO::_internal_mutable_shifts() {
+inline ::google::protobuf::RepeatedPtrField<::StaffShift>* PROTOBUF_NONNULL
+StaffSchedule::_internal_mutable_shifts() {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return &_impl_.shifts_;
 }

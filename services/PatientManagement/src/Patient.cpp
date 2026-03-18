@@ -1,5 +1,9 @@
 #include "Patient.hpp"
 
+using namespace general;
+using namespace person;
+using namespace patients;
+
 // Public
 Patient::Patient(const Name & name, Sex sex = Sex::Unknown) // Master Constuctor
     : patient_name(name), patient_sex(sex) {

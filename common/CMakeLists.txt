@@ -1,6 +1,30 @@
-file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
+set(SOURCES
+    # Headers
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Client.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Schedule.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Service.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/grpc_utils.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/time_utils.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/utils.hpp
+
+    # Sources
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Schedule.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Service.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/time_utils.cpp
+)
+
+set(CPP_CLIENTS
+    # C++ Headers
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/PatientManagementClient.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/ResourceManagementClient.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/RoomManagementClient.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/StaffManagementClient.hpp
+    
+    # C++ Sources
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/PatientManagementClient.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/ResourceManagementClient.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/RoomManagementClient.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/StaffManagementClient.cpp
 )
 
 set(GRPC_LOCAL_DIR ${PROJECT_SOURCE_DIR}/external/grpc/local)
@@ -9,8 +33,8 @@ list(INSERT CMAKE_PREFIX_PATH 0 ${GRPC_LOCAL_DIR}/lib/cmake)
 find_package(Protobuf CONFIG REQUIRED PATHS ${GRPC_LOCAL_DIR}/lib/cmake/protobuf)
 find_package(gRPC CONFIG REQUIRED PATHS ${GRPC_LOCAL_DIR}/lib/cmake/grpc)
 
-add_library(common ${SOURCES})
-target_sources(common PRIVATE ${SOURCES})
+add_library(common ${SOURCES} ${CPP_CLIENTS})
+target_sources(common PRIVATE ${SOURCES} ${CPP_CLIENTS})
 
 target_link_libraries(common
     PUBLIC
@@ -72,6 +96,26 @@ foreach(proto_file ${PROTO_FILES})
     target_sources(common PRIVATE ${proto_src} ${grpc_src} ${proto_hdr} ${grpc_hdr})
 endforeach()
 
+# Glob all Python client files
+set(PY_CLIENTS
+    # Python Sources
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/patient_client.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/resource_client.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/room_client.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/clients/staff_client.py
+)
+
+# Make them visible in Xcode under a group "Python Clients"
+source_group("Clients" FILES ${CPP_CLIENTS} ${PY_CLIENTS})
+
+# Add them as sources to the common target
+target_sources(common PRIVATE ${PY_CLIENTS})
+
 # Include generated headers
-target_include_directories(common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${GENERATED_DIR})
+target_include_directories(common
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${GENERATED_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/clients
+)
 

@@ -15,14 +15,16 @@ service StaffManagement {
     rpc UpdateStaffInformation(StaffDTO) returns (Success);
     
     // Staff Scheduling
-    rpc AddShift(Shift)                  returns (Success);
-    rpc RemoveShift(Shift)               returns (Success);
-    rpc TransferShift(Shift)             returns (Success);
+    rpc AddShift(StaffShift)             returns (Success);
+    rpc RemoveShift(StaffShift)          returns (Success);
+    rpc TransferShift(StaffShift)        returns (Success);
     rpc BookTimeOff(TimeOff)             returns (Success);
     
     // Staff Information
     rpc SeeStaffInformation(StaffDTO)    returns (StaffDTO);
-    rpc SeeSchedule(StaffDTO)            returns (ScheduleDTO);
+    rpc SeeTodaysSchedule(StaffDTO)      returns (StaffSchedule);
+    rpc SeeTomorrowsSchedule(StaffDTO)   returns (StaffSchedule);
+    rpc SeeScheduleRange(StaffShift)     returns (StaffSchedule);
     
     /* This call is not accessible to the front end */
     rpc GetStaffInRoom(RoomRequest)      returns (StaffList);
@@ -34,22 +36,23 @@ message StaffDTO {
     string  staff_sex    = 3;
     uint32  staff_room   = 4;
     float   staff_salary = 5;
+    string  staff_pos    = 6;
+    string  staff_clear  = 7;
 }
 
-message Shift {
-    uint64  staff_id = 1;
-    uint32  room_id  = 2;
-    DateDTO day      = 3;
-    TimeDTO time     = 4;
+message StaffShift {
+    StaffDTO staff = 1;
+    ShiftDTO shift = 2;
 }
 
 message TimeOff {
-    DateDTO start_date = 1;
-    DateDTO end_date   = 2;
+    StaffDTO staff     = 1;
+    DateDTO start_date = 2;
+    DateDTO end_date   = 3;
 }
 
-message ScheduleDTO {
-    repeated Shift shifts = 1;
+message StaffSchedule {
+    repeated StaffShift shifts = 1;
 }
 
 message StaffList {

@@ -1,5 +1,7 @@
 #include "Resource.hpp"
 
+using namespace resources;
+
 /* ******************************************************************** */
 /* ********************** Private Functions *************************** */
 /* ******************************************************************** */
@@ -10,21 +12,21 @@
 
 Resource::Resource() : resource_schedule(std::make_unique<Schedule>()) {}
 
-Resource::Resource(resources::MachineryType m)  : Resource() { type = m; }
-Resource::Resource(resources::ConsumableType c) : Resource() { type = c; }
-Resource::Resource(resources::ResourceType r)   : Resource() { type = std::move(r); }
+Resource::Resource(MachineryType m)  : Resource() { type = m; }
+Resource::Resource(ConsumableType c) : Resource() { type = c; }
+Resource::Resource(ResourceType r)   : Resource() { type = std::move(r); }
 
-Resource::Resource(resources::MachineryType m, uint64_t resource_id)   : Resource() {
+Resource::Resource(MachineryType m, uint64_t resource_id)   : Resource() {
     this->type = m;
     this->resource_id = resource_id;
 }
 
-Resource::Resource(resources::ConsumableType c, uint64_t resource_id)  : Resource() {
+Resource::Resource(ConsumableType c, uint64_t resource_id)  : Resource() {
     this->type = c;
     this->resource_id = resource_id;
 }
 
-Resource::Resource(resources::ResourceType r, uint64_t resource_id)    : Resource() {
+Resource::Resource(ResourceType r, uint64_t resource_id)    : Resource() {
     this->type = std::move(r);
     this->resource_id = resource_id;
 }
@@ -42,15 +44,15 @@ std::ostream & operator<<(std::ostream & os, const Resource & r) {
 
     os << "  Type      : "
        << ansi::bwhite
-       << Resource::resourceTypeToString(r)
+       << resourceTypeToString(r.getResourceType())
        << ansi::reset
        << '\n';
 
     os << "  Category  : ";
 
-    if (resources::isMachinery(r.getResourceType()))
+    if (isMachinery(r.getResourceType()))
         os << ansi::bblue << "Machinery";
-    else if (resources::isConsumable(r.getResourceType()))
+    else if (isConsumable(r.getResourceType()))
         os << ansi::bmagenta << "Consumable";
     else
         os << ansi::bred << "Unknown";

@@ -43,17 +43,17 @@ class StaffManagementStub(object):
                 _registered_method=True)
         self.AddShift = channel.unary_unary(
                 '/StaffManagement/AddShift',
-                request_serializer=StaffManagement__pb2.Shift.SerializeToString,
+                request_serializer=StaffManagement__pb2.StaffShift.SerializeToString,
                 response_deserializer=Common__pb2.Success.FromString,
                 _registered_method=True)
         self.RemoveShift = channel.unary_unary(
                 '/StaffManagement/RemoveShift',
-                request_serializer=StaffManagement__pb2.Shift.SerializeToString,
+                request_serializer=StaffManagement__pb2.StaffShift.SerializeToString,
                 response_deserializer=Common__pb2.Success.FromString,
                 _registered_method=True)
         self.TransferShift = channel.unary_unary(
                 '/StaffManagement/TransferShift',
-                request_serializer=StaffManagement__pb2.Shift.SerializeToString,
+                request_serializer=StaffManagement__pb2.StaffShift.SerializeToString,
                 response_deserializer=Common__pb2.Success.FromString,
                 _registered_method=True)
         self.BookTimeOff = channel.unary_unary(
@@ -66,10 +66,20 @@ class StaffManagementStub(object):
                 request_serializer=StaffManagement__pb2.StaffDTO.SerializeToString,
                 response_deserializer=StaffManagement__pb2.StaffDTO.FromString,
                 _registered_method=True)
-        self.SeeSchedule = channel.unary_unary(
-                '/StaffManagement/SeeSchedule',
+        self.SeeTodaysSchedule = channel.unary_unary(
+                '/StaffManagement/SeeTodaysSchedule',
                 request_serializer=StaffManagement__pb2.StaffDTO.SerializeToString,
-                response_deserializer=StaffManagement__pb2.ScheduleDTO.FromString,
+                response_deserializer=StaffManagement__pb2.StaffSchedule.FromString,
+                _registered_method=True)
+        self.SeeTomorrowsSchedule = channel.unary_unary(
+                '/StaffManagement/SeeTomorrowsSchedule',
+                request_serializer=StaffManagement__pb2.StaffDTO.SerializeToString,
+                response_deserializer=StaffManagement__pb2.StaffSchedule.FromString,
+                _registered_method=True)
+        self.SeeScheduleRange = channel.unary_unary(
+                '/StaffManagement/SeeScheduleRange',
+                request_serializer=StaffManagement__pb2.StaffShift.SerializeToString,
+                response_deserializer=StaffManagement__pb2.StaffSchedule.FromString,
                 _registered_method=True)
         self.GetStaffInRoom = channel.unary_unary(
                 '/StaffManagement/GetStaffInRoom',
@@ -146,7 +156,19 @@ class StaffManagementServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def SeeSchedule(self, request, context):
+    def SeeTodaysSchedule(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SeeTomorrowsSchedule(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SeeScheduleRange(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -189,17 +211,17 @@ def add_StaffManagementServicer_to_server(servicer, server):
             ),
             'AddShift': grpc.unary_unary_rpc_method_handler(
                     servicer.AddShift,
-                    request_deserializer=StaffManagement__pb2.Shift.FromString,
+                    request_deserializer=StaffManagement__pb2.StaffShift.FromString,
                     response_serializer=Common__pb2.Success.SerializeToString,
             ),
             'RemoveShift': grpc.unary_unary_rpc_method_handler(
                     servicer.RemoveShift,
-                    request_deserializer=StaffManagement__pb2.Shift.FromString,
+                    request_deserializer=StaffManagement__pb2.StaffShift.FromString,
                     response_serializer=Common__pb2.Success.SerializeToString,
             ),
             'TransferShift': grpc.unary_unary_rpc_method_handler(
                     servicer.TransferShift,
-                    request_deserializer=StaffManagement__pb2.Shift.FromString,
+                    request_deserializer=StaffManagement__pb2.StaffShift.FromString,
                     response_serializer=Common__pb2.Success.SerializeToString,
             ),
             'BookTimeOff': grpc.unary_unary_rpc_method_handler(
@@ -212,10 +234,20 @@ def add_StaffManagementServicer_to_server(servicer, server):
                     request_deserializer=StaffManagement__pb2.StaffDTO.FromString,
                     response_serializer=StaffManagement__pb2.StaffDTO.SerializeToString,
             ),
-            'SeeSchedule': grpc.unary_unary_rpc_method_handler(
-                    servicer.SeeSchedule,
+            'SeeTodaysSchedule': grpc.unary_unary_rpc_method_handler(
+                    servicer.SeeTodaysSchedule,
                     request_deserializer=StaffManagement__pb2.StaffDTO.FromString,
-                    response_serializer=StaffManagement__pb2.ScheduleDTO.SerializeToString,
+                    response_serializer=StaffManagement__pb2.StaffSchedule.SerializeToString,
+            ),
+            'SeeTomorrowsSchedule': grpc.unary_unary_rpc_method_handler(
+                    servicer.SeeTomorrowsSchedule,
+                    request_deserializer=StaffManagement__pb2.StaffDTO.FromString,
+                    response_serializer=StaffManagement__pb2.StaffSchedule.SerializeToString,
+            ),
+            'SeeScheduleRange': grpc.unary_unary_rpc_method_handler(
+                    servicer.SeeScheduleRange,
+                    request_deserializer=StaffManagement__pb2.StaffShift.FromString,
+                    response_serializer=StaffManagement__pb2.StaffSchedule.SerializeToString,
             ),
             'GetStaffInRoom': grpc.unary_unary_rpc_method_handler(
                     servicer.GetStaffInRoom,
@@ -384,7 +416,7 @@ class StaffManagement(object):
             request,
             target,
             '/StaffManagement/AddShift',
-            StaffManagement__pb2.Shift.SerializeToString,
+            StaffManagement__pb2.StaffShift.SerializeToString,
             Common__pb2.Success.FromString,
             options,
             channel_credentials,
@@ -411,7 +443,7 @@ class StaffManagement(object):
             request,
             target,
             '/StaffManagement/RemoveShift',
-            StaffManagement__pb2.Shift.SerializeToString,
+            StaffManagement__pb2.StaffShift.SerializeToString,
             Common__pb2.Success.FromString,
             options,
             channel_credentials,
@@ -438,7 +470,7 @@ class StaffManagement(object):
             request,
             target,
             '/StaffManagement/TransferShift',
-            StaffManagement__pb2.Shift.SerializeToString,
+            StaffManagement__pb2.StaffShift.SerializeToString,
             Common__pb2.Success.FromString,
             options,
             channel_credentials,
@@ -505,7 +537,7 @@ class StaffManagement(object):
             _registered_method=True)
 
     @staticmethod
-    def SeeSchedule(request,
+    def SeeTodaysSchedule(request,
             target,
             options=(),
             channel_credentials=None,
@@ -518,9 +550,63 @@ class StaffManagement(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/StaffManagement/SeeSchedule',
+            '/StaffManagement/SeeTodaysSchedule',
             StaffManagement__pb2.StaffDTO.SerializeToString,
-            StaffManagement__pb2.ScheduleDTO.FromString,
+            StaffManagement__pb2.StaffSchedule.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def SeeTomorrowsSchedule(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/StaffManagement/SeeTomorrowsSchedule',
+            StaffManagement__pb2.StaffDTO.SerializeToString,
+            StaffManagement__pb2.StaffSchedule.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def SeeScheduleRange(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/StaffManagement/SeeScheduleRange',
+            StaffManagement__pb2.StaffShift.SerializeToString,
+            StaffManagement__pb2.StaffSchedule.FromString,
             options,
             channel_credentials,
             insecure,

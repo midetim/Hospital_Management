@@ -6,9 +6,9 @@
 
 class Patient {
 private:
-    Name patient_name;
-    Sex patient_sex = Sex::Unknown;
-    Condition patient_condition = Condition::Unknown;
+    person::Name patient_name;
+    person::Sex patient_sex = person::Sex::Unknown;
+    patients::Condition patient_condition = patients::Condition::Unknown;
     
     uint64_t patient_id = 0;
     uint32_t room_id = 0;
@@ -20,7 +20,7 @@ public:
      * @param name The patients name
      * @param sex The patients sex
      */
-    Patient(const Name & name, Sex sex);    // Master Constructor -- Know both name and sex
+    Patient(const person::Name & name, person::Sex sex);    // Master Constructor -- Know both name and sex
     
     /**
      * @brief No argument constructor
@@ -33,14 +33,14 @@ public:
      * @param sex The sex of the patient
      * @note Calls the master constructor with a default name
      */
-    Patient(Sex sex);                       // No known name
+    Patient(person::Sex sex);                       // No known name
     
     /**
      * @brief Constructor with only patient name
      * @param name The name of the patient
      * @note Calls the master constructor with an unknown patient sex
      */
-    Patient(const Name & name);             // No known Sex
+    Patient(const person::Name & name);             // No known Sex
     
     ~Patient();
     
@@ -53,7 +53,7 @@ public:
      * @return Returns a return code depending on if assignment succeeded
      * @note If the new name matches the old name it will return a **ReturnCode::WARNING**
      */
-    ReturnCode updateName(Name & name); // Updates patient_name to name (returns 1 if name matches patient_name
+    general::ReturnCode updateName(person::Name & name); // Updates patient_name to name (returns 1 if name matches patient_name
     
     /**
      * @brief Gets the room id that the patient is in
@@ -84,38 +84,38 @@ public:
      * @brief Gets the name of the patient
      * @return Returns a reference to the name struct of the patient
      */
-    const Name & getPatientName() const { return this->patient_name; }
+    const person::Name & getPatientName() const { return this->patient_name; }
     
     /**
      * @brief Sets the patients sex
      * @param s Sex enumeration for the patient
      */
-    void setPatientSex(Sex s) { this->patient_sex = s; }
+    void setPatientSex(person::Sex s) { this->patient_sex = s; }
     
     /**
      * @brief Gets the sex of the patient
      * @return Returns the Sex enumeration value of the patient
      */
-    Sex getPatientSex() const { return this->patient_sex; }
+    person::Sex getPatientSex() const { return this->patient_sex; }
     
     /**
      * @brief Sets the patients condition
      * @param c Condtion enumeration for the patient
      */
-    void setPatientCondition(Condition c) { this->patient_condition = c; }
+    void setPatientCondition(patients::Condition c) { this->patient_condition = c; }
     
     /**
      * @brief Get the patients condition
      * @return Returns the Condition enumeration value of the patient
      */
-    Condition getPatientCondition() const { return this->patient_condition; }
+    patients::Condition getPatientCondition() const { return this->patient_condition; }
     
     /**
      * @brief Change the patients condition
      * @param c The Condition enumeration value to set the patients condtion to
      * @return Returns a return code
      */
-    ReturnCode updateCondition(Condition c) { this->patient_condition = c; }
+    general::ReturnCode updateCondition(patients::Condition c) { this->patient_condition = c; }
     
     
     friend std::ostream & operator<<(std::ostream & os, const Patient & p);

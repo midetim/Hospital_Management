@@ -73,25 +73,25 @@ class StaffManagement final {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncUpdateStaffInformationRaw(context, request, cq));
     }
     // Staff Scheduling
-    virtual ::grpc::Status AddShift(::grpc::ClientContext* context, const ::Shift& request, ::Success* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncAddShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    virtual ::grpc::Status AddShift(::grpc::ClientContext* context, const ::StaffShift& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncAddShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncAddShiftRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncAddShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncAddShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncAddShiftRaw(context, request, cq));
     }
-    virtual ::grpc::Status RemoveShift(::grpc::ClientContext* context, const ::Shift& request, ::Success* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncRemoveShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    virtual ::grpc::Status RemoveShift(::grpc::ClientContext* context, const ::StaffShift& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncRemoveShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncRemoveShiftRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncRemoveShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncRemoveShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncRemoveShiftRaw(context, request, cq));
     }
-    virtual ::grpc::Status TransferShift(::grpc::ClientContext* context, const ::Shift& request, ::Success* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncTransferShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    virtual ::grpc::Status TransferShift(::grpc::ClientContext* context, const ::StaffShift& request, ::Success* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> AsyncTransferShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(AsyncTransferShiftRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncTransferShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>> PrepareAsyncTransferShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::Success>>(PrepareAsyncTransferShiftRaw(context, request, cq));
     }
     virtual ::grpc::Status BookTimeOff(::grpc::ClientContext* context, const ::TimeOff& request, ::Success* response) = 0;
@@ -109,12 +109,26 @@ class StaffManagement final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffDTO>> PrepareAsyncSeeStaffInformation(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffDTO>>(PrepareAsyncSeeStaffInformationRaw(context, request, cq));
     }
-    virtual ::grpc::Status SeeSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::ScheduleDTO* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ScheduleDTO>> AsyncSeeSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ScheduleDTO>>(AsyncSeeScheduleRaw(context, request, cq));
+    virtual ::grpc::Status SeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::StaffSchedule* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>> AsyncSeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>>(AsyncSeeTodaysScheduleRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ScheduleDTO>> PrepareAsyncSeeSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ScheduleDTO>>(PrepareAsyncSeeScheduleRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>> PrepareAsyncSeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>>(PrepareAsyncSeeTodaysScheduleRaw(context, request, cq));
+    }
+    virtual ::grpc::Status SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::StaffSchedule* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>> AsyncSeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>>(AsyncSeeTomorrowsScheduleRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>> PrepareAsyncSeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>>(PrepareAsyncSeeTomorrowsScheduleRaw(context, request, cq));
+    }
+    virtual ::grpc::Status SeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift& request, ::StaffSchedule* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>> AsyncSeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>>(AsyncSeeScheduleRangeRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>> PrepareAsyncSeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>>(PrepareAsyncSeeScheduleRangeRaw(context, request, cq));
     }
     // This call is not accessible to the front end 
     virtual ::grpc::Status GetStaffInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::StaffList* response) = 0;
@@ -140,19 +154,23 @@ class StaffManagement final {
       virtual void UpdateStaffInformation(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
       virtual void UpdateStaffInformation(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // Staff Scheduling
-      virtual void AddShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void AddShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void RemoveShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void RemoveShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void TransferShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void TransferShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void AddShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void AddShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void RemoveShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void RemoveShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void TransferShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void TransferShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void BookTimeOff(::grpc::ClientContext* context, const ::TimeOff* request, ::Success* response, std::function<void(::grpc::Status)>) = 0;
       virtual void BookTimeOff(::grpc::ClientContext* context, const ::TimeOff* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // Staff Information
       virtual void SeeStaffInformation(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffDTO* response, std::function<void(::grpc::Status)>) = 0;
       virtual void SeeStaffInformation(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffDTO* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void SeeSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::ScheduleDTO* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void SeeSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::ScheduleDTO* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void SeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void SeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift* request, ::StaffSchedule* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift* request, ::StaffSchedule* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // This call is not accessible to the front end 
       virtual void GetStaffInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::StaffList* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetStaffInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::StaffList* response, ::grpc::ClientUnaryReactor* reactor) = 0;
@@ -171,18 +189,22 @@ class StaffManagement final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncChangeClearanceRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncUpdateStaffInformationRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncUpdateStaffInformationRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncAddShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncAddShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncTransferShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncTransferShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncAddShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncAddShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncTransferShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncTransferShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* AsyncBookTimeOffRaw(::grpc::ClientContext* context, const ::TimeOff& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::Success>* PrepareAsyncBookTimeOffRaw(::grpc::ClientContext* context, const ::TimeOff& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::StaffDTO>* AsyncSeeStaffInformationRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::StaffDTO>* PrepareAsyncSeeStaffInformationRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ScheduleDTO>* AsyncSeeScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ScheduleDTO>* PrepareAsyncSeeScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>* AsyncSeeTodaysScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>* PrepareAsyncSeeTodaysScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>* AsyncSeeTomorrowsScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>* PrepareAsyncSeeTomorrowsScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>* AsyncSeeScheduleRangeRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::StaffSchedule>* PrepareAsyncSeeScheduleRangeRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::StaffList>* AsyncGetStaffInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::StaffList>* PrepareAsyncGetStaffInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
@@ -224,25 +246,25 @@ class StaffManagement final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncUpdateStaffInformation(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncUpdateStaffInformationRaw(context, request, cq));
     }
-    ::grpc::Status AddShift(::grpc::ClientContext* context, const ::Shift& request, ::Success* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncAddShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    ::grpc::Status AddShift(::grpc::ClientContext* context, const ::StaffShift& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncAddShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncAddShiftRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncAddShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncAddShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncAddShiftRaw(context, request, cq));
     }
-    ::grpc::Status RemoveShift(::grpc::ClientContext* context, const ::Shift& request, ::Success* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncRemoveShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    ::grpc::Status RemoveShift(::grpc::ClientContext* context, const ::StaffShift& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncRemoveShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncRemoveShiftRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncRemoveShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncRemoveShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncRemoveShiftRaw(context, request, cq));
     }
-    ::grpc::Status TransferShift(::grpc::ClientContext* context, const ::Shift& request, ::Success* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncTransferShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    ::grpc::Status TransferShift(::grpc::ClientContext* context, const ::StaffShift& request, ::Success* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> AsyncTransferShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(AsyncTransferShiftRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncTransferShift(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>> PrepareAsyncTransferShift(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::Success>>(PrepareAsyncTransferShiftRaw(context, request, cq));
     }
     ::grpc::Status BookTimeOff(::grpc::ClientContext* context, const ::TimeOff& request, ::Success* response) override;
@@ -259,12 +281,26 @@ class StaffManagement final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffDTO>> PrepareAsyncSeeStaffInformation(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffDTO>>(PrepareAsyncSeeStaffInformationRaw(context, request, cq));
     }
-    ::grpc::Status SeeSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::ScheduleDTO* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ScheduleDTO>> AsyncSeeSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ScheduleDTO>>(AsyncSeeScheduleRaw(context, request, cq));
+    ::grpc::Status SeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::StaffSchedule* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>> AsyncSeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>>(AsyncSeeTodaysScheduleRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ScheduleDTO>> PrepareAsyncSeeSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ScheduleDTO>>(PrepareAsyncSeeScheduleRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>> PrepareAsyncSeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>>(PrepareAsyncSeeTodaysScheduleRaw(context, request, cq));
+    }
+    ::grpc::Status SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::StaffSchedule* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>> AsyncSeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>>(AsyncSeeTomorrowsScheduleRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>> PrepareAsyncSeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>>(PrepareAsyncSeeTomorrowsScheduleRaw(context, request, cq));
+    }
+    ::grpc::Status SeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift& request, ::StaffSchedule* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>> AsyncSeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>>(AsyncSeeScheduleRangeRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>> PrepareAsyncSeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffSchedule>>(PrepareAsyncSeeScheduleRangeRaw(context, request, cq));
     }
     ::grpc::Status GetStaffInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::StaffList* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::StaffList>> AsyncGetStaffInRoom(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) {
@@ -286,18 +322,22 @@ class StaffManagement final {
       void ChangeClearance(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
       void UpdateStaffInformation(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, std::function<void(::grpc::Status)>) override;
       void UpdateStaffInformation(::grpc::ClientContext* context, const ::StaffDTO* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void AddShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, std::function<void(::grpc::Status)>) override;
-      void AddShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void RemoveShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, std::function<void(::grpc::Status)>) override;
-      void RemoveShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void TransferShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, std::function<void(::grpc::Status)>) override;
-      void TransferShift(::grpc::ClientContext* context, const ::Shift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void AddShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void AddShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void RemoveShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void RemoveShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void TransferShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, std::function<void(::grpc::Status)>) override;
+      void TransferShift(::grpc::ClientContext* context, const ::StaffShift* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
       void BookTimeOff(::grpc::ClientContext* context, const ::TimeOff* request, ::Success* response, std::function<void(::grpc::Status)>) override;
       void BookTimeOff(::grpc::ClientContext* context, const ::TimeOff* request, ::Success* response, ::grpc::ClientUnaryReactor* reactor) override;
       void SeeStaffInformation(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffDTO* response, std::function<void(::grpc::Status)>) override;
       void SeeStaffInformation(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffDTO* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void SeeSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::ScheduleDTO* response, std::function<void(::grpc::Status)>) override;
-      void SeeSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::ScheduleDTO* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, std::function<void(::grpc::Status)>) override;
+      void SeeTodaysSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, std::function<void(::grpc::Status)>) override;
+      void SeeTomorrowsSchedule(::grpc::ClientContext* context, const ::StaffDTO* request, ::StaffSchedule* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift* request, ::StaffSchedule* response, std::function<void(::grpc::Status)>) override;
+      void SeeScheduleRange(::grpc::ClientContext* context, const ::StaffShift* request, ::StaffSchedule* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetStaffInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::StaffList* response, std::function<void(::grpc::Status)>) override;
       void GetStaffInRoom(::grpc::ClientContext* context, const ::RoomRequest* request, ::StaffList* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
@@ -321,18 +361,22 @@ class StaffManagement final {
     ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncChangeClearanceRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::Success>* AsyncUpdateStaffInformationRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncUpdateStaffInformationRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncAddShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncAddShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncTransferShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncTransferShiftRaw(::grpc::ClientContext* context, const ::Shift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncAddShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncAddShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncRemoveShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* AsyncTransferShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncTransferShiftRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::Success>* AsyncBookTimeOffRaw(::grpc::ClientContext* context, const ::TimeOff& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::Success>* PrepareAsyncBookTimeOffRaw(::grpc::ClientContext* context, const ::TimeOff& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::StaffDTO>* AsyncSeeStaffInformationRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::StaffDTO>* PrepareAsyncSeeStaffInformationRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ScheduleDTO>* AsyncSeeScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::ScheduleDTO>* PrepareAsyncSeeScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::StaffSchedule>* AsyncSeeTodaysScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::StaffSchedule>* PrepareAsyncSeeTodaysScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::StaffSchedule>* AsyncSeeTomorrowsScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::StaffSchedule>* PrepareAsyncSeeTomorrowsScheduleRaw(::grpc::ClientContext* context, const ::StaffDTO& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::StaffSchedule>* AsyncSeeScheduleRangeRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::StaffSchedule>* PrepareAsyncSeeScheduleRangeRaw(::grpc::ClientContext* context, const ::StaffShift& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::StaffList>* AsyncGetStaffInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::StaffList>* PrepareAsyncGetStaffInRoomRaw(::grpc::ClientContext* context, const ::RoomRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_AddStaff_;
@@ -345,7 +389,9 @@ class StaffManagement final {
     const ::grpc::internal::RpcMethod rpcmethod_TransferShift_;
     const ::grpc::internal::RpcMethod rpcmethod_BookTimeOff_;
     const ::grpc::internal::RpcMethod rpcmethod_SeeStaffInformation_;
-    const ::grpc::internal::RpcMethod rpcmethod_SeeSchedule_;
+    const ::grpc::internal::RpcMethod rpcmethod_SeeTodaysSchedule_;
+    const ::grpc::internal::RpcMethod rpcmethod_SeeTomorrowsSchedule_;
+    const ::grpc::internal::RpcMethod rpcmethod_SeeScheduleRange_;
     const ::grpc::internal::RpcMethod rpcmethod_GetStaffInRoom_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
@@ -362,13 +408,15 @@ class StaffManagement final {
     virtual ::grpc::Status ChangeClearance(::grpc::ServerContext* context, const ::StaffDTO* request, ::Success* response);
     virtual ::grpc::Status UpdateStaffInformation(::grpc::ServerContext* context, const ::StaffDTO* request, ::Success* response);
     // Staff Scheduling
-    virtual ::grpc::Status AddShift(::grpc::ServerContext* context, const ::Shift* request, ::Success* response);
-    virtual ::grpc::Status RemoveShift(::grpc::ServerContext* context, const ::Shift* request, ::Success* response);
-    virtual ::grpc::Status TransferShift(::grpc::ServerContext* context, const ::Shift* request, ::Success* response);
+    virtual ::grpc::Status AddShift(::grpc::ServerContext* context, const ::StaffShift* request, ::Success* response);
+    virtual ::grpc::Status RemoveShift(::grpc::ServerContext* context, const ::StaffShift* request, ::Success* response);
+    virtual ::grpc::Status TransferShift(::grpc::ServerContext* context, const ::StaffShift* request, ::Success* response);
     virtual ::grpc::Status BookTimeOff(::grpc::ServerContext* context, const ::TimeOff* request, ::Success* response);
     // Staff Information
     virtual ::grpc::Status SeeStaffInformation(::grpc::ServerContext* context, const ::StaffDTO* request, ::StaffDTO* response);
-    virtual ::grpc::Status SeeSchedule(::grpc::ServerContext* context, const ::StaffDTO* request, ::ScheduleDTO* response);
+    virtual ::grpc::Status SeeTodaysSchedule(::grpc::ServerContext* context, const ::StaffDTO* request, ::StaffSchedule* response);
+    virtual ::grpc::Status SeeTomorrowsSchedule(::grpc::ServerContext* context, const ::StaffDTO* request, ::StaffSchedule* response);
+    virtual ::grpc::Status SeeScheduleRange(::grpc::ServerContext* context, const ::StaffShift* request, ::StaffSchedule* response);
     // This call is not accessible to the front end 
     virtual ::grpc::Status GetStaffInRoom(::grpc::ServerContext* context, const ::RoomRequest* request, ::StaffList* response);
   };
@@ -484,11 +532,11 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestAddShift(::grpc::ServerContext* context, ::Shift* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestAddShift(::grpc::ServerContext* context, ::StaffShift* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -504,11 +552,11 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestRemoveShift(::grpc::ServerContext* context, ::Shift* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestRemoveShift(::grpc::ServerContext* context, ::StaffShift* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -524,11 +572,11 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestTransferShift(::grpc::ServerContext* context, ::Shift* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestTransferShift(::grpc::ServerContext* context, ::StaffShift* request, ::grpc::ServerAsyncResponseWriter< ::Success>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -573,23 +621,63 @@ class StaffManagement final {
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_SeeSchedule : public BaseClass {
+  class WithAsyncMethod_SeeTodaysSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_SeeSchedule() {
+    WithAsyncMethod_SeeTodaysSchedule() {
       ::grpc::Service::MarkMethodAsync(10);
     }
-    ~WithAsyncMethod_SeeSchedule() override {
+    ~WithAsyncMethod_SeeTodaysSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SeeSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::ScheduleDTO* /*response*/) override {
+    ::grpc::Status SeeTodaysSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestSeeSchedule(::grpc::ServerContext* context, ::StaffDTO* request, ::grpc::ServerAsyncResponseWriter< ::ScheduleDTO>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestSeeTodaysSchedule(::grpc::ServerContext* context, ::StaffDTO* request, ::grpc::ServerAsyncResponseWriter< ::StaffSchedule>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_SeeTomorrowsSchedule : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SeeTomorrowsSchedule() {
+      ::grpc::Service::MarkMethodAsync(11);
+    }
+    ~WithAsyncMethod_SeeTomorrowsSchedule() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SeeTomorrowsSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSeeTomorrowsSchedule(::grpc::ServerContext* context, ::StaffDTO* request, ::grpc::ServerAsyncResponseWriter< ::StaffSchedule>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_SeeScheduleRange : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SeeScheduleRange() {
+      ::grpc::Service::MarkMethodAsync(12);
+    }
+    ~WithAsyncMethod_SeeScheduleRange() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SeeScheduleRange(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSeeScheduleRange(::grpc::ServerContext* context, ::StaffShift* request, ::grpc::ServerAsyncResponseWriter< ::StaffSchedule>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(12, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -598,7 +686,7 @@ class StaffManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_GetStaffInRoom() {
-      ::grpc::Service::MarkMethodAsync(11);
+      ::grpc::Service::MarkMethodAsync(13);
     }
     ~WithAsyncMethod_GetStaffInRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -609,10 +697,10 @@ class StaffManagement final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetStaffInRoom(::grpc::ServerContext* context, ::RoomRequest* request, ::grpc::ServerAsyncResponseWriter< ::StaffList>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(13, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AddStaff<WithAsyncMethod_RemoveStaff<WithAsyncMethod_ChangePosition<WithAsyncMethod_ChangeClearance<WithAsyncMethod_UpdateStaffInformation<WithAsyncMethod_AddShift<WithAsyncMethod_RemoveShift<WithAsyncMethod_TransferShift<WithAsyncMethod_BookTimeOff<WithAsyncMethod_SeeStaffInformation<WithAsyncMethod_SeeSchedule<WithAsyncMethod_GetStaffInRoom<Service > > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_AddStaff<WithAsyncMethod_RemoveStaff<WithAsyncMethod_ChangePosition<WithAsyncMethod_ChangeClearance<WithAsyncMethod_UpdateStaffInformation<WithAsyncMethod_AddShift<WithAsyncMethod_RemoveShift<WithAsyncMethod_TransferShift<WithAsyncMethod_BookTimeOff<WithAsyncMethod_SeeStaffInformation<WithAsyncMethod_SeeTodaysSchedule<WithAsyncMethod_SeeTomorrowsSchedule<WithAsyncMethod_SeeScheduleRange<WithAsyncMethod_GetStaffInRoom<Service > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_AddStaff : public BaseClass {
    private:
@@ -755,25 +843,25 @@ class StaffManagement final {
    public:
     WithCallbackMethod_AddShift() {
       ::grpc::Service::MarkMethodCallback(5,
-          new ::grpc::internal::CallbackUnaryHandler< ::Shift, ::Success>(
+          new ::grpc::internal::CallbackUnaryHandler< ::StaffShift, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::Shift* request, ::Success* response) { return this->AddShift(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::StaffShift* request, ::Success* response) { return this->AddShift(context, request, response); }));}
     void SetMessageAllocatorFor_AddShift(
-        ::grpc::MessageAllocator< ::Shift, ::Success>* allocator) {
+        ::grpc::MessageAllocator< ::StaffShift, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::Shift, ::Success>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StaffShift, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_AddShift() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* AddShift(
-      ::grpc::CallbackServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_RemoveShift : public BaseClass {
@@ -782,25 +870,25 @@ class StaffManagement final {
    public:
     WithCallbackMethod_RemoveShift() {
       ::grpc::Service::MarkMethodCallback(6,
-          new ::grpc::internal::CallbackUnaryHandler< ::Shift, ::Success>(
+          new ::grpc::internal::CallbackUnaryHandler< ::StaffShift, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::Shift* request, ::Success* response) { return this->RemoveShift(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::StaffShift* request, ::Success* response) { return this->RemoveShift(context, request, response); }));}
     void SetMessageAllocatorFor_RemoveShift(
-        ::grpc::MessageAllocator< ::Shift, ::Success>* allocator) {
+        ::grpc::MessageAllocator< ::StaffShift, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::Shift, ::Success>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StaffShift, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_RemoveShift() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* RemoveShift(
-      ::grpc::CallbackServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_TransferShift : public BaseClass {
@@ -809,25 +897,25 @@ class StaffManagement final {
    public:
     WithCallbackMethod_TransferShift() {
       ::grpc::Service::MarkMethodCallback(7,
-          new ::grpc::internal::CallbackUnaryHandler< ::Shift, ::Success>(
+          new ::grpc::internal::CallbackUnaryHandler< ::StaffShift, ::Success>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::Shift* request, ::Success* response) { return this->TransferShift(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::StaffShift* request, ::Success* response) { return this->TransferShift(context, request, response); }));}
     void SetMessageAllocatorFor_TransferShift(
-        ::grpc::MessageAllocator< ::Shift, ::Success>* allocator) {
+        ::grpc::MessageAllocator< ::StaffShift, ::Success>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::Shift, ::Success>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StaffShift, ::Success>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_TransferShift() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* TransferShift(
-      ::grpc::CallbackServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_BookTimeOff : public BaseClass {
@@ -884,31 +972,85 @@ class StaffManagement final {
       ::grpc::CallbackServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffDTO* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_SeeSchedule : public BaseClass {
+  class WithCallbackMethod_SeeTodaysSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_SeeSchedule() {
+    WithCallbackMethod_SeeTodaysSchedule() {
       ::grpc::Service::MarkMethodCallback(10,
-          new ::grpc::internal::CallbackUnaryHandler< ::StaffDTO, ::ScheduleDTO>(
+          new ::grpc::internal::CallbackUnaryHandler< ::StaffDTO, ::StaffSchedule>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::StaffDTO* request, ::ScheduleDTO* response) { return this->SeeSchedule(context, request, response); }));}
-    void SetMessageAllocatorFor_SeeSchedule(
-        ::grpc::MessageAllocator< ::StaffDTO, ::ScheduleDTO>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::StaffDTO* request, ::StaffSchedule* response) { return this->SeeTodaysSchedule(context, request, response); }));}
+    void SetMessageAllocatorFor_SeeTodaysSchedule(
+        ::grpc::MessageAllocator< ::StaffDTO, ::StaffSchedule>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(10);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::StaffDTO, ::ScheduleDTO>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StaffDTO, ::StaffSchedule>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_SeeSchedule() override {
+    ~WithCallbackMethod_SeeTodaysSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SeeSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::ScheduleDTO* /*response*/) override {
+    ::grpc::Status SeeTodaysSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* SeeSchedule(
-      ::grpc::CallbackServerContext* /*context*/, const ::StaffDTO* /*request*/, ::ScheduleDTO* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* SeeTodaysSchedule(
+      ::grpc::CallbackServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_SeeTomorrowsSchedule : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SeeTomorrowsSchedule() {
+      ::grpc::Service::MarkMethodCallback(11,
+          new ::grpc::internal::CallbackUnaryHandler< ::StaffDTO, ::StaffSchedule>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::StaffDTO* request, ::StaffSchedule* response) { return this->SeeTomorrowsSchedule(context, request, response); }));}
+    void SetMessageAllocatorFor_SeeTomorrowsSchedule(
+        ::grpc::MessageAllocator< ::StaffDTO, ::StaffSchedule>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(11);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StaffDTO, ::StaffSchedule>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SeeTomorrowsSchedule() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SeeTomorrowsSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SeeTomorrowsSchedule(
+      ::grpc::CallbackServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_SeeScheduleRange : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SeeScheduleRange() {
+      ::grpc::Service::MarkMethodCallback(12,
+          new ::grpc::internal::CallbackUnaryHandler< ::StaffShift, ::StaffSchedule>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::StaffShift* request, ::StaffSchedule* response) { return this->SeeScheduleRange(context, request, response); }));}
+    void SetMessageAllocatorFor_SeeScheduleRange(
+        ::grpc::MessageAllocator< ::StaffShift, ::StaffSchedule>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(12);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::StaffShift, ::StaffSchedule>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SeeScheduleRange() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SeeScheduleRange(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SeeScheduleRange(
+      ::grpc::CallbackServerContext* /*context*/, const ::StaffShift* /*request*/, ::StaffSchedule* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_GetStaffInRoom : public BaseClass {
@@ -916,13 +1058,13 @@ class StaffManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_GetStaffInRoom() {
-      ::grpc::Service::MarkMethodCallback(11,
+      ::grpc::Service::MarkMethodCallback(13,
           new ::grpc::internal::CallbackUnaryHandler< ::RoomRequest, ::StaffList>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::RoomRequest* request, ::StaffList* response) { return this->GetStaffInRoom(context, request, response); }));}
     void SetMessageAllocatorFor_GetStaffInRoom(
         ::grpc::MessageAllocator< ::RoomRequest, ::StaffList>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(11);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(13);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::RoomRequest, ::StaffList>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -937,7 +1079,7 @@ class StaffManagement final {
     virtual ::grpc::ServerUnaryReactor* GetStaffInRoom(
       ::grpc::CallbackServerContext* /*context*/, const ::RoomRequest* /*request*/, ::StaffList* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_AddStaff<WithCallbackMethod_RemoveStaff<WithCallbackMethod_ChangePosition<WithCallbackMethod_ChangeClearance<WithCallbackMethod_UpdateStaffInformation<WithCallbackMethod_AddShift<WithCallbackMethod_RemoveShift<WithCallbackMethod_TransferShift<WithCallbackMethod_BookTimeOff<WithCallbackMethod_SeeStaffInformation<WithCallbackMethod_SeeSchedule<WithCallbackMethod_GetStaffInRoom<Service > > > > > > > > > > > > CallbackService;
+  typedef WithCallbackMethod_AddStaff<WithCallbackMethod_RemoveStaff<WithCallbackMethod_ChangePosition<WithCallbackMethod_ChangeClearance<WithCallbackMethod_UpdateStaffInformation<WithCallbackMethod_AddShift<WithCallbackMethod_RemoveShift<WithCallbackMethod_TransferShift<WithCallbackMethod_BookTimeOff<WithCallbackMethod_SeeStaffInformation<WithCallbackMethod_SeeTodaysSchedule<WithCallbackMethod_SeeTomorrowsSchedule<WithCallbackMethod_SeeScheduleRange<WithCallbackMethod_GetStaffInRoom<Service > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_AddStaff : public BaseClass {
@@ -1036,7 +1178,7 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1053,7 +1195,7 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1070,7 +1212,7 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1110,18 +1252,52 @@ class StaffManagement final {
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_SeeSchedule : public BaseClass {
+  class WithGenericMethod_SeeTodaysSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_SeeSchedule() {
+    WithGenericMethod_SeeTodaysSchedule() {
       ::grpc::Service::MarkMethodGeneric(10);
     }
-    ~WithGenericMethod_SeeSchedule() override {
+    ~WithGenericMethod_SeeTodaysSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SeeSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::ScheduleDTO* /*response*/) override {
+    ::grpc::Status SeeTodaysSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SeeTomorrowsSchedule : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SeeTomorrowsSchedule() {
+      ::grpc::Service::MarkMethodGeneric(11);
+    }
+    ~WithGenericMethod_SeeTomorrowsSchedule() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SeeTomorrowsSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SeeScheduleRange : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SeeScheduleRange() {
+      ::grpc::Service::MarkMethodGeneric(12);
+    }
+    ~WithGenericMethod_SeeScheduleRange() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SeeScheduleRange(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::StaffSchedule* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1132,7 +1308,7 @@ class StaffManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_GetStaffInRoom() {
-      ::grpc::Service::MarkMethodGeneric(11);
+      ::grpc::Service::MarkMethodGeneric(13);
     }
     ~WithGenericMethod_GetStaffInRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1255,7 +1431,7 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1275,7 +1451,7 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1295,7 +1471,7 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1344,23 +1520,63 @@ class StaffManagement final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_SeeSchedule : public BaseClass {
+  class WithRawMethod_SeeTodaysSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_SeeSchedule() {
+    WithRawMethod_SeeTodaysSchedule() {
       ::grpc::Service::MarkMethodRaw(10);
     }
-    ~WithRawMethod_SeeSchedule() override {
+    ~WithRawMethod_SeeTodaysSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SeeSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::ScheduleDTO* /*response*/) override {
+    ::grpc::Status SeeTodaysSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestSeeSchedule(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestSeeTodaysSchedule(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SeeTomorrowsSchedule : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SeeTomorrowsSchedule() {
+      ::grpc::Service::MarkMethodRaw(11);
+    }
+    ~WithRawMethod_SeeTomorrowsSchedule() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SeeTomorrowsSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSeeTomorrowsSchedule(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SeeScheduleRange : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SeeScheduleRange() {
+      ::grpc::Service::MarkMethodRaw(12);
+    }
+    ~WithRawMethod_SeeScheduleRange() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SeeScheduleRange(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSeeScheduleRange(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(12, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1369,7 +1585,7 @@ class StaffManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_GetStaffInRoom() {
-      ::grpc::Service::MarkMethodRaw(11);
+      ::grpc::Service::MarkMethodRaw(13);
     }
     ~WithRawMethod_GetStaffInRoom() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1380,7 +1596,7 @@ class StaffManagement final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetStaffInRoom(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(13, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1508,7 +1724,7 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1530,7 +1746,7 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1552,7 +1768,7 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1604,25 +1820,69 @@ class StaffManagement final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_SeeSchedule : public BaseClass {
+  class WithRawCallbackMethod_SeeTodaysSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_SeeSchedule() {
+    WithRawCallbackMethod_SeeTodaysSchedule() {
       ::grpc::Service::MarkMethodRawCallback(10,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SeeSchedule(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SeeTodaysSchedule(context, request, response); }));
     }
-    ~WithRawCallbackMethod_SeeSchedule() override {
+    ~WithRawCallbackMethod_SeeTodaysSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SeeSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::ScheduleDTO* /*response*/) override {
+    ::grpc::Status SeeTodaysSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* SeeSchedule(
+    virtual ::grpc::ServerUnaryReactor* SeeTodaysSchedule(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_SeeTomorrowsSchedule : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SeeTomorrowsSchedule() {
+      ::grpc::Service::MarkMethodRawCallback(11,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SeeTomorrowsSchedule(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SeeTomorrowsSchedule() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SeeTomorrowsSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SeeTomorrowsSchedule(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_SeeScheduleRange : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SeeScheduleRange() {
+      ::grpc::Service::MarkMethodRawCallback(12,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SeeScheduleRange(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SeeScheduleRange() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SeeScheduleRange(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SeeScheduleRange(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1631,7 +1891,7 @@ class StaffManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_GetStaffInRoom() {
-      ::grpc::Service::MarkMethodRawCallback(11,
+      ::grpc::Service::MarkMethodRawCallback(13,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetStaffInRoom(context, request, response); }));
@@ -1790,10 +2050,10 @@ class StaffManagement final {
     WithStreamedUnaryMethod_AddShift() {
       ::grpc::Service::MarkMethodStreamed(5,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::Shift, ::Success>(
+          ::StaffShift, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::Shift, ::Success>* streamer) {
+                     ::StaffShift, ::Success>* streamer) {
                        return this->StreamedAddShift(context,
                          streamer);
                   }));
@@ -1802,12 +2062,12 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status AddShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedAddShift(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::Shift,::Success>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedAddShift(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StaffShift,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_RemoveShift : public BaseClass {
@@ -1817,10 +2077,10 @@ class StaffManagement final {
     WithStreamedUnaryMethod_RemoveShift() {
       ::grpc::Service::MarkMethodStreamed(6,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::Shift, ::Success>(
+          ::StaffShift, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::Shift, ::Success>* streamer) {
+                     ::StaffShift, ::Success>* streamer) {
                        return this->StreamedRemoveShift(context,
                          streamer);
                   }));
@@ -1829,12 +2089,12 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status RemoveShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedRemoveShift(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::Shift,::Success>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedRemoveShift(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StaffShift,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_TransferShift : public BaseClass {
@@ -1844,10 +2104,10 @@ class StaffManagement final {
     WithStreamedUnaryMethod_TransferShift() {
       ::grpc::Service::MarkMethodStreamed(7,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::Shift, ::Success>(
+          ::StaffShift, ::Success>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::Shift, ::Success>* streamer) {
+                     ::StaffShift, ::Success>* streamer) {
                        return this->StreamedTransferShift(context,
                          streamer);
                   }));
@@ -1856,12 +2116,12 @@ class StaffManagement final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::Shift* /*request*/, ::Success* /*response*/) override {
+    ::grpc::Status TransferShift(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::Success* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedTransferShift(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::Shift,::Success>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedTransferShift(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StaffShift,::Success>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_BookTimeOff : public BaseClass {
@@ -1918,31 +2178,85 @@ class StaffManagement final {
     virtual ::grpc::Status StreamedSeeStaffInformation(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StaffDTO,::StaffDTO>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_SeeSchedule : public BaseClass {
+  class WithStreamedUnaryMethod_SeeTodaysSchedule : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_SeeSchedule() {
+    WithStreamedUnaryMethod_SeeTodaysSchedule() {
       ::grpc::Service::MarkMethodStreamed(10,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::StaffDTO, ::ScheduleDTO>(
+          ::StaffDTO, ::StaffSchedule>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::StaffDTO, ::ScheduleDTO>* streamer) {
-                       return this->StreamedSeeSchedule(context,
+                     ::StaffDTO, ::StaffSchedule>* streamer) {
+                       return this->StreamedSeeTodaysSchedule(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_SeeSchedule() override {
+    ~WithStreamedUnaryMethod_SeeTodaysSchedule() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status SeeSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::ScheduleDTO* /*response*/) override {
+    ::grpc::Status SeeTodaysSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedSeeSchedule(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StaffDTO,::ScheduleDTO>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedSeeTodaysSchedule(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StaffDTO,::StaffSchedule>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SeeTomorrowsSchedule : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SeeTomorrowsSchedule() {
+      ::grpc::Service::MarkMethodStreamed(11,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::StaffDTO, ::StaffSchedule>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::StaffDTO, ::StaffSchedule>* streamer) {
+                       return this->StreamedSeeTomorrowsSchedule(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SeeTomorrowsSchedule() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SeeTomorrowsSchedule(::grpc::ServerContext* /*context*/, const ::StaffDTO* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSeeTomorrowsSchedule(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StaffDTO,::StaffSchedule>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SeeScheduleRange : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SeeScheduleRange() {
+      ::grpc::Service::MarkMethodStreamed(12,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::StaffShift, ::StaffSchedule>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::StaffShift, ::StaffSchedule>* streamer) {
+                       return this->StreamedSeeScheduleRange(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SeeScheduleRange() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SeeScheduleRange(::grpc::ServerContext* /*context*/, const ::StaffShift* /*request*/, ::StaffSchedule* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSeeScheduleRange(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::StaffShift,::StaffSchedule>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_GetStaffInRoom : public BaseClass {
@@ -1950,7 +2264,7 @@ class StaffManagement final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_GetStaffInRoom() {
-      ::grpc::Service::MarkMethodStreamed(11,
+      ::grpc::Service::MarkMethodStreamed(13,
         new ::grpc::internal::StreamedUnaryHandler<
           ::RoomRequest, ::StaffList>(
             [this](::grpc::ServerContext* context,
@@ -1971,9 +2285,9 @@ class StaffManagement final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetStaffInRoom(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::RoomRequest,::StaffList>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_AddStaff<WithStreamedUnaryMethod_RemoveStaff<WithStreamedUnaryMethod_ChangePosition<WithStreamedUnaryMethod_ChangeClearance<WithStreamedUnaryMethod_UpdateStaffInformation<WithStreamedUnaryMethod_AddShift<WithStreamedUnaryMethod_RemoveShift<WithStreamedUnaryMethod_TransferShift<WithStreamedUnaryMethod_BookTimeOff<WithStreamedUnaryMethod_SeeStaffInformation<WithStreamedUnaryMethod_SeeSchedule<WithStreamedUnaryMethod_GetStaffInRoom<Service > > > > > > > > > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_AddStaff<WithStreamedUnaryMethod_RemoveStaff<WithStreamedUnaryMethod_ChangePosition<WithStreamedUnaryMethod_ChangeClearance<WithStreamedUnaryMethod_UpdateStaffInformation<WithStreamedUnaryMethod_AddShift<WithStreamedUnaryMethod_RemoveShift<WithStreamedUnaryMethod_TransferShift<WithStreamedUnaryMethod_BookTimeOff<WithStreamedUnaryMethod_SeeStaffInformation<WithStreamedUnaryMethod_SeeTodaysSchedule<WithStreamedUnaryMethod_SeeTomorrowsSchedule<WithStreamedUnaryMethod_SeeScheduleRange<WithStreamedUnaryMethod_GetStaffInRoom<Service > > > > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_AddStaff<WithStreamedUnaryMethod_RemoveStaff<WithStreamedUnaryMethod_ChangePosition<WithStreamedUnaryMethod_ChangeClearance<WithStreamedUnaryMethod_UpdateStaffInformation<WithStreamedUnaryMethod_AddShift<WithStreamedUnaryMethod_RemoveShift<WithStreamedUnaryMethod_TransferShift<WithStreamedUnaryMethod_BookTimeOff<WithStreamedUnaryMethod_SeeStaffInformation<WithStreamedUnaryMethod_SeeSchedule<WithStreamedUnaryMethod_GetStaffInRoom<Service > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_AddStaff<WithStreamedUnaryMethod_RemoveStaff<WithStreamedUnaryMethod_ChangePosition<WithStreamedUnaryMethod_ChangeClearance<WithStreamedUnaryMethod_UpdateStaffInformation<WithStreamedUnaryMethod_AddShift<WithStreamedUnaryMethod_RemoveShift<WithStreamedUnaryMethod_TransferShift<WithStreamedUnaryMethod_BookTimeOff<WithStreamedUnaryMethod_SeeStaffInformation<WithStreamedUnaryMethod_SeeTodaysSchedule<WithStreamedUnaryMethod_SeeTomorrowsSchedule<WithStreamedUnaryMethod_SeeScheduleRange<WithStreamedUnaryMethod_GetStaffInRoom<Service > > > > > > > > > > > > > > StreamedService;
 };
 
 

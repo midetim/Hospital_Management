@@ -51,12 +51,6 @@ private:
     /* ******************************************************************** */
     
     /**
-     * @brief Generates a unique resource id
-     * @return Returns a 64-bit resource id
-     */
-    uint64_t generate_unique_resource_id();
-    
-    /**
      * @brief Gets a pointer to one of the resource maps
      * @param o The resource map option
      * @return Returns a pointer to the resource maps
@@ -82,7 +76,7 @@ private:
      * @warning Will not allow moving nodes in total resources
      * @note If source and destination are the same it will break early
      */
-    ReturnCode moveResource(uint64_t resource_id, option source, option destination);
+    general::ReturnCode moveResource(uint64_t resource_id, option source, option destination);
     
     /**
      * @brief Sends all resources to their designated rooms
@@ -100,7 +94,7 @@ private:
      * @param schedule The resource schedule to add to
      * @param resource The resource DTO to add to each resource shift
      */
-    ReturnCode convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, ResourceSchedule * schedule, const ResourceDTO * resource) const;
+    general::ReturnCode convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, ResourceSchedule * schedule, const ResourceDTO * resource) const;
     
 public:
     
@@ -226,10 +220,10 @@ public:
     /* *************************** IServer ******************************** */
     /* ******************************************************************** */
     
-    ReturnCode connectToDB() override;
-    ReturnCode loadFromDB() override;
-    ReturnCode uploadToDB() override;
-    ReturnCode init() override;
+    general::ReturnCode connectToDB() override;
+    general::ReturnCode loadFromDB() override;
+    general::ReturnCode uploadToDB() override;
+    general::ReturnCode init() override;
     void print_internal() override;
     
     /* ******************************************************************** */

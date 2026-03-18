@@ -8,7 +8,9 @@
 #include <iomanip>
 #include <sstream>
 #include <ctime>
+#include <random>
 #include <variant>
+#include <ostream>
 
 
 /* ******************************************************************** */
@@ -84,144 +86,178 @@ namespace ansi {
     inline constexpr const char * bwhite =      "\033[97m";
 }
 
+/* ******************************************************************** */
+/* ********************* General Namespace **************************** */
+/* ******************************************************************** */
+
+namespace base {
+    enum class ReturnCode : int32_t {
+        SUCCESS = 0,
+        WARNING = 1,
+        FAILURE = -1,
+        NOT_YET_IMPLEMENTED = -2
+    };
+
+    inline uint64_t generate_id() {
+        static thread_local std::mt19937 rng(std::random_device{}());
+        static std::uniform_int_distribution<uint16_t> dist(0, 0xFFFF);
+        return ((uint64_t) time(nullptr) << 16) | dist(rng);
+    }
+}
+
 
 /* ******************************************************************** */
 /* *********************** Room Namespace ***************************** */
 /* ******************************************************************** */
 
-namespace rooms {
+namespace room {
     inline constexpr uint32_t none = 0;
     inline constexpr uint32_t idle = 0;
     inline constexpr uint32_t maintenance = 1;
 }
 
 /* ******************************************************************** */
-/* ************************* Name Struct ****************************** */
+/* ********************** Person Namespace **************************** */
 /* ******************************************************************** */
 
-/**
- * @brief Name struct for people
- * @param first The first name
- * @param middle The middle name
- * @param last The last name
- * @note Each paramater is optional for method functionality
- */
-struct Name {
-    std::string first;
-    std::string middle;
-    std::string last;
-};
+namespace person {
 
-/* ******************************************************************** */
-/* *********************** Sex Enumeration **************************** */
-/* ******************************************************************** */
+    /* ******************************************************************** */
+    /* ************************** Name Struct ***************************** */
+    /* ******************************************************************** */
 
-/**
- * @brief Sex enumeration for people
- * @note Default is **Sex::Unknown**
- */
-enum class Sex {
-    Unknown,
-    Male,
-    Female,
-    Intersex,
-    Other
-};
+    /**
+     * @brief Name struct for people
+     * @param first The first name
+     * @param middle The middle name
+     * @param last The last name
+     * @note Each paramater is optional for method functionality
+     */
+    struct Name {
+        std::string first;
+        std::string middle;
+        std::string last;
+        
+        friend std::ostream & operator<<(std::ostream & os, const Name & n) {
+            os << n.first;
+            if (!n.middle.empty()) {
+                os << " " << n.middle;
+            }
+            os << " " << n.last;
+            return os;
+        }
+    };
 
-/**
- * @brief Converts a Sex enumeration into a string
- * @param s Sex enumeration
- * @return Returns the string equivalent of the sex
- */
-inline std::string sexToString(Sex s) {
-    switch (s) {
-        case Sex::Unknown:  return "Unknown";
-        case Sex::Male:     return "Male";
-        case Sex::Female:   return "Female";
-        case Sex::Intersex: return "Intersex";
-        case Sex::Other:    return "Other";
-        default:            return "Unknown";
+
+    /* ******************************************************************** */
+    /* *********************** Sex Enumeration **************************** */
+    /* ******************************************************************** */
+
+    /**
+     * @brief Sex enumeration for people
+     * @note Default is **Sex::Unknown**
+     */
+    enum class Sex {
+        Unknown,
+        Male,
+        Female,
+        Intersex,
+        Other
+    };
+
+    /**
+     * @brief Converts a Sex enumeration into a string
+     * @param s Sex enumeration
+     * @return Returns the string equivalent of the sex
+     */
+    inline std::string sexToString(Sex s) {
+        switch (s) {
+            case Sex::Unknown:  return "Unknown";
+            case Sex::Male:     return "Male";
+            case Sex::Female:   return "Female";
+            case Sex::Intersex: return "Intersex";
+            case Sex::Other:    return "Other";
+            default:            return "Unknown";
+        }
     }
-}
 
-/**
- * @brief Converts a sex string into a Sex enumeration
- * @param s Sex string
- * @return Returns the Sex enumeration equivalent of the string
- */
-inline Sex stringToSex(const std::string & s) {
-    if      (s == "Unknown")    return Sex::Unknown;
-    else if (s == "Male")       return Sex::Male;
-    else if (s == "Female")     return Sex::Female;
-    else if (s == "Intersex")   return Sex::Intersex;
-    else if (s == "Other")      return Sex::Other;
-    else                        return Sex::Unknown;
-}
-
-/* ******************************************************************** */
-/* ******************** Condition Enumeration ************************* */
-/* ******************************************************************** */
-
-/**
- * @brief Patient Condition enumeration
- * @note Default is **Condition::Unknown**
- */
-enum class Condition {
-    Unknown,
-    Good,
-    Fair,
-    Serious,
-    Critical
-};
-
-/**
- * @brief Converts a Condition enumeration into a string
- * @param c Condition enumeration
- * @return Returns the string equivalent of the condition
- */
-inline std::string conditionToString(Condition c) {
-    switch (c) {
-        case Condition::Unknown:    return "Unknown";
-        case Condition::Good:       return "Good";
-        case Condition::Fair:       return "Fair";
-        case Condition::Serious:    return "Serious";
-        case Condition::Critical:   return "Critical";
-        default:                    return "Unknown";
+    /**
+     * @brief Converts a sex string into a Sex enumeration
+     * @param s Sex string
+     * @return Returns the Sex enumeration equivalent of the string
+     */
+    inline Sex stringToSex(const std::string & s) {
+        if      (s == "Unknown")    return Sex::Unknown;
+        else if (s == "Male")       return Sex::Male;
+        else if (s == "Female")     return Sex::Female;
+        else if (s == "Intersex")   return Sex::Intersex;
+        else if (s == "Other")      return Sex::Other;
+        else                        return Sex::Unknown;
     }
+
 }
 
-/**
- * @brief Converts a condtion string into a Condition enumeration
- * @param s Condition string
- * @return Returns the Condition enumeration equivalent of the string
- */
-inline Condition stringToCondition(const std::string & s) {
-    if      (s == "Unknown")    return Condition::Unknown;
-    else if (s == "Good")       return Condition::Good;
-    else if (s == "Fair")       return Condition::Fair;
-    else if (s == "Serious")    return Condition::Serious;
-    else if (s == "Critical")   return Condition::Critical;
-    else                        return Condition::Unknown;
-}
 
-/**
- * @brief Return codes for functions
- * @note **SUCCESS** = 0
- * @note **WARNING** = 1
- * @note **FAILURE** = -1
- */
-enum class ReturnCode : int32_t {
-    SUCCESS = 0,
-    WARNING = 1,
-    FAILURE = -1,
-    NOT_YET_IMPLEMENTED = -2
-};
+
+/* ******************************************************************** */
+/* ********************** Patient Namespace *************************** */
+/* ******************************************************************** */
+
+namespace patient {
+
+    /* ******************************************************************** */
+    /* ******************** Condition Enumeration ************************* */
+    /* ******************************************************************** */
+
+    /**
+     * @brief Patient Condition enumeration
+     * @note Default is **Condition::Unknown**
+     */
+    enum class Condition {
+        Unknown,
+        Good,
+        Fair,
+        Serious,
+        Critical
+    };
+
+    /**
+     * @brief Converts a Condition enumeration into a string
+     * @param c Condition enumeration
+     * @return Returns the string equivalent of the condition
+     */
+    inline std::string conditionToString(Condition c) {
+        switch (c) {
+            case Condition::Unknown:    return "Unknown";
+            case Condition::Good:       return "Good";
+            case Condition::Fair:       return "Fair";
+            case Condition::Serious:    return "Serious";
+            case Condition::Critical:   return "Critical";
+            default:                    return "Unknown";
+        }
+    }
+
+    /**
+     * @brief Converts a condtion string into a Condition enumeration
+     * @param s Condition string
+     * @return Returns the Condition enumeration equivalent of the string
+     */
+    inline Condition stringToCondition(const std::string & s) {
+        if      (s == "Unknown")    return Condition::Unknown;
+        else if (s == "Good")       return Condition::Good;
+        else if (s == "Fair")       return Condition::Fair;
+        else if (s == "Serious")    return Condition::Serious;
+        else if (s == "Critical")   return Condition::Critical;
+        else                        return Condition::Unknown;
+    }
+
+}
 
 /* ******************************************************************** */
 /* ********************** Resources Namespace ************************* */
 /* ******************************************************************** */
 
-namespace resources {
+namespace resource {
 
     /**
      * @brief Hospital Machinery Types
@@ -289,7 +325,7 @@ namespace resources {
         }
     }
 
-    inline std::string consumableToString(resources::ConsumableType c) {
+    inline std::string consumableToString(ConsumableType c) {
         switch (c) {
             case ConsumableType::Unknown:            return "Unknown";
             case ConsumableType::PPE:                return "PPE";
@@ -310,9 +346,9 @@ namespace resources {
 
     inline std::string resourceTypeToString(const ResourceType & r) {
         if (isMachinery(r)) {
-            return machineryToString(std::get<resources::MachineryType>(r));
+            return machineryToString(std::get<MachineryType>(r));
         } else if (isConsumable(r)) {
-            return consumableToString(std::get<resources::ConsumableType>(r));
+            return consumableToString(std::get<ConsumableType>(r));
         } else {
              return std::string(unknown);
         }
@@ -367,6 +403,126 @@ namespace resources {
         return std::monostate{};
     }
     
+
+}
+
+/* ******************************************************************** */
+/* ************************ Staff Namespace *************************** */
+/* ******************************************************************** */
+
+namespace staff {
+    enum class Position {
+        None,
+        Doctor,
+        Nurse,
+        Surgeon,
+        Pharmacist,
+        LabTechnician,
+        Radiologist,
+        Receptionist,
+        Janitor,
+        SecurityGuard,
+        PatientTransporter,
+        Therapist,
+        Dietitian,
+        Paramedic,
+        AdministrativeStaff,
+        Volunteer
+    };
+
+    enum class Clearance : uint8_t {
+        None = 0,   // No access
+        Low = 1,    // Basic access
+        Medium = 2, // Limited access
+        High = 3,   // Elevated access
+        Admin = 4   // Full administrative access
+    };
+
+    inline std::string position_to_string(Position p) {
+        switch (p) {
+            case Position::None:                return "None";
+            case Position::Doctor:              return "Doctor";
+            case Position::Nurse:               return "Nurse";
+            case Position::Surgeon:             return "Surgeon";
+            case Position::Pharmacist:          return "Pharmacist";
+            case Position::LabTechnician:       return "LabTechnician";
+            case Position::Radiologist:         return "Radiologist";
+            case Position::Receptionist:        return "Receptionist";
+            case Position::Janitor:             return "Janitor";
+            case Position::SecurityGuard:       return "SecurityGuard";
+            case Position::PatientTransporter:  return "PatientTransporter";
+            case Position::Therapist:           return "Therapist";
+            case Position::Dietitian:           return "Dietitian";
+            case Position::Paramedic:           return "Paramedic";
+            case Position::AdministrativeStaff: return "AdministrativeStaff";
+            case Position::Volunteer:           return "Volunteer";
+            default:                            return "None";
+        }
+    }
+
+    inline std::string clearance_to_string(Clearance c) {
+        switch (c) {
+            case Clearance::None:               return "None";
+            case Clearance::Low:                return "Low";
+            case Clearance::Medium:             return "Medium";
+            case Clearance::High:               return "High";
+            case Clearance::Admin:              return "Admin";
+            default:                            return "None";
+        }
+    }
+
+    inline Position string_to_position(std::string_view s) {
+        if      (s == "None")                   return Position::None;
+        else if (s == "Doctor")                 return Position::Doctor;
+        else if (s == "Nurse")                  return Position::Nurse;
+        else if (s == "Surgeon")                return Position::Surgeon;
+        else if (s == "Pharmacist")             return Position::Pharmacist;
+        else if (s == "LabTechnician")          return Position::LabTechnician;
+        else if (s == "Radiologist")            return Position::Radiologist;
+        else if (s == "Receptionist")           return Position::Receptionist;
+        else if (s == "Janitor")                return Position::Janitor;
+        else if (s == "SecurityGuard")          return Position::SecurityGuard;
+        else if (s == "PatientTransporter")     return Position::PatientTransporter;
+        else if (s == "Therapist")              return Position::Therapist;
+        else if (s == "Dietitian")              return Position::Dietitian;
+        else if (s == "Paramedic")              return Position::Paramedic;
+        else if (s == "AdministrativeStaff")    return Position::AdministrativeStaff;
+        else if (s == "Volunteer")              return Position::Volunteer;
+        else                                    return Position::None;
+    }
+
+    inline Clearance string_to_clearance(std::string_view s) {
+        if      (s == "None")                   return Clearance::None;
+        else if (s == "Low")                    return Clearance::Low;
+        else if (s == "Medium")                 return Clearance::Medium;
+        else if (s == "High")                   return Clearance::High;
+        else if (s == "Admin")                  return Clearance::Admin;
+        else                                    return Clearance::None;
+    }
+
+    inline Clearance next_clearance(Clearance c) {
+        switch (c) {
+            default:
+            case Clearance::None: return Clearance::Low;
+            case Clearance::Low: return Clearance::Medium;
+            case Clearance::Medium: return Clearance::High;
+            case Clearance::High: return Clearance::Admin;
+            case Clearance::Admin: return Clearance::Admin;
+        }
+    }
+
+    inline Clearance prev_clearance(Clearance c) {
+        switch (c) {
+            default:
+            case Clearance::None: return Clearance::None;
+            case Clearance::Low: return Clearance::None;
+            case Clearance::Medium: return Clearance::Low;
+            case Clearance::High: return Clearance::Medium;
+            case Clearance::Admin: return Clearance::High;
+        }
+    }
+
+    inline constexpr float minimum_wage = 17.60f;
 
 }
 
