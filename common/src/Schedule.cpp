@@ -92,7 +92,7 @@ Timestamp Schedule::timeUntilEnd() const {
 }
 
 uint32_t Schedule::check_schedule() {
-    if (shifts.empty()) { return rooms::idle; } // Exit early if no scheduled shifts
+    if (shifts.empty()) { return room::idle; } // Exit early if no scheduled shifts
     
     auto it = shifts.begin(); // Get the iterator to the start of the set
     
@@ -105,7 +105,7 @@ uint32_t Schedule::check_schedule() {
     if (timeUntilNext() <= times::zero) { // If the next shift needs to start
         return it->room_id; // Send out the room id
     } else {
-        return rooms::idle;
+        return room::idle;
     }
 }
 
@@ -134,8 +134,8 @@ std::set<Shift> Schedule::getBetween(const Date & start, const Date & end) const
         std::swap(start_ts, end_ts);
     }
     
-    Shift start_shift(start_ts, duration::none, rooms::idle);
-    Shift end_shift(end_ts, duration::none, rooms::idle);
+    Shift start_shift(start_ts, duration::none, room::idle);
+    Shift end_shift(end_ts, duration::none, room::idle);
     
     auto begin = shifts.lower_bound(start_shift); // Get an iterator to the first date
     auto finish = shifts.upper_bound(end_shift); // Get an iterator to the last date

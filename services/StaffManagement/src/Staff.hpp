@@ -14,7 +14,7 @@ private:
     person::Name staff_name;
     person::Sex staff_sex = person::Sex::Unknown;
     uint64_t staff_id = 0;
-    uint32_t room_id = rooms::none;
+    uint32_t room_id = room::none;
     float staff_salary = 0;
     
     staff::Position staff_position = staff::Position::None;
@@ -44,8 +44,8 @@ public:
     /* ********************** Operator Overloads ************************** */
     /* ******************************************************************** */
     
-    Staff(const Staff&) = delete;
-    Staff & operator=(const Staff&) = delete;
+    Staff(const Staff &) = delete;
+    Staff & operator=(const Staff &) = delete;
 
     Staff(Staff &&) = default;
     Staff & operator=(Staff &&) = default;

@@ -8,7 +8,7 @@ class Patient {
 private:
     person::Name patient_name;
     person::Sex patient_sex = person::Sex::Unknown;
-    patients::Condition patient_condition = patients::Condition::Unknown;
+    patient::Condition patient_condition = patient::Condition::Unknown;
     
     uint64_t patient_id = 0;
     uint32_t room_id = 0;
@@ -53,7 +53,7 @@ public:
      * @return Returns a return code depending on if assignment succeeded
      * @note If the new name matches the old name it will return a **ReturnCode::WARNING**
      */
-    general::ReturnCode updateName(person::Name & name); // Updates patient_name to name (returns 1 if name matches patient_name
+    core::ReturnCode updateName(person::Name & name); // Updates patient_name to name (returns 1 if name matches patient_name
     
     /**
      * @brief Gets the room id that the patient is in
@@ -102,20 +102,20 @@ public:
      * @brief Sets the patients condition
      * @param c Condtion enumeration for the patient
      */
-    void setPatientCondition(patients::Condition c) { this->patient_condition = c; }
+    void setPatientCondition(patient::Condition c) { this->patient_condition = c; }
     
     /**
      * @brief Get the patients condition
      * @return Returns the Condition enumeration value of the patient
      */
-    patients::Condition getPatientCondition() const { return this->patient_condition; }
+    patient::Condition getPatientCondition() const { return this->patient_condition; }
     
     /**
      * @brief Change the patients condition
      * @param c The Condition enumeration value to set the patients condtion to
      * @return Returns a return code
      */
-    general::ReturnCode updateCondition(patients::Condition c) { this->patient_condition = c; }
+    core::ReturnCode updateCondition(patient::Condition c) { this->patient_condition = c; }
     
     
     friend std::ostream & operator<<(std::ostream & os, const Patient & p);

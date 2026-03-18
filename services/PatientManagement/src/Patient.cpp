@@ -1,8 +1,8 @@
 #include "Patient.hpp"
 
-using namespace general;
+using namespace core;
 using namespace person;
-using namespace patients;
+using namespace patient;
 
 // Public
 Patient::Patient(const Name & name, Sex sex = Sex::Unknown) // Master Constuctor

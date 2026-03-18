@@ -1,6 +1,6 @@
 #include "Resource.hpp"
 
-using namespace resources;
+using namespace resource;
 
 /* ******************************************************************** */
 /* ********************** Private Functions *************************** */

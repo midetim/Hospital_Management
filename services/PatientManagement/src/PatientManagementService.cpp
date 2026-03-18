@@ -4,7 +4,7 @@
 #include "grpc_utils.hpp"
 
 
-using namespace general;
+using namespace core;
 using namespace person;
 using namespace patient;
 
@@ -60,18 +60,18 @@ grpc::Status PatientManagementService::update(grpc::ServerContext * context, con
 /* ********************** PatientManagement gRPC ********************** */
 /* ******************************************************************** */
 
-grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) {
+grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) {
     
     readMetadata(* context); // Read the request metadata
     
     // Extract the patient information from the patient DTO
     Name patient_name = {
-        .first  = patient->patient_name().first(),
-        .middle = patient->patient_name().middle(),
-        .last   = patient->patient_name().last()
+        .first  = patient_dto->patient_name().first(),
+        .middle = patient_dto->patient_name().middle(),
+        .last   = patient_dto->patient_name().last()
     };
-    Sex patient_sex = stringToSex(patient->patient_sex());
-    Condition patient_condition = stringToCondition(patient->patient_cond());
+    Sex patient_sex = stringToSex(patient_dto->patient_sex());
+    Condition patient_condition = stringToCondition(patient_dto->patient_cond());
     
     // Create a new patient
     Patient new_patient(patient_name, patient_sex);
@@ -86,8 +86,8 @@ grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * contex
     }
     
     // Extract room information
-    std::string room_type = patient->room_type();
-    bool is_quarantined = patient->is_quarantined();
+    std::string room_type = patient_dto->room_type();
+    bool is_quarantined = patient_dto->is_quarantined();
     
     // Generate a patient id
     patient_id = generate_id();
@@ -112,20 +112,20 @@ grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * contex
 }
 
 
-grpc::Status PatientManagementService::DischargePatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) {
+grpc::Status PatientManagementService::DischargePatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) {
     
     readMetadata(* context); // Read the request metadata
     
-    uint64_t patient_id = patient->patient_id(); // Get the patients id
+    uint64_t patient_id = patient_dto->patient_id(); // Get the patients id
     
     if (patient_id == 0) { // If the patient id was not provided
         // Extract the patient information from the patient DTO
         Name patient_name = {
-            .first  = patient->patient_name().first(),
-            .middle = patient->patient_name().middle(),
-            .last   = patient->patient_name().last()
+            .first  = patient_dto->patient_name().first(),
+            .middle = patient_dto->patient_name().middle(),
+            .last   = patient_dto->patient_name().last()
         };
-        Sex patient_sex = stringToSex(patient->patient_sex());
+        Sex patient_sex = stringToSex(patient_dto->patient_sex());
         Patient new_patient(patient_name, patient_sex);
         patient_id = find_patient(new_patient); // Find the person using their name / sex
     }
@@ -293,22 +293,22 @@ grpc::Status PatientManagementService::GetPatientInformation(grpc::ServerContext
     return grpc::Status::OK;
 }
 
-grpc::Status PatientManagementService::UpdatePatientInformation(grpc::ServerContext * context, const PatientDTO * patient, Success * success) {
+grpc::Status PatientManagementService::UpdatePatientInformation(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) {
     
     readMetadata(* context); // Read request metadata
     
     // Extract patient information from the request
-    uint64_t patient_id = patient->patient_id();
+    uint64_t patient_id = patient_dto->patient_id();
     
     if (patient_id == 0) { // If no patient id was provided
         
         // Extract patient name & sex
         Name patient_name = {
-            .first  = patient->patient_name().first(),
-            .middle = patient->patient_name().middle(),
-            .last   = patient->patient_name().middle()
+            .first  = patient_dto->patient_name().first(),
+            .middle = patient_dto->patient_name().middle(),
+            .last   = patient_dto->patient_name().middle()
         };
-        Sex patient_sex = stringToSex(patient->patient_sex());
+        Sex patient_sex = stringToSex(patient_dto->patient_sex());
         
         // Create a new patient and search for them
         Patient new_patient(patient_name, patient_sex);
@@ -328,14 +328,14 @@ grpc::Status PatientManagementService::UpdatePatientInformation(grpc::ServerCont
     }
     
     // Update patients information to be consistent with what was just received
-    it->second.setRoomId(patient->patient_room());
-    it->second.setPatientSex(stringToSex(patient->patient_sex()));
-    it->second.setPatientCondition(stringToCondition(patient->patient_cond()));
+    it->second.setRoomId(patient_dto->patient_room());
+    it->second.setPatientSex(stringToSex(patient_dto->patient_sex()));
+    it->second.setPatientCondition(stringToCondition(patient_dto->patient_cond()));
     
     Name name = {
-        .first  = patient->patient_name().first(),
-        .middle = patient->patient_name().middle(),
-        .last   = patient->patient_name().last()
+        .first  = patient_dto->patient_name().first(),
+        .middle = patient_dto->patient_name().middle(),
+        .last   = patient_dto->patient_name().last()
     };
     
     it->second.updateName(name);
@@ -351,8 +351,8 @@ grpc::Status PatientManagementService::GetPatientsInRoom(grpc::ServerContext * c
     
     uint32_t room_id = room->room_id(); // Get the room id
     
-    for (const auto & [patient_id, patient] : hospital_patients) {
-        if (patient.getRoomId() != room_id) {
+    for (const auto & [patient_id, patient_obj] : hospital_patients) {
+        if (patient_obj.getRoomId() != room_id) {
             continue; // If the room ids do not match, jump to the next patient
         }
         
@@ -361,13 +361,13 @@ grpc::Status PatientManagementService::GetPatientsInRoom(grpc::ServerContext * c
 
         current_patient->set_patient_id(patient_id);
         current_patient->set_patient_room(room_id);
-        current_patient->set_patient_sex(sexToString(patient.getPatientSex()));
-        current_patient->set_patient_cond(conditionToString(patient.getPatientCondition()));
+        current_patient->set_patient_sex(sexToString(patient_obj.getPatientSex()));
+        current_patient->set_patient_cond(conditionToString(patient_obj.getPatientCondition()));
 
         // Fill name
-        const Name & patient_name = patient.getPatientName();
+        const Name & patient_name = patient_obj.getPatientName();
 
-        NameDTO* name = current_patient->mutable_patient_name();
+        NameDTO * name = current_patient->mutable_patient_name();
         name->set_first(patient_name.first);
         name->set_middle(patient_name.middle);
         name->set_last(patient_name.last);

@@ -20,7 +20,7 @@ private:
     
     uint64_t resource_id = 0;
     uint32_t room_id = 0;
-    resources::ResourceType type;
+    resource::ResourceType type;
     std::unique_ptr<Schedule> resource_schedule;
     
     /* ******************************************************************** */
@@ -44,21 +44,21 @@ public:
      * @param m Machinery type enumeration
      * @note Calls the general constructor
      */
-    Resource(resources::MachineryType m);
+    Resource(resource::MachineryType m);
     
     /**
      * @brief Consumable type resource constructor
      * @param c Consumable type enumeration
      * @note Calls the general constructor
      */
-    Resource(resources::ConsumableType c);
+    Resource(resource::ConsumableType c);
     
     /**
      * @brief General typed resource constructor
      * @param r The resource type
      * @note Calls the general constructor
      */
-    Resource(resources::ResourceType r);
+    Resource(resource::ResourceType r);
     
     /**
      * @brief Machinery type resource constructor
@@ -66,7 +66,7 @@ public:
      * @param resource_id The id of the resource
      * @note Calls the general constructor
      */
-    Resource(resources::MachineryType m, uint64_t resource_id);
+    Resource(resource::MachineryType m, uint64_t resource_id);
     
     /**
      * @brief Consumable type resource constructor
@@ -74,7 +74,7 @@ public:
      * @param resource_id The id of the resource
      * @note Calls the general constructor
      */
-    Resource(resources::ConsumableType c, uint64_t resource_id);
+    Resource(resource::ConsumableType c, uint64_t resource_id);
     
     /**
      * @brief General typed resource constructor
@@ -82,7 +82,7 @@ public:
      * @param resource_id The id of the resource
      * @note Calls the general constructor
      */
-    Resource(resources::ResourceType r, uint64_t resource_id);
+    Resource(resource::ResourceType r, uint64_t resource_id);
   
     /* ******************************************************************** */
     /* ********************** Getters and Setters ************************* */
@@ -94,10 +94,10 @@ public:
     uint32_t getRoomId() const { return this->room_id; }
     void setRoomId(uint32_t rid) { this->room_id = rid; }
     
-    const resources::ResourceType & getResourceType() const { return this->type; }
-    void setResourceType(resources::MachineryType m) { this->type = m; }
-    void setResourceType(resources::ConsumableType c) { this->type = c; }
-    void setResourceType(resources::ResourceType r) { this->type = r; }
+    const resource::ResourceType & getResourceType() const { return this->type; }
+    void setResourceType(resource::MachineryType m) { this->type = m; }
+    void setResourceType(resource::ConsumableType c) { this->type = c; }
+    void setResourceType(resource::ResourceType r) { this->type = r; }
     
     /* ******************************************************************** */
     /* ************************* Schedule Access ************************** */

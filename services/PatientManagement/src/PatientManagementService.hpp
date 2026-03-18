@@ -84,13 +84,13 @@ public:
      * @brief Admits a patient into the hospital
      * @warning Will not allow you to admit a patient who has already been admitted
      */
-    grpc::Status AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) override;
+    grpc::Status AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) override;
     
     /**
      * @brief Attempts to discharge a patient from the hospital
      * @warning Cannot discharge quarantined patients
      */
-    grpc::Status DischargePatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) override;
+    grpc::Status DischargePatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) override;
     
     /**
      * @brief Attempts to transfer a patient into a new room
@@ -117,7 +117,7 @@ public:
     /**
      * @brief Updates the patient object to match the patient sent in the request
      */
-    grpc::Status UpdatePatientInformation(grpc::ServerContext * context, const PatientDTO * patient, Success * success) override;
+    grpc::Status UpdatePatientInformation(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) override;
     
     /**
      * @brief Gets the information on every patient that has been admitted to a specified room
@@ -129,10 +129,10 @@ public:
     /* *************************** IServer ******************************** */
     /* ******************************************************************** */
 
-    general::ReturnCode connectToDB() override;
-    general::ReturnCode loadFromDB() override;
-    general::ReturnCode uploadToDB() override;
-    general::ReturnCode init() override;
+    core::ReturnCode connectToDB() override;
+    core::ReturnCode loadFromDB() override;
+    core::ReturnCode uploadToDB() override;
+    core::ReturnCode init() override;
     void print_internal() override;
     
     

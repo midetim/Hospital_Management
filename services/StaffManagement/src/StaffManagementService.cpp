@@ -4,7 +4,7 @@
 #include <grpcpp/grpcpp.h>
 #include <memory>
 
-using namespace general;
+using namespace core;
 using namespace person;
 using namespace staff;
 
@@ -20,34 +20,34 @@ uint64_t StaffManagementService::findStaff(const Staff & staff) {
     return 0; // not found
 }
 
-void StaffManagementService::staff_to_dto(const Staff & staff, StaffDTO & dto) {
+void StaffManagementService::staff_to_dto(const Staff & obj, StaffDTO & dto) {
     NameDTO * name = dto.mutable_staff_name();
-    name->set_first(staff.getName().first);
-    name->set_middle(staff.getName().middle);
-    name->set_last(staff.getName().last);
+    name->set_first(obj.getName().first);
+    name->set_middle(obj.getName().middle);
+    name->set_last(obj.getName().last);
     
-    dto.set_staff_id(staff.getStaffId());
-    dto.set_staff_sex(sexToString(staff.getSex()));
-    dto.set_staff_room(staff.getRoomId());
-    dto.set_staff_salary(staff.getSalary());
-    dto.set_staff_pos(position_to_string(staff.getPosition()));
-    dto.set_staff_clear(clearance_to_string(staff.getClearance()));
+    dto.set_staff_id(obj.getStaffId());
+    dto.set_staff_sex(sexToString(obj.getSex()));
+    dto.set_staff_room(obj.getRoomId());
+    dto.set_staff_salary(obj.getSalary());
+    dto.set_staff_pos(position_to_string(obj.getPosition()));
+    dto.set_staff_clear(clearance_to_string(obj.getClearance()));
 }
 
-void StaffManagementService::dto_to_staff(const StaffDTO & dto, Staff & staff) {
+void StaffManagementService::dto_to_staff(const StaffDTO & dto, Staff & obj) {
     Name staff_name = {
         .first = dto.staff_name().first(),
         .middle = dto.staff_name().middle(),
         .last = dto.staff_name().last()
     };
     
-    staff.setName(staff_name);
-    staff.setStaffId(dto.staff_id());
-    staff.setSex(stringToSex(dto.staff_sex()));
-    staff.setRoomId(dto.staff_room());
-    staff.setSalary(dto.staff_salary());
-    staff.setPosition(string_to_position(dto.staff_pos()));
-    staff.setClearance(string_to_clearance(dto.staff_clear()));
+    obj.setName(staff_name);
+    obj.setStaffId(dto.staff_id());
+    obj.setSex(stringToSex(dto.staff_sex()));
+    obj.setRoomId(dto.staff_room());
+    obj.setSalary(dto.staff_salary());
+    obj.setPosition(string_to_position(dto.staff_pos()));
+    obj.setClearance(string_to_clearance(dto.staff_clear()));
 }
 
 ReturnCode StaffManagementService::convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, StaffSchedule * schedule, const StaffDTO * staff) const {
@@ -102,12 +102,12 @@ grpc::Status StaffManagementService::update(grpc::ServerContext * context, const
 /* *********************** StaffManagement gRPC *********************** */
 /* ******************************************************************** */
 
-grpc::Status StaffManagementService::AddStaff(grpc::ServerContext * context, const StaffDTO * staff, Success * success) {
+grpc::Status StaffManagementService::AddStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) {
     
     readMetadata(* context); // Read request metadata
     
     Staff new_staff;
-    dto_to_staff(* staff, new_staff);
+    dto_to_staff(* staff_dto, new_staff);
     
     uint64_t exists = findStaff(new_staff); // Check if staff exists in the system
     
@@ -129,12 +129,12 @@ grpc::Status StaffManagementService::AddStaff(grpc::ServerContext * context, con
     return grpc::Status::OK;
 }
 
-grpc::Status StaffManagementService::RemoveStaff(grpc::ServerContext * context, const StaffDTO * staff, Success * success) {
+grpc::Status StaffManagementService::RemoveStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) {
     
     readMetadata(* context); // Read reqeust metadata
     
     Staff removal_target;
-    dto_to_staff(* staff, removal_target);
+    dto_to_staff(* staff_dto, removal_target);
     
     if (removal_target.getStaffId() == 0) { // No id provided, search by name
         removal_target.setStaffId(findStaff(removal_target));  // Find staff id by staff name/sex
@@ -166,12 +166,12 @@ grpc::Status StaffManagementService::RemoveStaff(grpc::ServerContext * context, 
 }
 
 
-grpc::Status StaffManagementService::ChangePosition(grpc::ServerContext * context, const StaffDTO * staff, Success * success) {
+grpc::Status StaffManagementService::ChangePosition(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) {
     
     readMetadata(* context); // Read request metadata
     
     Staff target;
-    dto_to_staff(* staff, target);
+    dto_to_staff(* staff_dto, target);
     
     if (target.getStaffId() == 0) { // No id provided, search by name
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
@@ -190,12 +190,12 @@ grpc::Status StaffManagementService::ChangePosition(grpc::ServerContext * contex
     return grpc::Status::OK;
 }
 
-grpc::Status StaffManagementService::ChangeClearance(grpc::ServerContext * context, const StaffDTO * staff, Success * success) {
+grpc::Status StaffManagementService::ChangeClearance(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) {
     
     readMetadata(* context); // Read request metadata
     
     Staff target;
-    dto_to_staff(* staff, target);
+    dto_to_staff(* staff_dto, target);
     
     if (target.getStaffId() == 0) { // No id provided, search by name
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
@@ -213,12 +213,12 @@ grpc::Status StaffManagementService::ChangeClearance(grpc::ServerContext * conte
     return grpc::Status::OK;
 }
 
-grpc::Status StaffManagementService::UpdateStaffInformation(grpc::ServerContext * context, const StaffDTO * staff, Success * success) {
+grpc::Status StaffManagementService::UpdateStaffInformation(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) {
     
     readMetadata(* context); // Read request metadata
     
     Staff new_staff;
-    dto_to_staff(* staff, new_staff);
+    dto_to_staff(* staff_dto, new_staff);
     
     if (new_staff.getStaffId() == 0) { // No id provided, search by name
         new_staff.setStaffId(findStaff(new_staff)); // Find staff id by staff name/sex
@@ -291,7 +291,7 @@ grpc::Status StaffManagementService::RemoveShift(grpc::ServerContext * context, 
     time_util::dto_to_shift(shift->shift(), removal_target);
     
     // Remove the shift from the schedule
-    removal_target = time_util::Shift(removal_target.shift_start, time_util::duration::none, rooms::none);
+    removal_target = time_util::Shift(removal_target.shift_start, time_util::duration::none, room::none);
     bool removal_success = it->second->access_schedule()->removeFromSchedule(removal_target);
     success->set_successful(removal_success);
     
@@ -308,7 +308,7 @@ grpc::Status StaffManagementService::TransferShift(grpc::ServerContext * context
     uint32_t room_id = shift->shift().room_id();
     
     
-    if (room_id == rooms::idle) {
+    if (room_id == room::idle) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "No room id provided");
     }
@@ -335,7 +335,7 @@ grpc::Status StaffManagementService::TransferShift(grpc::ServerContext * context
     }
     
     // Get the shifts
-    time_util::Shift this_shift(this_shift_ts, time_util::duration::none, rooms::idle);
+    time_util::Shift this_shift(this_shift_ts, time_util::duration::none, room::idle);
     time_util::Shift backup = it->second->access_schedule()->copyShift(this_shift); // Just in case insertion fails but deletion succeeds
     time_util::Shift new_shift(new_shift_ts, new_shift_duration, room_id);
 
@@ -391,7 +391,7 @@ grpc::Status StaffManagementService::BookTimeOff(grpc::ServerContext * context, 
         return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "Must provide a shift start date");
     }
     
-    time_util::Shift new_shift(start_ts, end_ts, rooms::none);
+    time_util::Shift new_shift(start_ts, end_ts, room::none);
     bool addition_success = it->second->access_schedule()->addToSchedule(new_shift);
     
     success->set_successful(addition_success); // Report success depending on if the shift was added successfully
@@ -401,12 +401,12 @@ grpc::Status StaffManagementService::BookTimeOff(grpc::ServerContext * context, 
     } else { return grpc::Status::OK; }
 }
 
-grpc::Status StaffManagementService::SeeStaffInformation(grpc::ServerContext * context, const StaffDTO * staff, StaffDTO * staff_info) {
+grpc::Status StaffManagementService::SeeStaffInformation(grpc::ServerContext * context, const StaffDTO * staff_dto, StaffDTO * staff_info) {
     
     readMetadata(* context);
     
     Staff target;
-    dto_to_staff(* staff, target);
+    dto_to_staff(* staff_dto, target);
     
     if (target.getStaffId() == 0) { // No id provided, search by name
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
@@ -421,12 +421,12 @@ grpc::Status StaffManagementService::SeeStaffInformation(grpc::ServerContext * c
     return grpc::Status::OK;
 }
  
-grpc::Status StaffManagementService::SeeTodaysSchedule(grpc::ServerContext * context, const StaffDTO * staff, StaffSchedule * schedule) {
+grpc::Status StaffManagementService::SeeTodaysSchedule(grpc::ServerContext * context, const StaffDTO * staff_dto, StaffSchedule * schedule) {
     
     readMetadata(* context);
     
     Staff target;
-    dto_to_staff(* staff, target);
+    dto_to_staff(* staff_dto, target);
     
     if (target.getStaffId() == 0) { // No id provided, search by name
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
@@ -438,7 +438,7 @@ grpc::Status StaffManagementService::SeeTodaysSchedule(grpc::ServerContext * con
     }
     
     std::set<time_util::Shift> shifts = it->second->access_schedule()->getToday();
-    ReturnCode success = convertToSchedule(shifts, schedule, staff);
+    ReturnCode success = convertToSchedule(shifts, schedule, staff_dto);
     
     switch (success) {
         case ReturnCode::SUCCESS: return grpc::Status::OK;
@@ -451,12 +451,12 @@ grpc::Status StaffManagementService::SeeTodaysSchedule(grpc::ServerContext * con
     }
 }
 
-grpc::Status StaffManagementService::SeeTomorrowsSchedule(grpc::ServerContext * context, const StaffDTO * staff, StaffSchedule * schedule) {
+grpc::Status StaffManagementService::SeeTomorrowsSchedule(grpc::ServerContext * context, const StaffDTO * staff_dto, StaffSchedule * schedule) {
     
     readMetadata(* context);
     
     Staff target;
-    dto_to_staff(* staff, target);
+    dto_to_staff(* staff_dto, target);
     
     if (target.getStaffId() == 0) { // No id provided, search by name
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
@@ -468,7 +468,7 @@ grpc::Status StaffManagementService::SeeTomorrowsSchedule(grpc::ServerContext * 
     }
     
     std::set<time_util::Shift> shifts = it->second->access_schedule()->getTomorrow();
-    ReturnCode success = convertToSchedule(shifts, schedule, staff);
+    ReturnCode success = convertToSchedule(shifts, schedule, staff_dto);
     
     switch (success) {
         case ReturnCode::SUCCESS: return grpc::Status::OK;
@@ -486,7 +486,7 @@ grpc::Status StaffManagementService::SeeScheduleRange(grpc::ServerContext * cont
     readMetadata(* context);
     
     Staff target;
-    dto_to_staff(* staff, target);
+    dto_to_staff(range->staff(), target);
     
     if (target.getStaffId() == 0) { // No id provided, search by name
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
@@ -498,7 +498,7 @@ grpc::Status StaffManagementService::SeeScheduleRange(grpc::ServerContext * cont
     }
     
     std::set<time_util::Shift> shifts = it->second->access_schedule()->getToday();
-    ReturnCode success = convertToSchedule(shifts, schedule, staff);
+    ReturnCode success = convertToSchedule(shifts, schedule, range->staff());
     
     switch (success) {
         case ReturnCode::SUCCESS: return grpc::Status::OK;
@@ -512,4 +512,52 @@ grpc::Status StaffManagementService::SeeScheduleRange(grpc::ServerContext * cont
 
 }
 
-//grpc::Status StaffManagementService::GetStaffInRoom(grpc::ServerContext * context, const RoomRequest * room, StaffList * staff_info) override;
+grpc::Status StaffManagementService::GetStaffInRoom(grpc::ServerContext * context, const RoomRequest * room, StaffList * staff_info)  {
+    
+    readMetadata(* context);
+    
+    uint32_t room_id = room->room_id();
+    
+    for (const auto & [staff_id, staff_ptr] : total_staff) {
+        if (staff_ptr->getRoomId() != room_id) { continue; }
+        StaffDTO * current_staff = staff_info->add_staff();
+        staff_to_dto(* staff_ptr.get(), * current_staff);
+    }
+    
+    if (staff_info->staff_size() == 0) {
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "There are no staff in the specified room");
+    }
+    
+    return grpc::Status::OK;
+}
+
+
+
+/* ******************************************************************** */
+/* *************************** IServer ******************************** */
+/* ******************************************************************** */
+
+ReturnCode StaffManagementService::connectToDB() {
+    
+}
+
+ReturnCode StaffManagementService::loadFromDB() {
+    
+}
+
+ReturnCode StaffManagementService::uploadToDB() {
+    
+}
+
+ReturnCode StaffManagementService::init() {
+    
+}
+
+void StaffManagementService::print_internal() {
+    
+}
+
+/* ******************************************************************** */
+/* ****************************** Other ******************************* */
+/* ******************************************************************** */
+

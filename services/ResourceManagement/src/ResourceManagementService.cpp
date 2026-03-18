@@ -6,8 +6,8 @@
 #include <variant>
 #include "grpc_utils.hpp"
 
-using namespace general;
-using namespace resources;
+using namespace core;
+using namespace resource;
 
 /* ******************************************************************** */
 /* ********************** Private Functions *************************** */
@@ -78,7 +78,7 @@ ReturnCode ResourceManagementService::moveResource(uint64_t resource_id, option 
 bool ResourceManagementService::sendResources() {
     for (const auto & [resource_id, resource_ptr] : available_resources) {
         uint32_t new_room = resource_ptr->access_schedule()->check_schedule(); // Will return a room id if the resource needs to go to a new room
-        if (new_room == rooms::idle) { continue; }
+        if (new_room == room::idle) { continue; }
         /* TODO: need to complete this part once the room_client is done
         room_client->update_resource(resource_id, new_room, service::resource);
         */
@@ -90,7 +90,7 @@ bool ResourceManagementService::sendResources() {
 bool ResourceManagementService::retrieveResources() {
     for (const auto & [resource_id, resource_ptr] : busy_resources) {
         uint32_t new_room = resource_ptr->access_schedule()->check_schedule();
-        if (new_room != rooms::idle) { continue; }
+        if (new_room != room::idle) { continue; }
         /* TODO: Complete after room_client
         room_client->update_resource(resource_id, new_room, service::resource);
         */
@@ -161,14 +161,14 @@ grpc::Status ResourceManagementService::update(grpc::ServerContext * context, co
 /* ********************* ResourceManagement gRPC ********************** */
 /* ******************************************************************** */
 
-grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
+grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) {
     
     readMetadata(* context); // Read request metadata
  
     // Extract information from request
-    uint64_t resource_id = resource->resource_id();
-    ResourceType resource_type = stringToResourceType(resource->resource_type());
-    uint32_t stock_amount = resource->resource_stock();
+    uint64_t resource_id = resource_dto->resource_id();
+    ResourceType resource_type = stringToResourceType(resource_dto->resource_type());
+    uint32_t stock_amount = resource_dto->resource_stock();
     
     std::unique_ptr<Resource> new_resource; // The new resource to add to the system
     
@@ -205,11 +205,11 @@ grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * c
     return grpc::Status::OK;
 }
 
-grpc::Status ResourceManagementService::DeregisterResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
+grpc::Status ResourceManagementService::DeregisterResource(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) {
     
     readMetadata(* context); // Read the request metadata
  
-    uint64_t resource_id = resource->resource_id(); // Get the resource id
+    uint64_t resource_id = resource_dto->resource_id(); // Get the resource id
     
     // Get an iterator to the resource inside the total_resource map
     auto total_iterator = total_resources.find(resource_id);
@@ -242,12 +242,12 @@ grpc::Status ResourceManagementService::DeregisterResource(grpc::ServerContext *
     return grpc::Status::OK;
 }
 
-grpc::Status ResourceManagementService::SendForMaintenance(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
+grpc::Status ResourceManagementService::SendForMaintenance(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) {
     
     readMetadata(* context); // Read request metadata
     
     // Extract all relavant data
-    uint64_t resource_id = resource->resource_id();
+    uint64_t resource_id = resource_dto->resource_id();
     
     auto it = total_resources.find(resource_id);
     if (it == total_resources.end()) {
@@ -263,7 +263,7 @@ grpc::Status ResourceManagementService::SendForMaintenance(grpc::ServerContext *
     time_util::Timestamp maintenance_end   = maintenance_start + time_util::times::day;
     
     // Make the maintenance shift
-    time_util::Shift maintenance_shift(maintenance_start, maintenance_end, rooms::maintenance);
+    time_util::Shift maintenance_shift(maintenance_start, maintenance_end, room::maintenance);
     
     // Add the shift to the resources schedule
     bool successful_addition = it->second->access_schedule()->addToSchedule(maintenance_shift);
@@ -340,7 +340,7 @@ grpc::Status ResourceManagementService::RemoveFromSchedule(grpc::ServerContext *
     time_util::Timestamp shift_start_time = time_util::date_to_timestamp(time_util::Date(start_date)); // Convert the date to a timestamp
     
     // Remove the shift from the schedule
-    time_util::Shift shift_to_remove(shift_start_time, time_util::duration::none, rooms::idle);
+    time_util::Shift shift_to_remove(shift_start_time, time_util::duration::none, room::idle);
     bool removal_success = it->second->access_schedule()->removeFromSchedule(shift_to_remove);
     success->set_successful(removal_success);
     
@@ -356,7 +356,7 @@ grpc::Status ResourceManagementService::RemoveResourceFromRoom(grpc::ServerConte
     uint64_t resource_id = resource->resource_id();
     uint32_t room_id = resource->room_id();
     
-    if (room_id == rooms::idle) {
+    if (room_id == room::idle) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "No room id provided");
     }
@@ -383,7 +383,7 @@ grpc::Status ResourceManagementService::ChangeSchedule(grpc::ServerContext * con
     uint64_t resource_id = shift->resource().resource_id();
     uint32_t room_id     = shift->shift().room_id();
     
-    if (room_id == rooms::idle) {
+    if (room_id == room::idle) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "No room id provided");
     }
@@ -411,7 +411,7 @@ grpc::Status ResourceManagementService::ChangeSchedule(grpc::ServerContext * con
     }
     
     // Get the shifts
-    time_util::Shift this_shift(this_shift_ts, time_util::duration::none, rooms::idle);
+    time_util::Shift this_shift(this_shift_ts, time_util::duration::none, room::idle);
     time_util::Shift backup = it->second->access_schedule()->copyShift(this_shift); // Just in case insertion fails but deletion succeeds
     time_util::Shift new_shift(new_shift_ts, new_shift_duration, room_id);
 
@@ -436,11 +436,11 @@ grpc::Status ResourceManagementService::ChangeSchedule(grpc::ServerContext * con
     return grpc::Status::OK;
 }
 
-grpc::Status ResourceManagementService::SeeTodaysSchedule(grpc::ServerContext * context, const ResourceDTO * resource, ResourceSchedule * schedule) {
+grpc::Status ResourceManagementService::SeeTodaysSchedule(grpc::ServerContext * context, const ResourceDTO * resource_dto, ResourceSchedule * schedule) {
     
     readMetadata(* context); // Read request metadata
     
-    uint64_t resource_id = resource->resource_id(); // Extract the resource id
+    uint64_t resource_id = resource_dto->resource_id(); // Extract the resource id
     
     auto it = total_resources.find(resource_id); // Get the iterator to the resource id
     if (it == total_resources.end()) {
@@ -454,7 +454,7 @@ grpc::Status ResourceManagementService::SeeTodaysSchedule(grpc::ServerContext * 
     }
     
     // Convert the set into a schedule
-    convertToSchedule(resource_schedule, schedule, resource);
+    convertToSchedule(resource_schedule, schedule, resource_dto);
     return grpc::Status::OK;
 }
 
@@ -699,13 +699,13 @@ grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext *
     
     uint32_t room_id = room->room_id();
     
-    if (busy_resources.empty() && (room_id != rooms::idle)) { // If there are no busy resources exit early
+    if (busy_resources.empty() && (room_id != room::idle)) { // If there are no busy resources exit early
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "There are no resources assigned to any rooms at the moment");
     }
     
     // Get relevant information from request
     bool any_resources_in_room = false;
-    if (room_id != rooms::maintenance) {
+    if (room_id != room::maintenance) {
         for (const auto & [resource_id, resource_ptr] : busy_resources) {
             if (resource_ptr->getRoomId() != room_id) { continue; }
             any_resources_in_room = true;
@@ -718,7 +718,7 @@ grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext *
             new_resource->set_resource_id(resource_id);
             new_resource->set_resource_type(resourceTypeToString(resource_ptr->getResourceType()));
         }
-    } else if (room_id == rooms::maintenance) {
+    } else if (room_id == room::maintenance) {
         for (const auto & [resource_id, resource_ptr] : total_resources) {
             if (resource_ptr->getRoomId() != room_id) { continue; }
             any_resources_in_room = true;

@@ -33,12 +33,12 @@ private:
     /* ********************** Private Functions *************************** */
     /* ******************************************************************** */
      
-    uint64_t findStaff(const Staff & staff);
+    uint64_t findStaff(const Staff & obj);
     
-    void staff_to_dto(const Staff & staff, StaffDTO & dto);
-    void dto_to_staff(const StaffDTO & dto, Staff & staff);
+    void staff_to_dto(const Staff & obj, StaffDTO & dto);
+    void dto_to_staff(const StaffDTO & dto, Staff & obj);
     
-    general::ReturnCode convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, StaffSchedule * schedule, const StaffDTO * staff) const;
+    general::ReturnCode convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, StaffSchedule * schedule, const StaffDTO * staff_dto) const;
     
 public:
     
@@ -71,15 +71,15 @@ public:
     /* *********************** StaffManagement gRPC *********************** */
     /* ******************************************************************** */
     
-    grpc::Status AddStaff(grpc::ServerContext * context, const StaffDTO * staff, Success * success) override;
+    grpc::Status AddStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) override;
     
-    grpc::Status RemoveStaff(grpc::ServerContext * context, const StaffDTO * staff, Success * success) override;
+    grpc::Status RemoveStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) override;
     
-    grpc::Status ChangePosition(grpc::ServerContext * context, const StaffDTO * staff, Success * success) override;
+    grpc::Status ChangePosition(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) override;
     
-    grpc::Status ChangeClearance(grpc::ServerContext * context, const StaffDTO * staff, Success * success) override;
+    grpc::Status ChangeClearance(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) override;
     
-    grpc::Status UpdateStaffInformation(grpc::ServerContext * context, const StaffDTO * staff, Success * success) override;
+    grpc::Status UpdateStaffInformation(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) override;
     
     grpc::Status AddShift(grpc::ServerContext * context, const StaffShift * shift, Success * success) override;
     
@@ -89,11 +89,11 @@ public:
     
     grpc::Status BookTimeOff(grpc::ServerContext * context, const TimeOff * shift, Success * success) override;
     
-    grpc::Status SeeStaffInformation(grpc::ServerContext * context, const StaffDTO * staff, StaffDTO * staff_info) override;
+    grpc::Status SeeStaffInformation(grpc::ServerContext * context, const StaffDTO * staff_dto, StaffDTO * staff_info) override;
     
-    grpc::Status SeeTodaysSchedule(grpc::ServerContext * context, const StaffDTO * staff, StaffSchedule * schedule) override;
+    grpc::Status SeeTodaysSchedule(grpc::ServerContext * context, const StaffDTO * staff_dto, StaffSchedule * schedule) override;
     
-    grpc::Status SeeTomorrowsSchedule(grpc::ServerContext * context, const StaffDTO * staff, StaffSchedule * schedule) override;
+    grpc::Status SeeTomorrowsSchedule(grpc::ServerContext * context, const StaffDTO * staff_dto, StaffSchedule * schedule) override;
     
     grpc::Status SeeScheduleRange(grpc::ServerContext * context, const StaffShift * range, StaffSchedule * schedule) override;
     
@@ -104,10 +104,10 @@ public:
     /* *************************** IServer ******************************** */
     /* ******************************************************************** */
     
-    general::ReturnCode connectToDB() override;
-    general::ReturnCode loadFromDB() override;
-    general::ReturnCode uploadToDB() override;
-    general::ReturnCode init() override;
+    core::ReturnCode connectToDB() override;
+    core::ReturnCode loadFromDB() override;
+    core::ReturnCode uploadToDB() override;
+    core::ReturnCode init() override;
     void print_internal() override;
     
     /* ******************************************************************** */

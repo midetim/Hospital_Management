@@ -90,7 +90,7 @@ namespace ansi {
 /* ********************* General Namespace **************************** */
 /* ******************************************************************** */
 
-namespace base {
+namespace core {
     enum class ReturnCode : int32_t {
         SUCCESS = 0,
         WARNING = 1,

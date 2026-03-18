@@ -76,7 +76,7 @@ private:
      * @warning Will not allow moving nodes in total resources
      * @note If source and destination are the same it will break early
      */
-    general::ReturnCode moveResource(uint64_t resource_id, option source, option destination);
+    core::ReturnCode moveResource(uint64_t resource_id, option source, option destination);
     
     /**
      * @brief Sends all resources to their designated rooms
@@ -94,7 +94,7 @@ private:
      * @param schedule The resource schedule to add to
      * @param resource The resource DTO to add to each resource shift
      */
-    general::ReturnCode convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, ResourceSchedule * schedule, const ResourceDTO * resource) const;
+    core::ReturnCode convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, ResourceSchedule * schedule, const ResourceDTO * resource) const;
     
 public:
     
@@ -133,19 +133,19 @@ public:
      * @note If no resource id is provided, it will generate a new one for the resource
      * @warning Giving a resource id that is already in use will cause a failure
      */
-    grpc::Status RegisterResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
+    grpc::Status RegisterResource(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) override;
     
     /**
      * @brief Deregisters a resource from the service
      * @warning Cannot deregister a resource that is busy
      */
-    grpc::Status DeregisterResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
+    grpc::Status DeregisterResource(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) override;
     
     /**
      * @brief Schedules a resource for a 24-hour maintenance in the next available moment
      * @note The maintentance shift is 24-hours, so the resource will schedule it for the next free 24-hour period
      */
-    grpc::Status SendForMaintenance(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
+    grpc::Status SendForMaintenance(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) override;
     
     /**
      * @brief Adds a shift to the resources schedule
@@ -161,7 +161,7 @@ public:
     /**
      * @brief Removes all shifts that a resource has in a selected room
      */
-    grpc::Status RemoveResourceFromRoom(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
+    grpc::Status RemoveResourceFromRoom(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) override;
     
     /**
      * @brief Removes a shift and adds a new one
@@ -171,12 +171,12 @@ public:
     /**
      * @brief Gets the specified resource's schedule for today
      */
-    grpc::Status SeeTodaysSchedule(grpc::ServerContext * context, const ResourceDTO * resource, ResourceSchedule * schedule) override;
+    grpc::Status SeeTodaysSchedule(grpc::ServerContext * context, const ResourceDTO * resource_dto, ResourceSchedule * schedule) override;
     
     /**
      * @brief Gets the specified resource's schedule for tomorrow
      */
-    grpc::Status SeeTomorrowsSchedule(grpc::ServerContext * context, const ResourceDTO * resource, ResourceSchedule * schedule) override;
+    grpc::Status SeeTomorrowsSchedule(grpc::ServerContext * context, const ResourceDTO * resource_dto, ResourceSchedule * schedule) override;
     
     /**
      * @brief Gets the specified resource's schedule for a specific range of dates
@@ -220,10 +220,10 @@ public:
     /* *************************** IServer ******************************** */
     /* ******************************************************************** */
     
-    general::ReturnCode connectToDB() override;
-    general::ReturnCode loadFromDB() override;
-    general::ReturnCode uploadToDB() override;
-    general::ReturnCode init() override;
+    core::ReturnCode connectToDB() override;
+    core::ReturnCode loadFromDB() override;
+    core::ReturnCode uploadToDB() override;
+    core::ReturnCode init() override;
     void print_internal() override;
     
     /* ******************************************************************** */

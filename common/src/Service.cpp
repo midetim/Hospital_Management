@@ -5,7 +5,7 @@
 #include <string>
 #include <csignal>
 
-using namespace general;
+using namespace core;
 
 ReturnCode IService::connectToDB() {
     
