@@ -12,7 +12,6 @@ set(GRPC_INSTALL_DIR ${PROJECT_SOURCE_DIR}/external/grpc/local)
 # Tell CMake to use project-local gRPC/Protobuf 
 list(INSERT CMAKE_PREFIX_PATH 0 ${GRPC_INSTALL_DIR}/lib/cmake)
 
-
 # Find installed packages
 find_package(Protobuf CONFIG REQUIRED PATHS ${GRPC_INSTALL_DIR}/lib/cmake/protobuf)
 find_package(gRPC CONFIG REQUIRED PATHS ${GRPC_INSTALL_DIR}/lib/cmake/grpc)

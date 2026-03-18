@@ -30,6 +30,7 @@ clean:
 buf:
 	rm -rf common/proto/generated/*.pb.*
 	external/grpc/local/bin/protoc -I=common/proto --cpp_out=common/proto/generated --grpc_out=common/proto/generated --plugin=protoc-gen-grpc=external/grpc/local/bin/grpc_cpp_plugin common/proto/*.proto
+	external/grpc/local/bin/protoc -I=common/proto --python_out=common/proto/generated --grpc_python_out=common/proto/generated --plugin=protoc-gen-grpc_python=external/grpc/local/bin/grpc_python_plugin common/proto/*.proto
 
 # Git automation
 git:
