@@ -877,9 +877,7 @@ class ResourceShift final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kResourceFieldNumber = 1,
-    kStartFieldNumber = 2,
-    kOtherFieldNumber = 3,
-    kDurationFieldNumber = 4,
+    kShiftFieldNumber = 2,
   };
   // .ResourceDTO resource = 1;
   bool has_resource() const;
@@ -896,52 +894,27 @@ class ResourceShift final : public ::google::protobuf::Message
   ::ResourceDTO* PROTOBUF_NONNULL _internal_mutable_resource();
 
   public:
-  // .DateDTO start = 2;
-  bool has_start() const;
-  void clear_start() ;
-  const ::DateDTO& start() const;
-  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_start();
-  ::DateDTO* PROTOBUF_NONNULL mutable_start();
-  void set_allocated_start(::DateDTO* PROTOBUF_NULLABLE value);
-  void unsafe_arena_set_allocated_start(::DateDTO* PROTOBUF_NULLABLE value);
-  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_start();
+  // .ShiftDTO shift = 2;
+  bool has_shift() const;
+  void clear_shift() ;
+  const ::ShiftDTO& shift() const;
+  [[nodiscard]] ::ShiftDTO* PROTOBUF_NULLABLE release_shift();
+  ::ShiftDTO* PROTOBUF_NONNULL mutable_shift();
+  void set_allocated_shift(::ShiftDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_shift(::ShiftDTO* PROTOBUF_NULLABLE value);
+  ::ShiftDTO* PROTOBUF_NULLABLE unsafe_arena_release_shift();
 
   private:
-  const ::DateDTO& _internal_start() const;
-  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_start();
-
-  public:
-  // .DateDTO other = 3;
-  bool has_other() const;
-  void clear_other() ;
-  const ::DateDTO& other() const;
-  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_other();
-  ::DateDTO* PROTOBUF_NONNULL mutable_other();
-  void set_allocated_other(::DateDTO* PROTOBUF_NULLABLE value);
-  void unsafe_arena_set_allocated_other(::DateDTO* PROTOBUF_NULLABLE value);
-  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_other();
-
-  private:
-  const ::DateDTO& _internal_other() const;
-  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_other();
-
-  public:
-  // uint64 duration = 4;
-  void clear_duration() ;
-  ::uint64_t duration() const;
-  void set_duration(::uint64_t value);
-
-  private:
-  ::uint64_t _internal_duration() const;
-  void _internal_set_duration(::uint64_t value);
+  const ::ShiftDTO& _internal_shift() const;
+  ::ShiftDTO* PROTOBUF_NONNULL _internal_mutable_shift();
 
   public:
   // @@protoc_insertion_point(class_scope:ResourceShift)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 4,
-                                   3, 0,
+  static const ::google::protobuf::internal::TcParseTable<1, 2,
+                                   2, 0,
                                    2>
       _table_;
 
@@ -963,9 +936,7 @@ class ResourceShift final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::ResourceDTO* PROTOBUF_NULLABLE resource_;
-    ::DateDTO* PROTOBUF_NULLABLE start_;
-    ::DateDTO* PROTOBUF_NULLABLE other_;
-    ::uint64_t duration_;
+    ::ShiftDTO* PROTOBUF_NULLABLE shift_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -1426,41 +1397,41 @@ inline void ResourceShift::set_allocated_resource(::ResourceDTO* PROTOBUF_NULLAB
   // @@protoc_insertion_point(field_set_allocated:ResourceShift.resource)
 }
 
-// .DateDTO start = 2;
-inline bool ResourceShift::has_start() const {
+// .ShiftDTO shift = 2;
+inline bool ResourceShift::has_shift() const {
   bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.start_ != nullptr);
+  PROTOBUF_ASSUME(!value || _impl_.shift_ != nullptr);
   return value;
 }
-inline const ::DateDTO& ResourceShift::_internal_start() const {
+inline const ::ShiftDTO& ResourceShift::_internal_shift() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::DateDTO* p = _impl_.start_;
-  return p != nullptr ? *p : reinterpret_cast<const ::DateDTO&>(::_DateDTO_default_instance_);
+  const ::ShiftDTO* p = _impl_.shift_;
+  return p != nullptr ? *p : reinterpret_cast<const ::ShiftDTO&>(::_ShiftDTO_default_instance_);
 }
-inline const ::DateDTO& ResourceShift::start() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:ResourceShift.start)
-  return _internal_start();
+inline const ::ShiftDTO& ResourceShift::shift() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ResourceShift.shift)
+  return _internal_shift();
 }
-inline void ResourceShift::unsafe_arena_set_allocated_start(
-    ::DateDTO* PROTOBUF_NULLABLE value) {
+inline void ResourceShift::unsafe_arena_set_allocated_shift(
+    ::ShiftDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.start_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.shift_);
   }
-  _impl_.start_ = reinterpret_cast<::DateDTO*>(value);
+  _impl_.shift_ = reinterpret_cast<::ShiftDTO*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000002u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ResourceShift.start)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ResourceShift.shift)
 }
-inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_start() {
+inline ::ShiftDTO* PROTOBUF_NULLABLE ResourceShift::release_shift() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000002u;
-  ::DateDTO* released = _impl_.start_;
-  _impl_.start_ = nullptr;
+  ::ShiftDTO* released = _impl_.shift_;
+  _impl_.shift_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
     released = ::google::protobuf::internal::DuplicateIfNonNull(released);
@@ -1474,35 +1445,35 @@ inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_start() {
   }
   return released;
 }
-inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::unsafe_arena_release_start() {
+inline ::ShiftDTO* PROTOBUF_NULLABLE ResourceShift::unsafe_arena_release_shift() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:ResourceShift.start)
+  // @@protoc_insertion_point(field_release:ResourceShift.shift)
 
   _impl_._has_bits_[0] &= ~0x00000002u;
-  ::DateDTO* temp = _impl_.start_;
-  _impl_.start_ = nullptr;
+  ::ShiftDTO* temp = _impl_.shift_;
+  _impl_.shift_ = nullptr;
   return temp;
 }
-inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::_internal_mutable_start() {
+inline ::ShiftDTO* PROTOBUF_NONNULL ResourceShift::_internal_mutable_shift() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.start_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::DateDTO>(GetArena());
-    _impl_.start_ = reinterpret_cast<::DateDTO*>(p);
+  if (_impl_.shift_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::ShiftDTO>(GetArena());
+    _impl_.shift_ = reinterpret_cast<::ShiftDTO*>(p);
   }
-  return _impl_.start_;
+  return _impl_.shift_;
 }
-inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::mutable_start()
+inline ::ShiftDTO* PROTOBUF_NONNULL ResourceShift::mutable_shift()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000002u;
-  ::DateDTO* _msg = _internal_mutable_start();
-  // @@protoc_insertion_point(field_mutable:ResourceShift.start)
+  ::ShiftDTO* _msg = _internal_mutable_shift();
+  // @@protoc_insertion_point(field_mutable:ResourceShift.shift)
   return _msg;
 }
-inline void ResourceShift::set_allocated_start(::DateDTO* PROTOBUF_NULLABLE value) {
+inline void ResourceShift::set_allocated_shift(::ShiftDTO* PROTOBUF_NULLABLE value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.start_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.shift_);
   }
 
   if (value != nullptr) {
@@ -1515,125 +1486,8 @@ inline void ResourceShift::set_allocated_start(::DateDTO* PROTOBUF_NULLABLE valu
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
 
-  _impl_.start_ = reinterpret_cast<::DateDTO*>(value);
-  // @@protoc_insertion_point(field_set_allocated:ResourceShift.start)
-}
-
-// .DateDTO other = 3;
-inline bool ResourceShift::has_other() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.other_ != nullptr);
-  return value;
-}
-inline const ::DateDTO& ResourceShift::_internal_other() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::DateDTO* p = _impl_.other_;
-  return p != nullptr ? *p : reinterpret_cast<const ::DateDTO&>(::_DateDTO_default_instance_);
-}
-inline const ::DateDTO& ResourceShift::other() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:ResourceShift.other)
-  return _internal_other();
-}
-inline void ResourceShift::unsafe_arena_set_allocated_other(
-    ::DateDTO* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.other_);
-  }
-  _impl_.other_ = reinterpret_cast<::DateDTO*>(value);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000004u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000004u;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ResourceShift.other)
-}
-inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::release_other() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-
-  _impl_._has_bits_[0] &= ~0x00000004u;
-  ::DateDTO* released = _impl_.other_;
-  _impl_.other_ = nullptr;
-  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
-    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
-    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
-    if (GetArena() == nullptr) {
-      delete old;
-    }
-  } else {
-    if (GetArena() != nullptr) {
-      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
-    }
-  }
-  return released;
-}
-inline ::DateDTO* PROTOBUF_NULLABLE ResourceShift::unsafe_arena_release_other() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:ResourceShift.other)
-
-  _impl_._has_bits_[0] &= ~0x00000004u;
-  ::DateDTO* temp = _impl_.other_;
-  _impl_.other_ = nullptr;
-  return temp;
-}
-inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::_internal_mutable_other() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (_impl_.other_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::DateDTO>(GetArena());
-    _impl_.other_ = reinterpret_cast<::DateDTO*>(p);
-  }
-  return _impl_.other_;
-}
-inline ::DateDTO* PROTOBUF_NONNULL ResourceShift::mutable_other()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000004u;
-  ::DateDTO* _msg = _internal_mutable_other();
-  // @@protoc_insertion_point(field_mutable:ResourceShift.other)
-  return _msg;
-}
-inline void ResourceShift::set_allocated_other(::DateDTO* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::Arena* message_arena = GetArena();
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.other_);
-  }
-
-  if (value != nullptr) {
-    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
-    if (message_arena != submessage_arena) {
-      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
-    }
-    _impl_._has_bits_[0] |= 0x00000004u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000004u;
-  }
-
-  _impl_.other_ = reinterpret_cast<::DateDTO*>(value);
-  // @@protoc_insertion_point(field_set_allocated:ResourceShift.other)
-}
-
-// uint64 duration = 4;
-inline void ResourceShift::clear_duration() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.duration_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000008u;
-}
-inline ::uint64_t ResourceShift::duration() const {
-  // @@protoc_insertion_point(field_get:ResourceShift.duration)
-  return _internal_duration();
-}
-inline void ResourceShift::set_duration(::uint64_t value) {
-  _internal_set_duration(value);
-  _impl_._has_bits_[0] |= 0x00000008u;
-  // @@protoc_insertion_point(field_set:ResourceShift.duration)
-}
-inline ::uint64_t ResourceShift::_internal_duration() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.duration_;
-}
-inline void ResourceShift::_internal_set_duration(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.duration_ = value;
+  _impl_.shift_ = reinterpret_cast<::ShiftDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:ResourceShift.shift)
 }
 
 // -------------------------------------------------------------------

@@ -4,8 +4,11 @@
 #include <cstdint>
 #include <limits>
 #include <ctime>
+#include "utils.hpp"
 
 class DateDTO; // Forward declaration
+class ShiftDTO;
+class TimeDTO;
 
 namespace time_util {
     /* ******************************************************************** */
@@ -73,7 +76,18 @@ namespace time_util {
         Date(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t minute) :
         year(year), month(month), day(day), hour(hour), minute(minute) {}
         
+        /**
+         * @brief Date constructor which uses the DTO
+         *  @param date_ptr
+         */
         explicit Date(const DateDTO & date_ptr);
+        
+        /* ******************************************************************** */
+        /* ******************* Date Operation Overrides *********************** */
+        /* ******************************************************************** */
+        
+        Date & operator=(const Date & other);
+        
     };
 
     /* ******************************************************************** */
@@ -257,6 +271,17 @@ namespace time_util {
          */
         Shift(const Timestamp & start, uint64_t duration, uint32_t room_id);
         
+        /**
+         * @brief For schedule change
+         */
+        Shift(const Timestamp & old_ts, const Timestamp & new_ts, uint64_t dur, uint32_t room_id);
+        
+        /**
+         * @brief Constructs a shift from a dto
+         */
+        Shift(const ShiftDTO & shift_ptr);
+        
+        
         /* ******************************************************************** */
         /* ********************* Shift Operations ***************************** */
         /* ******************************************************************** */
@@ -288,6 +313,14 @@ namespace time_util {
     };
 
     inline static const Shift empty{};
+
+
+    /* ******************************************************************** */
+    /* ******************* Shift To DTO Conversions *********************** */
+    /* ******************************************************************** */
+
+    void shift_to_dto(const Shift & shift, ShiftDTO & dto);
+    void dto_to_shift(const ShiftDTO & dto, Shift & shift);
 
 }
 #endif

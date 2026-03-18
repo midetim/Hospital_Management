@@ -30,57 +30,6 @@ private:
 public:
     
     /* ******************************************************************** */
-    /* *********************** Static Functions *************************** */
-    /* ******************************************************************** */
-    
-    /**
-     * @brief Coverts a resourceType into a string
-     */
-    static std::string resourceTypeToString(const resources::ResourceType & r);
-    
-    /**
-     * @brief Converts a resource into a string
-     * @return Returns the resource's type as a string
-     * @warning Will return "Unknown" if type is not assigned
-     */
-    static std::string resourceTypeToString(const Resource & r);
-    
-    /**
-     * @brief Converts a machine's type into a string
-     * @return Returns the machines type as a string
-     * @warning Will return "Unknown" if type is not assigned
-     */
-    static std::string machineryToString(resources::MachineryType m);
-    
-    /**
-     * @brief Converts a consumable's type into a string
-     * @return Returns the consumable type as a string
-     * @warning Will return "Unknown" if type is not assigned
-     */
-    static std::string consumableToString(resources::ConsumableType c);
-    
-    /**
-     * @brief Converts a string into a machine type enumeration
-     * @param s The string to convert
-     * @warning Will return "Unknown" if type cannot be found
-     */
-    static resources::MachineryType stringToMachinery(std::string_view s);
-    
-    /**
-     * @brief Converts a string into a consumable type enumeration
-     * @param s The string to convert
-     * @warning Will return "Unknown" if type cannot be found
-     */
-    static resources::ConsumableType stringToConsumable(std::string_view s);
-    
-    /**
-     * @brief Converts a string into a resource type enumeration
-     * @param s The string to convert
-     * @warning Will return std::monostate{} if type cannot be found
-     */
-    static resources::ResourceType stringToResourceType(std::string_view s);
-    
-    /* ******************************************************************** */
     /* ************************* Constructors ***************************** */
     /* ******************************************************************** */
     

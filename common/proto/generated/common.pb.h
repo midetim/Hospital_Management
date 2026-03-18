@@ -68,6 +68,10 @@ class RoomRequest;
 struct RoomRequestDefaultTypeInternal;
 extern RoomRequestDefaultTypeInternal _RoomRequest_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull RoomRequest_class_data_;
+class ShiftDTO;
+struct ShiftDTODefaultTypeInternal;
+extern ShiftDTODefaultTypeInternal _ShiftDTO_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ShiftDTO_class_data_;
 class Success;
 struct SuccessDefaultTypeInternal;
 extern SuccessDefaultTypeInternal _Success_default_instance_;
@@ -536,7 +540,7 @@ class RoomRequest final : public ::google::protobuf::Message
     return *reinterpret_cast<const RoomRequest*>(
         &_RoomRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 5;
+  static constexpr int kIndexInFileMessages = 6;
   friend void swap(RoomRequest& a, RoomRequest& b) { a.Swap(&b); }
   inline void Swap(RoomRequest* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1323,6 +1327,243 @@ class DateDTO final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull DateDTO_class_data_;
+// -------------------------------------------------------------------
+
+class ShiftDTO final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:ShiftDTO) */ {
+ public:
+  inline ShiftDTO() : ShiftDTO(nullptr) {}
+  ~ShiftDTO() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(ShiftDTO* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ShiftDTO));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR ShiftDTO(::google::protobuf::internal::ConstantInitialized);
+
+  inline ShiftDTO(const ShiftDTO& from) : ShiftDTO(nullptr, from) {}
+  inline ShiftDTO(ShiftDTO&& from) noexcept
+      : ShiftDTO(nullptr, ::std::move(from)) {}
+  inline ShiftDTO& operator=(const ShiftDTO& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ShiftDTO& operator=(ShiftDTO&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ShiftDTO& default_instance() {
+    return *reinterpret_cast<const ShiftDTO*>(
+        &_ShiftDTO_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 5;
+  friend void swap(ShiftDTO& a, ShiftDTO& b) { a.Swap(&b); }
+  inline void Swap(ShiftDTO* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ShiftDTO* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ShiftDTO* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ShiftDTO>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const ShiftDTO& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const ShiftDTO& from) { ShiftDTO::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(ShiftDTO* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "ShiftDTO"; }
+
+ protected:
+  explicit ShiftDTO(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  ShiftDTO(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ShiftDTO& from);
+  ShiftDTO(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ShiftDTO&& from) noexcept
+      : ShiftDTO(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kStartFieldNumber = 1,
+    kOtherFieldNumber = 2,
+    kDurationFieldNumber = 3,
+    kRoomIdFieldNumber = 4,
+  };
+  // .DateDTO start = 1;
+  bool has_start() const;
+  void clear_start() ;
+  const ::DateDTO& start() const;
+  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_start();
+  ::DateDTO* PROTOBUF_NONNULL mutable_start();
+  void set_allocated_start(::DateDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_start(::DateDTO* PROTOBUF_NULLABLE value);
+  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_start();
+
+  private:
+  const ::DateDTO& _internal_start() const;
+  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_start();
+
+  public:
+  // .DateDTO other = 2;
+  bool has_other() const;
+  void clear_other() ;
+  const ::DateDTO& other() const;
+  [[nodiscard]] ::DateDTO* PROTOBUF_NULLABLE release_other();
+  ::DateDTO* PROTOBUF_NONNULL mutable_other();
+  void set_allocated_other(::DateDTO* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_other(::DateDTO* PROTOBUF_NULLABLE value);
+  ::DateDTO* PROTOBUF_NULLABLE unsafe_arena_release_other();
+
+  private:
+  const ::DateDTO& _internal_other() const;
+  ::DateDTO* PROTOBUF_NONNULL _internal_mutable_other();
+
+  public:
+  // uint64 duration = 3;
+  void clear_duration() ;
+  ::uint64_t duration() const;
+  void set_duration(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_duration() const;
+  void _internal_set_duration(::uint64_t value);
+
+  public:
+  // uint32 room_id = 4;
+  void clear_room_id() ;
+  ::uint32_t room_id() const;
+  void set_room_id(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_room_id() const;
+  void _internal_set_room_id(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:ShiftDTO)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 4,
+                                   2, 0,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const ShiftDTO& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::DateDTO* PROTOBUF_NULLABLE start_;
+    ::DateDTO* PROTOBUF_NULLABLE other_;
+    ::uint64_t duration_;
+    ::uint32_t room_id_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Common_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull ShiftDTO_class_data_;
 
 // ===================================================================
 
@@ -1815,6 +2056,254 @@ inline void DateDTO::set_allocated_time(::TimeDTO* PROTOBUF_NULLABLE value) {
 
   _impl_.time_ = reinterpret_cast<::TimeDTO*>(value);
   // @@protoc_insertion_point(field_set_allocated:DateDTO.time)
+}
+
+// -------------------------------------------------------------------
+
+// ShiftDTO
+
+// .DateDTO start = 1;
+inline bool ShiftDTO::has_start() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.start_ != nullptr);
+  return value;
+}
+inline void ShiftDTO::clear_start() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.start_ != nullptr) _impl_.start_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::DateDTO& ShiftDTO::_internal_start() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::DateDTO* p = _impl_.start_;
+  return p != nullptr ? *p : reinterpret_cast<const ::DateDTO&>(::_DateDTO_default_instance_);
+}
+inline const ::DateDTO& ShiftDTO::start() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ShiftDTO.start)
+  return _internal_start();
+}
+inline void ShiftDTO::unsafe_arena_set_allocated_start(
+    ::DateDTO* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.start_);
+  }
+  _impl_.start_ = reinterpret_cast<::DateDTO*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ShiftDTO.start)
+}
+inline ::DateDTO* PROTOBUF_NULLABLE ShiftDTO::release_start() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::DateDTO* released = _impl_.start_;
+  _impl_.start_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::DateDTO* PROTOBUF_NULLABLE ShiftDTO::unsafe_arena_release_start() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:ShiftDTO.start)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::DateDTO* temp = _impl_.start_;
+  _impl_.start_ = nullptr;
+  return temp;
+}
+inline ::DateDTO* PROTOBUF_NONNULL ShiftDTO::_internal_mutable_start() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.start_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::DateDTO>(GetArena());
+    _impl_.start_ = reinterpret_cast<::DateDTO*>(p);
+  }
+  return _impl_.start_;
+}
+inline ::DateDTO* PROTOBUF_NONNULL ShiftDTO::mutable_start()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  ::DateDTO* _msg = _internal_mutable_start();
+  // @@protoc_insertion_point(field_mutable:ShiftDTO.start)
+  return _msg;
+}
+inline void ShiftDTO::set_allocated_start(::DateDTO* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.start_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.start_ = reinterpret_cast<::DateDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:ShiftDTO.start)
+}
+
+// .DateDTO other = 2;
+inline bool ShiftDTO::has_other() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.other_ != nullptr);
+  return value;
+}
+inline void ShiftDTO::clear_other() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.other_ != nullptr) _impl_.other_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000002u;
+}
+inline const ::DateDTO& ShiftDTO::_internal_other() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::DateDTO* p = _impl_.other_;
+  return p != nullptr ? *p : reinterpret_cast<const ::DateDTO&>(::_DateDTO_default_instance_);
+}
+inline const ::DateDTO& ShiftDTO::other() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ShiftDTO.other)
+  return _internal_other();
+}
+inline void ShiftDTO::unsafe_arena_set_allocated_other(
+    ::DateDTO* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.other_);
+  }
+  _impl_.other_ = reinterpret_cast<::DateDTO*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ShiftDTO.other)
+}
+inline ::DateDTO* PROTOBUF_NULLABLE ShiftDTO::release_other() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::DateDTO* released = _impl_.other_;
+  _impl_.other_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::DateDTO* PROTOBUF_NULLABLE ShiftDTO::unsafe_arena_release_other() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:ShiftDTO.other)
+
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::DateDTO* temp = _impl_.other_;
+  _impl_.other_ = nullptr;
+  return temp;
+}
+inline ::DateDTO* PROTOBUF_NONNULL ShiftDTO::_internal_mutable_other() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.other_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::DateDTO>(GetArena());
+    _impl_.other_ = reinterpret_cast<::DateDTO*>(p);
+  }
+  return _impl_.other_;
+}
+inline ::DateDTO* PROTOBUF_NONNULL ShiftDTO::mutable_other()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000002u;
+  ::DateDTO* _msg = _internal_mutable_other();
+  // @@protoc_insertion_point(field_mutable:ShiftDTO.other)
+  return _msg;
+}
+inline void ShiftDTO::set_allocated_other(::DateDTO* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.other_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+
+  _impl_.other_ = reinterpret_cast<::DateDTO*>(value);
+  // @@protoc_insertion_point(field_set_allocated:ShiftDTO.other)
+}
+
+// uint64 duration = 3;
+inline void ShiftDTO::clear_duration() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.duration_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000004u;
+}
+inline ::uint64_t ShiftDTO::duration() const {
+  // @@protoc_insertion_point(field_get:ShiftDTO.duration)
+  return _internal_duration();
+}
+inline void ShiftDTO::set_duration(::uint64_t value) {
+  _internal_set_duration(value);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  // @@protoc_insertion_point(field_set:ShiftDTO.duration)
+}
+inline ::uint64_t ShiftDTO::_internal_duration() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.duration_;
+}
+inline void ShiftDTO::_internal_set_duration(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.duration_ = value;
+}
+
+// uint32 room_id = 4;
+inline void ShiftDTO::clear_room_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.room_id_ = 0u;
+  _impl_._has_bits_[0] &= ~0x00000008u;
+}
+inline ::uint32_t ShiftDTO::room_id() const {
+  // @@protoc_insertion_point(field_get:ShiftDTO.room_id)
+  return _internal_room_id();
+}
+inline void ShiftDTO::set_room_id(::uint32_t value) {
+  _internal_set_room_id(value);
+  _impl_._has_bits_[0] |= 0x00000008u;
+  // @@protoc_insertion_point(field_set:ShiftDTO.room_id)
+}
+inline ::uint32_t ShiftDTO::_internal_room_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.room_id_;
+}
+inline void ShiftDTO::_internal_set_room_id(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.room_id_ = value;
 }
 
 // -------------------------------------------------------------------

@@ -218,10 +218,8 @@ public:
     grpc::Status GetResourceInformation(grpc::ServerContext * context, const ResourceDTO * resource_request, ResourceDTO * resource_response) override;
     
     /**
-     * @brief Updates the resource to match the incoming resource DTO
+     * @brief Get a list of resources inside of a room
      */
-    grpc::Status UpdateResourceInformation(grpc::ServerContext * context, const ResourceDTO * update_request, Success * success) override;
-    
     grpc::Status GetResourcesInRoom(grpc::ServerContext * context, const RoomRequest * room, ResourceList * list) override;
     
     /* ******************************************************************** */

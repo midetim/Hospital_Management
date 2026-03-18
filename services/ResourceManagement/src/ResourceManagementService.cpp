@@ -40,7 +40,7 @@ Resource * ResourceManagementService::findResource(uint64_t & resource_id, std::
         return it->second.get(); // Return a raw pointer to the resource
         
     } else if (!resource_type.empty()) { // If resource type is provided
-        resources::ResourceType r = Resource::stringToResourceType(resource_type);
+        resources::ResourceType r = resources::stringToResourceType(resource_type);
         for (auto & [rid, res] : total_resources) { // Search for resource by type
             if (res->getResourceType() == r) {
                 resource_id = rid; // Sets the resource id to the resource's id
@@ -121,15 +121,9 @@ ReturnCode ResourceManagementService::convertToSchedule(const std::set<time_util
         resource_shift->mutable_resource()->CopyFrom(* resource);
         
         // Get the dates
-        DateDTO * start_date = resource_shift->mutable_start();
-        DateDTO * end_date = resource_shift->mutable_other();
+        ShiftDTO * shift_dto = resource_shift->mutable_shift();
         
-        // Fill them out
-        timestamp_to_date(shift.shift_start).fillDTO(start_date);
-        timestamp_to_date(shift.shift_end).fillDTO(end_date);
-        
-        // Get the shift duration
-        resource_shift->set_duration(shift.duration);
+        time_util::shift_to_dto(shift, * shift_dto);
     }
     return ReturnCode::SUCCESS;
 }
@@ -182,7 +176,7 @@ grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * c
  
     // Extract information from request
     uint64_t resource_id = resource->resource_id();
-    resources::ResourceType resource_type = Resource::stringToResourceType(resource->resource_type());
+    resources::ResourceType resource_type = resources::stringToResourceType(resource->resource_type());
     uint32_t stock_amount = resource->resource_stock();
     
     std::unique_ptr<Resource> new_resource; // The new resource to add to the system
@@ -278,7 +272,7 @@ grpc::Status ResourceManagementService::SendForMaintenance(grpc::ServerContext *
     time_util::Timestamp maintenance_end   = maintenance_start + time_util::times::day;
     
     // Make the maintenance shift
-    time_util::Shift maintenance_shift(maintenance_start, maintenance_end, rooms::idle);
+    time_util::Shift maintenance_shift(maintenance_start, maintenance_end, rooms::maintenance);
     
     // Add the shift to the resources schedule
     bool successful_addition = it->second->access_schedule()->addToSchedule(maintenance_shift);
@@ -294,7 +288,7 @@ grpc::Status ResourceManagementService::AddToSchedule(grpc::ServerContext * cont
     readMetadata(* context); // Read request metadata
     
     uint64_t resource_id = shift->resource().resource_id();
-    uint32_t room_id     = shift->resource().room_id();
+    uint32_t room_id     = shift->shift().room_id();
     
     // Find the resource pointer
     auto it = total_resources.find(resource_id);
@@ -304,9 +298,10 @@ grpc::Status ResourceManagementService::AddToSchedule(grpc::ServerContext * cont
     }
     
     // Get pointers to the dates
-    const DateDTO & start_date_ptr = shift->start();
-    const DateDTO & end_date_ptr   = shift->other();
-    uint64_t shift_duration = shift->duration();
+    
+    const DateDTO & start_date_ptr = shift->shift().start();
+    const DateDTO & end_date_ptr   = shift->shift().other();
+    uint64_t shift_duration = shift->shift().duration();
     
     // Get the dates as timestamps
     time_util::Timestamp start_ts = date_to_timestamp(time_util::Date(start_date_ptr));
@@ -350,7 +345,7 @@ grpc::Status ResourceManagementService::RemoveFromSchedule(grpc::ServerContext *
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource");
     }
     
-    const DateDTO & start_date = shift->start(); // Only the start time is required
+    const DateDTO & start_date = shift->shift().start(); // Only the start time is required
     
     time_util::Timestamp shift_start_time = date_to_timestamp(time_util::Date(start_date)); // Convert the date to a timestamp
     
@@ -396,7 +391,7 @@ grpc::Status ResourceManagementService::ChangeSchedule(grpc::ServerContext * con
     
     // Extract request information
     uint64_t resource_id = shift->resource().resource_id();
-    uint32_t room_id     = shift->resource().room_id();
+    uint32_t room_id     = shift->shift().room_id();
     
     if (room_id == rooms::idle) {
         success->set_successful(false);
@@ -411,9 +406,9 @@ grpc::Status ResourceManagementService::ChangeSchedule(grpc::ServerContext * con
     }
     
     // Extract shift information
-    const DateDTO & this_shift_date = shift->start(); // 'This' is the shift to change
-    const DateDTO & new_shift_date  = shift->other(); // 'New' is the new shift 'This' is changed to
-    uint64_t new_shift_duration     = shift->duration();
+    const DateDTO & this_shift_date = shift->shift().other(); // 'This' is the shift to change
+    const DateDTO & new_shift_date  = shift->shift().start(); // 'New' is the new shift 'This' is changed to
+    uint64_t new_shift_duration     = shift->shift().duration();
     
     // Convert dates to timestamps
     time_util::Timestamp this_shift_ts = date_to_timestamp(time_util::Date(this_shift_date));
@@ -501,8 +496,8 @@ grpc::Status ResourceManagementService::SeeScheduleRange(grpc::ServerContext * c
     
     // Extract information
     uint64_t resource_id = range->resource().resource_id();
-    const DateDTO & start_date = range->start();
-    const DateDTO & end_date   = range->other();
+    const DateDTO & start_date = range->shift().start();
+    const DateDTO & end_date   = range->shift().other();
     
     // Find the resource in the map
     auto it = total_resources.find(resource_id);
@@ -526,7 +521,7 @@ grpc::Status ResourceManagementService::AddStock(grpc::ServerContext * context, 
     readMetadata(* context); // Read request metadata
     
     uint64_t stock_id = stock->resource_id();
-    resources::ResourceType stock_type = Resource::stringToResourceType(stock->resource_type());
+    resources::ResourceType stock_type = resources::stringToResourceType(stock->resource_type());
     uint32_t stock_amount = stock->stock_amount();
     
     // If the resource type is not a consumable
@@ -553,7 +548,7 @@ grpc::Status ResourceManagementService::RemoveStock(grpc::ServerContext * contex
     
     // Extract relevant information
     uint64_t stock_id = stock->resource_id();
-    resources::ResourceType stock_type = Resource::stringToResourceType(stock->resource_type());
+    resources::ResourceType stock_type = resources::stringToResourceType(stock->resource_type());
     uint32_t stock_amount = stock->stock_amount();
     
     // If the resource type is not a consumable
@@ -594,7 +589,7 @@ grpc::Status ResourceManagementService::UseStock(grpc::ServerContext * context, 
     
     // Extract relevant information
     uint64_t stock_id = stock->resource_id();
-    resources::ResourceType stock_type = Resource::stringToResourceType(stock->resource_type());
+    resources::ResourceType stock_type = resources::stringToResourceType(stock->resource_type());
     uint32_t stock_amount = stock->stock_amount();
     
     // If the resource type is not a consumable
@@ -635,8 +630,7 @@ grpc::Status ResourceManagementService::EmptyStock(grpc::ServerContext * context
     
     // Extract relevant information
     uint64_t stock_id = stock->resource_id();
-    resources::ResourceType stock_type = Resource::stringToResourceType(stock->resource_type());
-    uint32_t stock_amount = stock->stock_amount();
+    resources::ResourceType stock_type = resources::stringToResourceType(stock->resource_type());
     
     // If the resource type is not a consumable
     if (!resources::isConsumable(stock_type)) {
@@ -674,7 +668,6 @@ grpc::Status ResourceManagementService::GetResourceInformation(grpc::ServerConte
     // Extract relevant information
     uint64_t resource_id = resource_request->resource_id();
     std::string_view resource_type = resource_request->resource_type();
-    resources::ResourceType type = Resource::stringToResourceType(resource_request->resource_type());
     
     const Resource * resource_ptr; // Read-only resource ptr
     
@@ -692,7 +685,7 @@ grpc::Status ResourceManagementService::GetResourceInformation(grpc::ServerConte
     }
     
     // Get the resources type
-    resource_type = Resource::resourceTypeToString(resource_ptr->getResourceType());
+    resource_type = resources::resourceTypeToString(resource_ptr->getResourceType());
     
     // Fill out the response
     resource_response->set_resource_id(resource_ptr->getResourceId());
@@ -707,34 +700,6 @@ grpc::Status ResourceManagementService::GetResourceInformation(grpc::ServerConte
             resource_response->set_resource_stock(it->second);
         }
     }
-    return grpc::Status::OK;
-}
-
-grpc::Status ResourceManagementService::UpdateResourceInformation(grpc::ServerContext * context, const ResourceDTO * update_request, Success * success) {
-    
-    readMetadata(* context); // Read request metadata
-    
-    uint64_t resource_id = update_request->resource_id(); // Get resource id
-    
-    auto it = total_resources.find(resource_id);
-    if (it == total_resources.end()) {
-        success->set_successful(false);
-        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource to update");
-    }
-    
-    it->second->setRoomId(update_request->room_id());
-    it->second->setResourceType(Resource::stringToResourceType(update_request->resource_type()));
-    
-    if (resources::isConsumable(it->second->getResourceType())) { // If the resource is a consumabe
-        auto stock_it = resource_stock.find(resource_id); // Find the resource in the stock map
-        if (stock_it == resource_stock.end()) { // If the stock can not be found
-            resource_stock.emplace(resource_id, update_request->resource_stock()); // Create the stock
-        } else { // If the stock can be found
-            stock_it->second = update_request->resource_stock(); // Set the stock amount
-        }
-    }
-    
-    success->set_successful(true);
     return grpc::Status::OK;
 }
 
@@ -761,7 +726,7 @@ grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext *
             // Add resource information
             new_resource->set_room_id(room_id);
             new_resource->set_resource_id(resource_id);
-            new_resource->set_resource_type(Resource::resourceTypeToString(resource_ptr->getResourceType()));
+            new_resource->set_resource_type(resources::resourceTypeToString(resource_ptr->getResourceType()));
         }
     } else if (room_id == rooms::maintenance) {
         for (const auto & [resource_id, resource_ptr] : total_resources) {
@@ -774,7 +739,7 @@ grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext *
             // Add resource information
             new_resource->set_room_id(room_id);
             new_resource->set_resource_id(resource_id);
-            new_resource->set_resource_type(Resource::resourceTypeToString(resource_ptr->getResourceType()));
+            new_resource->set_resource_type(resources::resourceTypeToString(resource_ptr->getResourceType()));
         }
     } else {
         return grpc::Status(grpc::StatusCode::UNKNOWN, "An unknown error occurred");

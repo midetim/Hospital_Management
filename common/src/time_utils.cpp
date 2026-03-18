@@ -63,6 +63,19 @@ Date::Date(const DateDTO & date_ptr) { // No loner needs a nullptr check
 }
 
 /* ******************************************************************** */
+/* ******************* Date Operation Overrides *********************** */
+/* ******************************************************************** */
+
+Date & Date::operator=(const Date & other) {
+    this->year   = other.year;
+    this->month  = other.month;
+    this->day    = other.day;
+    this->hour   = other.hour;
+    this->minute = other.minute;
+    return * this;
+}
+
+/* ******************************************************************** */
 /* ********************* Timestamp Functions ************************** */
 /* ******************************************************************** */
 
@@ -162,6 +175,16 @@ Shift::Shift(const Timestamp & start, uint64_t duration, uint32_t room_id)
     this->duration = (shift_end - shift_start).time; // Get the exact duration
 }
 
+Shift::Shift(const Timestamp & old_ts, const Timestamp & new_ts, uint64_t dur, uint32_t room_id)
+: Shift(new_ts, dur, room_id) {
+    shift_end = old_ts;
+}
+
+
+Shift::Shift(const ShiftDTO & shift_ptr) {
+    dto_to_shift(shift_ptr, * this);
+}
+
 /* ******************************************************************** */
 /* ********************* Shift Operations ***************************** */
 /* ******************************************************************** */
@@ -212,4 +235,27 @@ void Shift::move_shift(Shift & shift, const Timestamp & move_amount, bool push_b
     }
     Timestamp::to_next_interval(shift.shift_start);
     Timestamp::to_next_interval(shift.shift_end);
+}
+
+/* ******************************************************************** */
+/* ******************* Shift To DTO Conversions *********************** */
+/* ******************************************************************** */
+
+void shift_to_dto(const Shift & shift, ShiftDTO & dto) {
+    DateDTO * start_date = dto.mutable_start();
+    DateDTO * end_date   = dto.mutable_other();
+    
+    timestamp_to_date(shift.shift_start).fillDTO(start_date);
+    timestamp_to_date(shift.shift_end).fillDTO(end_date);
+    
+    dto.set_duration(shift.duration);
+    dto.set_room_id(shift.room_id);
+}
+
+void dto_to_shift(const ShiftDTO & dto, Shift & shift) {
+    shift.shift_start = date_to_timestamp(Date(dto.start()));
+    shift.shift_end   = date_to_timestamp(Date(dto.other()));
+    
+    shift.duration = dto.duration();
+    shift.room_id  = dto.room_id();
 }

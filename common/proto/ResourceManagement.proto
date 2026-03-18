@@ -29,7 +29,6 @@ service ResourceManagement {
     
     // Resource Information
     rpc GetResourceInformation(ResourceDTO)     returns (ResourceDTO);
-    rpc UpdateResourceInformation(ResourceDTO)  returns (Success);
     
     /* This call is not accessible to the front end */
     rpc GetResourcesInRoom(RoomRequest)         returns (ResourceList);
@@ -44,9 +43,7 @@ message ResourceDTO {
 
 message ResourceShift {
     ResourceDTO resource = 1;
-    DateDTO     start    = 2;
-    DateDTO     other    = 3;
-    uint64      duration = 4;
+    ShiftDTO shift = 2;
 }
 
 message StockUpdate {

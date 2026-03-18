@@ -265,9 +265,109 @@ namespace resources {
     // Resource Type must be either Machinery or Consumable
     using ResourceType = std::variant<std::monostate, MachineryType, ConsumableType>;
 
-    inline bool isMachinery (const ResourceType & t) { return std::holds_alternative<MachineryType>(t); }
-    inline bool isConsumable(const ResourceType & t) { return std::holds_alternative<ConsumableType>(t); }
+    inline constexpr bool isMachinery (const ResourceType & t) { return std::holds_alternative<MachineryType>(t); }
+    inline constexpr bool isConsumable(const ResourceType & t) { return std::holds_alternative<ConsumableType>(t); }
     inline constexpr std::string_view unknown = "Unknown";
+
+    inline std::string machineryToString(MachineryType m) {
+        switch (m) {
+            case MachineryType::Unknown:             return "Unknown";
+            case MachineryType::XRay:                return "XRay";
+            case MachineryType::Ultrasound:          return "Ultrasound";
+            case MachineryType::MRI:                 return "MRI";
+            case MachineryType::CTScanner:           return "CTScanner";
+            case MachineryType::Ventilator:          return "Ventilator";
+            case MachineryType::ECGMachine:          return "ECGMachine";
+            case MachineryType::Defibrillator:       return "Defibrillator";
+            case MachineryType::AnesthesiaMachine:   return "AnesthesiaMachine";
+            case MachineryType::DialysisMachine:     return "DialysisMachine";
+            case MachineryType::InfusionPump:        return "InfusionPump";
+            case MachineryType::SurgicalRobot:       return "SurgicalRobot";
+            case MachineryType::PatientMonitor:      return "PatientMonitor";
+            case MachineryType::OxygenGenerator:     return "OxygenGenerator";
+            default:                                 return std::string{unknown};
+        }
+    }
+
+    inline std::string consumableToString(resources::ConsumableType c) {
+        switch (c) {
+            case ConsumableType::Unknown:            return "Unknown";
+            case ConsumableType::PPE:                return "PPE";
+            case ConsumableType::Medication:         return "Medication";
+            case ConsumableType::Syringes:           return "Syringes";
+            case ConsumableType::IVFluids:           return "IVFluids";
+            case ConsumableType::Bandages:           return "Bandages";
+            case ConsumableType::Gloves:             return "Gloves";
+            case ConsumableType::Masks:              return "Masks";
+            case ConsumableType::TestKits:           return "TestKits";
+            case ConsumableType::BloodBags:          return "BloodBags";
+            case ConsumableType::Saline:             return "Saline";
+            case ConsumableType::Disinfectant:       return "Disinfectant";
+            case ConsumableType::Sutures:            return "Sutures";
+            default:                                 return std::string{unknown};
+        }
+    }
+
+    inline std::string resourceTypeToString(const ResourceType & r) {
+        if (isMachinery(r)) {
+            return machineryToString(std::get<resources::MachineryType>(r));
+        } else if (isConsumable(r)) {
+            return consumableToString(std::get<resources::ConsumableType>(r));
+        } else {
+             return std::string(unknown);
+        }
+    }
+
+    inline MachineryType stringToMachinery(std::string_view s) {
+        if      (s == unknown)                       return MachineryType::Unknown;
+        else if (s == "XRay")                        return MachineryType::XRay;
+        else if (s == "Ultrasound")                  return MachineryType::Ultrasound;
+        else if (s == "MRI")                         return MachineryType::MRI;
+        else if (s == "CTScanner")                   return MachineryType::CTScanner;
+        else if (s == "Ventilator")                  return MachineryType::Ventilator;
+        else if (s == "ECGMachine")                  return MachineryType::ECGMachine;
+        else if (s == "Defibrillator")               return MachineryType::Defibrillator;
+        else if (s == "AnesthesiaMachine")           return MachineryType::AnesthesiaMachine;
+        else if (s == "DialysisMachine")             return MachineryType::DialysisMachine;
+        else if (s == "InfusionPump")                return MachineryType::InfusionPump;
+        else if (s == "SurgicalRobot")               return MachineryType::SurgicalRobot;
+        else if (s == "PatientMonitor")              return MachineryType::PatientMonitor;
+        else if (s == "OxygenGenerator")             return MachineryType::OxygenGenerator;
+        else                                         return MachineryType::Unknown;
+    }
+
+    inline ConsumableType stringToConsumable(std::string_view s) {
+        if      (s == unknown)                       return ConsumableType::Unknown;
+        else if (s == "PPE")                         return ConsumableType::PPE;
+        else if (s == "Medication")                  return ConsumableType::Medication;
+        else if (s == "Syringes")                    return ConsumableType::Syringes;
+        else if (s == "IVFluids")                    return ConsumableType::IVFluids;
+        else if (s == "Bandages")                    return ConsumableType::Bandages;
+        else if (s == "Gloves")                      return ConsumableType::Gloves;
+        else if (s == "Masks")                       return ConsumableType::Masks;
+        else if (s == "TestKits")                    return ConsumableType::TestKits;
+        else if (s == "BloodBags")                   return ConsumableType::BloodBags;
+        else if (s == "Saline")                      return ConsumableType::Saline;
+        else if (s == "Disinfectant")                return ConsumableType::Disinfectant;
+        else if (s == "Sutures")                     return ConsumableType::Sutures;
+        else                                         return ConsumableType::PPE;
+    }
+
+    inline ResourceType stringToResourceType(std::string_view s) {
+        MachineryType m = stringToMachinery(s);
+        if (m != MachineryType::Unknown) {
+            return m;
+        }
+        
+        ConsumableType c = stringToConsumable(s);
+        if (c != ConsumableType::Unknown) {
+            return c;
+        }
+        
+        return std::monostate{};
+    }
+    
+
 }
 
 /**

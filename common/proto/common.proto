@@ -32,6 +32,13 @@ message DateDTO {
     TimeDTO time  = 4;
 }
 
+message ShiftDTO {
+    DateDTO start    = 1;
+    DateDTO other    = 2;
+    uint64  duration = 3;
+    uint32  room_id  = 4;
+}
+
 message RoomRequest {
     uint32 room_id = 1;
 }
