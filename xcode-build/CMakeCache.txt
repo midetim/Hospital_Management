@@ -20,6 +20,9 @@ CMAKE_ADDR2LINE:FILEPATH=CMAKE_ADDR2LINE-NOTFOUND
 //Path to a program.
 CMAKE_AR:FILEPATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar
 
+//No help, variable specified on the command line.
+CMAKE_BUILD_TYPE:UNINITIALIZED=Release
+
 //Semicolon separated list of supported configuration types, only
 // supports Debug, Release, MinSizeRel, and RelWithDebInfo, anything
 // else will be ignored.
@@ -35,7 +38,7 @@ CMAKE_CXX_FLAGS_DEBUG:STRING=-g
 CMAKE_CXX_FLAGS_MINSIZEREL:STRING=-Os -DNDEBUG
 
 //Flags used by the CXX compiler during RELEASE builds.
-CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
+CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -ffunction-sections -fdata-sections -flto
 
 //Flags used by the CXX compiler during RELWITHDEBINFO builds.
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
@@ -53,7 +56,7 @@ CMAKE_EXE_LINKER_FLAGS_DEBUG:STRING=
 CMAKE_EXE_LINKER_FLAGS_MINSIZEREL:STRING=
 
 //Flags used by the linker during RELEASE builds.
-CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=
+CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=-Wl,-dead_strip
 
 //Flags used by the linker during RELWITHDEBINFO builds.
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
@@ -356,7 +359,7 @@ FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //Stored Xcode object GUID
 FrontEnd_CLI_GUID_CMAKE:INTERNAL=BB7006BD5A9897A5A39DFF39
 //Stored Xcode object GUID
-PROJECT_Hospital_Management_GUID_CMAKE:INTERNAL=C11A842D9970488C97817740
+PROJECT_Hospital_Management_GUID_CMAKE:INTERNAL=2A57FB3D7BD14365B5EB8136
 //Stored Xcode object GUID
 PatientManagement_GUID_CMAKE:INTERNAL=229DAD7AE4693E82E583E101
 //Stored Xcode object GUID

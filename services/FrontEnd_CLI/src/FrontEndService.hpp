@@ -1,11 +1,11 @@
 #ifndef FRONTENDSERVICE_HPP
 #define FRONTENDSERVICE_HPP
 
-
 #include "Service.hpp"
-#include "RoomManagementClient.hpp"
+
 #include "PatientManagementClient.hpp"
 #include "ResourceManagementClient.hpp"
+#include "RoomManagementClient.hpp"
 #include "StaffManagementClient.hpp"
 
 class FrontEndService final : public IService {

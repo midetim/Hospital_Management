@@ -9,10 +9,12 @@ all: ref
 
 # Opens the project
 xcode:
-	cmake -S . -B $(BUILD_DIR) -G $(CMAKE_GEN)
-	cmake --build $(BUILD_DIR)
-	
-	
+	cmake -S . -B $(BUILD_DIR) -G $(CMAKE_GEN) \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_CXX_FLAGS_RELEASE="-O3 -ffunction-sections -fdata-sections -flto" \
+		-DCMAKE_EXE_LINKER_FLAGS_RELEASE="-Wl,-dead_strip"
+	cmake --build $(BUILD_DIR) --config Release
+
 # Refresh the project: delete build dir, regenerate, and build
 ref:
 	rm -rf $(BUILD_DIR)
@@ -41,4 +43,4 @@ endif
 	git commit -m "$(MSG)"
 	git push -u origin main
 
-.PHONY: all xcode ref open clean git
+.PHONY: all xcode ref open clean git buf

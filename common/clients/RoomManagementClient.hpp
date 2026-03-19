@@ -2,11 +2,9 @@
 #define ROOMMANAGEMENTCLIENT_HPP
 
 #include "Client.hpp"
+
 #include "RoomManagement.grpc.pb.h"
 #include "Common.grpc.pb.h"
-
-#include <ostream>
-
 
 /* ******************************************************************** */
 /* ********************** Staff Management Client ********************* */

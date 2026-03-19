@@ -1,17 +1,14 @@
 #ifndef STAFFMANAGEMENTSERVICE_HPP
 #define STAFFMANAGEMENTSERVICE_HPP
 
-#include "Staff.hpp"
 #include "RoomManagementClient.hpp"
 #include "Service.hpp"
-
-#include <unordered_map>
-
-#include "StaffManagement.grpc.pb.h"
-#include "StaffManagement.pb.h"
+#include "Staff.hpp"
 
 #include "Common.grpc.pb.h"
-#include "Common.pb.h"
+#include "StaffManagement.grpc.pb.h"
+
+#include <unordered_map>
 
 /* ******************************************************************** */
 /* ****************** Patient Management Service ********************** */

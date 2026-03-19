@@ -3,8 +3,10 @@
 
 #include "Client.hpp"
 #include "time_utils.hpp"
-#include "ResourceManagement.grpc.pb.h"
+
 #include "Common.grpc.pb.h"
+#include "ResourceManagement.grpc.pb.h"
+
 #include <set>
 
 /* ******************************************************************** */

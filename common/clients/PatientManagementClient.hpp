@@ -2,8 +2,11 @@
 #define PATIENTMANAGEMENTCLIENT_HPP
 
 #include "Client.hpp"
-#include "PatientManagement.grpc.pb.h"
+
 #include "Common.grpc.pb.h"
+#include "PatientManagement.grpc.pb.h"
+
+#include <set>
 
 /* ******************************************************************** */
 /* ******************** Patient Management Client ********************* */

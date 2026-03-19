@@ -2,8 +2,9 @@
 #define SERVICE_HPP
 
 #include "utils.hpp"
-#include <grpcpp/impl/service_type.h>
-#include <csignal>
+
+// Forward declare grpc::Service
+namespace grpc { class Service; }
 
 class IService {
 protected:
@@ -70,7 +71,7 @@ public:
      * @param service The service to run
      * @warning **NO DATABASES EXISTS YET**
      */
-    static void Run(std::string_view address, IService & service);
+    static void Run(std::string_view address, std::string_view service_name, grpc::Service & service1, grpc::Service & service2);
     
 };
 

@@ -1,6 +1,6 @@
 #include "Schedule.hpp"
+
 #include <iostream>
-#include <ctime>
 
 using namespace time_util;
 

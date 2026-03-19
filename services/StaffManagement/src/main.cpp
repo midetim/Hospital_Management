@@ -1,15 +1,15 @@
 // Staff management service
-#include <iostream>
-#include <memory>
-#include <string>
-
-#include <grpcpp/grpcpp.h>
-
-#include "utils.hpp"
 #include "StaffManagementService.hpp"
 
 int main() {
-    StaffManagementService service;
-    ServiceRunner::Run(service::staff_host, service);
+    StaffManagementService staff_service;
+    
+    staff_service.init();
+    staff_service.loadFromDB();
+    
+    StaffManagement::Service & staff_base = staff_service;
+    Common::Service & common_base = staff_service;
+    
+    ServiceRunner::Run(service::staff_host, service::staff, staff_base, common_base);
     return (int) core::ReturnCode::SUCCESS;
 }

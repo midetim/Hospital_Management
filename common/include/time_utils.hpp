@@ -1,10 +1,9 @@
 #ifndef TIME_UTILS_HPP
 #define TIME_UTILS_HPP
 
-#include <cstdint>
-#include <limits>
-#include <ctime>
 #include "utils.hpp"
+
+#include <limits>
 
 class DateDTO; // Forward declaration
 class ShiftDTO;

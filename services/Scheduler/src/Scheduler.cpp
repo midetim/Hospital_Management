@@ -1,7 +1,5 @@
 #include "Scheduler.hpp"
-#include "utils.hpp"
 #include <iostream>
-#include <chrono>
 
 /* ******************************************************************** */
 /* ********************** Private Functions *************************** */

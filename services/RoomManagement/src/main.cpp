@@ -1,16 +1,16 @@
 // Room Management Service
-#include <iostream>
-#include <memory>
-#include <string>
-
-#include <grpcpp/grpcpp.h>
-
-#include "utils.hpp"
 #include "RoomManagementService.hpp"
 
 int main() {
-    RoomManagementService service;
-    ServiceRunner::Run(service::room_host, service);
+    RoomManagementService room_service;
+    
+    room_service.init();
+    room_service.loadFromDB();
+    
+    RoomManagement::Service & room_base = room_service;
+    Common::Service & common_base = room_service;
+    
+    ServiceRunner::Run(service::room_host, service::room, room_base, common_base);
     return (int) core::ReturnCode::SUCCESS;
 }
  

@@ -1,5 +1,4 @@
 #include "Scheduler.hpp"
-#include "utils.hpp"
 
 int main() {
     std::unique_ptr<Scheduler> s = std::make_unique<Scheduler>();

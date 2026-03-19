@@ -1,6 +1,6 @@
 #include "time_utils.hpp"
-#include "Common.grpc.pb.h"
-#include "utils.hpp"
+
+#include "Common.pb.h"
 
 namespace time_util {
 

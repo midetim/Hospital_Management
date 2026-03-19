@@ -1,12 +1,9 @@
 #ifndef SCHEDULE_HPP
 #define SCHEDULE_HPP
 
-#include <set>
-#include <limits>
-#include "utils.hpp"
 #include "time_utils.hpp"
-#include <Common.pb.h>
-#include <Common.grpc.pb.h>
+
+#include <set>
 
 /* ******************************************************************** */
 /* *********************** Schedule Class ***************************** */

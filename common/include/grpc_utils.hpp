@@ -1,16 +1,13 @@
 #ifndef GRPC_UTILS_HPP
 #define GRPC_UTILS_HPP
 
-#include <grpcpp/client_context.h>
-#include <grpcpp/server_context.h>
-#include <grpcpp/support/status.h>
-#include <string>
-#include <chrono>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
-
 #include "utils.hpp"
+
+namespace grpc {
+    class ClientContext;
+    class ServerContext;
+    class Status;
+}
 
 /**
  * @brief Adds some metadata to the grpc request that will get sent out

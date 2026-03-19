@@ -4,18 +4,17 @@
 #include "Room.hpp"
 #include "Service.hpp"
 
-#include <unordered_set>
-#include <unordered_map>
-#include <memory>
-
-#include "RoomManagement.pb.h"
-#include "RoomManagement.grpc.pb.h"
 #include "Common.pb.h"
 #include "Common.grpc.pb.h"
+#include "RoomManagement.pb.h"
+#include "RoomManagement.grpc.pb.h"
 
 #include "PatientManagementClient.hpp"
 #include "ResourceManagementClient.hpp"
 #include "StaffManagementClient.hpp"
+
+#include <unordered_map>
+#include <memory>
 
 
 class RoomManagementService final : public IService, public RoomManagement::Service, public Common::Service {

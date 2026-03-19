@@ -1,20 +1,16 @@
 #ifndef PATIENTMANAGEMENTSERVICE_HPP
 #define PATIENTMANAGEMENTSERVICE_HPP
 
-
 #include "Patient.hpp"
 #include "RoomManagementClient.hpp"
 #include "Service.hpp"
 
-#include <unordered_map>
-
-#include "PatientManagement.grpc.pb.h"
-#include "PatientManagement.pb.h"
-
-#include "Common.grpc.pb.h"
 #include "Common.pb.h"
+#include "Common.grpc.pb.h"
+#include "PatientManagement.pb.h"
+#include "PatientManagement.grpc.pb.h"
 
-#define UNKNOWN_PATIENT_ERROR 0
+#include <unordered_map>
 
 /* ******************************************************************** */
 /* ****************** Patient Management Service ********************** */

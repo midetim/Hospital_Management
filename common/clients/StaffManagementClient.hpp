@@ -2,9 +2,11 @@
 #define STAFFMANAGEMENTCLIENT_HPP
 
 #include "Client.hpp"
-#include "StaffManagement.grpc.pb.h"
-#include "Common.grpc.pb.h"
 #include "time_utils.hpp"
+
+#include "Common.grpc.pb.h"
+#include "StaffManagement.grpc.pb.h"
+
 #include <set>
 
 /* ******************************************************************** */

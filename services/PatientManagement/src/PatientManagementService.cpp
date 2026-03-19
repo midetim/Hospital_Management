@@ -1,8 +1,7 @@
 #include "PatientManagementService.hpp"
 
-#include <grpcpp/grpcpp.h>
 #include "grpc_utils.hpp"
-
+#include <grpcpp/grpcpp.h>
 
 using namespace core;
 using namespace person;

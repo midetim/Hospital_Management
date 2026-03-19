@@ -1,8 +1,8 @@
 #ifndef STAFF_HPP
 #define STAFF_HPP
 
-#include "utils.hpp"
 #include "Schedule.hpp"
+#include "utils.hpp"
 
 class Staff {
 private:

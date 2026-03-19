@@ -1,22 +1,22 @@
 #ifndef RESOURCEMANAGEMENTSERVICE_HPP
 #define RESOURCEMANAGEMENTSERVICE_HPP
 
-#include "ResourceManagement.grpc.pb.h"
-#include "ResourceManagement.pb.h"
+#include "Resource.hpp"
+#include "RoomManagementClient.hpp"
+#include "Service.hpp"
 
-#include "Common.grpc.pb.h"
 #include "Common.pb.h"
+#include "Common.grpc.pb.h"
+#include "ResourceManagement.pb.h"
+#include "ResourceManagement.grpc.pb.h"
 
 #include <unordered_map>
-#include "Resource.hpp"
-#include "Service.hpp"
-#include "time_utils.hpp"
-
-#include "RoomManagementClient.hpp"
 
 /* ******************************************************************** */
 /* ****************** Resource Management Service ********************* */
 /* ******************************************************************** */
+
+namespace time_util { class Shift; }
 
 /**
  * @brief The resource management service class

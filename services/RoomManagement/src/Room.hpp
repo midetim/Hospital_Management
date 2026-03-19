@@ -1,11 +1,10 @@
 #ifndef ROOM_HPP
 #define ROOM_HPP
 
-#include <vector>
-#include <unordered_set>
-
 #include "utils.hpp"
 
+#include <unordered_set>
+#include <vector>
 
 class Room {
 private:

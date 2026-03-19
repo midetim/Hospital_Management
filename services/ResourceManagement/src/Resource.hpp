@@ -1,7 +1,6 @@
 #ifndef RESOURCE_HPP
 #define RESOURCE_HPP
 
-#include "utils.hpp"
 #include "Schedule.hpp"
 
 /* ******************************************************************** */

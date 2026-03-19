@@ -1,16 +1,15 @@
 // Resource Management Service
-#include <iostream>
-#include <memory>
-#include <string>
-
-#include <grpcpp/grpcpp.h>
-
-#include "utils.hpp"
 #include "ResourceManagementService.hpp"
-#include "Service.hpp"
 
 int main() {
-    ResourceManagementService service;
-    ServiceRunner::Run(service::resource_host, service);
+    ResourceManagementService resource_service;
+    
+    resource_service.init();
+    resource_service.loadFromDB();
+    
+    ResourceManagement::Service & resource_base = resource_service;
+    Common::Service & common_base = resource_service;
+    
+    ServiceRunner::Run(service::resource_host, service::resource, resource_base, common_base);
     return (int) core::ReturnCode::SUCCESS;
 }
