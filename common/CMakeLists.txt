@@ -120,3 +120,17 @@ target_include_directories(common
         ${PROJECT_SOURCE_DIR}/external/json
 )
 
+# Get all the JSON files
+set(DATABASE_FILES
+    # All JSON files
+    ${PROJECT_SOURCE_DIR}/services/PatientManagement/database/patient_database.json
+    ${PROJECT_SOURCE_DIR}/services/ResourceManagement/database/resource_database.json
+    ${PROJECT_SOURCE_DIR}/services/RoomManagement/database/room_database.json
+    ${PROJECT_SOURCE_DIR}/services/StaffManagement/database/staff_database.json
+)
+
+# Make them visible in Xcode under "JSON Files"
+source_group("JSON Files" FILES ${DATABASE_FILES})
+
+# Add them as sources to the common target
+target_sources(common PRIVATE ${DATABASE_FILES})
