@@ -76,6 +76,21 @@ bool Schedule::removeFromSchedule(const Shift & old_shift) {
     return true;
 }
 
+bool Schedule::removeFromSchedule(uint32_t room) {
+    bool removed = false;
+
+    for (auto it = shifts.begin(); it != shifts.end(); ) {
+        if (it->room_id == room) {
+            it = shifts.erase(it);
+            removed = true;
+        } else {
+            ++it;
+        }
+    }
+
+    return removed;
+}
+
 
 /* ******************************************************************** */
 /* *********************** Schedule Utility *************************** */

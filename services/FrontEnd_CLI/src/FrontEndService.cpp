@@ -11,3 +11,6 @@ FrontEndService::~FrontEndService() {
     
 }
 
+void FrontEndService::read_input() {
+    
+}

@@ -34,7 +34,7 @@ public:
     /* ******************************************************************** */
     
     Staff();
-    ~Staff();
+    ~Staff() = default;
     
     Staff(const person::Name & name, person::Sex sex, float salary, staff::Position position, staff::Clearance clearance);
     

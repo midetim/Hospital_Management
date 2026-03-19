@@ -138,21 +138,12 @@ grpc::Status PatientManagementService::DischargePatient(grpc::ServerContext * co
     
     uint32_t room_id = it->second.getRoomId(); // Get the room id of the room the patient is currently in
     
-    ReturnCode room_discharge = room_client->dischargePatient(patient_id, room_id, this->name); // Discharge them from that room
+    bool room_discharge = room_client->dischargePatient(patient_id, this->name); // Discharge them from that room
+    success->set_successful(room_discharge);
     
-    switch (room_discharge) { // Check room discharge return code
-        case ReturnCode::SUCCESS: // Successful discharge
-            success->set_successful(true);
-            hospital_patients.erase(it);
-            return grpc::Status::OK;
-        case ReturnCode::WARNING: // Discharge warning
-            success->set_successful(false);
-            return grpc::Status(grpc::StatusCode::ABORTED, "Cannot discharge a quarantined patient");
-        case ReturnCode::FAILURE: // Discharge failure
-        default:
-            success->set_successful(false);
+    if (!room_discharge) {
             return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Unable to successfully discharge patient");
-    }
+    } else { return grpc::Status::OK; }
 }
 
 grpc::Status PatientManagementService::TransferPatient(grpc::ServerContext * context, const PatientTransfer * transfer_request, Success * success) {
@@ -176,7 +167,7 @@ grpc::Status PatientManagementService::TransferPatient(grpc::ServerContext * con
     uint32_t old_room_id = it->second.getRoomId();
     
     // Get the new room id of the patient
-    uint32_t room_transfer = room_client->transferPatient(patient_id, old_room_id, room_type, new_room_id, is_quarantined, this->name);
+    uint32_t room_transfer = room_client->transferPatient(patient_id, new_room_id, old_room_id, room_type, is_quarantined, this->name);
     
     if (room_transfer == room::none) { // If the room service could not put the patient into a new room
         success->set_successful(false);
@@ -209,7 +200,7 @@ grpc::Status PatientManagementService::QuarantinePatient(grpc::ServerContext * c
     uint32_t old_room_id = it->second.getRoomId(); // Store old room id
     
     // Attempt to quarantine the patient
-    bool quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, this->name);
+    bool quarantined = room_client->quarantinePatient(patient_id, quarantine_entire_room, this->name);
     if (!quarantined || old_room_id == it->second.getRoomId()) { // Patient could not be quarantined
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
@@ -237,7 +228,7 @@ grpc::Status PatientManagementService::LiftPatientQuarantine(grpc::ServerContext
     // TODO: WILL NEED TO MODIFY THIS PART IN ROOM CLIENT TO MATCH
     
     // Attempt to quarantine the patient
-    uint32_t quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, this->name);
+    uint32_t quarantined = room_client->quarantinePatient(patient_id, quarantine_entire_room, this->name);
     if (quarantined == room::none) { // Patient could not be quarantined
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
@@ -402,8 +393,8 @@ ReturnCode PatientManagementService::uploadToDB() {
 }
 
 ReturnCode PatientManagementService::init() {
-    
-    return ReturnCode::NOT_YET_IMPLEMENTED;
+    hospital_patients.clear();
+    return ReturnCode::SUCCESS;
 }
 
 

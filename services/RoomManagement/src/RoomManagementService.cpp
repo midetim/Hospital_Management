@@ -733,24 +733,25 @@ grpc::Status RoomManagementService::GetRoomInformation(grpc::ServerContext * con
 
 ReturnCode RoomManagementService::connectToDB() {
     
-    return ReturnCode::SUCCESS;
+    return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
 
 ReturnCode RoomManagementService::loadFromDB() {
     
-    return ReturnCode::SUCCESS;
+    return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
 ReturnCode RoomManagementService::uploadToDB() {
     
-    return ReturnCode::SUCCESS;
+    return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
 
 ReturnCode RoomManagementService::init() {
-    
-    
+    total_rooms.clear();
+    hospital_rooms.clear();
+    quarantined_rooms.clear();
     return ReturnCode::SUCCESS;
 }
 

@@ -7,7 +7,6 @@
 #include "PatientManagementClient.hpp"
 #include "ResourceManagementClient.hpp"
 #include "StaffManagementClient.hpp"
-#include <vector>
 
 class FrontEndService final : public IService {
 private:
@@ -20,11 +19,12 @@ public:
     FrontEndService();
     ~FrontEndService();
   
-    virtual core::ReturnCode connectToDB() override;
-    virtual core::ReturnCode loadFromDB() override;
-    virtual core::ReturnCode uploadToDB() override;
-    virtual core::ReturnCode init() override;
-    virtual void print_internal() override;
+    // Nothing to do with these functions
+    core::ReturnCode connectToDB() override { return core::ReturnCode::SUCCESS; }
+    core::ReturnCode loadFromDB() override { return core::ReturnCode::SUCCESS; }
+    core::ReturnCode uploadToDB() override { return core::ReturnCode::SUCCESS; }
+    core::ReturnCode init() override { return core::ReturnCode::SUCCESS; }
+    void print_internal() override { return; }
     
     void read_input();
     

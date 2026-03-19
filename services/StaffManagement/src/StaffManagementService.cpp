@@ -573,18 +573,23 @@ grpc::Status StaffManagementService::GetStaffInRoom(grpc::ServerContext * contex
 
 ReturnCode StaffManagementService::connectToDB() {
     
+    return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
 ReturnCode StaffManagementService::loadFromDB() {
     
+    return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
 ReturnCode StaffManagementService::uploadToDB() {
     
+    return ReturnCode::NOT_YET_IMPLEMENTED;
 }
 
 ReturnCode StaffManagementService::init() {
-    
+    total_staff.clear();
+    working_staff.clear();
+    return ReturnCode::SUCCESS;
 }
 
 void StaffManagementService::print_internal() {
