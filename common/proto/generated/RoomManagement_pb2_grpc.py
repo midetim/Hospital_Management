@@ -84,26 +84,6 @@ class RoomManagementStub(object):
                 request_serializer=RoomManagement__pb2.RoomDTO.SerializeToString,
                 response_deserializer=RoomManagement__pb2.RoomInformation.FromString,
                 _registered_method=True)
-        self.UpdatePatient = channel.unary_unary(
-                '/RoomManagement/UpdatePatient',
-                request_serializer=PatientManagement__pb2.PatientDTO.SerializeToString,
-                response_deserializer=Common__pb2.Success.FromString,
-                _registered_method=True)
-        self.UpdateResource = channel.unary_unary(
-                '/RoomManagement/UpdateResource',
-                request_serializer=ResourceManagement__pb2.ResourceDTO.SerializeToString,
-                response_deserializer=Common__pb2.Success.FromString,
-                _registered_method=True)
-        self.UpdateStaff = channel.unary_unary(
-                '/RoomManagement/UpdateStaff',
-                request_serializer=StaffManagement__pb2.StaffDTO.SerializeToString,
-                response_deserializer=Common__pb2.Success.FromString,
-                _registered_method=True)
-        self.UpdateRoom = channel.unary_unary(
-                '/RoomManagement/UpdateRoom',
-                request_serializer=RoomManagement__pb2.RoomDTO.SerializeToString,
-                response_deserializer=Common__pb2.Success.FromString,
-                _registered_method=True)
 
 
 class RoomManagementServicer(object):
@@ -195,31 +175,6 @@ class RoomManagementServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def UpdatePatient(self, request, context):
-        """Consistency update calls
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def UpdateResource(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def UpdateStaff(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def UpdateRoom(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
 
 def add_RoomManagementServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -287,26 +242,6 @@ def add_RoomManagementServicer_to_server(servicer, server):
                     servicer.GetRoomInformation,
                     request_deserializer=RoomManagement__pb2.RoomDTO.FromString,
                     response_serializer=RoomManagement__pb2.RoomInformation.SerializeToString,
-            ),
-            'UpdatePatient': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdatePatient,
-                    request_deserializer=PatientManagement__pb2.PatientDTO.FromString,
-                    response_serializer=Common__pb2.Success.SerializeToString,
-            ),
-            'UpdateResource': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdateResource,
-                    request_deserializer=ResourceManagement__pb2.ResourceDTO.FromString,
-                    response_serializer=Common__pb2.Success.SerializeToString,
-            ),
-            'UpdateStaff': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdateStaff,
-                    request_deserializer=StaffManagement__pb2.StaffDTO.FromString,
-                    response_serializer=Common__pb2.Success.SerializeToString,
-            ),
-            'UpdateRoom': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdateRoom,
-                    request_deserializer=RoomManagement__pb2.RoomDTO.FromString,
-                    response_serializer=Common__pb2.Success.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -661,114 +596,6 @@ class RoomManagement(object):
             '/RoomManagement/GetRoomInformation',
             RoomManagement__pb2.RoomDTO.SerializeToString,
             RoomManagement__pb2.RoomInformation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def UpdatePatient(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/RoomManagement/UpdatePatient',
-            PatientManagement__pb2.PatientDTO.SerializeToString,
-            Common__pb2.Success.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def UpdateResource(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/RoomManagement/UpdateResource',
-            ResourceManagement__pb2.ResourceDTO.SerializeToString,
-            Common__pb2.Success.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def UpdateStaff(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/RoomManagement/UpdateStaff',
-            StaffManagement__pb2.StaffDTO.SerializeToString,
-            Common__pb2.Success.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def UpdateRoom(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/RoomManagement/UpdateRoom',
-            RoomManagement__pb2.RoomDTO.SerializeToString,
-            Common__pb2.Success.FromString,
             options,
             channel_credentials,
             insecure,

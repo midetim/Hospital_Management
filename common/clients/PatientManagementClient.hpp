@@ -18,6 +18,8 @@ struct patient_data {
     person::Sex patient_sex = person::Sex::Unknown;
     patient::Condition patient_condition = patient::Condition::Unknown;
     uint32_t room_id = room::none;
+    
+    bool operator<(const patient_data & other) const { return this->patient_id < other.patient_id; }
 };
 
 class PatientManagementClient final : public IClient {
@@ -89,7 +91,7 @@ public:
     
     bool updatePatientinformation(const patient_data & patient_data, std::string_view service_name);
     
-    bool getPatientsInRoom(uint32_t room_id, std::vector<patient_data> & data, std::string_view service_name);
+    bool getPatientsInRoom(uint32_t room_id, std::set<patient_data> & data, std::string_view service_name);
     
     /* ******************************************************************** */
     /* ****************************** Other ******************************* */

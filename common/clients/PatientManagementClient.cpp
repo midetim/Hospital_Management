@@ -206,7 +206,7 @@ bool PatientManagementClient::updatePatientinformation(const patient_data & pati
     return success.successful();
 }
 
-bool PatientManagementClient::getPatientsInRoom(uint32_t room_id, std::vector<patient_data> & patients, std::string_view service_name) {
+bool PatientManagementClient::getPatientsInRoom(uint32_t room_id, std::set<patient_data> & patients, std::string_view service_name) {
     RoomRequest room_request;
     room_request.set_room_id(room_id);
     
@@ -224,7 +224,7 @@ bool PatientManagementClient::getPatientsInRoom(uint32_t room_id, std::vector<pa
     patients.clear();
     for (const PatientDTO & p : list.patients()) {
         // Add patient to the list
-        patients.push_back(to_data(p));
+        patients.emplace(to_data(p));
     }
 
     return status.ok();

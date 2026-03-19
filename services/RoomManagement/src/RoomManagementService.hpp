@@ -6,6 +6,7 @@
 
 #include <unordered_set>
 #include <unordered_map>
+#include <memory>
 
 #include "RoomManagement.pb.h"
 #include "RoomManagement.grpc.pb.h"
@@ -14,23 +15,19 @@
 
 #include "PatientManagementClient.hpp"
 #include "ResourceManagementClient.hpp"
-//#include "StaffManagementClient.hpp"
-
-#define UNKNOWN_ROOM_ERROR 0
-#define NO_AVAILABLE_ROOM_FOUND 0
-#define ROOM_ID_NOT_PROVIDED 0 
-
+#include "StaffManagementClient.hpp"
 
 
 class RoomManagementService final : public IService, public RoomManagement::Service, public Common::Service {
 private:
-    std::unordered_map<uint32_t, Room> hospital_rooms;
-    std::unordered_map<uint32_t, Room> quarantined_rooms;
+    std::unordered_map<uint32_t, std::unique_ptr<Room>> total_rooms;
+    std::unordered_map<uint32_t, Room *> hospital_rooms;
+    std::unordered_map<uint32_t, Room *> quarantined_rooms;
     
     // gRPC Clients
     std::unique_ptr<PatientManagementClient> patient_client;
     std::unique_ptr<ResourceManagementClient> resource_client;
-    //std::unique_ptr<StaffManagementClient> staff_client;
+    std::unique_ptr<StaffManagementClient> staff_client;
     
     /* Will need a mutex (or a few) */
     
@@ -54,6 +51,10 @@ private:
      * @return Returns the room id of type ``Type``
      */
     uint32_t findAvailableRoom(const std::string type, bool quarantined) const;
+    
+    uint32_t findPatient(uint64_t patient_id);
+    uint32_t findResource(uint64_t resource_id);
+    uint32_t findStaff(uint64_t staff_id);
     
 public:
     
@@ -89,13 +90,13 @@ public:
     /**
      * @brief Admits a patient to the desired room type with the most availability
      */
-    grpc::Status AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) override;
+    grpc::Status AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) override;
     
     /**
      * @brief Attempts to discharge a patient from the hospital
      * @warning Cannot discharge quarantined patients
      */
-    grpc::Status DischargePatient(grpc::ServerContext * context, const PatientDTO * patient, Success * success) override;
+    grpc::Status DischargePatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) override;
     
     /**
      * @brief Transfers a patient from one room to another
@@ -115,32 +116,24 @@ public:
      */
     grpc::Status LiftPatientQuarantine(grpc::ServerContext * context, const PatientQuarantine * quarantine_request, Success * success) override;
     
-    grpc::Status RetrieveResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
+    grpc::Status RetrieveResource(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) override;
     
-    grpc::Status ReleaseResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
+    grpc::Status ReleaseResource(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) override;
     
-    grpc::Status TransferResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) override;
+    grpc::Status TransferResource(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) override;
     
-    grpc::Status RetrieveStaff(grpc::ServerContext * context, const StaffDTO * resource, Success * success) override;
+    grpc::Status RetrieveStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) override;
     
-    grpc::Status ReleaseStaff(grpc::ServerContext * context, const StaffDTO * resource, Success * success) override;
+    grpc::Status ReleaseStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) override;
     
-    grpc::Status TransferStaff(grpc::ServerContext * context, const StaffDTO * resource, Success * success) override;
+    grpc::Status TransferStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) override;
     
     /**
      * @brief Can either quarantine a room, or lift the quarantine on a room
      */
     grpc::Status QuarantineRoom(grpc::ServerContext * context, const RoomQuarantine * quarantine_request, Success * success) override;
     
-    grpc::Status GetRoomInformation(grpc::ServerContext * context, const RoomDTO * room, RoomInformation * room_information) override;
-    
-    grpc::Status UpdatePatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) override;
-    
-    grpc::Status UpdateResource(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) override;
-    
-    grpc::Status UpdateStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) override;
-    
-    grpc::Status UpdateRoom(grpc::ServerContext * context, const RoomDTO * room_dto, Success * success) override;
+    grpc::Status GetRoomInformation(grpc::ServerContext * context, const RoomDTO * room_number, RoomInformation * room_information) override;
     
     /* ******************************************************************** */
     /* *************************** IServer ******************************** */

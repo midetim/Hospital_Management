@@ -77,6 +77,20 @@ ReturnCode Room::removeResource(uint64_t rid) {
     return ReturnCode::SUCCESS;
 }
 
+ReturnCode Room::addStaff(uint64_t sid) {
+    auto it = assigned_staff.find(sid);
+    if (it != assigned_staff.end()) { return ReturnCode::WARNING; }
+    assigned_staff.emplace(sid);
+    return ReturnCode::SUCCESS;
+}
+
+ReturnCode Room::removeStaff(uint64_t sid) {
+    auto it = assigned_staff.find(sid);
+    if (it == assigned_staff.end()) { return ReturnCode::WARNING; }
+    assigned_staff.erase(it); // Delete the resource from the set
+    return ReturnCode::SUCCESS;
+}
+
 
 std::ostream & operator<<(std::ostream & os, const Room & room) {
     os << ansi::bcyan << "Room ID: "

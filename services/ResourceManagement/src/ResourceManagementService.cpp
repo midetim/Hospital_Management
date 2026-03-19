@@ -78,7 +78,8 @@ ReturnCode ResourceManagementService::moveResource(uint64_t resource_id, option 
 bool ResourceManagementService::sendResources() {
     for (const auto & [resource_id, resource_ptr] : available_resources) {
         uint32_t new_room = resource_ptr->access_schedule()->check_schedule(); // Will return a room id if the resource needs to go to a new room
-        if (new_room == room::idle) { continue; }
+        if (new_room == room::idle)                 { continue; }
+        if (new_room == resource_ptr->getRoomId())  { continue; }
         /* TODO: need to complete this part once the room_client is done
         room_client->update_resource(resource_id, new_room, service::resource);
         */
@@ -90,7 +91,8 @@ bool ResourceManagementService::sendResources() {
 bool ResourceManagementService::retrieveResources() {
     for (const auto & [resource_id, resource_ptr] : busy_resources) {
         uint32_t new_room = resource_ptr->access_schedule()->check_schedule();
-        if (new_room != room::idle) { continue; }
+        if (new_room != room::idle)                  { continue; }
+        if (resource_ptr->getRoomId() == room::idle) { continue; }
         /* TODO: Complete after room_client
         room_client->update_resource(resource_id, new_room, service::resource);
         */
@@ -151,7 +153,7 @@ grpc::Status ResourceManagementService::update(grpc::ServerContext * context, co
     readMetadata(* context);
     sendResources(); // Send all resources to their respective rooms
     retrieveResources(); // Retrieve all resources that are done in a room
-    loadFromDB();
+    uploadToDB();
     std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
     response->set_error(false);
     return grpc::Status::OK;

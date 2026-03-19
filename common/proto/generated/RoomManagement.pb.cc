@@ -55,12 +55,6 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 inline constexpr RoomDTO::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
-        assigned_staff_{},
-        _assigned_staff_cached_byte_size_{0},
-        assigned_patients_{},
-        _assigned_patients_cached_byte_size_{0},
-        assigned_resource_{},
-        _assigned_resource_cached_byte_size_{0},
         room_type_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
@@ -125,23 +119,17 @@ const ::uint32_t
         protodesc_cold) = {
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::RoomDTO, _impl_._has_bits_),
-        11, // hasbit index offset
+        8, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::RoomDTO, _impl_.room_type_),
         PROTOBUF_FIELD_OFFSET(::RoomDTO, _impl_.room_id_),
         PROTOBUF_FIELD_OFFSET(::RoomDTO, _impl_.room_capacity_),
         PROTOBUF_FIELD_OFFSET(::RoomDTO, _impl_.current_capacity_),
         PROTOBUF_FIELD_OFFSET(::RoomDTO, _impl_.quarantined_),
-        PROTOBUF_FIELD_OFFSET(::RoomDTO, _impl_.assigned_staff_),
-        PROTOBUF_FIELD_OFFSET(::RoomDTO, _impl_.assigned_patients_),
-        PROTOBUF_FIELD_OFFSET(::RoomDTO, _impl_.assigned_resource_),
         0,
         1,
         2,
         3,
         4,
-        ~0u,
-        ~0u,
-        ~0u,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::RoomQuarantine, _impl_._has_bits_),
         6, // hasbit index offset
@@ -167,8 +155,8 @@ const ::uint32_t
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, sizeof(::RoomDTO)},
-        {19, sizeof(::RoomQuarantine)},
-        {28, sizeof(::RoomInformation)},
+        {13, sizeof(::RoomQuarantine)},
+        {22, sizeof(::RoomInformation)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::_RoomDTO_default_instance_._instance,
@@ -179,37 +167,32 @@ const char descriptor_table_protodef_RoomManagement_2eproto[] ABSL_ATTRIBUTE_SEC
     protodesc_cold) = {
     "\n\024RoomManagement.proto\032\014Common.proto\032\027Pa"
     "tientManagement.proto\032\030ResourceManagemen"
-    "t.proto\032\025StaffManagement.proto\"\301\001\n\007RoomD"
-    "TO\022\021\n\troom_type\030\001 \001(\t\022\017\n\007room_id\030\002 \001(\r\022\025"
-    "\n\rroom_capacity\030\003 \001(\r\022\030\n\020current_capacit"
-    "y\030\004 \001(\r\022\023\n\013quarantined\030\005 \001(\010\022\026\n\016assigned"
-    "_staff\030\006 \003(\004\022\031\n\021assigned_patients\030\007 \003(\004\022"
-    "\031\n\021assigned_resource\030\010 \003(\004\"K\n\016RoomQuaran"
-    "tine\022\017\n\007room_id\030\001 \001(\r\022\022\n\nquarantine\030\002 \001("
-    "\010\022\024\n\014move_patient\030\003 \001(\010\"\264\001\n\017RoomInformat"
-    "ion\022\"\n\020room_information\030\001 \001(\0132\010.RoomDTO\022"
-    ")\n\023patient_information\030\002 \001(\0132\014.PatientLi"
-    "st\022+\n\024resource_information\030\003 \001(\0132\r.Resou"
-    "rceList\022%\n\021staff_information\030\004 \001(\0132\n.Sta"
-    "ffList2\346\005\n\016RoomManagement\022%\n\014AdmitPatien"
-    "t\022\013.PatientDTO\032\010.Success\022)\n\020DischargePat"
-    "ient\022\013.PatientDTO\032\010.Success\022-\n\017TransferP"
-    "atient\022\020.PatientTransfer\032\010.Success\0221\n\021Qu"
-    "arantinePatient\022\022.PatientQuarantine\032\010.Su"
-    "ccess\0225\n\025LiftPatientQuarantine\022\022.Patient"
-    "Quarantine\032\010.Success\022*\n\020RetrieveResource"
-    "\022\014.ResourceDTO\032\010.Success\022)\n\017ReleaseResou"
-    "rce\022\014.ResourceDTO\032\010.Success\022*\n\020TransferR"
-    "esource\022\014.ResourceDTO\032\010.Success\022$\n\rRetri"
-    "eveStaff\022\t.StaffDTO\032\010.Success\022#\n\014Release"
-    "Staff\022\t.StaffDTO\032\010.Success\022$\n\rTransferSt"
-    "aff\022\t.StaffDTO\032\010.Success\022+\n\016QuarantineRo"
-    "om\022\017.RoomQuarantine\032\010.Success\0220\n\022GetRoom"
-    "Information\022\010.RoomDTO\032\020.RoomInformation\022"
-    "&\n\rUpdatePatient\022\013.PatientDTO\032\010.Success\022"
-    "(\n\016UpdateResource\022\014.ResourceDTO\032\010.Succes"
-    "s\022\"\n\013UpdateStaff\022\t.StaffDTO\032\010.Success\022 \n"
-    "\nUpdateRoom\022\010.RoomDTO\032\010.Successb\006proto3"
+    "t.proto\032\025StaffManagement.proto\"s\n\007RoomDT"
+    "O\022\021\n\troom_type\030\001 \001(\t\022\017\n\007room_id\030\002 \001(\r\022\025\n"
+    "\rroom_capacity\030\003 \001(\r\022\030\n\020current_capacity"
+    "\030\004 \001(\r\022\023\n\013quarantined\030\005 \001(\010\"K\n\016RoomQuara"
+    "ntine\022\017\n\007room_id\030\001 \001(\r\022\022\n\nquarantine\030\002 \001"
+    "(\010\022\024\n\014move_patient\030\003 \001(\010\"\264\001\n\017RoomInforma"
+    "tion\022\"\n\020room_information\030\001 \001(\0132\010.RoomDTO"
+    "\022)\n\023patient_information\030\002 \001(\0132\014.PatientL"
+    "ist\022+\n\024resource_information\030\003 \001(\0132\r.Reso"
+    "urceList\022%\n\021staff_information\030\004 \001(\0132\n.St"
+    "affList2\316\004\n\016RoomManagement\022%\n\014AdmitPatie"
+    "nt\022\013.PatientDTO\032\010.Success\022)\n\020DischargePa"
+    "tient\022\013.PatientDTO\032\010.Success\022-\n\017Transfer"
+    "Patient\022\020.PatientTransfer\032\010.Success\0221\n\021Q"
+    "uarantinePatient\022\022.PatientQuarantine\032\010.S"
+    "uccess\0225\n\025LiftPatientQuarantine\022\022.Patien"
+    "tQuarantine\032\010.Success\022*\n\020RetrieveResourc"
+    "e\022\014.ResourceDTO\032\010.Success\022)\n\017ReleaseReso"
+    "urce\022\014.ResourceDTO\032\010.Success\022*\n\020Transfer"
+    "Resource\022\014.ResourceDTO\032\010.Success\022$\n\rRetr"
+    "ieveStaff\022\t.StaffDTO\032\010.Success\022#\n\014Releas"
+    "eStaff\022\t.StaffDTO\032\010.Success\022$\n\rTransferS"
+    "taff\022\t.StaffDTO\032\010.Success\022+\n\016QuarantineR"
+    "oom\022\017.RoomQuarantine\032\010.Success\0220\n\022GetRoo"
+    "mInformation\022\010.RoomDTO\032\020.RoomInformation"
+    "b\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_RoomManagement_2eproto_deps[4] = {
@@ -222,7 +205,7 @@ static ::absl::once_flag descriptor_table_RoomManagement_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_RoomManagement_2eproto = {
     false,
     false,
-    1319,
+    1088,
     descriptor_table_protodef_RoomManagement_2eproto,
     "RoomManagement.proto",
     &descriptor_table_RoomManagement_2eproto_once,
@@ -260,12 +243,6 @@ PROTOBUF_NDEBUG_INLINE RoomDTO::Impl_::Impl_(
     const ::RoomDTO& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
-        assigned_staff_{visibility, arena, from.assigned_staff_},
-        _assigned_staff_cached_byte_size_{0},
-        assigned_patients_{visibility, arena, from.assigned_patients_},
-        _assigned_patients_cached_byte_size_{0},
-        assigned_resource_{visibility, arena, from.assigned_resource_},
-        _assigned_resource_cached_byte_size_{0},
         room_type_(arena, from.room_type_) {}
 
 RoomDTO::RoomDTO(
@@ -295,12 +272,6 @@ PROTOBUF_NDEBUG_INLINE RoomDTO::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
-        assigned_staff_{visibility, arena},
-        _assigned_staff_cached_byte_size_{0},
-        assigned_patients_{visibility, arena},
-        _assigned_patients_cached_byte_size_{0},
-        assigned_resource_{visibility, arena},
-        _assigned_resource_cached_byte_size_{0},
         room_type_(arena) {}
 
 inline void RoomDTO::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
@@ -330,28 +301,8 @@ inline void* PROTOBUF_NONNULL RoomDTO::PlacementNew_(
   return ::new (mem) RoomDTO(arena);
 }
 constexpr auto RoomDTO::InternalNewImpl_() {
-  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
-      PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.assigned_staff_) +
-          decltype(RoomDTO::_impl_.assigned_staff_)::
-              InternalGetArenaOffset(
-                  ::google::protobuf::Message::internal_visibility()),
-      PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.assigned_patients_) +
-          decltype(RoomDTO::_impl_.assigned_patients_)::
-              InternalGetArenaOffset(
-                  ::google::protobuf::Message::internal_visibility()),
-      PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.assigned_resource_) +
-          decltype(RoomDTO::_impl_.assigned_resource_)::
-              InternalGetArenaOffset(
-                  ::google::protobuf::Message::internal_visibility()),
-  });
-  if (arena_bits.has_value()) {
-    return ::google::protobuf::internal::MessageCreator::CopyInit(
-        sizeof(RoomDTO), alignof(RoomDTO), *arena_bits);
-  } else {
-    return ::google::protobuf::internal::MessageCreator(&RoomDTO::PlacementNew_,
-                                 sizeof(RoomDTO),
-                                 alignof(RoomDTO));
-  }
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(RoomDTO),
+                                            alignof(RoomDTO));
 }
 constexpr auto RoomDTO::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
@@ -387,16 +338,16 @@ RoomDTO::GetClassData() const {
   return RoomDTO_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 8, 0, 33, 2>
+const ::_pbi::TcParseTable<3, 5, 0, 25, 2>
 RoomDTO::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_._has_bits_),
     0, // no _extensions_
-    8, 56,  // max_field_number, fast_idx_mask
+    5, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967040,  // skipmap
+    4294967264,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    8,  // num_field_entries
+    5,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     RoomDTO_class_data_.base(),
@@ -406,9 +357,7 @@ RoomDTO::_table_ = {
     ::_pbi::TcParser::GetTable<::RoomDTO>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // repeated uint64 assigned_resource = 8;
-    {::_pbi::TcParser::FastV64P1,
-     {66, 63, 0, PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.assigned_resource_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // string room_type = 1;
     {::_pbi::TcParser::FastUS1,
      {10, 0, 0, PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.room_type_)}},
@@ -424,12 +373,8 @@ RoomDTO::_table_ = {
     // bool quarantined = 5;
     {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(RoomDTO, _impl_.quarantined_), 4>(),
      {40, 4, 0, PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.quarantined_)}},
-    // repeated uint64 assigned_staff = 6;
-    {::_pbi::TcParser::FastV64P1,
-     {50, 63, 0, PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.assigned_staff_)}},
-    // repeated uint64 assigned_patients = 7;
-    {::_pbi::TcParser::FastV64P1,
-     {58, 63, 0, PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.assigned_patients_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
@@ -448,19 +393,10 @@ RoomDTO::_table_ = {
     // bool quarantined = 5;
     {PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.quarantined_), _Internal::kHasBitsOffset + 4, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kBool)},
-    // repeated uint64 assigned_staff = 6;
-    {PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.assigned_staff_), -1, 0,
-    (0 | ::_fl::kFcRepeated | ::_fl::kPackedUInt64)},
-    // repeated uint64 assigned_patients = 7;
-    {PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.assigned_patients_), -1, 0,
-    (0 | ::_fl::kFcRepeated | ::_fl::kPackedUInt64)},
-    // repeated uint64 assigned_resource = 8;
-    {PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.assigned_resource_), -1, 0,
-    (0 | ::_fl::kFcRepeated | ::_fl::kPackedUInt64)},
   }},
   // no aux_entries
   {{
-    "\7\11\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+    "\7\11\0\0\0\0\0\0"
     "RoomDTO"
     "room_type"
   }},
@@ -472,9 +408,6 @@ PROTOBUF_NOINLINE void RoomDTO::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.assigned_staff_.Clear();
-  _impl_.assigned_patients_.Clear();
-  _impl_.assigned_resource_.Clear();
   cached_has_bits = _impl_._has_bits_[0];
   if ((cached_has_bits & 0x00000001u) != 0) {
     _impl_.room_type_.ClearNonDefaultToEmpty();
@@ -549,33 +482,6 @@ PROTOBUF_NOINLINE void RoomDTO::Clear() {
     }
   }
 
-  // repeated uint64 assigned_staff = 6;
-  {
-    int byte_size = this_._impl_._assigned_staff_cached_byte_size_.Get();
-    if (byte_size > 0) {
-      target = stream->WriteUInt64Packed(
-          6, this_._internal_assigned_staff(), byte_size, target);
-    }
-  }
-
-  // repeated uint64 assigned_patients = 7;
-  {
-    int byte_size = this_._impl_._assigned_patients_cached_byte_size_.Get();
-    if (byte_size > 0) {
-      target = stream->WriteUInt64Packed(
-          7, this_._internal_assigned_patients(), byte_size, target);
-    }
-  }
-
-  // repeated uint64 assigned_resource = 8;
-  {
-    int byte_size = this_._impl_._assigned_resource_cached_byte_size_.Get();
-    if (byte_size > 0) {
-      target = stream->WriteUInt64Packed(
-          8, this_._internal_assigned_resource(), byte_size, target);
-    }
-  }
-
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -600,29 +506,6 @@ PROTOBUF_NOINLINE void RoomDTO::Clear() {
   (void)cached_has_bits;
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
-   {
-    // repeated uint64 assigned_staff = 6;
-    {
-      total_size +=
-          ::_pbi::WireFormatLite::UInt64SizeWithPackedTagSize(
-              this_._internal_assigned_staff(), 1,
-              this_._impl_._assigned_staff_cached_byte_size_);
-    }
-    // repeated uint64 assigned_patients = 7;
-    {
-      total_size +=
-          ::_pbi::WireFormatLite::UInt64SizeWithPackedTagSize(
-              this_._internal_assigned_patients(), 1,
-              this_._impl_._assigned_patients_cached_byte_size_);
-    }
-    // repeated uint64 assigned_resource = 8;
-    {
-      total_size +=
-          ::_pbi::WireFormatLite::UInt64SizeWithPackedTagSize(
-              this_._internal_assigned_resource(), 1,
-              this_._impl_._assigned_resource_cached_byte_size_);
-    }
-  }
   cached_has_bits = this_._impl_._has_bits_[0];
   if ((cached_has_bits & 0x0000001fu) != 0) {
     // string room_type = 1;
@@ -672,9 +555,6 @@ void RoomDTO::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google:
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_internal_mutable_assigned_staff()->MergeFrom(from._internal_assigned_staff());
-  _this->_internal_mutable_assigned_patients()->MergeFrom(from._internal_assigned_patients());
-  _this->_internal_mutable_assigned_resource()->MergeFrom(from._internal_assigned_resource());
   cached_has_bits = from._impl_._has_bits_[0];
   if ((cached_has_bits & 0x0000001fu) != 0) {
     if ((cached_has_bits & 0x00000001u) != 0) {
@@ -725,9 +605,6 @@ void RoomDTO::InternalSwap(RoomDTO* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  _impl_.assigned_staff_.InternalSwap(&other->_impl_.assigned_staff_);
-  _impl_.assigned_patients_.InternalSwap(&other->_impl_.assigned_patients_);
-  _impl_.assigned_resource_.InternalSwap(&other->_impl_.assigned_resource_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.room_type_, &other->_impl_.room_type_, arena);
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(RoomDTO, _impl_.quarantined_)

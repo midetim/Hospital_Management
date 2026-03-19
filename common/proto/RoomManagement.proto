@@ -31,12 +31,6 @@ service RoomManagement {
     rpc QuarantineRoom(RoomQuarantine)              returns (Success);
     rpc GetRoomInformation(RoomDTO)                 returns (RoomInformation); // Displays all the people and resources in a room
     
-    // Consistency update calls
-    rpc UpdatePatient(PatientDTO)                   returns (Success);
-    rpc UpdateResource(ResourceDTO)                 returns (Success);
-    rpc UpdateStaff(StaffDTO)                       returns (Success);
-    rpc UpdateRoom(RoomDTO)                         returns (Success);
-    
 }
 
 message RoomDTO {
@@ -45,9 +39,6 @@ message RoomDTO {
     uint32          room_capacity     = 3;
     uint32          current_capacity  = 4;
     bool            quarantined       = 5;
-    repeated uint64 assigned_staff    = 6;
-    repeated uint64 assigned_patients = 7;
-    repeated uint64 assigned_resource = 8;
 }
 
 message RoomQuarantine {

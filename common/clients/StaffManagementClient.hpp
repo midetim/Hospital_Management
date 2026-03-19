@@ -13,7 +13,7 @@
 
 struct staff_data {
     person::Name name{};
-    uint64_t id = 0;
+    uint64_t id = staff::none;
     person::Sex sex = person::Sex::Unknown;
     uint32_t room_id = room::none;
     float salary = 0.0f;

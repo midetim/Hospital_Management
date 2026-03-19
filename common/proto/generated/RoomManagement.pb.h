@@ -437,69 +437,12 @@ class RoomDTO final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kAssignedStaffFieldNumber = 6,
-    kAssignedPatientsFieldNumber = 7,
-    kAssignedResourceFieldNumber = 8,
     kRoomTypeFieldNumber = 1,
     kRoomIdFieldNumber = 2,
     kRoomCapacityFieldNumber = 3,
     kCurrentCapacityFieldNumber = 4,
     kQuarantinedFieldNumber = 5,
   };
-  // repeated uint64 assigned_staff = 6;
-  int assigned_staff_size() const;
-  private:
-  int _internal_assigned_staff_size() const;
-
-  public:
-  void clear_assigned_staff() ;
-  ::uint64_t assigned_staff(int index) const;
-  void set_assigned_staff(int index, ::uint64_t value);
-  void add_assigned_staff(::uint64_t value);
-  const ::google::protobuf::RepeatedField<::uint64_t>& assigned_staff() const;
-  ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL mutable_assigned_staff();
-
-  private:
-  const ::google::protobuf::RepeatedField<::uint64_t>& _internal_assigned_staff() const;
-  ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL _internal_mutable_assigned_staff();
-
-  public:
-  // repeated uint64 assigned_patients = 7;
-  int assigned_patients_size() const;
-  private:
-  int _internal_assigned_patients_size() const;
-
-  public:
-  void clear_assigned_patients() ;
-  ::uint64_t assigned_patients(int index) const;
-  void set_assigned_patients(int index, ::uint64_t value);
-  void add_assigned_patients(::uint64_t value);
-  const ::google::protobuf::RepeatedField<::uint64_t>& assigned_patients() const;
-  ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL mutable_assigned_patients();
-
-  private:
-  const ::google::protobuf::RepeatedField<::uint64_t>& _internal_assigned_patients() const;
-  ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL _internal_mutable_assigned_patients();
-
-  public:
-  // repeated uint64 assigned_resource = 8;
-  int assigned_resource_size() const;
-  private:
-  int _internal_assigned_resource_size() const;
-
-  public:
-  void clear_assigned_resource() ;
-  ::uint64_t assigned_resource(int index) const;
-  void set_assigned_resource(int index, ::uint64_t value);
-  void add_assigned_resource(::uint64_t value);
-  const ::google::protobuf::RepeatedField<::uint64_t>& assigned_resource() const;
-  ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL mutable_assigned_resource();
-
-  private:
-  const ::google::protobuf::RepeatedField<::uint64_t>& _internal_assigned_resource() const;
-  ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL _internal_mutable_assigned_resource();
-
-  public:
   // string room_type = 1;
   void clear_room_type() ;
   const ::std::string& room_type() const;
@@ -559,8 +502,8 @@ class RoomDTO final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 8,
-                                   0, 33,
+  static const ::google::protobuf::internal::TcParseTable<3, 5,
+                                   0, 25,
                                    2>
       _table_;
 
@@ -581,12 +524,6 @@ class RoomDTO final : public ::google::protobuf::Message
         const RoomDTO& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::RepeatedField<::uint64_t> assigned_staff_;
-    ::google::protobuf::internal::CachedSize _assigned_staff_cached_byte_size_;
-    ::google::protobuf::RepeatedField<::uint64_t> assigned_patients_;
-    ::google::protobuf::internal::CachedSize _assigned_patients_cached_byte_size_;
-    ::google::protobuf::RepeatedField<::uint64_t> assigned_resource_;
-    ::google::protobuf::internal::CachedSize _assigned_resource_cached_byte_size_;
     ::google::protobuf::internal::ArenaStringPtr room_type_;
     ::uint32_t room_id_;
     ::uint32_t room_capacity_;
@@ -1022,144 +959,6 @@ inline bool RoomDTO::_internal_quarantined() const {
 inline void RoomDTO::_internal_set_quarantined(bool value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.quarantined_ = value;
-}
-
-// repeated uint64 assigned_staff = 6;
-inline int RoomDTO::_internal_assigned_staff_size() const {
-  return _internal_assigned_staff().size();
-}
-inline int RoomDTO::assigned_staff_size() const {
-  return _internal_assigned_staff_size();
-}
-inline void RoomDTO::clear_assigned_staff() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.assigned_staff_.Clear();
-}
-inline ::uint64_t RoomDTO::assigned_staff(int index) const {
-  // @@protoc_insertion_point(field_get:RoomDTO.assigned_staff)
-  return _internal_assigned_staff().Get(index);
-}
-inline void RoomDTO::set_assigned_staff(int index, ::uint64_t value) {
-  _internal_mutable_assigned_staff()->Set(index, value);
-  // @@protoc_insertion_point(field_set:RoomDTO.assigned_staff)
-}
-inline void RoomDTO::add_assigned_staff(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _internal_mutable_assigned_staff()->Add(value);
-  // @@protoc_insertion_point(field_add:RoomDTO.assigned_staff)
-}
-inline const ::google::protobuf::RepeatedField<::uint64_t>& RoomDTO::assigned_staff() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:RoomDTO.assigned_staff)
-  return _internal_assigned_staff();
-}
-inline ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL RoomDTO::mutable_assigned_staff()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:RoomDTO.assigned_staff)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _internal_mutable_assigned_staff();
-}
-inline const ::google::protobuf::RepeatedField<::uint64_t>&
-RoomDTO::_internal_assigned_staff() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.assigned_staff_;
-}
-inline ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL
-RoomDTO::_internal_mutable_assigned_staff() {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return &_impl_.assigned_staff_;
-}
-
-// repeated uint64 assigned_patients = 7;
-inline int RoomDTO::_internal_assigned_patients_size() const {
-  return _internal_assigned_patients().size();
-}
-inline int RoomDTO::assigned_patients_size() const {
-  return _internal_assigned_patients_size();
-}
-inline void RoomDTO::clear_assigned_patients() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.assigned_patients_.Clear();
-}
-inline ::uint64_t RoomDTO::assigned_patients(int index) const {
-  // @@protoc_insertion_point(field_get:RoomDTO.assigned_patients)
-  return _internal_assigned_patients().Get(index);
-}
-inline void RoomDTO::set_assigned_patients(int index, ::uint64_t value) {
-  _internal_mutable_assigned_patients()->Set(index, value);
-  // @@protoc_insertion_point(field_set:RoomDTO.assigned_patients)
-}
-inline void RoomDTO::add_assigned_patients(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _internal_mutable_assigned_patients()->Add(value);
-  // @@protoc_insertion_point(field_add:RoomDTO.assigned_patients)
-}
-inline const ::google::protobuf::RepeatedField<::uint64_t>& RoomDTO::assigned_patients() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:RoomDTO.assigned_patients)
-  return _internal_assigned_patients();
-}
-inline ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL RoomDTO::mutable_assigned_patients()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:RoomDTO.assigned_patients)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _internal_mutable_assigned_patients();
-}
-inline const ::google::protobuf::RepeatedField<::uint64_t>&
-RoomDTO::_internal_assigned_patients() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.assigned_patients_;
-}
-inline ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL
-RoomDTO::_internal_mutable_assigned_patients() {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return &_impl_.assigned_patients_;
-}
-
-// repeated uint64 assigned_resource = 8;
-inline int RoomDTO::_internal_assigned_resource_size() const {
-  return _internal_assigned_resource().size();
-}
-inline int RoomDTO::assigned_resource_size() const {
-  return _internal_assigned_resource_size();
-}
-inline void RoomDTO::clear_assigned_resource() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.assigned_resource_.Clear();
-}
-inline ::uint64_t RoomDTO::assigned_resource(int index) const {
-  // @@protoc_insertion_point(field_get:RoomDTO.assigned_resource)
-  return _internal_assigned_resource().Get(index);
-}
-inline void RoomDTO::set_assigned_resource(int index, ::uint64_t value) {
-  _internal_mutable_assigned_resource()->Set(index, value);
-  // @@protoc_insertion_point(field_set:RoomDTO.assigned_resource)
-}
-inline void RoomDTO::add_assigned_resource(::uint64_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _internal_mutable_assigned_resource()->Add(value);
-  // @@protoc_insertion_point(field_add:RoomDTO.assigned_resource)
-}
-inline const ::google::protobuf::RepeatedField<::uint64_t>& RoomDTO::assigned_resource() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:RoomDTO.assigned_resource)
-  return _internal_assigned_resource();
-}
-inline ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL RoomDTO::mutable_assigned_resource()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:RoomDTO.assigned_resource)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _internal_mutable_assigned_resource();
-}
-inline const ::google::protobuf::RepeatedField<::uint64_t>&
-RoomDTO::_internal_assigned_resource() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.assigned_resource_;
-}
-inline ::google::protobuf::RepeatedField<::uint64_t>* PROTOBUF_NONNULL
-RoomDTO::_internal_mutable_assigned_resource() {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return &_impl_.assigned_resource_;
 }
 
 // -------------------------------------------------------------------

@@ -149,6 +149,13 @@ public:
     core::ReturnCode addResource(uint64_t rid);
     core::ReturnCode removeResource(uint64_t rid);
     
+    core::ReturnCode addStaff(uint64_t sid);
+    core::ReturnCode removeStaff(uint64_t sid);
+    
+    const std::unordered_set<uint64_t> * see_patients()  { return & assigned_patients; }
+    const std::unordered_set<uint64_t> * see_resources() { return & assigned_resources; }
+    const std::unordered_set<uint64_t> * see_staff()     { return & assigned_staff; }
+    
     
     friend std::ostream & operator<<(std::ostream & os, const Room & p);
 };

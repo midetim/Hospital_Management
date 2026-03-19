@@ -40,6 +40,9 @@ private:
     
     core::ReturnCode convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, StaffSchedule * schedule, const StaffDTO * staff_dto) const;
     
+    bool sendStaff();
+    bool retrieveStaff();
+    
 public:
     
     /* ******************************************************************** */

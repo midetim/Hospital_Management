@@ -295,6 +295,8 @@ namespace patient {
 
 namespace resource {
 
+    inline constexpr uint64_t none = 0;
+
     /**
      * @brief Hospital Machinery Types
      */
@@ -559,6 +561,7 @@ namespace staff {
     }
 
     inline constexpr float minimum_wage = 17.60f;
+    inline constexpr uint64_t none = 0;
 
 }
 

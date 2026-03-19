@@ -64,6 +64,32 @@ ReturnCode StaffManagementService::convertToSchedule(const std::set<time_util::S
     
 }
 
+bool StaffManagementService::sendStaff() {
+    for (const auto & [staff_id, staff_ptr] : total_staff) {
+        uint32_t new_room = staff_ptr->access_schedule()->check_schedule(); // Will return a room id if the resource needs to go to a new room
+        if (new_room == room::idle)             { continue; } // Staff not assigned to room
+        if (new_room == staff_ptr->getRoomId()) { continue; } // Staff in the room they need to be
+        /* TODO: need to complete this part once the room_client is done
+        room_client->update_resource(resource_id, new_room, service::resource);
+        */
+        staff_ptr->setRoomId(new_room);
+    }
+    return true;
+}
+
+bool StaffManagementService::retrieveStaff() {
+    for (const auto & [staff_id, staff_ptr] : total_staff) {
+        uint32_t new_room = staff_ptr->access_schedule()->check_schedule();
+        if (new_room != room::idle)               { continue; } // Staff still assigned to room
+        if (staff_ptr->getRoomId() == room::idle) { continue; } // Staff in the room they need to be
+        /* TODO: Complete after room_client
+        room_client->update_resource(resource_id, new_room, service::resource);
+        */
+        staff_ptr->setRoomId(new_room);
+    }
+    return true;
+}
+
 /* ******************************************************************** */
 /* ************************** Constructor ***************************** */
 /* ******************************************************************** */
@@ -92,7 +118,9 @@ grpc::Status StaffManagementService::print(grpc::ServerContext * context, const 
 
 grpc::Status StaffManagementService::update(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
     readMetadata(* context);
-    loadFromDB();
+    sendStaff(); // Send all resources to their respective rooms
+    retrieveStaff(); // Retrieve all resources that are done in a room
+    uploadToDB();
     std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
     response->set_error(false);
     return grpc::Status::OK;

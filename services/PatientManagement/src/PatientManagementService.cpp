@@ -206,14 +206,14 @@ grpc::Status PatientManagementService::QuarantinePatient(grpc::ServerContext * c
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the patient to quarantine");
     }
     
+    uint32_t old_room_id = it->second.getRoomId(); // Store old room id
+    
     // Attempt to quarantine the patient
-    uint32_t quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, this->name);
-    if (quarantined == room::none) { // Patient could not be quarantined
+    bool quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, this->name);
+    if (!quarantined || old_room_id == it->second.getRoomId()) { // Patient could not be quarantined
+        success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
-    
-    // Set the patients room to the quarantined room
-    it->second.setRoomId(quarantined);
     
     // Report success
     success->set_successful(true);
