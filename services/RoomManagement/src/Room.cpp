@@ -107,7 +107,7 @@ std::ostream & operator<<(std::ostream & os, const Room & room) {
        << ansi::reset
        << '\n';
 
-    const auto & patients = room.getList(GET_ASSIGNED_PATIENTS);
+    const auto & patients = room.getList(get_patients);
 
     os << "  Patients   : ";
 

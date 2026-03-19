@@ -134,6 +134,14 @@ public:
     
     grpc::Status GetRoomInformation(grpc::ServerContext * context, const RoomDTO * room, RoomInformation * room_information) override;
     
+    grpc::Status UpdatePatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) override;
+    
+    grpc::Status UpdateResource(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) override;
+    
+    grpc::Status UpdateStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) override;
+    
+    grpc::Status UpdateRoom(grpc::ServerContext * context, const RoomDTO * room_dto, Success * success) override;
+    
     /* ******************************************************************** */
     /* *************************** IServer ******************************** */
     /* ******************************************************************** */

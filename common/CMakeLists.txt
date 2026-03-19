@@ -117,5 +117,6 @@ target_include_directories(common
         ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${GENERATED_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/clients
+        ${PROJECT_SOURCE_DIR}/external/json
 )
 

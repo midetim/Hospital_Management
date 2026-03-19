@@ -165,7 +165,7 @@ grpc::Status RoomManagementService::TransferPatient(grpc::ServerContext * contex
     
     auto new_it = new_room.find(new_room_id); // Search for the provided new room id in the selected map
     
-    if (new_room_id == ROOM_ID_NOT_PROVIDED) {// If no room selected
+    if (new_room_id == room::none) {// If no room selected
         new_room_id = findAvailableRoom(stringToRoomType(room_type), to_quarantine); // Find an available room
         new_it = new_room.find(new_room_id); // Set the iterator to the new room
     }
@@ -249,7 +249,7 @@ grpc::Status RoomManagementService::QuarantinePatient(grpc::ServerContext * cont
     } else { // Quarantine just the one patient
         
         RoomType room_type = it->second.getRoomType(); // Get the room type
-        const std::unordered_set<uint64_t> & patients = it->second.getList(GET_ASSIGNED_PATIENTS); // Ge the list of patients
+        const std::unordered_set<uint64_t> & patients = it->second.getList(get_patients); // Ge the list of patients
         
         // Iterate through each patient
         for (uint64_t current_patient_id : patients) {
@@ -388,6 +388,36 @@ grpc::Status RoomManagementService::LiftPatientQuarantine(grpc::ServerContext * 
 }
 
 
+grpc::Status RoomManagementService::RetrieveResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
+    
+    return grpc::Status::OK;
+}
+
+grpc::Status RoomManagementService::ReleaseResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
+    
+    return grpc::Status::OK;
+}
+
+grpc::Status RoomManagementService::TransferResource(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
+    
+    return grpc::Status::OK;
+}
+
+grpc::Status RoomManagementService::RetrieveStaff(grpc::ServerContext * context, const StaffDTO * resource, Success * success) {
+    
+    return grpc::Status::OK;
+}
+
+grpc::Status RoomManagementService::ReleaseStaff(grpc::ServerContext * context, const StaffDTO * resource, Success * success) {
+    
+    return grpc::Status::OK;
+}
+
+grpc::Status RoomManagementService::TransferStaff(grpc::ServerContext * context, const StaffDTO * resource, Success * success) {
+    
+    return grpc::Status::OK;
+}
+
 grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context, const RoomQuarantine * quarantine_request, Success * success) {
     
     readMetadata(* context); // Read request metadata
@@ -425,7 +455,7 @@ grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context
     
     if (move_patients) { // If you want to move all the patients
         RoomType room_type = it->second.getRoomType();
-        const std::unordered_set<uint64_t> & patients = it->second.getList(GET_ASSIGNED_PATIENTS);
+        const std::unordered_set<uint64_t> & patients = it->second.getList(get_patients);
         
         // For each patient inside of the room
         for (uint64_t patient_id : patients) {
@@ -489,6 +519,26 @@ grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context
 
 
 grpc::Status RoomManagementService::GetRoomInformation(grpc::ServerContext * context, const RoomDTO * room, RoomInformation * room_information) {
+    
+    return grpc::Status::OK;
+}
+
+grpc::Status RoomManagementService::UpdatePatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) {
+    
+    return grpc::Status::OK;
+}
+
+grpc::Status RoomManagementService::UpdateResource(grpc::ServerContext * context, const ResourceDTO * resource_dto, Success * success) {
+    
+    return grpc::Status::OK;
+}
+
+grpc::Status RoomManagementService::UpdateStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) {
+    
+    return grpc::Status::OK;
+}
+
+grpc::Status RoomManagementService::UpdateRoom(grpc::ServerContext * context, const RoomDTO * room_dto, Success * success) {
     
     return grpc::Status::OK;
 }

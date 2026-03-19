@@ -111,6 +111,10 @@ namespace core {
 /* ******************************************************************** */
 
 namespace room {
+    
+    inline constexpr bool get_patients = true;
+    inline constexpr bool get_staff = false;
+
     inline constexpr uint32_t none = 0;
     inline constexpr uint32_t idle = 0;
     inline constexpr uint32_t maintenance = 1;

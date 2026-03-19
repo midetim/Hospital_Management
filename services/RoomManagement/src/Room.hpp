@@ -7,11 +7,6 @@
 #include "utils.hpp"
 
 
-constexpr bool GET_ASSIGNED_PATIENTS = true;
-constexpr bool GET_ASSIGNED_STAFF = false;
-
-
-
 class Room {
 private:
     room::RoomType room_type = room::RoomType::General;

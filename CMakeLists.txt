@@ -15,7 +15,7 @@ list(INSERT CMAKE_PREFIX_PATH 0 ${GRPC_INSTALL_DIR}/lib/cmake)
 # Find installed packages
 find_package(Protobuf CONFIG REQUIRED PATHS ${GRPC_INSTALL_DIR}/lib/cmake/protobuf)
 find_package(gRPC CONFIG REQUIRED PATHS ${GRPC_INSTALL_DIR}/lib/cmake/grpc)
-# find_package(Threads REQUIRED)
+find_package(Threads REQUIRED)
 
 # Common files
 add_subdirectory(${COMMON_DIR})

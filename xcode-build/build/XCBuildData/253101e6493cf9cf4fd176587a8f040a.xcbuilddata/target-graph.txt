@@ -1,0 +1,7 @@
+Target dependency graph (3 targets)
+Target 'RoomManagement' in project 'Hospital_Management'
+➜ Explicit dependency on target 'ZERO_CHECK' in project 'Hospital_Management'
+➜ Explicit dependency on target 'common' in project 'Hospital_Management'
+Target 'common' in project 'Hospital_Management'
+➜ Explicit dependency on target 'ZERO_CHECK' in project 'Hospital_Management'
+Target 'ZERO_CHECK' in project 'Hospital_Management' (no dependencies)
