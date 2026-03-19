@@ -18,6 +18,7 @@ if(APPLE)
 else()
     set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wl,--gc-sections -pthread")
 endif()
+
 # Environment variables
 set(SERVICE_DIR ${PROJECT_SOURCE_DIR}/services)
 set(COMMON_DIR ${PROJECT_SOURCE_DIR}/common)
