@@ -13,8 +13,8 @@
 
 struct resource_data {
     uint64_t resource_id = 0;
-    uint32_t room_id = rooms::idle;
-    std::string resource_type = std::string{resources::unknown};
+    uint32_t room_id = room::idle;
+    std::string resource_type = std::string{resource::unknown};
     uint32_t resource_stock = 0;
     
     bool operator<(const resource_data & other) const { return this->resource_id < other.resource_id; }
@@ -26,7 +26,7 @@ struct resource_data {
     }
 };
 
-class ResourceManagementClient : public IClient {
+class ResourceManagementClient final : public IClient {
 private:
     
     /* ******************************************************************** */

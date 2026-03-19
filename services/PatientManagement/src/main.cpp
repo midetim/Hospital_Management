@@ -11,7 +11,7 @@
 
 int main() {
     PatientManagementService service;
-    ServiceRunner::Run(service::patient_host, service, service::patient_db);
-    return (int) ReturnCode::SUCCESS;
+    ServiceRunner::Run(service::patient_host, service);
+    return (int) core::ReturnCode::SUCCESS;
 }
 

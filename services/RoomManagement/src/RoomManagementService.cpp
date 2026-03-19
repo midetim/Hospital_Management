@@ -1,6 +1,8 @@
 #include "RoomManagementService.hpp"
 #include "grpc_utils.hpp"
 
+using namespace core;
+using namespace room;
 
 /* ******************************************************************** */
 /* ********************** Private Functions *************************** */
@@ -27,7 +29,7 @@ uint32_t RoomManagementService::findAvailableRoom(const RoomType type, bool quar
         }
         
     }
-    return max_available > 0 ? best_room_id : NO_AVAILABLE_ROOM_FOUND;
+    return max_available > 0 ? best_room_id : room::none;
 }
 
 uint32_t RoomManagementService::findAvailableRoom(const std::string type, bool quarantined) const {

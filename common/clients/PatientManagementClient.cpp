@@ -51,7 +51,9 @@ PatientDTO PatientManagementClient::to_dto(const patient_data & pd) {
 
 
 PatientManagementClient::PatientManagementClient(std::string_view target)
-: stub(PatientManagement::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), common(Common::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), target_hostport(target) {}
+: stub(PatientManagement::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), common(Common::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), target_hostport(target) {
+    this->name = service::patient_client;
+}
 
 
 /* ******************************************************************** */
@@ -89,8 +91,8 @@ bool PatientManagementClient::update(std::string_view service_name) {
 /* ********************** PatientManagement gRPC ********************** */
 /* ******************************************************************** */
 
-bool PatientManagementClient::admitPatient(const patient_data & patient, std::string_view room_type, bool quarantined, std::string_view service_name) {
-    PatientDTO patient_out = to_dto(patient);
+bool PatientManagementClient::admitPatient(const patient_data & patient_data, std::string_view room_type, bool quarantined, std::string_view service_name) {
+    PatientDTO patient_out = to_dto(patient_data);
     
     // Set the rest of the information that was missed in to_dto
     patient_out.set_room_type(room_type);
@@ -110,8 +112,8 @@ bool PatientManagementClient::admitPatient(const patient_data & patient, std::st
     return success.successful();
 }
 
-bool PatientManagementClient::dischargePatient(const patient_data & patient, std::string_view service_name) {
-    PatientDTO patient_out = to_dto(patient);
+bool PatientManagementClient::dischargePatient(const patient_data & patient_data, std::string_view service_name) {
+    PatientDTO patient_out = to_dto(patient_data);
     
     // Setup the gRPC response
     grpc::ClientContext context;
@@ -169,8 +171,8 @@ bool PatientManagementClient::quarantinePatient(uint64_t patient_id, bool quaran
     return success.successful();
 }
 
-patient_data PatientManagementClient::getPatientInformation(const patient_data & patient, std::string_view service_name) {
-    PatientDTO patient_out = to_dto(patient);
+bool PatientManagementClient::getPatientInformation(patient_data & patient_data, std::string_view service_name) {
+    PatientDTO patient_out = to_dto(patient_data);
     
     // Setup the rest of the gRPC response
     grpc::ClientContext context;
@@ -183,12 +185,13 @@ patient_data PatientManagementClient::getPatientInformation(const patient_data &
         printStatusCode(status);
     }
     
-    // Return a filled out struct
-    return to_data(patient_in);
+    // Fill out struct
+    patient_data = to_data(patient_in);
+    return status.ok();
 }
 
-bool PatientManagementClient::updatePatientinformation(const patient_data & patient, std::string_view service_name) {
-    PatientDTO patient_out = to_dto(patient);
+bool PatientManagementClient::updatePatientinformation(const patient_data & patient_data, std::string_view service_name) {
+    PatientDTO patient_out = to_dto(patient_data);
     
     // Setup the rest of the gRPC response
     grpc::ClientContext context;
@@ -203,7 +206,7 @@ bool PatientManagementClient::updatePatientinformation(const patient_data & pati
     return success.successful();
 }
 
-std::vector<patient_data> PatientManagementClient::getPatientsInRoom(uint32_t room_id, std::string_view service_name) {
+bool PatientManagementClient::getPatientsInRoom(uint32_t room_id, std::vector<patient_data> & patients, std::string_view service_name) {
     RoomRequest room_request;
     room_request.set_room_id(room_id);
     
@@ -212,20 +215,19 @@ std::vector<patient_data> PatientManagementClient::getPatientsInRoom(uint32_t ro
     PatientList list;
     addMetadata(context, service_name, target_hostport);
     
-    std::vector<patient_data> patients;
-    
     grpc::Status status = stub->GetPatientsInRoom(& context, room_request, & list);
     if (!status.ok()) {
         printStatusCode(status);
-        return patients;
+        return false;
     }
     
+    patients.clear();
     for (const PatientDTO & p : list.patients()) {
         // Add patient to the list
         patients.push_back(to_data(p));
     }
 
-    return patients;
+    return status.ok();
 }
 
 /* ******************************************************************** */

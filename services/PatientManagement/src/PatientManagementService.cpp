@@ -97,7 +97,7 @@ grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * contex
     uint32_t success_code = room_client->admitPatient(patient_id, room_type, is_quarantined, this->name);
     
     // If the admission failed
-    if (success_code == ROOM_NOT_FOUND) {
+    if (success_code == room::none) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not admit patient");
     }
@@ -178,7 +178,7 @@ grpc::Status PatientManagementService::TransferPatient(grpc::ServerContext * con
     // Get the new room id of the patient
     uint32_t room_transfer = room_client->transferPatient(patient_id, old_room_id, room_type, new_room_id, is_quarantined, this->name);
     
-    if (room_transfer == ROOM_NOT_FOUND) { // If the room service could not put the patient into a new room
+    if (room_transfer == room::none) { // If the room service could not put the patient into a new room
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not admit patient to new room");
     }
@@ -208,7 +208,7 @@ grpc::Status PatientManagementService::QuarantinePatient(grpc::ServerContext * c
     
     // Attempt to quarantine the patient
     uint32_t quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, this->name);
-    if (quarantined == ROOM_NOT_FOUND) { // Patient could not be quarantined
+    if (quarantined == room::none) { // Patient could not be quarantined
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
     
@@ -238,7 +238,7 @@ grpc::Status PatientManagementService::LiftPatientQuarantine(grpc::ServerContext
     
     // Attempt to quarantine the patient
     uint32_t quarantined = room_client->quarantinePatient(patient_id, it->second.getRoomId(), quarantine_entire_room, this->name);
-    if (quarantined == ROOM_NOT_FOUND) { // Patient could not be quarantined
+    if (quarantined == room::none) { // Patient could not be quarantined
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
     

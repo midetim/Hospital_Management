@@ -6,45 +6,27 @@
 #include "RoomManagementClient.hpp"
 #include "PatientManagementClient.hpp"
 #include "ResourceManagementClient.hpp"
+#include "StaffManagementClient.hpp"
 #include <vector>
 
-class FrontEndService : public IService {
+class FrontEndService final : public IService {
 private:
     std::unique_ptr<RoomManagementClient> room_client;
     std::unique_ptr<PatientManagementClient> patient_client;
     std::unique_ptr<ResourceManagementClient> resource_client;
-      
+    std::unique_ptr<StaffManagementClient> staff_client;
 public:
     
-    /* Patient Management Service Functions */
-    void add_patient();
-    void remove_patient();
-    void view_patient();
-    
-    /* Room Management Service Functions */
-    void view_room();
-    
-    
-    /* Resource Management Service Functions */
-    
-    /* Staff Management Service Functions*/
-    
-    void initConnections();
-    void show_options();
-    void read_input();
-    
-    ReturnCode loadFromDB(std::string_view database_name) override;
-    ReturnCode uploadToDB(std::string_view database_name) override;
-    
-    std::string_view service_name() const override { return service::front; };
-    
-    ReturnCode init() override;
-    void HandleShutdown(int signal) override;
-    void print_internal() override;
-    
-  
     FrontEndService();
     ~FrontEndService();
+  
+    virtual core::ReturnCode connectToDB() override;
+    virtual core::ReturnCode loadFromDB() override;
+    virtual core::ReturnCode uploadToDB() override;
+    virtual core::ReturnCode init() override;
+    virtual void print_internal() override;
+    
+    void read_input();
     
 };
 

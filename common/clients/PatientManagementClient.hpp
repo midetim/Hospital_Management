@@ -17,10 +17,10 @@ struct patient_data {
     uint64_t patient_id = 0;
     person::Sex patient_sex = person::Sex::Unknown;
     patient::Condition patient_condition = patient::Condition::Unknown;
-    uint32_t room_id = rooms::none;
+    uint32_t room_id = room::none;
 };
 
-class PatientManagementClient : public IClient {
+class PatientManagementClient final : public IClient {
 private:
     
     /* ******************************************************************** */
@@ -73,13 +73,11 @@ public:
     bool print(std::string_view service_name) override;
     bool update(std::string_view service_name) override;
     
-    std::string_view name() override { return service::patient_client; }
-    
     /* ******************************************************************** */
     /* ********************** PatientManagement gRPC ********************** */
     /* ******************************************************************** */
     
-    bool admitPatient(const patient_data & patient, std::string_view room_type, bool quarantined, std::string_view service_name);
+    bool admitPatient(const patient_data & patient_data, std::string_view room_type, bool quarantined, std::string_view service_name);
     
     bool dischargePatient(const patient_data & patient_data, std::string_view service_name);
     
@@ -87,11 +85,11 @@ public:
     
     bool quarantinePatient(uint64_t patient_id, bool quarantine_patient, bool quarantine_room, std::string_view service_name);
     
-    patient_data getPatientInformation(const patient_data & patient, std::string_view service_name);
+    bool getPatientInformation(patient_data & patient_data, std::string_view service_name);
     
-    bool updatePatientinformation(const patient_data & patient, std::string_view service_name);
+    bool updatePatientinformation(const patient_data & patient_data, std::string_view service_name);
     
-    std::vector<patient_data> getPatientsInRoom(uint32_t room_id, std::string_view service_name);
+    bool getPatientsInRoom(uint32_t room_id, std::vector<patient_data> & data, std::string_view service_name);
     
     /* ******************************************************************** */
     /* ****************************** Other ******************************* */

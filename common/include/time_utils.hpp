@@ -59,7 +59,7 @@ namespace time_util {
          * @brief Fills out a DateDTO with the date parameters
          * @param dto The data transfer object to fill out
          */
-        void fillDTO(DateDTO * dto);
+        void fillDTO(DateDTO * dto) const;
         
         /* ******************************************************************** */
         /* *********************** Date Constructors ************************** */
@@ -242,7 +242,7 @@ namespace time_util {
         Timestamp shift_start = times::zero;
         Timestamp shift_end   = times::zero;
         uint64_t duration = duration::none;
-        uint32_t room_id  = rooms::idle;
+        uint32_t room_id  = room::idle;
         
         /* ******************************************************************** */
         /* ******************** Shift Constructor ***************************** */

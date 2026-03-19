@@ -6,6 +6,9 @@
 #include "utils.hpp"
 
 class IClient {
+protected:
+    std::string_view name;
+    
 public:
 	virtual ~IClient() = 0;
     
@@ -32,7 +35,7 @@ public:
      * @brief The name of the client
      * @return Returns the client name as a string
      */
-    virtual std::string_view name() = 0;
+    std::string_view client_name() { return name; };
     
     
 };

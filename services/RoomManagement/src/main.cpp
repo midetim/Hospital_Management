@@ -10,7 +10,7 @@
 
 int main() {
     RoomManagementService service;
-    ServiceRunner::Run(service::room_host, service, service::room_db);
-    return (int) ReturnCode::SUCCESS;
+    ServiceRunner::Run(service::room_host, service);
+    return (int) core::ReturnCode::SUCCESS;
 }
  

@@ -11,6 +11,6 @@
 
 int main() {
     ResourceManagementService service;
-    ServiceRunner::Run(service::resource_host, service, service::resource_db);
-    return (int) ReturnCode::SUCCESS;
+    ServiceRunner::Run(service::resource_host, service);
+    return (int) core::ReturnCode::SUCCESS;
 }

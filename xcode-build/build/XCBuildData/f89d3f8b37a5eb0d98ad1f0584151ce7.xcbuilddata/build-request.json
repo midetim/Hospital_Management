@@ -1,8 +1,8 @@
 {
   "buildCommand" : {
-    "command" : "prepareForIndexing",
-    "enableIndexBuildArena" : false,
-    "targets" : null
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildOnly"
   },
   "configuredTargets" : [
     {
@@ -10,7 +10,7 @@
     }
   ],
   "containerPath" : "/Users/matthewhvizdos/Desktop/COE892/Hospital_Management/xcode-build/Hospital_Management.xcodeproj",
-  "continueBuildingAfterErrors" : true,
+  "continueBuildingAfterErrors" : false,
   "dependencyScope" : "workspace",
   "enableIndexBuildArena" : false,
   "hideShellScriptEnvironment" : false,

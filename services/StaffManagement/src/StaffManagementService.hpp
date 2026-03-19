@@ -38,7 +38,7 @@ private:
     void staff_to_dto(const Staff & obj, StaffDTO & dto);
     void dto_to_staff(const StaffDTO & dto, Staff & obj);
     
-    general::ReturnCode convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, StaffSchedule * schedule, const StaffDTO * staff_dto) const;
+    core::ReturnCode convertToSchedule(const std::set<time_util::Shift> & scheduled_shifts, StaffSchedule * schedule, const StaffDTO * staff_dto) const;
     
 public:
     

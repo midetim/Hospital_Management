@@ -1,1 +1,1 @@
-
+import common.proto.generated

@@ -3,5 +3,5 @@
 int main() {
     FrontEndService f;
     f.read_input();
-    return (int) ReturnCode::SUCCESS;
+    return (int) core::ReturnCode::SUCCESS;
 }

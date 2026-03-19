@@ -1,17 +1,20 @@
 #include "Room.hpp"
 
+using namespace core;
+using namespace room;
+
 Room::Room(uint32_t capacity, RoomType type)
     : room_capacity(capacity),
       room_type(type) {}
 
 Room::Room()
-    : Room(DEFAULT_PATIENT_CAPACITY_LIMIT, RoomType::General) {}
+    : Room(capacity::def, RoomType::General) {}
 
 Room::Room(uint32_t capacity)
     : Room(capacity, RoomType::General) {}
 
 Room::Room(RoomType type)
-    : Room(DEFAULT_PATIENT_CAPACITY_LIMIT, type) {}
+    : Room(capacity::def, type) {}
 
 Room::~Room() {
 

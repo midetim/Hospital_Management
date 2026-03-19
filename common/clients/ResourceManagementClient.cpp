@@ -8,7 +8,9 @@
 
 ResourceManagementClient::ResourceManagementClient(std::string_view target)
 : stub(ResourceManagement::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), target_hostport(target),
-    common(Common::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))) {}
+    common(Common::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))) {
+        this->name = service::resource_client;
+    }
 
 /* ******************************************************************** */
 /* ********************* Common gRPC | ICLient ************************ */
@@ -62,7 +64,7 @@ bool ResourceManagementClient::registerResource(uint64_t resource_id, std::strin
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return status.ok();
+    return success.successful();
 }
 
 bool ResourceManagementClient::deregisterResource(uint64_t resource_id, std::string_view service_name) {
@@ -80,7 +82,7 @@ bool ResourceManagementClient::deregisterResource(uint64_t resource_id, std::str
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return status.ok();
+    return success.successful();
 }
 
 bool ResourceManagementClient::scheduleMaintenance(uint64_t resource_id, std::string_view service_name) {
@@ -98,7 +100,7 @@ bool ResourceManagementClient::scheduleMaintenance(uint64_t resource_id, std::st
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return status.ok();
+    return success.successful();
 }
 
 bool ResourceManagementClient::addToSchedule(uint64_t resource_id, const time_util::Shift & shift, std::string_view service_name) {
@@ -121,7 +123,7 @@ bool ResourceManagementClient::addToSchedule(uint64_t resource_id, const time_ut
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return status.ok();
+    return success.successful();
 }
 
 bool ResourceManagementClient::removeFromSchedule(uint64_t resource_id, const time_util::Date & shift_start, std::string_view service_name) {
@@ -131,7 +133,7 @@ bool ResourceManagementClient::removeFromSchedule(uint64_t resource_id, const ti
     ResourceDTO * resource = resource_shift.mutable_resource();
     resource->set_resource_id(resource_id);
     
-    time_util::Shift new_shift(time_util::date_to_timestamp(shift_start), time_util::times::zero, rooms::idle);
+    time_util::Shift new_shift(time_util::date_to_timestamp(shift_start), time_util::times::zero, room::idle);
     
     ShiftDTO * shift_dto = resource_shift.mutable_shift();
     time_util::shift_to_dto(new_shift, * shift_dto);
@@ -146,7 +148,7 @@ bool ResourceManagementClient::removeFromSchedule(uint64_t resource_id, const ti
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return status.ok();
+    return success.successful();
 }
 
 bool ResourceManagementClient::removeFromRoom(uint64_t resource_id, uint32_t room_id, std::string_view service_name) {
@@ -165,7 +167,7 @@ bool ResourceManagementClient::removeFromRoom(uint64_t resource_id, uint32_t roo
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return status.ok();
+    return success.successful();
 }
 
 bool ResourceManagementClient::changeSchedule(uint64_t resource_id, uint32_t new_room_id, const time_util::Date & old_shift, uint64_t new_shift_duration, const time_util::Date & new_shift, std::string_view service_name) {
@@ -194,7 +196,7 @@ bool ResourceManagementClient::changeSchedule(uint64_t resource_id, uint32_t new
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return status.ok();
+    return success.successful();
 }
 
 bool ResourceManagementClient::seeTodaysSchedule(uint64_t resource_id, std::set<time_util::Shift> & schedule, std::string_view service_name) {
@@ -261,7 +263,7 @@ bool ResourceManagementClient::seeSchedule_Range(uint64_t resource_id, const tim
     ShiftDTO * shift = resource_shift.mutable_shift();
     time_util::Timestamp range_begin(time_util::date_to_timestamp(start_date));
     time_util::Timestamp range_end(time_util::date_to_timestamp(end_date));
-    time_util::Shift shift_range(range_begin, range_end, rooms::idle);
+    time_util::Shift shift_range(range_begin, range_end, room::idle);
     time_util::shift_to_dto(shift_range, * shift);
     
     grpc::ClientContext context; // Context
@@ -304,10 +306,11 @@ bool ResourceManagementClient::changeStockAmount(uint64_t stock_id, std::string 
     } else {
         status = stub->RemoveStock(& context, stock, & success);
     }
+    
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return status.ok();
+    return success.successful();
 }
 
 bool ResourceManagementClient::useStock(uint64_t stock_id, std::string stock_type, uint32_t use_amount, std::string_view service_name) {
@@ -326,7 +329,7 @@ bool ResourceManagementClient::useStock(uint64_t stock_id, std::string stock_typ
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return status.ok();
+    return success.successful();
 }
 
 bool ResourceManagementClient::emptyStock(uint64_t stock_id, std::string stock_type, std::string_view service_name) {
@@ -344,7 +347,7 @@ bool ResourceManagementClient::emptyStock(uint64_t stock_id, std::string stock_t
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return status.ok();
+    return success.successful();
 }
 
 bool ResourceManagementClient::getResourceInformation(uint64_t resource_id, std::string resource_type, resource_data & data, std::string_view service_name) {
@@ -364,7 +367,7 @@ bool ResourceManagementClient::getResourceInformation(uint64_t resource_id, std:
     }
     
     data.set(success);
-    return true;
+    return status.ok();
 }
 
 bool ResourceManagementClient::getAllResourcesInRoom(uint32_t room_id, std::set<resource_data> & resources, std::string_view service_name) {

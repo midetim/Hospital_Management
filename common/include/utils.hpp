@@ -114,6 +114,38 @@ namespace room {
     inline constexpr uint32_t none = 0;
     inline constexpr uint32_t idle = 0;
     inline constexpr uint32_t maintenance = 1;
+
+    namespace capacity { // Room capacity namespace
+        inline constexpr uint32_t def     = 20;
+        inline constexpr uint32_t surgery = 1;
+        inline constexpr uint32_t none    = 0;
+    }
+
+    enum class RoomType {
+        General,
+        Operating,
+        IntesiveCare,
+        Emergency
+    };
+
+    inline std::string roomTypeToString(RoomType t) {
+        switch (t) {
+            case RoomType::General:         return "General";
+            case RoomType::Operating:       return "Operating";
+            case RoomType::IntesiveCare:    return "IntesiveCare";
+            case RoomType::Emergency:       return "Emergency";
+            default:                        return "General";
+        }
+    }
+
+    inline RoomType stringToRoomType(const std::string & s) {
+        if      (s == "General")        return RoomType::General;
+        else if (s == "Operating")      return RoomType::Operating;
+        else if (s == "IntensiveCare")  return RoomType::IntesiveCare;
+        else if (s == "Emergency")      return RoomType::Emergency;
+        else                            return RoomType::General;
+    }
+
 }
 
 /* ******************************************************************** */

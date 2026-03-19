@@ -497,8 +497,14 @@ grpc::Status StaffManagementService::SeeScheduleRange(grpc::ServerContext * cont
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the staff to remove");
     }
     
-    std::set<time_util::Shift> shifts = it->second->access_schedule()->getToday();
-    ReturnCode success = convertToSchedule(shifts, schedule, range->staff());
+    time_util::Shift temp_shift;
+    time_util::dto_to_shift(range->shift(), temp_shift);
+    
+    time_util::Date start_date = time_util::timestamp_to_date(temp_shift.shift_start);
+    time_util::Date end_date   = time_util::timestamp_to_date(temp_shift.shift_end);
+    
+    std::set<time_util::Shift> shifts = it->second->access_schedule()->getBetween(start_date, end_date);
+    ReturnCode success = convertToSchedule(shifts, schedule, & range->staff());
     
     switch (success) {
         case ReturnCode::SUCCESS: return grpc::Status::OK;

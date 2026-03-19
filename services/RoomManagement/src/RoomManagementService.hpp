@@ -45,7 +45,7 @@ private:
      * @param quarantined Determines whether to search the quarantined rooms set or not
      * @return Returns the room id of type ``type``
      */
-    uint32_t findAvailableRoom(const RoomType type, bool quarantined) const;
+    uint32_t findAvailableRoom(const room::RoomType type, bool quarantined) const;
     
     /**
      * @brief Finds the room with the largest number of available beds
@@ -138,10 +138,10 @@ public:
     /* *************************** IServer ******************************** */
     /* ******************************************************************** */
     
-    ReturnCode connectToDB() override;
-    ReturnCode loadFromDB() override;
-    ReturnCode uploadToDB() override;
-    ReturnCode init() override;
+    core::ReturnCode connectToDB() override;
+    core::ReturnCode loadFromDB() override;
+    core::ReturnCode uploadToDB() override;
+    core::ReturnCode init() override;
     void print_internal() override;
     
     

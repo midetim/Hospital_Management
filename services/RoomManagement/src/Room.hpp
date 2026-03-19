@@ -6,41 +6,16 @@
 
 #include "utils.hpp"
 
-#define DEFAULT_STAFF_CAPACITY_LIMIT 10
-#define DEFAULT_PATIENT_CAPACITY_LIMIT 1
 
 constexpr bool GET_ASSIGNED_PATIENTS = true;
 constexpr bool GET_ASSIGNED_STAFF = false;
 
-enum class RoomType {
-    General,
-    Operating,
-    IntesiveCare,
-    Emergency
-};
 
-inline std::string roomTypeToString(RoomType t) {
-    switch (t) {
-        case RoomType::General:         return "General";
-        case RoomType::Operating:       return "Operating";
-        case RoomType::IntesiveCare:    return "IntesiveCare";
-        case RoomType::Emergency:       return "Emergency";
-        default:                        return "General";
-    }
-}
-
-inline RoomType stringToRoomType(const std::string & s) {
-    if      (s == "General")        return RoomType::General;
-    else if (s == "Operating")      return RoomType::Operating;
-    else if (s == "IntensiveCare")  return RoomType::IntesiveCare;
-    else if (s == "Emergency")      return RoomType::Emergency;
-    else                            return RoomType::General;
-}   
 
 class Room {
 private:
-    RoomType room_type = RoomType::General;
-    uint32_t room_id = 0;
+    room::RoomType room_type = room::RoomType::General;
+    uint32_t room_id = room::none;
     uint32_t room_capacity = 0;
     uint32_t current_capacity = 0;
     std::unordered_set<uint64_t> assigned_staff;
@@ -56,7 +31,7 @@ public:
      * @param type The room type
      * @note Master Constructor
      */
-    Room(uint32_t capacity, RoomType type);
+    Room(uint32_t capacity, room::RoomType type);
     
     /**
      * @brief Instantiate a room with all values zeroed
@@ -73,7 +48,7 @@ public:
      * @brief Instantiate a room with a specific type
      * @param type The room type
      */
-    Room(RoomType type);
+    Room(room::RoomType type);
     
     ~Room();
     
@@ -84,7 +59,7 @@ public:
      * @param patient_id The id of the patient to add
      * @return Returns a return code depending on success
      */
-    ReturnCode addPatient(uint64_t patient_id);
+    core::ReturnCode addPatient(uint64_t patient_id);
     
     /**
      * @brief Adds multiple patients to the room
@@ -92,7 +67,7 @@ public:
      * @return Returns a vector of return codes depending on each patients success
      * @warning Avoid using if possible
      */
-    std::vector<ReturnCode> addPatients(const std::vector<uint64_t> & patient_ids);
+    std::vector<core::ReturnCode> addPatients(const std::vector<uint64_t> & patient_ids);
     
     /**
      * @brief Checks to see if the room has the patient with the corresponding id
@@ -105,14 +80,14 @@ public:
      * @param patient_id The id of the patient to remove
      * @return Returns a return code depending on success
      */
-    ReturnCode removePatient(uint64_t patient_id);
+    core::ReturnCode removePatient(uint64_t patient_id);
     
     /**
      * @brief Removes multiple patients from a room
      * @param patient_ids A vector of patients to remove
      * @return Returns a vector of return codes depending on each patients success
      */
-    std::vector<ReturnCode> removePatients(const std::vector<uint64_t> & patient_ids);
+    std::vector<core::ReturnCode> removePatients(const std::vector<uint64_t> & patient_ids);
     
     /**
      * @return Get the rooms id
@@ -132,7 +107,7 @@ public:
     /**
      * @return Get the type of the room
      */
-    RoomType getRoomType() const { return room_type; }
+    room::RoomType getRoomType() const { return room_type; }
     
     /**
      * @brief Recalculate the current patient count of the room
@@ -176,8 +151,8 @@ public:
     void clearPatients() { assigned_patients.clear(); }
     
     
-    ReturnCode addResource(uint64_t rid);
-    ReturnCode removeResource(uint64_t rid);
+    core::ReturnCode addResource(uint64_t rid);
+    core::ReturnCode removeResource(uint64_t rid);
     
     
     friend std::ostream & operator<<(std::ostream & os, const Room & p);
