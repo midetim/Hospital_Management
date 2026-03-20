@@ -50,10 +50,10 @@ namespace service {
     inline constexpr std::string_view staff_client = "Staff Management Client";
     
     // DATABASE NAMES
-    inline constexpr std::string_view room_db =     "No db yet";
-    inline constexpr std::string_view resource_db = "No db yet";
-    inline constexpr std::string_view patient_db =  "No db yet";
-    inline constexpr std::string_view staff_db =    "No db yet";
+    inline constexpr std::string_view room_db =     "../database/room_database.json";
+    inline constexpr std::string_view resource_db = "../database/resource_database.json";
+    inline constexpr std::string_view patient_db =  "../database/patient_database.json";
+    inline constexpr std::string_view staff_db =    "../database/staff_database.json";
 
 }
 
