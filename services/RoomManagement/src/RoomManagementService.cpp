@@ -731,12 +731,6 @@ grpc::Status RoomManagementService::GetRoomInformation(grpc::ServerContext * con
 /* *************************** IServer ******************************** */
 /* ******************************************************************** */
 
-ReturnCode RoomManagementService::connectToDB() {
-    
-    return ReturnCode::NOT_YET_IMPLEMENTED;
-}
-
-
 ReturnCode RoomManagementService::loadFromDB() {
     
     return ReturnCode::NOT_YET_IMPLEMENTED;

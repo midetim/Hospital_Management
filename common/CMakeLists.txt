@@ -91,6 +91,7 @@ add_custom_target(python_protos ALL
 
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Client.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/JSONParser.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Schedule.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Service.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/grpc_utils.hpp
@@ -154,6 +155,7 @@ source_group("Clients/Source Files" FILES
 # Common Sources and Headers
 source_group("Header Files" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Client.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/JSONParser.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Schedule.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Service.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/grpc_utils.hpp

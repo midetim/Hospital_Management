@@ -86,12 +86,15 @@ void FrontEndService::read_input() {
                         case 0: goto debug_back;
                         case 1:
                             std::cout << "[DEBUG] Ping called\n";
+                            ping();
                             break;
                         case 2:
                             std::cout << "[DEBUG] Print called\n";
+                            print();
                             break;
                         case 3:
                             std::cout << "[DEBUG] Update called\n";
+                            update();
                             break;
                         default:
                             std::cout << "Invalid choice\n";

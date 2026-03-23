@@ -5,11 +5,6 @@
 
 using namespace core;
 
-ReturnCode IService::connectToDB() {
-    
-    return ReturnCode::SUCCESS;
-}
-
 void ServiceRunner::Run(std::string_view address, std::string_view service_name, grpc::Service & service1, grpc::Service & service2) {
     grpc::ServerBuilder builder;
     builder.AddListeningPort(std::string(address), grpc::InsecureServerCredentials());

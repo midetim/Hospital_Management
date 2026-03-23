@@ -215,7 +215,7 @@ namespace staff_front_end {
 
         /* ---------------- Send Request ---------------- */
 
-        bool success = ref.addStaff(data, service::staff);
+        bool success = ref.addStaff(data, service::front);
 
         if (success) {
             std::cout << Utils::timestamp()
@@ -296,7 +296,7 @@ namespace staff_front_end {
 
         /* ---------------- Send Request ---------------- */
 
-        bool success = ref.removeStaff(data, service::staff);
+        bool success = ref.removeStaff(data, service::front);
 
         if (success) {
             std::cout << Utils::timestamp()
@@ -415,7 +415,7 @@ namespace staff_front_end {
 
         /* ---------------- Send Request ---------------- */
 
-        bool success = ref.changePosition(data, service::staff);
+        bool success = ref.changePosition(data, service::front);
 
         if (success) {
             std::cout << Utils::timestamp()
@@ -535,7 +535,7 @@ namespace staff_front_end {
 
         /* ---------------- Send Request ---------------- */
 
-        bool success = ref.changeClearance(data, service::staff);
+        bool success = ref.changeClearance(data, service::front);
 
         if (success) {
             std::cout << Utils::timestamp()
@@ -695,7 +695,7 @@ namespace staff_front_end {
 
         /* ---------------- Send Request ---------------- */
 
-        bool success = ref.updateStaffInformation(data, service::staff);
+        bool success = ref.updateStaffInformation(data, service::front);
 
         if (success) {
             std::cout << Utils::timestamp()
@@ -810,7 +810,7 @@ namespace staff_front_end {
             return;
         }
 
-        bool success = ref.addShift(staff_id, new_shift, service::staff);
+        bool success = ref.addShift(staff_id, new_shift, service::front);
 
         if (success) {
             std::cout << Utils::timestamp()
@@ -863,7 +863,7 @@ namespace staff_front_end {
             return;
         }
 
-        bool success = ref.removeShift(staff_id, target_date, service::staff);
+        bool success = ref.removeShift(staff_id, target_date, service::front);
 
         if (success) {
             std::cout << Utils::timestamp()
@@ -952,14 +952,7 @@ namespace staff_front_end {
 
         /* ---------- Send RPC ---------- */
 
-        bool success = ref.transferShift(
-            staff_id,
-            target_date,
-            replacement_date,
-            duration,
-            new_room,
-            service::staff
-        );
+        bool success = ref.transferShift(staff_id, target_date, replacement_date, duration, new_room, service::front);
 
         if (success) {
             std::cout << Utils::timestamp()
@@ -1077,12 +1070,7 @@ namespace staff_front_end {
 
         /* ---------- Send RPC ---------- */
 
-        bool success = ref.bookTimeOff(
-            staff_id,
-            start_date,
-            end_date,
-            service::staff
-        );
+        bool success = ref.bookTimeOff(staff_id, start_date, end_date, service::front);
 
         if (success) {
 
@@ -1104,7 +1092,7 @@ namespace staff_front_end {
         std::set<time_util::Shift> shifts;
         staff_data staff = getStaffFromInput();
 
-        if (client.seeTodaysSchedule(staff, shifts, service::staff_client)) {
+        if (client.seeTodaysSchedule(staff, shifts, service::front)) {
             std::cout << ansi::bgreen << "\n===== Today's Shifts =====\n" << ansi::reset;
             if (shifts.empty()) {
                 std::cout << ansi::byellow << "No shifts scheduled for today.\n" << ansi::reset;
@@ -1118,7 +1106,7 @@ namespace staff_front_end {
         std::set<time_util::Shift> shifts;
         staff_data staff = getStaffFromInput();
 
-        if (client.seeTomorrowsSchedule(staff, shifts, service::staff_client)) {
+        if (client.seeTomorrowsSchedule(staff, shifts, service::front)) {
             std::cout << ansi::bgreen << "\n===== Tomorrow's Shifts =====\n" << ansi::reset;
             if (shifts.empty()) {
                 std::cout << ansi::byellow << "No shifts scheduled for tomorrow.\n" << ansi::reset;
@@ -1147,7 +1135,7 @@ namespace staff_front_end {
             std::cout << ansi::bred << "Invalid date format.\n" << ansi::reset;
         }
 
-        if (client.seeScheduleBetweenRange(staff, start, end, shifts, service::staff_client)) {
+        if (client.seeScheduleBetweenRange(staff, start, end, shifts, service::front)) {
             std::cout << ansi::bgreen << "\n===== Shifts from " << start << " to " << end << " =====\n" << ansi::reset;
             if (shifts.empty()) {
                 std::cout << ansi::byellow << "No shifts scheduled in this range.\n" << ansi::reset;

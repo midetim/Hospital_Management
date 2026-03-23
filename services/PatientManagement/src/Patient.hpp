@@ -86,6 +86,8 @@ public:
      */
     const person::Name & getPatientName() const { return this->patient_name; }
     
+    void setPatientName(const person::Name & name) { this->patient_name = name; }
+    
     /**
      * @brief Sets the patients sex
      * @param s Sex enumeration for the patient
@@ -120,6 +122,17 @@ public:
     
     friend std::ostream & operator<<(std::ostream & os, const Patient & p);
 };
+
+#include <functional> 
+
+namespace std {
+    template<>
+    struct hash<Patient> {
+        std::size_t operator()(const Patient& p) const noexcept {
+            return std::hash<uint64_t>{}(p.getPatientId());
+        }
+    };
+}
 
 
 #endif

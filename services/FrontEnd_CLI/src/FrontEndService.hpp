@@ -20,7 +20,6 @@ public:
     ~FrontEndService();
   
     // Nothing to do with these functions
-    core::ReturnCode connectToDB() override { return core::ReturnCode::SUCCESS; }
     core::ReturnCode loadFromDB() override { return core::ReturnCode::SUCCESS; }
     core::ReturnCode uploadToDB() override { return core::ReturnCode::SUCCESS; }
     core::ReturnCode init() override { return core::ReturnCode::SUCCESS; }

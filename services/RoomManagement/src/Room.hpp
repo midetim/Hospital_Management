@@ -87,21 +87,25 @@ public:
      * @return Get the rooms id
      */
     uint32_t getRoomId() const { return room_id; }
+    void setRoomId(uint32_t room_id) { this->room_id = room_id; }
     
     /**
      * @return Get the rooms maximum capacity
      */
     uint32_t getRoomCapacity() const { return room_capacity; }
+    void setRoomCapacity(uint32_t cap) { this->room_capacity = cap; }
     
     /**
      * @return Get the rooms current patient count
      */
     uint32_t getCurrentCapacity() const { return current_capacity; }
+    void setCurrentCapacity(uint32_t cap) { this->current_capacity = cap; }
     
     /**
      * @return Get the type of the room
      */
     room::RoomType getRoomType() const { return room_type; }
+    void setRoomType(room::RoomType type) { this->room_type = type; }
     
     /**
      * @brief Recalculate the current patient count of the room
@@ -154,6 +158,10 @@ public:
     const std::unordered_set<uint64_t> * see_patients()  { return & assigned_patients; }
     const std::unordered_set<uint64_t> * see_resources() { return & assigned_resources; }
     const std::unordered_set<uint64_t> * see_staff()     { return & assigned_staff; }
+    
+    std::unordered_set<uint64_t> & getAssignedStaff()     { return assigned_staff; }
+    std::unordered_set<uint64_t> & getAssignedPatients()  { return assigned_patients; }
+    std::unordered_set<uint64_t> & getAssignedResources() { return assigned_resources; }
     
     
     friend std::ostream & operator<<(std::ostream & os, const Room & p);

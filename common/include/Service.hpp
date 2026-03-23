@@ -23,14 +23,6 @@ public:
     std::string_view db_name() { return this->database_name; }
     
     /**
-     * @brief Connects the microservice to the database
-     * @param database_name The name of the database to connect to
-     * @return Returns a return code depending on if it was successful or not
-     * @warning **NO DATABASES EXIST YET**
-     */
-    virtual core::ReturnCode connectToDB() = 0;
-    
-    /**
      * @brief Load all data from the database into the service
      * @param database_name The name of the database to pull data from
      * @return Returns a return code depending on if it was successful or not

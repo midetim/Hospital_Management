@@ -10,6 +10,8 @@
 #include "PatientManagement.pb.h"
 #include "PatientManagement.grpc.pb.h"
 
+#include "PatientJSONParser.hpp"
+
 #include <unordered_map>
 
 /* ******************************************************************** */
@@ -29,6 +31,7 @@ private:
     
     std::unordered_map<uint64_t, Patient> hospital_patients;
     std::unique_ptr<RoomManagementClient> room_client;
+    std::unique_ptr<PatientJSONParser> parser;
     
     /* ******************************************************************** */
     /* ********************** Private Functions *************************** */
@@ -125,7 +128,6 @@ public:
     /* *************************** IServer ******************************** */
     /* ******************************************************************** */
 
-    core::ReturnCode connectToDB() override;
     core::ReturnCode loadFromDB() override;
     core::ReturnCode uploadToDB() override;
     core::ReturnCode init() override;

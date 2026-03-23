@@ -25,7 +25,7 @@ uint64_t PatientManagementService::find_patient(const Patient & p) {
 /* ******************************************************************** */
 
 PatientManagementService::PatientManagementService()
-: room_client(std::make_unique<RoomManagementClient>(service::room_host)) {
+: room_client(std::make_unique<RoomManagementClient>(service::room_host)), parser(std::make_unique<PatientJSONParser>(service::patient_db)) {
     this->name = service::patient;
     this->database_name = service::patient_db;
 }
@@ -376,19 +376,22 @@ grpc::Status PatientManagementService::GetPatientsInRoom(grpc::ServerContext * c
 /* ****************************** IServer ***************************** */
 /* ******************************************************************** */
 
-ReturnCode PatientManagementService::connectToDB() {
-    
-    return ReturnCode::NOT_YET_IMPLEMENTED;
-}
-
 ReturnCode PatientManagementService::loadFromDB() {
-    
-    return ReturnCode::NOT_YET_IMPLEMENTED;
+    std::unordered_set<Patient> patients;
+    parser->read_all(patients);
+    for (const Patient & p : patients) {
+        hospital_patients.emplace(p.getPatientId(), p);
+    }
+    return ReturnCode::SUCCESS;
 }
 
 ReturnCode PatientManagementService::uploadToDB() {
-    
-    return ReturnCode::NOT_YET_IMPLEMENTED;
+    std::unordered_set<Patient> patients;
+    for (const auto & [id, patient] : hospital_patients) {
+        patients.emplace(patient);
+    }
+    parser->write_all(patients);
+    return ReturnCode::SUCCESS;
 }
 
 ReturnCode PatientManagementService::init() {

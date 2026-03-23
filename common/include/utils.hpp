@@ -182,6 +182,8 @@ namespace person {
             os << " " << n.last;
             return os;
         }
+        
+        bool operator==(const Name & other) const { return (this->first == other.first && this->last == other.last); }
     };
 
 

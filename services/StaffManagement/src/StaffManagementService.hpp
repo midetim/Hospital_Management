@@ -104,7 +104,6 @@ public:
     /* *************************** IServer ******************************** */
     /* ******************************************************************** */
     
-    core::ReturnCode connectToDB() override;
     core::ReturnCode loadFromDB() override;
     core::ReturnCode uploadToDB() override;
     core::ReturnCode init() override;

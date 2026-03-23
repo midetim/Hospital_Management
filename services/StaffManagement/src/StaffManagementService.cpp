@@ -570,11 +570,6 @@ grpc::Status StaffManagementService::GetStaffInRoom(grpc::ServerContext * contex
 /* *************************** IServer ******************************** */
 /* ******************************************************************** */
 
-ReturnCode StaffManagementService::connectToDB() {
-    
-    return ReturnCode::NOT_YET_IMPLEMENTED;
-}
-
 ReturnCode StaffManagementService::loadFromDB() {
     
     return ReturnCode::NOT_YET_IMPLEMENTED;

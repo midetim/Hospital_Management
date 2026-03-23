@@ -740,11 +740,6 @@ grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext *
 /* *************************** IServer ******************************** */
 /* ******************************************************************** */
 
-ReturnCode ResourceManagementService::connectToDB() {
-    /* Not yet implemented */
-    return ReturnCode::NOT_YET_IMPLEMENTED;
-}
-
 ReturnCode ResourceManagementService::loadFromDB() {
     /* Not yet implemented */
     return ReturnCode::NOT_YET_IMPLEMENTED;

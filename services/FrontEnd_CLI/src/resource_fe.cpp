@@ -64,24 +64,14 @@ namespace resource_front_end {
                 return;
             }
         }
-
-        /* ---------------- Service Name ---------------- */
-        service_name = cli::getLine(std::string(ansi::byellow) + "Service Name: " + ansi::reset);
-        if (service_name.empty()) {
-            std::cout << Utils::timestamp()
-                      << ansi::bold << ansi::bred
-                      << "Service name cannot be empty."
-                      << ansi::reset << "\n";
-            return;
-        }
-
+        
         /* ---------------- Send Request ---------------- */
         std::cout << "\n" << Utils::timestamp()
                   << ansi::bblue
                   << "Registering resource..."
                   << ansi::reset << "\n";
 
-        bool success = client.registerResource(resource_id, resource_type, stock_amount, service_name);
+        bool success = client.registerResource(resource_id, resource_type, stock_amount, service::front);
 
         /* ---------------- Result ---------------- */
         if (success) {
@@ -128,16 +118,6 @@ namespace resource_front_end {
             return;
         }
 
-        /* ---------------- Service Name ---------------- */
-        service_name = cli::getLine(std::string(ansi::byellow) + "Service Name: " + ansi::reset);
-        if (service_name.empty()) {
-            std::cout << Utils::timestamp()
-                      << ansi::bold << ansi::bred
-                      << "Service name cannot be empty."
-                      << ansi::reset << "\n";
-            return;
-        }
-
         /* ---------------- Send Request ---------------- */
         std::cout << "\n"
                   << Utils::timestamp()
@@ -145,7 +125,7 @@ namespace resource_front_end {
                   << "Deregistering resource..."
                   << ansi::reset << "\n";
 
-        bool success = client.deregisterResource(resource_id, service_name);
+        bool success = client.deregisterResource(resource_id, service::front);
 
         /* ---------------- Result ---------------- */
         if (success) {
@@ -192,16 +172,6 @@ namespace resource_front_end {
             return;
         }
 
-        /* ---------------- Service Name ---------------- */
-        service_name = cli::getLine(std::string(ansi::byellow) + "Service Name: " + ansi::reset);
-        if (service_name.empty()) {
-            std::cout << Utils::timestamp()
-                      << ansi::bold << ansi::bred
-                      << "Service name cannot be empty."
-                      << ansi::reset << "\n";
-            return;
-        }
-
         /* ---------------- Send Request ---------------- */
         std::cout << "\n"
                   << Utils::timestamp()
@@ -209,7 +179,7 @@ namespace resource_front_end {
                   << "Sending resource for maintenance..."
                   << ansi::reset << "\n";
 
-        bool success = client.scheduleMaintenance(resource_id, service_name);
+        bool success = client.scheduleMaintenance(resource_id, service::front);
 
         /* ---------------- Result ---------------- */
         if (success) {
@@ -260,18 +230,11 @@ namespace resource_front_end {
             catch (...) { std::cout << "Invalid duration.\n"; return; }
         }
 
-        // Service name
-        std::string service_name = cli::getLine(std::string(ansi::byellow) + "Service Name: " + ansi::reset);
-
         // Build shift
-        time_util::Shift shift(
-            time_util::date_to_timestamp(start_date),
-            end_ts != time_util::times::zero ? end_ts : duration,
-            room_id
-        );
+        time_util::Shift shift(time_util::date_to_timestamp(start_date), end_ts != time_util::times::zero ? end_ts : duration, room_id);
 
         // Send request
-        bool success = client.addToSchedule(resource_id, shift, service_name);
+        bool success = client.addToSchedule(resource_id, shift, service::front);
         std::cout << Utils::timestamp()
                   << (success ? std::string(ansi::bold) + std::string(ansi::bgreen) + "✓ Shift added successfully."
                               : std::string(ansi::bold) + std::string(ansi::bred) + "✗ Failed to add shift.")
@@ -328,9 +291,7 @@ namespace resource_front_end {
         try { new_duration = std::stoull(input); }
         catch (...) { std::cout << "Invalid duration.\n"; return; }
 
-        std::string service_name = cli::getLine(std::string(ansi::byellow) + "Service Name: " + ansi::reset);
-
-        bool success = client.changeSchedule(resource_id, new_room_id, old_shift, new_duration, new_shift, service_name);
+        bool success = client.changeSchedule(resource_id, new_room_id, old_shift, new_duration, new_shift, service::front);
         std::cout << Utils::timestamp()
                   << (success ? std::string(ansi::bold) + std::string(ansi::bgreen) + "✓ Schedule changed successfully."
                               : std::string(ansi::bold) + std::string(ansi::bred) + "✗ Failed to change schedule.")
@@ -381,7 +342,7 @@ namespace resource_front_end {
                   << ansi::reset;
 
         for (const auto & shift : schedule) {
-            std::cout << "  " << shift << "\n"; // Assumes Shift has toString()
+            std::cout << "  " << shift << "\n";
         }
     }
 
@@ -429,7 +390,7 @@ namespace resource_front_end {
                   << ansi::reset;
 
         for (const auto & shift : schedule) {
-            std::cout << "  " << shift << "\n"; // Assumes Shift has toString()
+            std::cout << "  " << shift << "\n"; 
         }
     }
 
