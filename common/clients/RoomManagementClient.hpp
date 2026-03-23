@@ -37,39 +37,39 @@ public:
     /* ********************* Common gRPC | ICLient ************************ */
     /* ******************************************************************** */
     
-    bool ping(std::string_view service_name) override;
-    bool print(std::string_view service_name) override;
-    bool update(std::string_view service_name) override;
+    bool ping(std::string_view service_name) const override;
+    bool print(std::string_view service_name) const override;
+    bool update(std::string_view service_name) const override;
    
     /* ******************************************************************** */
     /* ********************** PatientManagement gRPC ********************** */
     /* ******************************************************************** */
     
-    bool admitPatient(uint64_t patient_id, std::string_view room_type, bool is_quarantined, std::string_view service_name);
+    bool admitPatient(uint64_t patient_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const;
     
-    bool dischargePatient(uint64_t patient_id, std::string_view service_name);
+    bool dischargePatient(uint64_t patient_id, std::string_view service_name) const;
     
-    bool transferPatient(uint64_t patient_id, uint32_t new_room_id, uint32_t old_room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name);
+    bool transferPatient(uint64_t patient_id, uint32_t new_room_id, uint32_t old_room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const;
     
-    bool quarantinePatient(uint64_t patient_id, bool full_quarantine, std::string_view service_name);
+    bool quarantinePatient(uint64_t patient_id, bool full_quarantine, std::string_view service_name) const;
     
-    bool liftPatientQuarantine(uint64_t patient_id, bool full_quarantine, std::string_view service_name);
+    bool liftPatientQuarantine(uint64_t patient_id, bool full_quarantine, std::string_view service_name) const;
     
-    bool retrieveResource(uint64_t resource_id, uint32_t room_id, std::string_view service_name);
+    bool retrieveResource(uint64_t resource_id, uint32_t room_id, std::string_view service_name) const;
     
-    bool releaseResource(uint64_t resource_id, uint32_t room_id, std::string_view service_name);
+    bool releaseResource(uint64_t resource_id, uint32_t room_id, std::string_view service_name) const;
     
-    bool transferResource(uint64_t resource_id, uint32_t new_room_id, std::string_view service_name);
+    bool transferResource(uint64_t resource_id, uint32_t new_room_id, std::string_view service_name) const;
     
-    bool retrieveStaff(uint64_t staff_id, uint32_t room_id, std::string_view service_name);
+    bool retrieveStaff(uint64_t staff_id, uint32_t room_id, std::string_view service_name) const;
     
-    bool releaseStaff(uint64_t staff_id, uint32_t room_id, std::string_view service_name);
+    bool releaseStaff(uint64_t staff_id, uint32_t room_id, std::string_view service_name) const;
     
-    bool transferStaff(uint64_t staff_id, uint32_t new_room_id, std::string_view service_name);
+    bool transferStaff(uint64_t staff_id, uint32_t new_room_id, std::string_view service_name) const;
     
-    bool quarantineRoom(uint32_t room_id, bool quarantine, bool move_patients, std::string_view service_name);
+    bool quarantineRoom(uint32_t room_id, bool quarantine, bool move_patients, std::string_view service_name) const;
     
-    bool getRoomInformation(uint32_t room_id, std::string_view service_name);
+    bool getRoomInformation(uint32_t room_id, std::string_view service_name) const;
     
     /* ******************************************************************** */
     /* ****************************** Other ******************************* */

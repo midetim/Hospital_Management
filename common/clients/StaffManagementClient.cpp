@@ -1,4 +1,8 @@
 #include "StaffManagementClient.hpp"
+
+#include "Common.pb.h"
+#include "StaffManagement.pb.h"
+
 #include "grpc_utils.hpp"
 #include <grpcpp/grpcpp.h>
 
@@ -8,7 +12,7 @@ using namespace staff;
 /* ********************** Private Functions *************************** */
 /* ******************************************************************** */
 
-void StaffManagementClient::dto_to_struct(const StaffDTO & dto, staff_data & obj) {
+void StaffManagementClient::dto_to_struct(const StaffDTO & dto, staff_data & obj) const {
 
     // Name
     const NameDTO & name_dto = dto.staff_name();
@@ -28,7 +32,7 @@ void StaffManagementClient::dto_to_struct(const StaffDTO & dto, staff_data & obj
 }
 
 
-void StaffManagementClient::struct_to_dto(const staff_data & obj, StaffDTO & dto) {
+void StaffManagementClient::struct_to_dto(const staff_data & obj, StaffDTO & dto) const {
 
     // Name
     NameDTO * name_dto = dto.mutable_staff_name();
@@ -48,7 +52,7 @@ void StaffManagementClient::struct_to_dto(const staff_data & obj, StaffDTO & dto
 }
 
 
-void StaffManagementClient::fill_schedule(const StaffSchedule & schedule, std::set<time_util::Shift> & fill_target) {
+void StaffManagementClient::fill_schedule(const StaffSchedule & schedule, std::set<time_util::Shift> & fill_target) const {
     fill_target.clear();
     for (const StaffShift & shift : schedule.shifts()) {
         fill_target.emplace(shift.shift());
@@ -70,7 +74,7 @@ common(Common::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureCh
 /* ********************* Common gRPC | ICLient ************************ */
 /* ******************************************************************** */
 
-bool StaffManagementClient::ping(std::string_view service_name) {
+bool StaffManagementClient::ping(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -79,7 +83,7 @@ bool StaffManagementClient::ping(std::string_view service_name) {
     return status.ok();
 }
 
-bool StaffManagementClient::print(std::string_view service_name) {
+bool StaffManagementClient::print(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -88,7 +92,7 @@ bool StaffManagementClient::print(std::string_view service_name) {
     return status.ok();
 }
 
-bool StaffManagementClient::update(std::string_view service_name) {
+bool StaffManagementClient::update(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -101,7 +105,7 @@ bool StaffManagementClient::update(std::string_view service_name) {
 /* ********************** StaffManagement gRPC ************************ */
 /* ******************************************************************** */
 
-bool StaffManagementClient::addStaff(const staff_data & data, std::string_view service_name) {
+bool StaffManagementClient::addStaff(const staff_data & data, std::string_view service_name) const {
     
     StaffDTO staff_dto;
     struct_to_dto(data, staff_dto);
@@ -118,7 +122,7 @@ bool StaffManagementClient::addStaff(const staff_data & data, std::string_view s
     return success.successful();
 }
 
-bool StaffManagementClient::removeStaff(const staff_data & data, std::string_view service_name) {
+bool StaffManagementClient::removeStaff(const staff_data & data, std::string_view service_name) const {
     
     StaffDTO staff_dto;
     struct_to_dto(data, staff_dto);
@@ -135,7 +139,7 @@ bool StaffManagementClient::removeStaff(const staff_data & data, std::string_vie
     return success.successful();
 }
 
-bool StaffManagementClient::changePosition(const staff_data & data, std::string_view service_name) {
+bool StaffManagementClient::changePosition(const staff_data & data, std::string_view service_name) const {
     
     StaffDTO staff_dto;
     struct_to_dto(data, staff_dto);
@@ -152,7 +156,7 @@ bool StaffManagementClient::changePosition(const staff_data & data, std::string_
     return success.successful();
 }
 
-bool StaffManagementClient::changeClearance(const staff_data & data, std::string_view service_name) {
+bool StaffManagementClient::changeClearance(const staff_data & data, std::string_view service_name) const {
     
     StaffDTO staff_dto;
     struct_to_dto(data, staff_dto);
@@ -169,7 +173,7 @@ bool StaffManagementClient::changeClearance(const staff_data & data, std::string
     return success.successful();
 }
 
-bool StaffManagementClient::updateStaffInformation(const staff_data & data, std::string_view service_name) {
+bool StaffManagementClient::updateStaffInformation(const staff_data & data, std::string_view service_name) const {
     
     StaffDTO staff_dto;
     struct_to_dto(data, staff_dto);
@@ -186,7 +190,7 @@ bool StaffManagementClient::updateStaffInformation(const staff_data & data, std:
     return success.successful();
 }
 
-bool StaffManagementClient::addShift(uint64_t staff_id, const time_util::Shift & new_shift, std::string_view service_name) {
+bool StaffManagementClient::addShift(uint64_t staff_id, const time_util::Shift & new_shift, std::string_view service_name) const {
     
     StaffShift staff_shift;
     
@@ -208,7 +212,7 @@ bool StaffManagementClient::addShift(uint64_t staff_id, const time_util::Shift &
     return success.successful();
 }
 
-bool StaffManagementClient::removeShift(uint64_t staff_id, const time_util::Date & target, std::string_view service_name) {
+bool StaffManagementClient::removeShift(uint64_t staff_id, const time_util::Date & target, std::string_view service_name) const {
     
     StaffShift staff_shift;
     
@@ -232,7 +236,7 @@ bool StaffManagementClient::removeShift(uint64_t staff_id, const time_util::Date
     return success.successful();
 }
 
-bool StaffManagementClient::transferShift(uint64_t staff_id, const time_util::Date & target, const time_util::Date & replacement, uint64_t duration, uint32_t new_room_id, std::string_view service_name) {
+bool StaffManagementClient::transferShift(uint64_t staff_id, const time_util::Date & target, const time_util::Date & replacement, uint64_t duration, uint32_t new_room_id, std::string_view service_name) const {
     
     StaffShift staff_shift;
     
@@ -259,7 +263,7 @@ bool StaffManagementClient::transferShift(uint64_t staff_id, const time_util::Da
     return success.successful();
 }
 
-bool StaffManagementClient::bookTimeOff(uint64_t staff_id, const time_util::Date & start_date, const time_util::Date & end_date, std::string_view service_name) {
+bool StaffManagementClient::bookTimeOff(uint64_t staff_id, const time_util::Date & start_date, const time_util::Date & end_date, std::string_view service_name) const {
     
     TimeOff time_off;
     
@@ -284,7 +288,7 @@ bool StaffManagementClient::bookTimeOff(uint64_t staff_id, const time_util::Date
     return success.successful();
 }
 
-bool StaffManagementClient::seeStaffInformation(staff_data & data, std::string_view service_name) {
+bool StaffManagementClient::seeStaffInformation(staff_data & data, std::string_view service_name) const {
     
     StaffDTO staff_request;
     struct_to_dto(data, staff_request);
@@ -303,7 +307,7 @@ bool StaffManagementClient::seeStaffInformation(staff_data & data, std::string_v
     return status.ok();
 }
 
-bool StaffManagementClient::seeTodaysSchedule(const staff_data & data, std::set<time_util::Shift> & shifts, std::string_view service_name) {
+bool StaffManagementClient::seeTodaysSchedule(const staff_data & data, std::set<time_util::Shift> & shifts, std::string_view service_name) const {
     
     StaffDTO staff_dto;
     struct_to_dto(data, staff_dto);
@@ -323,7 +327,7 @@ bool StaffManagementClient::seeTodaysSchedule(const staff_data & data, std::set<
     return status.ok();
 }
 
-bool StaffManagementClient::seeTomorrowsSchedule(const staff_data & data, std::set<time_util::Shift> & shifts, std::string_view service_name) {
+bool StaffManagementClient::seeTomorrowsSchedule(const staff_data & data, std::set<time_util::Shift> & shifts, std::string_view service_name) const {
     
     StaffDTO staff_dto;
     struct_to_dto(data, staff_dto);
@@ -343,7 +347,7 @@ bool StaffManagementClient::seeTomorrowsSchedule(const staff_data & data, std::s
     return status.ok();
 }
 
-bool StaffManagementClient::seeScheduleBetweenRange(const staff_data & data, const time_util::Date & start_date, const time_util::Date & end_date, std::set<time_util::Shift> & shifts, std::string_view service_name) {
+bool StaffManagementClient::seeScheduleBetweenRange(const staff_data & data, const time_util::Date & start_date, const time_util::Date & end_date, std::set<time_util::Shift> & shifts, std::string_view service_name) const {
     
     StaffShift staff_shift;
     
@@ -373,7 +377,7 @@ bool StaffManagementClient::seeScheduleBetweenRange(const staff_data & data, con
     return status.ok();
 }
 
-bool StaffManagementClient::getStaffInRoom(uint32_t room_id, std::set<staff_data> & total_staff, std::string_view service_name) {
+bool StaffManagementClient::getStaffInRoom(uint32_t room_id, std::set<staff_data> & total_staff, std::string_view service_name) const {
     
     RoomRequest room_request;
     room_request.set_room_id(room_id);

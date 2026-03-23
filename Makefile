@@ -1,40 +1,62 @@
+# ------------------------------------------------------------------
+# Build configuration
+# ------------------------------------------------------------------
+
 # Build directory
 BUILD_DIR := xcode-build
 
 # CMake generator
 CMAKE_GEN := Xcode
 
-# Default Target
-all: ref
+# Default target
+all: build
 
-# Opens the project
-xcode:
-	cmake -S . -B $(BUILD_DIR) -G $(CMAKE_GEN) \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_CXX_FLAGS_RELEASE="-O3 -ffunction-sections -fdata-sections -flto" \
-		-DCMAKE_EXE_LINKER_FLAGS_RELEASE="-Wl,-dead_strip"
+# ------------------------------------------------------------------
+# Build the project (Release by default)
+# ------------------------------------------------------------------
+build:
+	cmake -S . -B $(BUILD_DIR) -G $(CMAKE_GEN) -DCMAKE_BUILD_TYPE=Release
 	cmake --build $(BUILD_DIR) --config Release
 
-# Refresh the project: delete build dir, regenerate, and build
+# ------------------------------------------------------------------
+# Refresh: clean + build
+# ------------------------------------------------------------------
 ref:
 	rm -rf $(BUILD_DIR)
-	$(MAKE) xcode
+	$(MAKE) build
 
+# ------------------------------------------------------------------
 # Open Xcode project without building
-open: xcode
+# ------------------------------------------------------------------
+open:
+	cmake -S . -B $(BUILD_DIR) -G $(CMAKE_GEN)
 	open $(BUILD_DIR)/Hospital_Management.xcodeproj
 
+# ------------------------------------------------------------------
 # Clean build directory
+# ------------------------------------------------------------------
 clean:
 	rm -rf $(BUILD_DIR)
 
-# Remake protobuf files
+# ------------------------------------------------------------------
+# Rebuild protobuf and gRPC files (C++ & Python)
+# ------------------------------------------------------------------
 buf:
-	rm -rf common/proto/generated/*.pb.*
-	external/grpc/local/bin/protoc -I=common/proto --cpp_out=common/proto/generated --grpc_out=common/proto/generated --plugin=protoc-gen-grpc=external/grpc/local/bin/grpc_cpp_plugin common/proto/*.proto
-	external/grpc/local/bin/protoc -I=common/proto --python_out=common/proto/generated --grpc_python_out=common/proto/generated --plugin=protoc-gen-grpc_python=external/grpc/local/bin/grpc_python_plugin common/proto/*.proto
+	rm -rf common/proto/generated/*
+	external/grpc/local/bin/protoc -I=common/proto \
+		--cpp_out=common/proto/generated \
+		--grpc_out=common/proto/generated \
+		--plugin=protoc-gen-grpc=external/grpc/local/bin/grpc_cpp_plugin \
+		common/proto/*.proto
+	external/grpc/local/bin/protoc -I=common/proto \
+		--python_out=common/proto/generated \
+		--grpc_python_out=common/proto/generated \
+		--plugin=protoc-gen-grpc_python=external/grpc/local/bin/grpc_python_plugin \
+		common/proto/*.proto
 
-# Git automation
+# ------------------------------------------------------------------
+# Git helper
+# ------------------------------------------------------------------
 git:
 ifndef MSG
 	$(error MSG is undefined. Usage: make git MSG="commit message")
@@ -43,4 +65,7 @@ endif
 	git commit -m "$(MSG)"
 	git push -u origin main
 
-.PHONY: all xcode ref open clean git buf
+# ------------------------------------------------------------------
+# Phony targets
+# ------------------------------------------------------------------
+.PHONY: all build ref open clean buf git

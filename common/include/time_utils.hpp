@@ -60,6 +60,8 @@ namespace time_util {
          */
         void fillDTO(DateDTO * dto) const;
         
+        std::string toString() const;
+        
         /* ******************************************************************** */
         /* *********************** Date Constructors ************************** */
         /* ******************************************************************** */
@@ -320,6 +322,43 @@ namespace time_util {
 
     void shift_to_dto(const Shift & shift, ShiftDTO & dto);
     void dto_to_shift(const ShiftDTO & dto, Shift & shift);
+
+    /* ******************************************************************** */
+    /* ************************** Date Output ***************************** */
+    /* ******************************************************************** */
+    inline std::ostream & operator<<(std::ostream & os, const Date & d) {
+        os << ansi::bblue
+           << (d.year < 10 ? "0" : "") << d.year << "-"
+           << (d.month < 10 ? "0" : "") << d.month << "-"
+           << (d.day < 10 ? "0" : "") << d.day
+           << " "
+           << (d.hour < 10 ? "0" : "") << d.hour << ":"
+           << (d.minute < 10 ? "0" : "") << d.minute
+           << ansi::reset;
+        return os;
+    }
+
+    /* ******************************************************************** */
+    /* *********************** Timestamp Output *************************** */
+    /* ******************************************************************** */
+    inline std::ostream & operator<<(std::ostream & os, const Timestamp & ts) {
+        Date d = timestamp_to_date(ts);
+        os << ansi::bgreen << ts.time << " min (" << d << ")" << ansi::reset;
+        return os;
+    }
+
+    /* ******************************************************************** */
+    /* ************************ Shift Output ******************************** */
+    /* ******************************************************************** */
+    inline std::ostream & operator<<(std::ostream & os, const Shift & shift) {
+        os << ansi::bmagenta
+           << "Shift[start=" << shift.shift_start
+           << ", end=" << shift.shift_end
+           << ", duration=" << shift.duration << "min"
+           << ", room=" << shift.room_id
+           << "]" << ansi::reset;
+        return os;
+    }
 
 }
 #endif

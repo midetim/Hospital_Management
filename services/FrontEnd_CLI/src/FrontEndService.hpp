@@ -26,6 +26,10 @@ public:
     core::ReturnCode init() override { return core::ReturnCode::SUCCESS; }
     void print_internal() override { return; }
     
+    void ping();
+    void print();
+    void update();
+    
     void read_input();
     
 };

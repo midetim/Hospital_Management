@@ -44,17 +44,17 @@ private:
      * @brief Prints out a patient to the terminal
      * @warning **UNUSED**
      */
-    void printPatientData(const patient_data & patient);
+    void printPatientData(const patient_data & patient) const;
     
     /**
      * @brief Converts a DTO to a data struct
      */
-    patient_data to_data(const PatientDTO & p);
+    patient_data to_data(const PatientDTO & p) const;
     
     /**
      * @brief Converts a data struct to a DTO
      */
-    PatientDTO to_dto(const patient_data & pd);
+    PatientDTO to_dto(const patient_data & pd) const;
     
 public:
     
@@ -74,27 +74,27 @@ public:
     /* ********************* Common gRPC | ICLient ************************ */
     /* ******************************************************************** */
     
-    bool ping(std::string_view service_name) override;
-    bool print(std::string_view service_name) override;
-    bool update(std::string_view service_name) override;
+    bool ping(std::string_view service_name) const override;
+    bool print(std::string_view service_name) const override;
+    bool update(std::string_view service_name) const override;
     
     /* ******************************************************************** */
     /* ********************** PatientManagement gRPC ********************** */
     /* ******************************************************************** */
     
-    bool admitPatient(const patient_data & patient_data, std::string_view room_type, bool quarantined, std::string_view service_name);
+    bool admitPatient(const patient_data & patient_data, std::string_view room_type, bool quarantined, std::string_view service_name) const;
     
-    bool dischargePatient(const patient_data & patient_data, std::string_view service_name);
+    bool dischargePatient(const patient_data & patient_data, std::string_view service_name) const;
     
-    bool transferPatient(uint64_t patient_id, uint32_t room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name);
+    bool transferPatient(uint64_t patient_id, uint32_t room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const;
     
-    bool quarantinePatient(uint64_t patient_id, bool quarantine_patient, bool quarantine_room, std::string_view service_name);
+    bool quarantinePatient(uint64_t patient_id, bool quarantine_patient, bool quarantine_room, std::string_view service_name) const;
     
-    bool getPatientInformation(patient_data & patient_data, std::string_view service_name);
+    bool getPatientInformation(patient_data & patient_data, std::string_view service_name) const;
     
-    bool updatePatientinformation(const patient_data & patient_data, std::string_view service_name);
+    bool updatePatientinformation(const patient_data & patient_data, std::string_view service_name) const;
     
-    bool getPatientsInRoom(uint32_t room_id, std::set<patient_data> & data, std::string_view service_name);
+    bool getPatientsInRoom(uint32_t room_id, std::set<patient_data> & data, std::string_view service_name) const;
     
     /* ******************************************************************** */
     /* ****************************** Other ******************************* */

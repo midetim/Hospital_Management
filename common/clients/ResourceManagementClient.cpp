@@ -16,7 +16,7 @@ ResourceManagementClient::ResourceManagementClient(std::string_view target)
 /* ********************* Common gRPC | ICLient ************************ */
 /* ******************************************************************** */
 
-bool ResourceManagementClient::ping(std::string_view service_name) {
+bool ResourceManagementClient::ping(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -25,7 +25,7 @@ bool ResourceManagementClient::ping(std::string_view service_name) {
     return status.ok();
 }
 
-bool ResourceManagementClient::print(std::string_view service_name) {
+bool ResourceManagementClient::print(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -34,7 +34,7 @@ bool ResourceManagementClient::print(std::string_view service_name) {
     return status.ok();
 }
 
-bool ResourceManagementClient::update(std::string_view service_name) {
+bool ResourceManagementClient::update(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -47,7 +47,7 @@ bool ResourceManagementClient::update(std::string_view service_name) {
 /* ********************* ResourceManagement gRPC ********************** */
 /* ******************************************************************** */
 
-bool ResourceManagementClient::registerResource(uint64_t resource_id, std::string_view resource_type, uint32_t resource_stock, std::string_view service_name) {
+bool ResourceManagementClient::registerResource(uint64_t resource_id, std::string_view resource_type, uint32_t resource_stock, std::string_view service_name) const {
 
     ResourceDTO resource; // Request object
     resource.set_resource_id(resource_id);
@@ -67,7 +67,7 @@ bool ResourceManagementClient::registerResource(uint64_t resource_id, std::strin
     return success.successful();
 }
 
-bool ResourceManagementClient::deregisterResource(uint64_t resource_id, std::string_view service_name) {
+bool ResourceManagementClient::deregisterResource(uint64_t resource_id, std::string_view service_name) const {
     
     ResourceDTO resource; // Request object
     resource.set_resource_id(resource_id);
@@ -85,7 +85,7 @@ bool ResourceManagementClient::deregisterResource(uint64_t resource_id, std::str
     return success.successful();
 }
 
-bool ResourceManagementClient::scheduleMaintenance(uint64_t resource_id, std::string_view service_name) {
+bool ResourceManagementClient::scheduleMaintenance(uint64_t resource_id, std::string_view service_name) const {
     
     ResourceDTO resource; // Request object
     resource.set_resource_id(resource_id);
@@ -103,7 +103,7 @@ bool ResourceManagementClient::scheduleMaintenance(uint64_t resource_id, std::st
     return success.successful();
 }
 
-bool ResourceManagementClient::addToSchedule(uint64_t resource_id, const time_util::Shift & shift, std::string_view service_name) {
+bool ResourceManagementClient::addToSchedule(uint64_t resource_id, const time_util::Shift & shift, std::string_view service_name) const {
     
     ResourceShift resource_shift; // Request object
     
@@ -126,7 +126,7 @@ bool ResourceManagementClient::addToSchedule(uint64_t resource_id, const time_ut
     return success.successful();
 }
 
-bool ResourceManagementClient::removeFromSchedule(uint64_t resource_id, const time_util::Date & shift_start, std::string_view service_name) {
+bool ResourceManagementClient::removeFromSchedule(uint64_t resource_id, const time_util::Date & shift_start, std::string_view service_name) const {
     
     ResourceShift resource_shift; // Request object
     
@@ -151,7 +151,7 @@ bool ResourceManagementClient::removeFromSchedule(uint64_t resource_id, const ti
     return success.successful();
 }
 
-bool ResourceManagementClient::removeFromRoom(uint64_t resource_id, uint32_t room_id, std::string_view service_name) {
+bool ResourceManagementClient::removeFromRoom(uint64_t resource_id, uint32_t room_id, std::string_view service_name) const {
     
     ResourceDTO resource; // Request object
     resource.set_resource_id(resource_id);
@@ -170,7 +170,7 @@ bool ResourceManagementClient::removeFromRoom(uint64_t resource_id, uint32_t roo
     return success.successful();
 }
 
-bool ResourceManagementClient::changeSchedule(uint64_t resource_id, uint32_t new_room_id, const time_util::Date & old_shift, uint64_t new_shift_duration, const time_util::Date & new_shift, std::string_view service_name) {
+bool ResourceManagementClient::changeSchedule(uint64_t resource_id, uint32_t new_room_id, const time_util::Date & old_shift, uint64_t new_shift_duration, const time_util::Date & new_shift, std::string_view service_name) const {
     
     ResourceShift resource_shift;// Request object
     
@@ -199,7 +199,7 @@ bool ResourceManagementClient::changeSchedule(uint64_t resource_id, uint32_t new
     return success.successful();
 }
 
-bool ResourceManagementClient::seeTodaysSchedule(uint64_t resource_id, std::set<time_util::Shift> & schedule, std::string_view service_name) {
+bool ResourceManagementClient::seeTodaysSchedule(uint64_t resource_id, std::set<time_util::Shift> & schedule, std::string_view service_name) const {
     
     ResourceDTO resource; // Request object
     resource.set_resource_id(resource_id);
@@ -225,7 +225,7 @@ bool ResourceManagementClient::seeTodaysSchedule(uint64_t resource_id, std::set<
     return status.ok();
 }
 
-bool ResourceManagementClient::seeTomorrowsSchedule(uint64_t resource_id, std::set<time_util::Shift> & schedule, std::string_view service_name) {
+bool ResourceManagementClient::seeTomorrowsSchedule(uint64_t resource_id, std::set<time_util::Shift> & schedule, std::string_view service_name) const {
     
     ResourceDTO resource; // Request object
     resource.set_resource_id(resource_id);
@@ -251,7 +251,7 @@ bool ResourceManagementClient::seeTomorrowsSchedule(uint64_t resource_id, std::s
     return status.ok();
 }
 
-bool ResourceManagementClient::seeSchedule_Range(uint64_t resource_id, const time_util::Date & start_date, const time_util::Date & end_date, std::set<time_util::Shift> & schedule, std::string_view service_name) {
+bool ResourceManagementClient::seeSchedule_Range(uint64_t resource_id, const time_util::Date & start_date, const time_util::Date & end_date, std::set<time_util::Shift> & schedule, std::string_view service_name) const {
     
     ResourceShift resource_shift; // Request object
     
@@ -288,7 +288,7 @@ bool ResourceManagementClient::seeSchedule_Range(uint64_t resource_id, const tim
     
 }
 
-bool ResourceManagementClient::changeStockAmount(uint64_t stock_id, std::string stock_type, uint32_t amount, bool adding_stock, std::string_view service_name) {
+bool ResourceManagementClient::changeStockAmount(uint64_t stock_id, std::string stock_type, uint32_t amount, bool adding_stock, std::string_view service_name) const {
     
     StockUpdate stock; // Request object
     stock.set_resource_id(stock_id);
@@ -313,7 +313,7 @@ bool ResourceManagementClient::changeStockAmount(uint64_t stock_id, std::string 
     return success.successful();
 }
 
-bool ResourceManagementClient::useStock(uint64_t stock_id, std::string stock_type, uint32_t use_amount, std::string_view service_name) {
+bool ResourceManagementClient::useStock(uint64_t stock_id, std::string stock_type, uint32_t use_amount, std::string_view service_name) const {
     
     StockUpdate stock; // Request object
     stock.set_resource_id(stock_id);
@@ -332,7 +332,7 @@ bool ResourceManagementClient::useStock(uint64_t stock_id, std::string stock_typ
     return success.successful();
 }
 
-bool ResourceManagementClient::emptyStock(uint64_t stock_id, std::string stock_type, std::string_view service_name) {
+bool ResourceManagementClient::emptyStock(uint64_t stock_id, std::string stock_type, std::string_view service_name) const {
     
     StockUpdate stock; // Request object
     stock.set_resource_id(stock_id);
@@ -350,7 +350,7 @@ bool ResourceManagementClient::emptyStock(uint64_t stock_id, std::string stock_t
     return success.successful();
 }
 
-bool ResourceManagementClient::getResourceInformation(uint64_t resource_id, std::string resource_type, resource_data & data, std::string_view service_name) {
+bool ResourceManagementClient::getResourceInformation(uint64_t resource_id, std::string resource_type, resource_data & data, std::string_view service_name) const {
     
     ResourceDTO resource; // Request object
     resource.set_resource_id(resource_id);
@@ -370,7 +370,7 @@ bool ResourceManagementClient::getResourceInformation(uint64_t resource_id, std:
     return status.ok();
 }
 
-bool ResourceManagementClient::getAllResourcesInRoom(uint32_t room_id, std::set<resource_data> & resources, std::string_view service_name) {
+bool ResourceManagementClient::getAllResourcesInRoom(uint32_t room_id, std::set<resource_data> & resources, std::string_view service_name) const {
     
     RoomRequest room; // Request object
     room.set_room_id(room_id);

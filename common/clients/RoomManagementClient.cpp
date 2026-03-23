@@ -1,4 +1,11 @@
 #include "RoomManagementClient.hpp"
+
+#include "Common.pb.h"
+#include "PatientManagement.pb.h"
+#include "ResourceManagement.pb.h"
+#include "RoomManagement.pb.h"
+#include "StaffManagement.pb.h"
+
 #include "grpc_utils.hpp"
 #include <grpcpp/grpcpp.h>
 
@@ -6,9 +13,9 @@
 /* ********************** Private Functions *************************** */
 /* ******************************************************************** */
 
-std::ostream & operator<<(std::ostream& os, const RoomInformation& info) {
+std::ostream & operator<<(std::ostream & os, const RoomInformation & info) {
 
-    const RoomDTO& room = info.room_information();
+    const RoomDTO & room = info.room_information();
 
     os << Utils::timestamp()
        << ansi::bcyan << "[RoomService] " << ansi::reset
@@ -91,7 +98,7 @@ RoomManagementClient::RoomManagementClient(std::string_view target)
 /* ********************* Common gRPC | ICLient ************************ */
 /* ******************************************************************** */
 
-bool RoomManagementClient::ping(std::string_view service_name) {
+bool RoomManagementClient::ping(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -100,7 +107,7 @@ bool RoomManagementClient::ping(std::string_view service_name) {
     return status.ok();
 }
 
-bool RoomManagementClient::print(std::string_view service_name) {
+bool RoomManagementClient::print(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -109,7 +116,7 @@ bool RoomManagementClient::print(std::string_view service_name) {
     return status.ok();
 }
 
-bool RoomManagementClient::update(std::string_view service_name) {
+bool RoomManagementClient::update(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -122,7 +129,7 @@ bool RoomManagementClient::update(std::string_view service_name) {
 /* ********************** PatientManagement gRPC ********************** */
 /* ******************************************************************** */
 
-bool RoomManagementClient::admitPatient(uint64_t patient_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) { // make dto , fill dto grpc response, meta
+bool RoomManagementClient::admitPatient(uint64_t patient_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const { // make dto , fill dto grpc response, meta
     
     // Make DTO
     PatientDTO patient_dto;
@@ -146,7 +153,7 @@ bool RoomManagementClient::admitPatient(uint64_t patient_id, std::string_view ro
     return success.successful();
 }
 
-bool RoomManagementClient::dischargePatient(uint64_t patient_id, std::string_view service_name) {
+bool RoomManagementClient::dischargePatient(uint64_t patient_id, std::string_view service_name) const {
     // Make DTO
     PatientDTO patient_dto;
     
@@ -167,7 +174,7 @@ bool RoomManagementClient::dischargePatient(uint64_t patient_id, std::string_vie
     return success.successful();
 }
 
-bool RoomManagementClient::transferPatient(uint64_t patient_id, uint32_t new_room_id, uint32_t old_room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) {
+bool RoomManagementClient::transferPatient(uint64_t patient_id, uint32_t new_room_id, uint32_t old_room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const {
     // Make DTO
     PatientTransfer transfer_dto;
     
@@ -192,7 +199,7 @@ bool RoomManagementClient::transferPatient(uint64_t patient_id, uint32_t new_roo
     return success.successful();
 }
 
-bool RoomManagementClient::quarantinePatient(uint64_t patient_id, bool full_quarantine, std::string_view service_name) {
+bool RoomManagementClient::quarantinePatient(uint64_t patient_id, bool full_quarantine, std::string_view service_name) const {
     // Make DTO
     PatientQuarantine patient_dto;
     
@@ -214,7 +221,7 @@ bool RoomManagementClient::quarantinePatient(uint64_t patient_id, bool full_quar
     return success.successful();
 }
 
-bool RoomManagementClient::liftPatientQuarantine(uint64_t patient_id, bool full_quarantine, std::string_view service_name) {
+bool RoomManagementClient::liftPatientQuarantine(uint64_t patient_id, bool full_quarantine, std::string_view service_name) const {
     // Make DTO
     PatientQuarantine patient_dto;
     
@@ -236,7 +243,7 @@ bool RoomManagementClient::liftPatientQuarantine(uint64_t patient_id, bool full_
     return success.successful();
 }
 
-bool RoomManagementClient::retrieveResource(uint64_t resource_id, uint32_t room_id, std::string_view service_name) {
+bool RoomManagementClient::retrieveResource(uint64_t resource_id, uint32_t room_id, std::string_view service_name) const {
     // Make DTO
     ResourceDTO resource_dto;
     
@@ -258,7 +265,7 @@ bool RoomManagementClient::retrieveResource(uint64_t resource_id, uint32_t room_
     return success.successful();
 }
 
-bool RoomManagementClient::releaseResource(uint64_t resource_id, uint32_t room_id, std::string_view service_name) {
+bool RoomManagementClient::releaseResource(uint64_t resource_id, uint32_t room_id, std::string_view service_name) const {
     // Make DTO
     ResourceDTO resource_dto;
     
@@ -280,7 +287,7 @@ bool RoomManagementClient::releaseResource(uint64_t resource_id, uint32_t room_i
     return success.successful();
 }
 
-bool RoomManagementClient::transferResource(uint64_t resource_id, uint32_t new_room_id, std::string_view service_name) {
+bool RoomManagementClient::transferResource(uint64_t resource_id, uint32_t new_room_id, std::string_view service_name) const {
     // Make DTO
     ResourceDTO resource_dto;
     
@@ -302,7 +309,7 @@ bool RoomManagementClient::transferResource(uint64_t resource_id, uint32_t new_r
     return success.successful();
 }
 
-bool RoomManagementClient::retrieveStaff(uint64_t staff_id, uint32_t room_id, std::string_view service_name) {
+bool RoomManagementClient::retrieveStaff(uint64_t staff_id, uint32_t room_id, std::string_view service_name) const {
     // Make DTO
     StaffDTO staff_dto;
     
@@ -324,7 +331,7 @@ bool RoomManagementClient::retrieveStaff(uint64_t staff_id, uint32_t room_id, st
     return success.successful();
 }
 
-bool RoomManagementClient::releaseStaff(uint64_t staff_id, uint32_t room_id, std::string_view service_name) {
+bool RoomManagementClient::releaseStaff(uint64_t staff_id, uint32_t room_id, std::string_view service_name) const {
     // Make DTO
     StaffDTO staff_dto;
     
@@ -346,7 +353,7 @@ bool RoomManagementClient::releaseStaff(uint64_t staff_id, uint32_t room_id, std
     return success.successful();
 }
 
-bool RoomManagementClient::transferStaff(uint64_t staff_id, uint32_t new_room_id, std::string_view service_name) {
+bool RoomManagementClient::transferStaff(uint64_t staff_id, uint32_t new_room_id, std::string_view service_name) const {
     // Make DTO
     StaffDTO staff_dto;
     
@@ -368,7 +375,7 @@ bool RoomManagementClient::transferStaff(uint64_t staff_id, uint32_t new_room_id
     return success.successful();
 }
 
-bool RoomManagementClient::quarantineRoom(uint32_t room_id, bool quarantine, bool move_patients, std::string_view service_name) {
+bool RoomManagementClient::quarantineRoom(uint32_t room_id, bool quarantine, bool move_patients, std::string_view service_name) const {
     // Make DTO
     RoomQuarantine quarantine_request;
     
@@ -391,7 +398,7 @@ bool RoomManagementClient::quarantineRoom(uint32_t room_id, bool quarantine, boo
     return success.successful();
 }
 
-bool RoomManagementClient::getRoomInformation(uint32_t room_id, std::string_view service_name) {
+bool RoomManagementClient::getRoomInformation(uint32_t room_id, std::string_view service_name) const {
     // Make DTO
     RoomDTO room_dto;
     

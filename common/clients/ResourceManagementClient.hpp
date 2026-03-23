@@ -55,43 +55,43 @@ public:
     /* ********************* Common gRPC | ICLient ************************ */
     /* ******************************************************************** */
     
-    bool ping(std::string_view service_name) override;
-    bool print(std::string_view service_name) override;
-    bool update(std::string_view service_name) override;
+    bool ping(std::string_view service_name) const override;
+    bool print(std::string_view service_name) const override;
+    bool update(std::string_view service_name) const override;
     
     /* ******************************************************************** */
     /* ******************** ResourceManagement gRPC *********************** */
     /* ******************************************************************** */
     
-    bool registerResource(uint64_t resource_id, std::string_view resource_type, uint32_t resource_stock, std::string_view service_name);
+    bool registerResource(uint64_t resource_id, std::string_view resource_type, uint32_t resource_stock, std::string_view service_name) const;
     
-    bool deregisterResource(uint64_t resource_id, std::string_view service_name);
+    bool deregisterResource(uint64_t resource_id, std::string_view service_name) const;
     
-    bool scheduleMaintenance(uint64_t resource_id, std::string_view service_name);
+    bool scheduleMaintenance(uint64_t resource_id, std::string_view service_name) const;
     
-    bool addToSchedule(uint64_t resource_id, const time_util::Shift & shift, std::string_view service_name);
+    bool addToSchedule(uint64_t resource_id, const time_util::Shift & shift, std::string_view service_name) const;
     
-    bool removeFromSchedule(uint64_t resource_id, const time_util::Date & shift_start, std::string_view service_name);
+    bool removeFromSchedule(uint64_t resource_id, const time_util::Date & shift_start, std::string_view service_name) const;
     
-    bool removeFromRoom(uint64_t resource_id, uint32_t room_id, std::string_view service_name);
+    bool removeFromRoom(uint64_t resource_id, uint32_t room_id, std::string_view service_name) const;
     
-    bool changeSchedule(uint64_t resource_id, uint32_t new_room_id, const time_util::Date & old_shift, uint64_t new_shift_duration, const time_util::Date & new_shift, std::string_view service_name);
+    bool changeSchedule(uint64_t resource_id, uint32_t new_room_id, const time_util::Date & old_shift, uint64_t new_shift_duration, const time_util::Date & new_shift, std::string_view service_name) const;
     
-    bool seeTodaysSchedule(uint64_t resource_id, std::set<time_util::Shift> & schedule, std::string_view service_name);
+    bool seeTodaysSchedule(uint64_t resource_id, std::set<time_util::Shift> & schedule, std::string_view service_name) const;
     
-    bool seeTomorrowsSchedule(uint64_t resource_id, std::set<time_util::Shift> & schedule, std::string_view service_name);
+    bool seeTomorrowsSchedule(uint64_t resource_id, std::set<time_util::Shift> & schedule, std::string_view service_name) const;
     
-    bool seeSchedule_Range(uint64_t resource_id, const time_util::Date & start_date, const time_util::Date & end_date, std::set<time_util::Shift> & schedule, std::string_view service_name);
+    bool seeSchedule_Range(uint64_t resource_id, const time_util::Date & start_date, const time_util::Date & end_date, std::set<time_util::Shift> & schedule, std::string_view service_name) const;
     
-    bool changeStockAmount(uint64_t stock_id, std::string stock_type, uint32_t amount, bool adding_stock, std::string_view service_name);
+    bool changeStockAmount(uint64_t stock_id, std::string stock_type, uint32_t amount, bool adding_stock, std::string_view service_name) const;
     
-    bool useStock(uint64_t stock_id, std::string stock_type, uint32_t use_amount, std::string_view service_name);
+    bool useStock(uint64_t stock_id, std::string stock_type, uint32_t use_amount, std::string_view service_name) const;
     
-    bool emptyStock(uint64_t stock_id, std::string stock_type, std::string_view service_name);
+    bool emptyStock(uint64_t stock_id, std::string stock_type, std::string_view service_name) const;
     
-    bool getResourceInformation(uint64_t resource_id, std::string resource_type, resource_data & data, std::string_view service_name);
+    bool getResourceInformation(uint64_t resource_id, std::string resource_type, resource_data & data, std::string_view service_name) const;
     
-    bool getAllResourcesInRoom(uint32_t room_id, std::set<resource_data> & resources, std::string_view service_name);
+    bool getAllResourcesInRoom(uint32_t room_id, std::set<resource_data> & resources, std::string_view service_name) const;
     
     /* ******************************************************************** */
     /* **************************** Other ********************************* */

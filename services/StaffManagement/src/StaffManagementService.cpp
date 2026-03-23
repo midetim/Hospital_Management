@@ -207,7 +207,7 @@ grpc::Status StaffManagementService::ChangePosition(grpc::ServerContext * contex
     auto it = total_staff.find(target.getStaffId()); // Search for staff by id
     if (it == total_staff.end()) { // Staff not found
         success->set_successful(false);
-        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the staff to remove");
+        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the staff to update");
     }
     
     // Change position & salary

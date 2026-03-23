@@ -9,13 +9,13 @@ using namespace patient;
 /* ********************** Private Functions *************************** */
 /* ******************************************************************** */
 
-void PatientManagementClient::printPatientData(const patient_data & patient) {
+void PatientManagementClient::printPatientData(const patient_data & patient) const {
     std::cout << "Patient #" << ansi::yellow << patient.patient_id << ansi::reset << std::endl
          << patient.patient_name.last << ", " << patient.patient_name.first << " " << patient.patient_name.middle << std::endl
          << "Sex : " << sexToString(patient.patient_sex) << " | Condition : " << conditionToString(patient.patient_condition) << " | Room : " << ansi::cyan << patient.room_id << ansi::reset << std::endl;
 }
 
-patient_data PatientManagementClient::to_data(const PatientDTO& p) {
+patient_data PatientManagementClient::to_data(const PatientDTO& p) const {
     patient_data pd;
     
     pd.patient_id = p.patient_id();
@@ -29,7 +29,7 @@ patient_data PatientManagementClient::to_data(const PatientDTO& p) {
     return pd;
 }
 
-PatientDTO PatientManagementClient::to_dto(const patient_data & pd) {
+PatientDTO PatientManagementClient::to_dto(const patient_data & pd) const {
     PatientDTO dto;
 
     dto.set_patient_id(pd.patient_id);
@@ -60,7 +60,7 @@ PatientManagementClient::PatientManagementClient(std::string_view target)
 /* ********************* Common gRPC | ICLient ************************ */
 /* ******************************************************************** */
 
-bool PatientManagementClient::ping(std::string_view service_name) {
+bool PatientManagementClient::ping(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -69,7 +69,7 @@ bool PatientManagementClient::ping(std::string_view service_name) {
     return status.ok();
 }
 
-bool PatientManagementClient::print(std::string_view service_name) {
+bool PatientManagementClient::print(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -78,7 +78,7 @@ bool PatientManagementClient::print(std::string_view service_name) {
     return status.ok();
 }
 
-bool PatientManagementClient::update(std::string_view service_name) {
+bool PatientManagementClient::update(std::string_view service_name) const {
     grpc::ClientContext context;
     Nothing request, response;
     
@@ -91,7 +91,7 @@ bool PatientManagementClient::update(std::string_view service_name) {
 /* ********************** PatientManagement gRPC ********************** */
 /* ******************************************************************** */
 
-bool PatientManagementClient::admitPatient(const patient_data & patient_data, std::string_view room_type, bool quarantined, std::string_view service_name) {
+bool PatientManagementClient::admitPatient(const patient_data & patient_data, std::string_view room_type, bool quarantined, std::string_view service_name) const {
     PatientDTO patient_out = to_dto(patient_data);
     
     // Set the rest of the information that was missed in to_dto
@@ -112,7 +112,7 @@ bool PatientManagementClient::admitPatient(const patient_data & patient_data, st
     return success.successful();
 }
 
-bool PatientManagementClient::dischargePatient(const patient_data & patient_data, std::string_view service_name) {
+bool PatientManagementClient::dischargePatient(const patient_data & patient_data, std::string_view service_name) const {
     PatientDTO patient_out = to_dto(patient_data);
     
     // Setup the gRPC response
@@ -128,7 +128,7 @@ bool PatientManagementClient::dischargePatient(const patient_data & patient_data
     return success.successful();
 }
 
-bool PatientManagementClient::transferPatient(uint64_t patient_id, uint32_t room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) {
+bool PatientManagementClient::transferPatient(uint64_t patient_id, uint32_t room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const {
     PatientTransfer transfer_request;
     
     // Fill out request
@@ -151,7 +151,7 @@ bool PatientManagementClient::transferPatient(uint64_t patient_id, uint32_t room
     
 }
 
-bool PatientManagementClient::quarantinePatient(uint64_t patient_id, bool quarantine_patient, bool quarantine_room, std::string_view service_name) {
+bool PatientManagementClient::quarantinePatient(uint64_t patient_id, bool quarantine_patient, bool quarantine_room, std::string_view service_name) const {
     PatientQuarantine quarantine_request;
     
     // Fill out the request
@@ -171,7 +171,7 @@ bool PatientManagementClient::quarantinePatient(uint64_t patient_id, bool quaran
     return success.successful();
 }
 
-bool PatientManagementClient::getPatientInformation(patient_data & patient_data, std::string_view service_name) {
+bool PatientManagementClient::getPatientInformation(patient_data & patient_data, std::string_view service_name) const {
     PatientDTO patient_out = to_dto(patient_data);
     
     // Setup the rest of the gRPC response
@@ -190,7 +190,7 @@ bool PatientManagementClient::getPatientInformation(patient_data & patient_data,
     return status.ok();
 }
 
-bool PatientManagementClient::updatePatientinformation(const patient_data & patient_data, std::string_view service_name) {
+bool PatientManagementClient::updatePatientinformation(const patient_data & patient_data, std::string_view service_name) const {
     PatientDTO patient_out = to_dto(patient_data);
     
     // Setup the rest of the gRPC response
@@ -206,7 +206,7 @@ bool PatientManagementClient::updatePatientinformation(const patient_data & pati
     return success.successful();
 }
 
-bool PatientManagementClient::getPatientsInRoom(uint32_t room_id, std::set<patient_data> & patients, std::string_view service_name) {
+bool PatientManagementClient::getPatientsInRoom(uint32_t room_id, std::set<patient_data> & patients, std::string_view service_name) const {
     RoomRequest room_request;
     room_request.set_room_id(room_id);
     

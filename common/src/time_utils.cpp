@@ -50,6 +50,18 @@ namespace time_util {
         time->set_minute(this->minute);
     }
 
+    std::string Date::toString() const {
+        std::ostringstream ss;
+
+        ss << year << "-"
+           << std::setw(2) << std::setfill('0') << month << "-"
+           << std::setw(2) << std::setfill('0') << day   << " "
+           << std::setw(2) << std::setfill('0') << hour  << ":"
+           << std::setw(2) << std::setfill('0') << minute;
+
+        return ss.str();
+    }
+
     /* ******************************************************************** */
     /* ************************ Date Constructor ************************** */
     /* ******************************************************************** */

@@ -296,7 +296,7 @@ grpc::Status PatientManagementService::UpdatePatientInformation(grpc::ServerCont
         Name patient_name = {
             .first  = patient_dto->patient_name().first(),
             .middle = patient_dto->patient_name().middle(),
-            .last   = patient_dto->patient_name().middle()
+            .last   = patient_dto->patient_name().last()
         };
         Sex patient_sex = stringToSex(patient_dto->patient_sex());
         
