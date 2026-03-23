@@ -3,7 +3,3 @@ external/grpc/local/lib/*.so
 external/grpc/local/bin/
 .DS_Store
 xcode-build
-generated_python/*
-!generated_python/
-!generated_python/**
-

@@ -87,6 +87,35 @@ namespace staff_front_end {
         std::cout << "-------------------------------------------------\n";
     }
 
+    staff_data getStaffFromInput() {
+        staff_data staff;
+
+        std::string id_str = cli::getLine("Enter Staff ID (or leave blank to use name): ");
+        if (!id_str.empty()) {
+            try {
+                staff.id = std::stoull(id_str);
+                return staff;
+            } catch (...) {
+                std::cout << ansi::bred << "Invalid ID, will prompt for name instead.\n" << ansi::reset;
+            }
+        }
+
+        // Prompt for name
+        staff.name.first = cli::getLine("Enter First Name: ");
+        staff.name.middle = cli::getLine("Enter Middle Name (optional): ");
+        staff.name.last = cli::getLine("Enter Last Name: ");
+
+        // Prompt for sex
+        while (true) {
+            std::string sex_input = cli::getLine("Enter Sex (Unknown/Male/Female/Intersex/Other): ");
+            staff.sex = parseSexInput(sex_input);
+            if (staff.sex != person::Sex::Unknown || sex_input == "Unknown") break;
+            std::cout << ansi::bred << "Invalid sex, try again.\n" << ansi::reset;
+        }
+
+        return staff;
+    }
+
 
     void add(const StaffManagementClient & ref) {
 
@@ -1068,6 +1097,63 @@ namespace staff_front_end {
                       << ansi::bred
                       << "Failed to book time off.\n"
                       << ansi::reset;
+        }
+    }
+
+    void seeToday(const StaffManagementClient & client) {
+        std::set<time_util::Shift> shifts;
+        staff_data staff = getStaffFromInput();
+
+        if (client.seeTodaysSchedule(staff, shifts, service::staff_client)) {
+            std::cout << ansi::bgreen << "\n===== Today's Shifts =====\n" << ansi::reset;
+            if (shifts.empty()) {
+                std::cout << ansi::byellow << "No shifts scheduled for today.\n" << ansi::reset;
+            } else {
+                for (const auto & s : shifts) std::cout << s << "\n";
+            }
+        }
+    }
+
+    void seeTomorrow(const StaffManagementClient & client) {
+        std::set<time_util::Shift> shifts;
+        staff_data staff = getStaffFromInput();
+
+        if (client.seeTomorrowsSchedule(staff, shifts, service::staff_client)) {
+            std::cout << ansi::bgreen << "\n===== Tomorrow's Shifts =====\n" << ansi::reset;
+            if (shifts.empty()) {
+                std::cout << ansi::byellow << "No shifts scheduled for tomorrow.\n" << ansi::reset;
+            } else {
+                for (const auto & s : shifts) std::cout << s << "\n";
+            }
+        }
+    }
+
+    void seeRange(const StaffManagementClient & client) {
+        std::set<time_util::Shift> shifts;
+        staff_data staff = getStaffFromInput();
+        time_util::Date start, end;
+
+        // Prompt user for start date
+        while (true) {
+            std::string s = cli::getLine("Enter start date (YYYY-MM-DD HH:MM): ");
+            if (parseDateTime(s, start)) break;
+            std::cout << ansi::bred << "Invalid date format.\n" << ansi::reset;
+        }
+
+        // Prompt user for end date
+        while (true) {
+            std::string s = cli::getLine("Enter end date (YYYY-MM-DD HH:MM): ");
+            if (parseDateTime(s, end)) break;
+            std::cout << ansi::bred << "Invalid date format.\n" << ansi::reset;
+        }
+
+        if (client.seeScheduleBetweenRange(staff, start, end, shifts, service::staff_client)) {
+            std::cout << ansi::bgreen << "\n===== Shifts from " << start << " to " << end << " =====\n" << ansi::reset;
+            if (shifts.empty()) {
+                std::cout << ansi::byellow << "No shifts scheduled in this range.\n" << ansi::reset;
+            } else {
+                for (const auto & s : shifts) std::cout << s << "\n";
+            }
         }
     }
 

@@ -1,2 +1,47 @@
-concurrency stuff
-get databases up & working
+[
+  {
+    "name-first": "Matthew",
+    "name-middle": "Elliott",
+    "name-last": "Hvizdos",
+    "sex": "Male",
+    "condition": "Critical",
+    "id": 1,
+    "room": 101
+  },
+  {
+      "name-first": "Wilson",
+      "name-middle": "Terrell",
+      "name-last": "Thomson",
+      "sex": "Intersex",
+      "condition": "Serious",
+      "id": 2,
+      "room": 102,
+  },
+  {
+      "name-first": "Henrietta",
+      "name-middle": "Hayden",
+      "name-last": "Osborne",
+      "sex": "Female",
+      "condition": "Fair",
+      "id": 3,
+      "room": 103,
+  },
+  {
+      "name-first": "Riley",
+      "name-middle": "Howe",
+      "name-last": "Hopkins",
+      "sex": "Other",
+      "condition": "Good",
+      "id": 4,
+      "room": 104,
+  },
+  {
+      "name-first": "test",
+      "name-middle": "",
+      "name-last": "test",
+      "sex": "test",
+      "condition": "test",
+      "id": 5,
+      "room": 105,
+  }
+]

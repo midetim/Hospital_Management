@@ -1,0 +1,19 @@
+[
+    {
+        "type": "General",
+        "id": 101,
+        "max-capacity": 10,
+        "current-capacity": 1,
+        "assigned-staff": [1, 2, 3],
+        "assigned-patients": [1, 2, 3],
+        "assigned-resources": [1, 2, 3]
+    }, {
+        "type": "General",
+        "id": 102,
+        "max-capacity": 10,
+        "current-capacity": 1,
+        "assigned-staff": [1, 2, 3],
+        "assigned-patients": [1, 2, 3],
+        "assigned-resources": [1, 2, 3]
+    }
+]

@@ -1,0 +1,25 @@
+[
+    {
+        "id": 1,
+        "room": 101,
+        "type": "CTScanner",
+        "schedule": [
+            {
+                "start": 1774436869,
+                "end": 1774496869,
+                "duration": 60000,
+                "room": 101
+            }, {
+                "start": 1775496869,
+                "end": 1775497869,
+                "duration": 1000,
+                "room": 102
+            }
+        ]
+    }, {
+        "id": 2,
+        "room": 0,
+        "type": "Syringes",
+        "schedule": []
+    }
+]

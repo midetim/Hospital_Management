@@ -59,6 +59,8 @@ public:
      */
     virtual void print_internal() = 0;
     
+    
+    core::ReturnCode shutdown() { return this->uploadToDB(); }
 };
 
 class ServiceRunner {

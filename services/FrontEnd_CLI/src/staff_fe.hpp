@@ -4,13 +4,15 @@
 #include <string>
 
 class StaffManagementClient;
+struct staff_data;
 namespace person { enum class Sex; }
 namespace time_util{ class Date; }
 
 namespace staff_front_end {
 
     person::Sex parseSexInput(std::string s);
-    bool parseDateTime(const std::string & input, time_util::Date & out) ;
+    bool parseDateTime(const std::string & input, time_util::Date & out);
+    staff_data getStaffFromInput();
 
     void add(const StaffManagementClient & ref);
     void remove(const StaffManagementClient & ref);

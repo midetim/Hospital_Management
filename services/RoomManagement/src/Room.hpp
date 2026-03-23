@@ -16,7 +16,7 @@ private:
     std::unordered_set<uint64_t> assigned_patients;
     std::unordered_set<uint64_t> assigned_resources;
     
-    bool quarantined = false;
+    bool quarantined = false; // unused
      
 public:
     /**

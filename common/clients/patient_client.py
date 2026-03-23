@@ -1,5 +1,16 @@
-from ..proto.generated import PatientManagement_pb2, PatientManagement_pb2_grpc
-from ..proto.generated import Common_pb2, Common_pb2_grpc
+import sys
+import os
+
+# Add the generated_python folder to sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../xcode-build/generated_python")))
+
+# Common.proto
+from Common_pb2 import *
+from Common_pb2_grpc import *
+
+# PatientManagement.proto
+from PatientManagement_pb2 import *
+from PatientManagement_pb2_grpc import *
 
 # Hachi
 

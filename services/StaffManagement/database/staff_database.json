@@ -1,0 +1,26 @@
+[
+    {
+        "name-first": "Kelsey",
+        "name-middle": "Rose",
+        "name-last": "Mcknight",
+        "sex": "Female",
+        "id": 1,
+        "room": 102,
+        "salary": 20.00,
+        "position": "AdministrativeStaff",
+        "clearance": "Admin",
+        "schedule": [
+            {
+                "start": 1774237046,
+                "end": 1774247046,
+                "duration": 10000,
+                "room": 102
+            }, {
+                "start": 1774257046,
+                "end": 1774357046,
+                "duration": 100000,
+                "room": 102
+            }
+        ]
+    }
+]
