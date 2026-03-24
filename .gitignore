@@ -3,3 +3,11 @@ external/grpc/local/lib/*.so
 external/grpc/local/bin/
 .DS_Store
 xcode-build
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/
+.venv/

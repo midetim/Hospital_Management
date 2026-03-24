@@ -161,7 +161,6 @@
 <header>
   <div>
     <h1>Hospital Management System</h1>
-    <span>COE892 — Distributed Cloud Computing</span>
   </div>
 </header>
 
@@ -297,7 +296,7 @@
 </main>
 
 <script>
-  const API = '';  // same origin — FastAPI serves this file
+  const API = '';  // same origin FastAPI serves this file
   let selectedRoomId = null;
 
   //  Tab switching 
@@ -344,7 +343,7 @@
     try {
       const res = await fetch(`${API}/api/rooms/${roomId}`);
       const r = await res.json();
-      title.textContent = `Room ${r.room_id} — ${r.room_type} ${r.quarantined ? '⚠ QUARANTINED' : ''}`;
+      title.textContent = `Room ${r.room_id} - ${r.room_type} ${r.quarantined ? '⚠ QUARANTINED' : ''}`;
       content.innerHTML = `
         <p style="margin-bottom:12px; font-size:0.875rem;">
           Capacity: <strong>${r.current_capacity} / ${r.room_capacity}</strong>

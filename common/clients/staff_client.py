@@ -47,8 +47,8 @@ class StaffManagementClient:
     def __init__(self, target: str):
         self.target_hostport = target
         self.channel = grpc.insecure_channel(self.target_hostport)
-        self.stub   = spb.StaffManagementStub(self.channel)
-        self.common = cpb.CommonStub(self.channel)
+        self.stub   = sgrpc.StaffManagementStub(self.channel)
+        self.common = cgrpc.CommonStub(self.channel)
         self.name   = "staff_client"
 
     # Common calls

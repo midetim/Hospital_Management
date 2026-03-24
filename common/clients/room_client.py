@@ -142,8 +142,8 @@ class RoomManagementClient:
     def __init__(self, target: str):
         self.target_hostport = target
         self.channel = grpc.insecure_channel(self.target_hostport)
-        self.stub = rpb.RoomManagementStub(self.channel)
-        self.common = cpb.CommonStub(self.channel)
+        self.stub = rgrpc.RoomManagementStub(self.channel)
+        self.common = cgrpc.CommonStub(self.channel)
         self.name = "room_client"
 
     # Common calls
