@@ -12,9 +12,8 @@ import uvicorn
 
 from room_client import RoomManagementClient
 from staff_client import StaffManagementClient
-# TODO: uncomment when teammates complete their clients
-# from patient_client import PatientManagementClient
-# from resource_client import ResourceManagementClient
+from patient_client import PatientManagementClient
+# from resource_client import ResourceManagementClient  # TODO: uncomment when Olamide completes
 
 app = FastAPI(title="Hospital Management System API")
 
@@ -25,8 +24,9 @@ RESOURCE_HOST = "127.0.0.1:8923"
 STAFF_HOST    = "127.0.0.1:8924"
 SERVICE_NAME  = "frontend"
 
-room_client  = RoomManagementClient(ROOM_HOST)
-staff_client = StaffManagementClient(STAFF_HOST)
+room_client    = RoomManagementClient(ROOM_HOST)
+staff_client   = StaffManagementClient(STAFF_HOST)
+patient_client = PatientManagementClient(PATIENT_HOST)
 
 # Request models 
 
@@ -111,24 +111,45 @@ def quarantine_room(req: QuarantineRoomRequest):
         raise HTTPException(status_code=500, detail="Quarantine operation failed")
     return {"success": True}
 
-# Patients (stub: wire when patient_client.py is complete)
+# Patients
 
 @app.post("/api/patients/admit")
 def admit_patient(req: AdmitPatientRequest):
-    # TODO: patient_client.admitPatient(...)
-    return JSONResponse(status_code=501, content={"message": "Patient client not yet connected"})
+    success = patient_client.admitPatient(
+        first=req.first, middle=req.middle, last=req.last,
+        sex=req.sex, condition=req.condition, room_type=req.room_type,
+        service_name=SERVICE_NAME
+    )
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to admit patient")
+    return {"success": True}
 
 @app.post("/api/patients/discharge")
 def discharge_patient(req: DischargePatientRequest):
-    return JSONResponse(status_code=501, content={"message": "Patient client not yet connected"})
+    success = patient_client.dischargePatient(req.patient_id, SERVICE_NAME)
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to discharge patient")
+    return {"success": True}
 
 @app.post("/api/patients/transfer")
 def transfer_patient(req: TransferPatientRequest):
-    return JSONResponse(status_code=501, content={"message": "Patient client not yet connected"})
+    success = patient_client.transferPatient(
+        patient_id=req.patient_id,
+        old_room_id=req.old_room_id,
+        new_room_id=req.new_room_id,
+        room_type=req.room_type,
+        service_name=SERVICE_NAME
+    )
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to transfer patient")
+    return {"success": True}
 
 @app.get("/api/patients/{patient_id}")
 def get_patient(patient_id: int):
-    return JSONResponse(status_code=501, content={"message": "Patient client not yet connected"})
+    info = patient_client.getInfo(patient_id, SERVICE_NAME)
+    if info is None:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    return info
 
 # Staff
 
