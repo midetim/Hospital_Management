@@ -168,6 +168,7 @@
   <button class="active" onclick="switchTab('rooms')">Rooms</button>
   <button onclick="switchTab('patients')">Patients</button>
   <button onclick="switchTab('staff')">Staff</button>
+  <button onclick="switchTab('resources')">Resources</button>
 </nav>
 
 <main>
@@ -291,6 +292,52 @@
       </div>
       <div id="staff-result"></div>
     </div>
+  </div>
+
+  <!--  RESOURCES  -->
+  <div id="tab-resources" class="tab">
+
+    <div class="card">
+      <h2>Register Resource</h2>
+      <div id="resource-register-banner" class="banner"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Resource Type</label><input id="r-type" placeholder="e.g. Ventilator, Morphine" /></div>
+        <div class="form-group"><label>Room ID</label><input id="r-room" type="number" placeholder="Room ID" /></div>
+        <div class="form-group"><label>Initial Stock</label><input id="r-stock" type="number" placeholder="0 for equipment" /></div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary" onclick="registerResource()">Register</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Resource Lookup</h2>
+      <div class="lookup-row">
+        <div class="form-group"><label>Resource ID</label><input id="lookup-resource-id" type="number" placeholder="Enter ID" /></div>
+        <button class="btn btn-primary" onclick="lookupResource()">Lookup</button>
+        <button class="btn btn-danger" onclick="deregisterResource()">Deregister</button>
+      </div>
+      <div id="resource-result"></div>
+    </div>
+
+    <div class="card">
+      <h2>Stock Management</h2>
+      <div id="stock-banner" class="banner"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Resource ID</label><input id="stock-id" type="number" placeholder="Resource ID" /></div>
+        <div class="form-group"><label>Resource Type</label><input id="stock-type" placeholder="e.g. Morphine" /></div>
+        <div class="form-group"><label>Amount</label><input id="stock-amount" type="number" placeholder="Units" /></div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <label>&nbsp;</label>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-primary" onclick="updateStock('add')">+ Add</button>
+            <button class="btn btn-warning" onclick="updateStock('use')">- Use</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </main>
@@ -490,6 +537,66 @@
     const data = await res.json();
     document.getElementById('staff-result').innerHTML =
       `<p class="empty">${data.detail || 'Staff member removed.'}</p>`;
+  }
+
+  //  Resources ─
+  async function registerResource() {
+    const body = {
+      resource_type: document.getElementById('r-type').value,
+      room_id: parseInt(document.getElementById('r-room').value) || 0,
+      stock: parseInt(document.getElementById('r-stock').value) || 0,
+    };
+    showBanner('resource-register-banner', 'loading', 'Registering resource...');
+    const res = await fetch(`${API}/api/resources/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (res.ok) showBanner('resource-register-banner', 'success', 'Resource registered.');
+    else showBanner('resource-register-banner', 'error', data.detail || 'Error registering resource.');
+  }
+
+  async function lookupResource() {
+    const id = document.getElementById('lookup-resource-id').value;
+    if (!id) return;
+    const res = await fetch(`${API}/api/resources/${id}`);
+    const data = await res.json();
+    const el = document.getElementById('resource-result');
+    if (res.ok) {
+      el.innerHTML = `<table><thead><tr><th>ID</th><th>Type</th><th>Room</th><th>Stock</th></tr></thead>
+        <tbody><tr><td>${data.resource_id}</td><td>${data.resource_type}</td>
+        <td>${data.room_id}</td><td>${data.stock ?? '—'}</td></tr></tbody></table>`;
+    } else {
+      el.innerHTML = `<p class="empty">${data.detail || 'Not found.'}</p>`;
+    }
+  }
+
+  async function deregisterResource() {
+    const id = document.getElementById('lookup-resource-id').value;
+    if (!id) return;
+    const res = await fetch(`${API}/api/resources/${id}`, { method: 'DELETE' });
+    const data = await res.json();
+    document.getElementById('resource-result').innerHTML =
+      `<p class="empty">${data.detail || 'Resource deregistered.'}</p>`;
+  }
+
+  async function updateStock(action) {
+    const body = {
+      resource_id: parseInt(document.getElementById('stock-id').value) || 0,
+      resource_type: document.getElementById('stock-type').value,
+      amount: parseInt(document.getElementById('stock-amount').value) || 0,
+    };
+    const endpoint = action === 'add' ? '/api/resources/stock/add' : '/api/resources/stock/use';
+    showBanner('stock-banner', 'loading', action === 'add' ? 'Adding stock...' : 'Using stock...');
+    const res = await fetch(`${API}${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (res.ok) showBanner('stock-banner', 'success', `Stock ${action === 'add' ? 'added' : 'used'} successfully.`);
+    else showBanner('stock-banner', 'error', data.detail || 'Stock update failed.');
   }
 
   //  Helpers ─

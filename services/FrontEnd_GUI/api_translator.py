@@ -13,7 +13,7 @@ import uvicorn
 from room_client import RoomManagementClient
 from staff_client import StaffManagementClient
 from patient_client import PatientManagementClient
-# from resource_client import ResourceManagementClient  # TODO: uncomment when Olamide completes
+from resource_client import ResourceManagementClient
 
 app = FastAPI(title="Hospital Management System API")
 
@@ -24,9 +24,10 @@ RESOURCE_HOST = "127.0.0.1:8923"
 STAFF_HOST    = "127.0.0.1:8924"
 SERVICE_NAME  = "frontend"
 
-room_client    = RoomManagementClient(ROOM_HOST)
-staff_client   = StaffManagementClient(STAFF_HOST)
-patient_client = PatientManagementClient(PATIENT_HOST)
+room_client     = RoomManagementClient(ROOM_HOST)
+staff_client    = StaffManagementClient(STAFF_HOST)
+patient_client  = PatientManagementClient(PATIENT_HOST)
+resource_client = ResourceManagementClient(RESOURCE_HOST)
 
 # Request models 
 
@@ -51,6 +52,19 @@ class TransferPatientRequest(BaseModel):
     old_room_id: int
     new_room_id: int
     room_type: str
+
+class RegisterResourceRequest(BaseModel):
+    resource_type: str
+    room_id: int
+    stock: int = 0
+
+class DeregisterResourceRequest(BaseModel):
+    resource_id: int
+
+class StockUpdateRequest(BaseModel):
+    resource_id: int
+    resource_type: str
+    amount: int
 
 class AddStaffRequest(BaseModel):
     first: str
@@ -150,6 +164,46 @@ def get_patient(patient_id: int):
     if info is None:
         raise HTTPException(status_code=404, detail="Patient not found")
     return info
+
+# Resources
+
+@app.get("/api/resources/{resource_id}")
+def get_resource(resource_id: int):
+    info = resource_client.getInfo(resource_id, SERVICE_NAME)
+    if info is None:
+        raise HTTPException(status_code=404, detail="Resource not found")
+    return info
+
+@app.post("/api/resources/register")
+def register_resource(req: RegisterResourceRequest):
+    success = resource_client.registerResource(
+        resource_type=req.resource_type, room_id=req.room_id,
+        stock=req.stock, service_name=SERVICE_NAME
+    )
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to register resource")
+    return {"success": True}
+
+@app.delete("/api/resources/{resource_id}")
+def deregister_resource(resource_id: int):
+    success = resource_client.deregisterResource(resource_id, SERVICE_NAME)
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to deregister resource")
+    return {"success": True}
+
+@app.post("/api/resources/stock/add")
+def add_stock(req: StockUpdateRequest):
+    success = resource_client.addStock(req.resource_id, req.resource_type, req.amount, SERVICE_NAME)
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to add stock")
+    return {"success": True}
+
+@app.post("/api/resources/stock/use")
+def use_stock(req: StockUpdateRequest):
+    success = resource_client.useStock(req.resource_id, req.resource_type, req.amount, SERVICE_NAME)
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to use stock")
+    return {"success": True}
 
 # Staff
 
