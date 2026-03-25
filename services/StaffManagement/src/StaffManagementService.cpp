@@ -68,9 +68,7 @@ bool StaffManagementService::sendStaff() {
         uint32_t new_room = staff_ptr->access_schedule()->check_schedule(); // Will return a room id if the resource needs to go to a new room
         if (new_room == room::idle)             { continue; } // Staff not assigned to room
         if (new_room == staff_ptr->getRoomId()) { continue; } // Staff in the room they need to be
-        /* TODO: need to complete this part once the room_client is done
-        room_client->update_resource(resource_id, new_room, service::resource);
-        */
+        room_client->retrieveStaff(staff_id, new_room, service::staff);
         staff_ptr->setRoomId(new_room);
     }
     return true;
@@ -81,9 +79,7 @@ bool StaffManagementService::retrieveStaff() {
         uint32_t new_room = staff_ptr->access_schedule()->check_schedule();
         if (new_room != room::idle)               { continue; } // Staff still assigned to room
         if (staff_ptr->getRoomId() == room::idle) { continue; } // Staff in the room they need to be
-        /* TODO: Complete after room_client
-        room_client->update_resource(resource_id, new_room, service::resource);
-        */
+        room_client->releaseStaff(staff_id, new_room, service::staff);
         staff_ptr->setRoomId(new_room);
     }
     return true;
@@ -93,7 +89,7 @@ bool StaffManagementService::retrieveStaff() {
 /* ************************** Constructor ***************************** */
 /* ******************************************************************** */
 
-StaffManagementService::StaffManagementService() : room_client(std::make_unique<RoomManagementClient>(service::room_host)) {
+StaffManagementService::StaffManagementService() : room_client(std::make_unique<RoomManagementClient>(service::room_host)), parser(std::make_unique<StaffJSONParser>(service::staff_db)) {
     this->name = service::staff;
     this->database_name = service::staff_db;
 }
@@ -117,8 +113,11 @@ grpc::Status StaffManagementService::print(grpc::ServerContext * context, const 
 
 grpc::Status StaffManagementService::update(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
     readMetadata(* context);
-    sendStaff(); // Send all resources to their respective rooms
-    retrieveStaff(); // Retrieve all resources that are done in a room
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        sendStaff(); // Send all resources to their respective rooms
+        retrieveStaff(); // Retrieve all resources that are done in a room
+    }
     uploadToDB();
     std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
     response->set_error(false);
@@ -136,6 +135,8 @@ grpc::Status StaffManagementService::AddStaff(grpc::ServerContext * context, con
     Staff new_staff;
     dto_to_staff(* staff_dto, new_staff);
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     uint64_t exists = findStaff(new_staff); // Check if staff exists in the system
     
     if (new_staff.getStaffId() != 0 || exists != 0) { // If a staff id was provided or staffs already in system
@@ -146,11 +147,20 @@ grpc::Status StaffManagementService::AddStaff(grpc::ServerContext * context, con
         }
     } else { new_staff.setStaffId(generate_id()); } // Id was not provided, and staff wasnt in system
     
-    
     // Ensure staff get paid enough
     if (new_staff.getSalary() < minimum_wage) { new_staff.setSalary(minimum_wage); }
     
-    total_staff.emplace(new_staff.getStaffId(), std::make_unique<Staff>(std::move(new_staff))); // Add staff to system
+    auto [it, inserted] = total_staff.emplace(new_staff.getStaffId(), std::make_unique<Staff>(std::move(new_staff))); // Add staff to system
+    
+    if (!inserted) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::ABORTED, "Something went critically wrong");
+    }
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->write_one(* it->second);
+    }
     
     success->set_successful(true);
     return grpc::Status::OK;
@@ -158,37 +168,46 @@ grpc::Status StaffManagementService::AddStaff(grpc::ServerContext * context, con
 
 grpc::Status StaffManagementService::RemoveStaff(grpc::ServerContext * context, const StaffDTO * staff_dto, Success * success) {
     
+    /* TODO: Update room client to handle staff services
+    ReturnCode staff_discharge = room_client->removeStaff();
+    */
+    
     readMetadata(* context); // Read reqeust metadata
     
     Staff removal_target;
     dto_to_staff(* staff_dto, removal_target);
     
-    if (removal_target.getStaffId() == 0) { // No id provided, search by name
+    uint64_t id = removal_target.getStaffId();
+    
+    std::lock_guard<std::mutex> lock(mtx);
+    
+    if (id == 0) { // No id provided, search by name
         removal_target.setStaffId(findStaff(removal_target));  // Find staff id by staff name/sex
+        id = removal_target.getStaffId();
     }
     
-    auto it = total_staff.find(removal_target.getStaffId()); // Search for staff by id
+    auto it = total_staff.find(id); // Search for staff by id
     if (it == total_staff.end()) { // Staff not found
         success->set_successful(false);
        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the staff to remove");
     }
     
-    /* TODO: Update room client to handle staff services
-    ReturnCode staff_discharge = room_client->removeStaff();
-    */
+    uint32_t room_id = it->second->getRoomId(); // find the room the staff is currently at
+    bool staff_removal = room_id != room::idle ? room_client->releaseStaff(id, room_id, service::staff) : true;
     
-    ReturnCode staff_discharge = ReturnCode::SUCCESS;
-    
-    switch (staff_discharge) {
-        case ReturnCode::SUCCESS:
-            success->set_successful(true);
-            total_staff.erase(it);
-            return grpc::Status::OK;
-        case ReturnCode::WARNING:
-        case ReturnCode::FAILURE:
-        default:
-            success->set_successful(false);
-            return grpc::Status(grpc::StatusCode::ABORTED, "Something went wrong during firing process");
+    if (staff_removal) {
+        success->set_successful(true);
+        total_staff.erase(it);
+
+        {
+            std::lock_guard<std::mutex> json_lock(json_mtx);
+            parser->remove_one(id);
+        }
+
+        return grpc::Status::OK;
+    } else {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::ABORTED, "Something went wrong during firing process");
     }
 }
 
@@ -199,6 +218,8 @@ grpc::Status StaffManagementService::ChangePosition(grpc::ServerContext * contex
     
     Staff target;
     dto_to_staff(* staff_dto, target);
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     if (target.getStaffId() == 0) { // No id provided, search by name
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
@@ -213,6 +234,12 @@ grpc::Status StaffManagementService::ChangePosition(grpc::ServerContext * contex
     // Change position & salary
     it->second->setPosition(target.getPosition());
     it->second->setSalary(target.getSalary());
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->write_one(* it->second);
+    }
+    
     success->set_successful(true);
     return grpc::Status::OK;
 }
@@ -223,6 +250,8 @@ grpc::Status StaffManagementService::ChangeClearance(grpc::ServerContext * conte
     
     Staff target;
     dto_to_staff(* staff_dto, target);
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     if (target.getStaffId() == 0) { // No id provided, search by name
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
@@ -236,6 +265,12 @@ grpc::Status StaffManagementService::ChangeClearance(grpc::ServerContext * conte
     
     it->second->setClearance(target.getClearance());
     it->second->increaseSalary(target.getSalary());
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->write_one(* it->second);
+    }
+    
     success->set_successful(true);
     return grpc::Status::OK;
 }
@@ -246,6 +281,8 @@ grpc::Status StaffManagementService::UpdateStaffInformation(grpc::ServerContext 
     
     Staff new_staff;
     dto_to_staff(* staff_dto, new_staff);
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     if (new_staff.getStaffId() == 0) { // No id provided, search by name
         new_staff.setStaffId(findStaff(new_staff)); // Find staff id by staff name/sex
@@ -259,6 +296,11 @@ grpc::Status StaffManagementService::UpdateStaffInformation(grpc::ServerContext 
     
     * (it->second) = std::move(new_staff);
     
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->write_one(* it->second);
+    }
+    
     success->set_successful(true);
     return grpc::Status::OK;
 }
@@ -268,6 +310,8 @@ grpc::Status StaffManagementService::AddShift(grpc::ServerContext * context, con
     readMetadata(* context); // Read request metadata
     
     uint64_t staff_id = shift->staff().staff_id();
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     auto it = total_staff.find(staff_id);
     if (it == total_staff.end()) {
@@ -300,7 +344,13 @@ grpc::Status StaffManagementService::AddShift(grpc::ServerContext * context, con
     
     if (!addition_success) {
         return grpc::Status(grpc::StatusCode::UNKNOWN, "Unknown error occurred when adding to schedule");
-    } else { return grpc::Status::OK; }
+    } else {
+        {
+            std::lock_guard<std::mutex> json_lock(json_mtx);
+            parser->write_one(* it->second);
+        }
+        return grpc::Status::OK;
+    }
 }
 
 grpc::Status StaffManagementService::RemoveShift(grpc::ServerContext * context, const StaffShift * shift, Success * success) {
@@ -308,6 +358,9 @@ grpc::Status StaffManagementService::RemoveShift(grpc::ServerContext * context, 
     readMetadata(* context); // Read request metadata
     
     uint64_t staff_id = shift->staff().staff_id();
+    
+    std::lock_guard<std::mutex> lock(mtx);
+    
     auto it = total_staff.find(staff_id);
     if (it == total_staff.end()) {
         success->set_successful(false);
@@ -324,7 +377,13 @@ grpc::Status StaffManagementService::RemoveShift(grpc::ServerContext * context, 
     
     if (!removal_success) {
         return grpc::Status(grpc::StatusCode::CANCELLED, "Specified shift does not exist");
-    } else { return grpc::Status::OK; }
+    } else {
+        {
+            std::lock_guard<std::mutex> json_lock(json_mtx);
+            parser->write_one(* it->second);
+        }
+        return grpc::Status::OK;
+    }
 }
 
 grpc::Status StaffManagementService::TransferShift(grpc::ServerContext * context, const StaffShift * shift, Success * success) {
@@ -334,17 +393,20 @@ grpc::Status StaffManagementService::TransferShift(grpc::ServerContext * context
     uint64_t staff_id = shift->staff().staff_id();
     uint32_t room_id = shift->shift().room_id();
     
-    
     if (room_id == room::idle) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "No room id provided");
     }
+    
+    std::unique_lock<std::mutex> lock(mtx);
     
     auto it = total_staff.find(staff_id);
     if (it == total_staff.end()) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource");
     }
+    
+    lock.unlock();
     
     // Extract shift information
     const DateDTO & this_shift_date = shift->shift().other(); // 'This' is the shift to change
@@ -360,6 +422,8 @@ grpc::Status StaffManagementService::TransferShift(grpc::ServerContext * context
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::CANCELLED, "Missing input arguments");
     }
+    
+    lock.lock();
     
     // Get the shifts
     time_util::Shift this_shift(this_shift_ts, time_util::duration::none, room::idle);
@@ -383,6 +447,12 @@ grpc::Status StaffManagementService::TransferShift(grpc::ServerContext * context
     }
 
     // Removal and Addition must succeed
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->write_one(* it->second);
+    }
+    
     success->set_successful(successfully_added && removal_success);
     return grpc::Status::OK;
 }
@@ -398,11 +468,15 @@ grpc::Status StaffManagementService::BookTimeOff(grpc::ServerContext * context, 
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
     }
     
+    std::unique_lock<std::mutex> lock(mtx);
+    
     auto it = total_staff.find(target.getStaffId()); // Search for staff by id
     if (it == total_staff.end()) { // Staff not found
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the staff to remove");
     }
+    
+    lock.unlock();
     
     // Get pointers to the dates
     const DateDTO & start_date_ptr = shift->start_date();
@@ -419,13 +493,21 @@ grpc::Status StaffManagementService::BookTimeOff(grpc::ServerContext * context, 
     }
     
     time_util::Shift new_shift(start_ts, end_ts, room::none);
+    
+    lock.lock();
     bool addition_success = it->second->access_schedule()->addToSchedule(new_shift);
     
     success->set_successful(addition_success); // Report success depending on if the shift was added successfully
     
     if (!addition_success) {
         return grpc::Status(grpc::StatusCode::UNKNOWN, "Unknown error occurred when adding to schedule");
-    } else { return grpc::Status::OK; }
+    } else {
+        {
+            std::lock_guard<std::mutex> json_lock(json_mtx);
+            parser->write_one(* it->second);
+        }
+        return grpc::Status::OK;
+    }
 }
 
 grpc::Status StaffManagementService::SeeStaffInformation(grpc::ServerContext * context, const StaffDTO * staff_dto, StaffDTO * staff_info) {
@@ -438,6 +520,8 @@ grpc::Status StaffManagementService::SeeStaffInformation(grpc::ServerContext * c
     if (target.getStaffId() == 0) { // No id provided, search by name
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
     }
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     auto it = total_staff.find(target.getStaffId()); // Search for staff by id
     if (it == total_staff.end()) { // Staff not found
@@ -458,6 +542,8 @@ grpc::Status StaffManagementService::SeeTodaysSchedule(grpc::ServerContext * con
     if (target.getStaffId() == 0) { // No id provided, search by name
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
     }
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     auto it = total_staff.find(target.getStaffId()); // Search for staff by id
     if (it == total_staff.end()) { // Staff not found
@@ -489,6 +575,8 @@ grpc::Status StaffManagementService::SeeTomorrowsSchedule(grpc::ServerContext * 
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
     }
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     auto it = total_staff.find(target.getStaffId()); // Search for staff by id
     if (it == total_staff.end()) { // Staff not found
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the staff to remove");
@@ -519,10 +607,14 @@ grpc::Status StaffManagementService::SeeScheduleRange(grpc::ServerContext * cont
         target.setStaffId(findStaff(target)); // Find staff id by staff name/sex
     }
     
+    std::unique_lock<std::mutex> lock(mtx);
+    
     auto it = total_staff.find(target.getStaffId()); // Search for staff by id
     if (it == total_staff.end()) { // Staff not found
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the staff to remove");
     }
+    
+    lock.unlock();
     
     time_util::Shift temp_shift;
     time_util::dto_to_shift(range->shift(), temp_shift);
@@ -530,6 +622,7 @@ grpc::Status StaffManagementService::SeeScheduleRange(grpc::ServerContext * cont
     time_util::Date start_date = time_util::timestamp_to_date(temp_shift.shift_start);
     time_util::Date end_date   = time_util::timestamp_to_date(temp_shift.shift_end);
     
+    lock.lock();
     std::set<time_util::Shift> shifts = it->second->access_schedule()->getBetween(start_date, end_date);
     ReturnCode success = convertToSchedule(shifts, schedule, & range->staff());
     
@@ -551,6 +644,8 @@ grpc::Status StaffManagementService::GetStaffInRoom(grpc::ServerContext * contex
     
     uint32_t room_id = room->room_id();
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     for (const auto & [staff_id, staff_ptr] : total_staff) {
         if (staff_ptr->getRoomId() != room_id) { continue; }
         StaffDTO * current_staff = staff_info->add_staff();
@@ -571,13 +666,41 @@ grpc::Status StaffManagementService::GetStaffInRoom(grpc::ServerContext * contex
 /* ******************************************************************** */
 
 ReturnCode StaffManagementService::loadFromDB() {
+    std::vector<std::unique_ptr<Staff>> all_staff;
     
-    return ReturnCode::NOT_YET_IMPLEMENTED;
+    {
+        std::lock_guard<std::mutex> lock(json_mtx);
+        parser->read_all(all_staff);
+    }
+    
+    std::lock_guard<std::mutex> lock(mtx);
+    
+    for (std::unique_ptr<Staff> & ptr : all_staff) {
+        uint64_t id = ptr->getStaffId();
+        
+        total_staff.emplace(id, std::move(ptr));
+        
+        if (total_staff[id]->getRoomId() != room::none) {
+            working_staff.emplace(id, total_staff[id].get());
+        }
+    }
+    
+    return ReturnCode::SUCCESS;
 }
 
 ReturnCode StaffManagementService::uploadToDB() {
+    std::vector<std::unique_ptr<Staff>> all_staff;
     
-    return ReturnCode::NOT_YET_IMPLEMENTED;
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        for (const auto & [id, ptr] : total_staff) {
+            all_staff.push_back(ptr->clone());
+        }
+    }
+    
+    std::lock_guard<std::mutex> lock(json_mtx);
+    parser->write_all(all_staff);
+    return ReturnCode::SUCCESS;
 }
 
 ReturnCode StaffManagementService::init() {
@@ -588,7 +711,60 @@ ReturnCode StaffManagementService::init() {
 
 
 void StaffManagementService::print_internal() {
-    
+    using namespace std;
+
+    std::lock_guard<std::mutex> lock(mtx); // protect total_staff & working_staff
+
+    cout << ansi::bgreen
+         << "==== " << service::staff << " STATE ===="
+         << ansi::reset << '\n';
+
+    auto print_staff_map = [&](const auto& map, const string& name) {
+        cout << ansi::byellow
+             << name << " (" << map.size() << " staff)"
+             << ansi::reset << '\n';
+
+        if (map.empty()) {
+            cout << ansi::bred
+                 << "  No staff in this category."
+                 << ansi::reset << '\n';
+            return;
+        }
+
+        for (const auto& [id, staff_ptr] : map) {
+            if (staff_ptr) {
+                cout << *staff_ptr << '\n';
+            } else {
+                cout << ansi::bred
+                     << "  Staff ID " << id << " is null!"
+                     << ansi::reset << '\n';
+            }
+            cout << "------------------------\n";
+        }
+    };
+
+    // Total staff
+    print_staff_map(total_staff, "Total Staff");
+
+    // Working staff
+    std::unordered_map<uint64_t, Staff*> working_subset;
+    for (auto [id, staff_ptr] : working_staff) {
+        if (staff_ptr) working_subset[id] = staff_ptr;
+    }
+    print_staff_map(working_subset, "Working Staff");
+
+    // Idle staff (total - working)
+    std::unordered_map<uint64_t, Staff*> idle_subset;
+    for (auto& [id, staff_ptr] : total_staff) {
+        if (!working_staff.contains(id) && staff_ptr) {
+            idle_subset[id] = staff_ptr.get();
+        }
+    }
+    print_staff_map(idle_subset, "Idle Staff");
+
+    cout << ansi::bgreen
+         << "==== END OF STATE ===="
+         << ansi::reset << '\n';
 }
 
 /* ******************************************************************** */

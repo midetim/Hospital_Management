@@ -32,14 +32,66 @@ bool Staff::operator==(const Staff & other) const {
 }
 
 std::ostream & operator<<(std::ostream & os, const Staff & s) {
-    os << "Staff [ID: "   << s.staff_id
-       << ", Name: "      << s.staff_name
-       << ", Sex: "       << sexToString(s.staff_sex)
-       << ", Salary: $"   << s.staff_salary
-       << ", Room ID: "   << s.room_id
-       << ", Position: "  << staff::position_to_string(s.staff_position)
-       << ", Clearance: " << static_cast<int>(s.staff_clearance)
-       << "]";
+    os << ansi::bcyan
+       << "Staff ID: "
+       << s.staff_id
+       << ansi::reset
+       << '\n';
+
+    os << "  Name       : "
+       << ansi::bwhite
+       << s.staff_name
+       << ansi::reset
+       << '\n';
+
+    os << "  Sex        : "
+       << ansi::bmagenta
+       << person::sexToString(s.staff_sex)
+       << ansi::reset
+       << '\n';
+
+    os << "  Salary     : $"
+       << ansi::byellow
+       << s.staff_salary
+       << ansi::reset
+       << '\n';
+
+    os << "  Room ID    : "
+       << ansi::bblue
+       << s.room_id
+       << ansi::reset
+       << '\n';
+
+    os << "  Position   : "
+       << ansi::bgreen
+       << staff::position_to_string(s.staff_position)
+       << ansi::reset
+       << '\n';
+
+    os << "  Clearance  : "
+       << ansi::bred
+       << staff::clearance_to_string(s.staff_clearance)
+       << ansi::reset
+       << '\n';
 
     return os;
+}
+
+
+std::unique_ptr<Staff> Staff::clone() const {
+    std::unique_ptr<Staff> ptr = std::make_unique<Staff>();
+    ptr->setName(this->getName());
+    ptr->setSex(this->getSex());
+    ptr->setStaffId(this->getStaffId());
+    ptr->setRoomId(this->getRoomId());
+    ptr->setSalary(this->getSalary());
+    ptr->setPosition(this->getPosition());
+    ptr->setClearance(this->getClearance());
+    
+    // Copy schedule
+    for (const time_util::Shift & shift : this->view_schedule()->getFrom(time_util::timestamp_to_date(time_util::times::max))) {
+        ptr->access_schedule()->addToSchedule(shift);
+    }
+    
+    return ptr;
 }

@@ -13,6 +13,7 @@
 #include "PatientJSONParser.hpp"
 
 #include <unordered_map>
+#include <mutex>
 
 /* ******************************************************************** */
 /* ****************** Patient Management Service ********************** */
@@ -29,9 +30,13 @@ private:
     /* ********************** Private Variables *************************** */
     /* ******************************************************************** */
     
-    std::unordered_map<uint64_t, Patient> hospital_patients;
+    std::unordered_map<uint64_t, std::unique_ptr<Patient>> hospital_patients;
     std::unique_ptr<RoomManagementClient> room_client;
     std::unique_ptr<PatientJSONParser> parser;
+    
+    /* mutexes */
+    std::mutex mtx;
+    std::mutex json_mtx;
     
     /* ******************************************************************** */
     /* ********************** Private Functions *************************** */
@@ -116,7 +121,7 @@ public:
     /**
      * @brief Updates the patient object to match the patient sent in the request
      */
-    grpc::Status UpdatePatientInformation(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) override;
+    grpc::Status UpdatePatientInformation(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) override; // CALLED BY ROOM SERVICE
     
     /**
      * @brief Gets the information on every patient that has been admitted to a specified room

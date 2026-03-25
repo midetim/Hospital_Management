@@ -8,7 +8,10 @@
 #include "Common.grpc.pb.h"
 #include "StaffManagement.grpc.pb.h"
 
+#include "StaffJSONParser.hpp"
+
 #include <unordered_map>
+#include <mutex>
 
 /* ******************************************************************** */
 /* ****************** Patient Management Service ********************** */
@@ -24,7 +27,11 @@ private:
     std::unordered_map<uint64_t, std::unique_ptr<Staff>> total_staff;
     std::unordered_map<uint64_t, Staff *> working_staff;
     
-   std::unique_ptr<RoomManagementClient> room_client;
+    std::unique_ptr<RoomManagementClient> room_client;
+    std::unique_ptr<StaffJSONParser> parser;
+    
+    std::mutex mtx;
+    std::mutex json_mtx;
     
     /* ******************************************************************** */
     /* ********************** Private Functions *************************** */

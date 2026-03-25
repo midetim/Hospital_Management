@@ -3,6 +3,7 @@
 
 #include "utils.hpp"
 
+#include <memory>
 
 class Patient {
 private:
@@ -121,6 +122,9 @@ public:
     
     
     friend std::ostream & operator<<(std::ostream & os, const Patient & p);
+    
+    
+    std::unique_ptr<Patient> clone() const;
 };
 
 #include <functional> 

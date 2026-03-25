@@ -12,8 +12,8 @@ using namespace patient;
 /* ******************************************************************** */
  
 uint64_t PatientManagementService::find_patient(const Patient & p) {
-    for (const auto & [pid, patient] : hospital_patients) {
-        if (patient == p) { // If patients are equivalent
+    for (const auto & [pid, ptr] : hospital_patients) {
+        if (* ptr == p) { // If patients are equivalent
             return pid;    // Found the patient
         }
     }
@@ -49,7 +49,7 @@ grpc::Status PatientManagementService::print(grpc::ServerContext * context, cons
 
 grpc::Status PatientManagementService::update(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
     readMetadata(* context);
-    loadFromDB();
+    uploadToDB();
     std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
     response->set_error(false);
     return grpc::Status::OK;
@@ -76,6 +76,8 @@ grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * contex
     Patient new_patient(patient_name, patient_sex);
     new_patient.setPatientCondition(patient_condition);
     
+    std::unique_lock<std::mutex> lock(mtx);
+    
     // Attempt to find that patient
     uint64_t patient_id = find_patient(new_patient);
     auto it = hospital_patients.find(patient_id);
@@ -83,6 +85,8 @@ grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * contex
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::ALREADY_EXISTS, "Patient has already been admitted");
     }
+    
+    lock.unlock();
     
     // Extract room information
     std::string room_type = patient_dto->room_type();
@@ -101,9 +105,17 @@ grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * contex
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not admit patient");
     }
     
+    lock.lock();
+    
     // If admission succeeded does it add the patient to the hospital system
     new_patient.setRoomId(success_code);
-    hospital_patients.emplace(patient_id, std::move(new_patient));
+    hospital_patients.emplace(patient_id, std::make_unique<Patient>(std::move(new_patient)));
+    lock.unlock();
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->write_one(new_patient);
+    }
     
     // Returns succesful
     success->set_successful(true);
@@ -129,15 +141,22 @@ grpc::Status PatientManagementService::DischargePatient(grpc::ServerContext * co
         patient_id = find_patient(new_patient); // Find the person using their name / sex
     }
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     auto it = hospital_patients.find(patient_id); // Find the patient in the hospital
     if (it == hospital_patients.end()) { // If the patient could not be found
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find patient");
     }
     
-    uint32_t room_id = it->second.getRoomId(); // Get the room id of the room the patient is currently in
+    uint32_t room_id = it->second->getRoomId(); // Get the room id of the room the patient is currently in
     
     bool room_discharge = room_client->dischargePatient(patient_id, this->name); // Discharge them from that room
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->remove_one(patient_id);
+    }
+    
     success->set_successful(room_discharge);
     
     if (!room_discharge) {
@@ -155,6 +174,8 @@ grpc::Status PatientManagementService::TransferPatient(grpc::ServerContext * con
     std::string room_type = transfer_request->room_type();
     bool is_quarantined   = transfer_request->is_quarantined();
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     // Find patient in the hospital
     auto it = hospital_patients.find(patient_id);
     if (it == hospital_patients.end()) { // If the patient was not found
@@ -163,7 +184,7 @@ grpc::Status PatientManagementService::TransferPatient(grpc::ServerContext * con
     }
     
     // Get the current room id of the patient
-    uint32_t old_room_id = it->second.getRoomId();
+    uint32_t old_room_id = it->second->getRoomId();
     
     // Get the new room id of the patient
     uint32_t room_transfer = room_client->transferPatient(patient_id, new_room_id, old_room_id, room_type, is_quarantined, this->name);
@@ -174,7 +195,12 @@ grpc::Status PatientManagementService::TransferPatient(grpc::ServerContext * con
     }
     
     // Change the patients room id to their new room id
-    it->second.setRoomId(room_transfer);
+    it->second->setRoomId(room_transfer);
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->replace_one(* it->second);
+    }
     
     // Report success
     success->set_successful(true);
@@ -189,6 +215,8 @@ grpc::Status PatientManagementService::QuarantinePatient(grpc::ServerContext * c
     uint64_t patient_id = quarantine_request->patient_id();
     bool quarantine_entire_room = quarantine_request->quarantine_room();
     
+    std::unique_lock<std::mutex> lock(mtx);
+    
     // Find the patient in the hospital
     auto it = hospital_patients.find(patient_id);
     if (it == hospital_patients.end()) { // If patient is not found
@@ -196,14 +224,21 @@ grpc::Status PatientManagementService::QuarantinePatient(grpc::ServerContext * c
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the patient to quarantine");
     }
     
-    uint32_t old_room_id = it->second.getRoomId(); // Store old room id
+    uint32_t old_room_id = it->second->getRoomId(); // Store old room id
+    
+    lock.unlock(); // Unlock mutex before quarantine
     
     // Attempt to quarantine the patient
     bool quarantined = room_client->quarantinePatient(patient_id, quarantine_entire_room, this->name);
-    if (!quarantined || old_room_id == it->second.getRoomId()) { // Patient could not be quarantined
+    
+    lock.lock();
+    
+    if (!quarantined || old_room_id == it->second->getRoomId()) { // Patient could not be quarantined
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
+    
+    // Patient does not know they are quarantined
     
     // Report success
     success->set_successful(true);
@@ -217,6 +252,8 @@ grpc::Status PatientManagementService::LiftPatientQuarantine(grpc::ServerContext
     uint64_t patient_id = quarantine_request->patient_id();
     bool quarantine_entire_room = quarantine_request->quarantine_room();
     
+    std::unique_lock<std::mutex> lock(mtx);
+    
     // Find the patient in the hospital
     auto it = hospital_patients.find(patient_id);
     if (it == hospital_patients.end()) { // If patient is not found
@@ -224,7 +261,7 @@ grpc::Status PatientManagementService::LiftPatientQuarantine(grpc::ServerContext
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the patient to quarantine");
     }
     
-    // TODO: WILL NEED TO MODIFY THIS PART IN ROOM CLIENT TO MATCH
+    lock.unlock();
     
     // Attempt to quarantine the patient
     uint32_t quarantined = room_client->quarantinePatient(patient_id, quarantine_entire_room, this->name);
@@ -232,8 +269,15 @@ grpc::Status PatientManagementService::LiftPatientQuarantine(grpc::ServerContext
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
     
+    lock.lock();
+    
     // Set the patients room to the quarantined room
-    it->second.setRoomId(quarantined);
+    it->second->setRoomId(quarantined);
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->replace_one(* it->second);
+    }
     
     // Report success
     success->set_successful(true);
@@ -257,6 +301,8 @@ grpc::Status PatientManagementService::GetPatientInformation(grpc::ServerContext
     // Create a temporary patient
     Patient patient_data(patient_name, patient_sex);
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     if (patient_id == 0) { // If no patient id was provided
         patient_id = find_patient(patient_data); // Try and find the patient with other ways
     }
@@ -270,15 +316,17 @@ grpc::Status PatientManagementService::GetPatientInformation(grpc::ServerContext
     
     // Extract the name from the system and format it into the response
     NameDTO * name = patient_response->mutable_patient_name();
-    name->set_first (it->second.getPatientName().first);
-    name->set_middle(it->second.getPatientName().middle);
-    name->set_last  (it->second.getPatientName().last);
+    name->set_first (it->second->getPatientName().first);
+    name->set_middle(it->second->getPatientName().middle);
+    name->set_last  (it->second->getPatientName().last);
     
-    // Fill out the rest of teh response
-    patient_response->set_patient_id(it->second.getPatientId());
-    patient_response->set_patient_sex(sexToString(it->second.getPatientSex()));
-    patient_response->set_patient_cond(conditionToString(it->second.getPatientCondition()));
-    patient_response->set_patient_room(it->second.getRoomId());
+    // Fill out the rest of the response
+    patient_response->set_patient_id(it->second->getPatientId());
+    patient_response->set_patient_sex(sexToString(it->second->getPatientSex()));
+    patient_response->set_patient_cond(conditionToString(it->second->getPatientCondition()));
+    patient_response->set_patient_room(it->second->getRoomId());
+    
+    // No printing
     
     return grpc::Status::OK;
 }
@@ -289,6 +337,8 @@ grpc::Status PatientManagementService::UpdatePatientInformation(grpc::ServerCont
     
     // Extract patient information from the request
     uint64_t patient_id = patient_dto->patient_id();
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     if (patient_id == 0) { // If no patient id was provided
         
@@ -318,9 +368,8 @@ grpc::Status PatientManagementService::UpdatePatientInformation(grpc::ServerCont
     }
     
     // Update patients information to be consistent with what was just received
-    it->second.setRoomId(patient_dto->patient_room());
-    it->second.setPatientSex(stringToSex(patient_dto->patient_sex()));
-    it->second.setPatientCondition(stringToCondition(patient_dto->patient_cond()));
+    it->second->setPatientSex(stringToSex(patient_dto->patient_sex()));
+    it->second->setPatientCondition(stringToCondition(patient_dto->patient_cond()));
     
     Name name = {
         .first  = patient_dto->patient_name().first(),
@@ -328,7 +377,12 @@ grpc::Status PatientManagementService::UpdatePatientInformation(grpc::ServerCont
         .last   = patient_dto->patient_name().last()
     };
     
-    it->second.updateName(name);
+    it->second->updateName(name);
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->replace_one(* it->second);
+    }
     
     // Report success
     success->set_successful(true);
@@ -341,8 +395,10 @@ grpc::Status PatientManagementService::GetPatientsInRoom(grpc::ServerContext * c
     
     uint32_t room_id = room->room_id(); // Get the room id
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     for (const auto & [patient_id, patient_obj] : hospital_patients) {
-        if (patient_obj.getRoomId() != room_id) {
+        if (patient_obj->getRoomId() != room_id) {
             continue; // If the room ids do not match, jump to the next patient
         }
         
@@ -351,11 +407,11 @@ grpc::Status PatientManagementService::GetPatientsInRoom(grpc::ServerContext * c
 
         current_patient->set_patient_id(patient_id);
         current_patient->set_patient_room(room_id);
-        current_patient->set_patient_sex(sexToString(patient_obj.getPatientSex()));
-        current_patient->set_patient_cond(conditionToString(patient_obj.getPatientCondition()));
+        current_patient->set_patient_sex(sexToString(patient_obj->getPatientSex()));
+        current_patient->set_patient_cond(conditionToString(patient_obj->getPatientCondition()));
 
         // Fill name
-        const Name & patient_name = patient_obj.getPatientName();
+        const Name & patient_name = patient_obj->getPatientName();
 
         NameDTO * name = current_patient->mutable_patient_name();
         name->set_first(patient_name.first);
@@ -377,19 +433,34 @@ grpc::Status PatientManagementService::GetPatientsInRoom(grpc::ServerContext * c
 /* ******************************************************************** */
 
 ReturnCode PatientManagementService::loadFromDB() {
-    std::unordered_set<Patient> patients;
-    parser->read_all(patients);
-    for (const Patient & p : patients) {
-        hospital_patients.emplace(p.getPatientId(), p);
+    std::vector<std::unique_ptr<Patient>> patients;
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mtx);
+        parser->read_all(patients);
     }
+    
+    std::lock_guard<std::mutex> lock(mtx);
+    for (std::unique_ptr<Patient> & ptr : patients) {
+        uint64_t id = ptr->getPatientId();
+        
+        hospital_patients.emplace(id, std::move(ptr));
+    }
+    
     return ReturnCode::SUCCESS;
 }
 
 ReturnCode PatientManagementService::uploadToDB() {
-    std::unordered_set<Patient> patients;
-    for (const auto & [id, patient] : hospital_patients) {
-        patients.emplace(patient);
+    std::vector<std::unique_ptr<Patient>> patients;
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        
+        for (const auto & [id, ptr] : hospital_patients) {
+            patients.push_back(ptr->clone());
+        }
     }
+    
+    std::lock_guard<std::mutex> lock(json_mtx);
     parser->write_all(patients);
     return ReturnCode::SUCCESS;
 }
@@ -401,6 +472,7 @@ ReturnCode PatientManagementService::init() {
 
 
 void PatientManagementService::print_internal() {
+    std::lock_guard<std::mutex> lock(mtx);
     std::cout << ansi::bgreen
               << "==== " << this->name << " STATE ===="
               << ansi::reset << '\n';
@@ -418,7 +490,7 @@ void PatientManagementService::print_internal() {
                   << '\n';
     } else {
         for (const auto & [_, patient] : hospital_patients)
-            std::cout << patient
+            std::cout << * patient
                       << "------------------------\n";
     }
 

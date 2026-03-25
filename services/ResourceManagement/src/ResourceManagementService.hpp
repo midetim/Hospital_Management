@@ -10,7 +10,10 @@
 #include "ResourceManagement.pb.h"
 #include "ResourceManagement.grpc.pb.h"
 
+#include "ResourceJSONParser.hpp"
+
 #include <unordered_map>
+#include <mutex>
 
 /* ******************************************************************** */
 /* ****************** Resource Management Service ********************* */
@@ -45,6 +48,11 @@ private:
     std::unordered_map<uint64_t, uint32_t> resource_stock;
     
     std::unique_ptr<RoomManagementClient> room_client;
+    std::unique_ptr<ResourceJSONParser> parser;
+    
+    std::mutex mtx;
+    std::mutex stock_mtx;
+    std::mutex json_mtx;
     
     /* ******************************************************************** */
     /* ********************** Private Functions *************************** */

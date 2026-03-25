@@ -4,6 +4,7 @@
 #include <chrono>
 #include <cstdint>
 #include <ctime>
+#include <filesystem>
 #include <iomanip>
 #include <ostream>
 #include <random>
@@ -13,6 +14,8 @@
 #include <variant>
 
 
+namespace fs = std::filesystem;
+
 /* ******************************************************************** */
 /* ********************** Service Namespace *************************** */
 /* ******************************************************************** */
@@ -20,40 +23,52 @@
 /* DEBUG / LOCAL TESTING COMPILER MACROS*/
 namespace service {
     // HOST NAMES --> Host names will be changed for containerization
-    inline constexpr std::string_view front_host =      "127.0.0.1:8920"; // -> front:8920
-    inline constexpr std::string_view room_host =       "127.0.0.1:8921"; // -> room:8921
-    inline constexpr std::string_view patient_host =    "127.0.0.1:8922"; // -> patient:8922
-    inline constexpr std::string_view resource_host =   "127.0.0.1:8923"; // -> resource:8923
-    inline constexpr std::string_view staff_host =      "127.0.0.1:8924"; // -> staff:8924
-    inline constexpr std::string_view scheduler_host =  "127.0.0.1:8925"; // -> scheduler:8925
+    inline constexpr std::string_view front_host        = "127.0.0.1:8920"; // -> front:8920
+    inline constexpr std::string_view room_host         = "127.0.0.1:8921"; // -> room:8921
+    inline constexpr std::string_view patient_host      = "127.0.0.1:8922"; // -> patient:8922
+    inline constexpr std::string_view resource_host     = "127.0.0.1:8923"; // -> resource:8923
+    inline constexpr std::string_view staff_host        = "127.0.0.1:8924"; // -> staff:8924
+    inline constexpr std::string_view scheduler_host    = "127.0.0.1:8925"; // -> scheduler:8925
 
     // PORT NAMES
-    inline constexpr uint32_t front_port =      8920;
-    inline constexpr uint32_t room_port =       8921;
-    inline constexpr uint32_t patient_port =    8922;
-    inline constexpr uint32_t resource_port =   8923;
-    inline constexpr uint32_t staff_port =      8924;
-    inline constexpr uint32_t scheduler_port =  8925;
+    inline constexpr uint32_t front_port        = 8920;
+    inline constexpr uint32_t room_port         = 8921;
+    inline constexpr uint32_t patient_port      = 8922;
+    inline constexpr uint32_t resource_port     = 8923;
+    inline constexpr uint32_t staff_port        = 8924;
+    inline constexpr uint32_t scheduler_port    = 8925;
 
     // SERVICE NAMES
-    inline constexpr std::string_view room =        "Room Management Service";
-    inline constexpr std::string_view resource =    "Resource Management Service";
-    inline constexpr std::string_view patient =     "Patient Management Service";
-    inline constexpr std::string_view staff =       "Staff Management Service";
-    inline constexpr std::string_view scheduler =   "Scheduler Management Service";
-    inline constexpr std::string_view front =       "Front End Service";
+    inline constexpr std::string_view room      = "Room Management Service";
+    inline constexpr std::string_view resource  = "Resource Management Service";
+    inline constexpr std::string_view patient   = "Patient Management Service";
+    inline constexpr std::string_view staff     = "Staff Management Service";
+    inline constexpr std::string_view scheduler = "Scheduler Management Service";
+    inline constexpr std::string_view front     = "Front End Service";
 
     // CLIENT NAMES
-    inline constexpr std::string_view room_client = "Room Management Client";
-    inline constexpr std::string_view resource_client = "Resource Management Client";
-    inline constexpr std::string_view patient_client = "Patient Management Client";
-    inline constexpr std::string_view staff_client = "Staff Management Client";
+    inline constexpr std::string_view room_client       = "Room Management Client";
+    inline constexpr std::string_view resource_client   = "Resource Management Client";
+    inline constexpr std::string_view patient_client    = "Patient Management Client";
+    inline constexpr std::string_view staff_client      = "Staff Management Client";
     
+    // SERVICE ROOT PATH
+    inline const fs::path patient_root  = "./services/PatientManagement/";
+    inline const fs::path resource_root = "./services/ResourceManagement/";
+    inline const fs::path room_root     = "./services/RoomManagement/";
+    inline const fs::path staff_root    = "./services/StaffManagement/";
+
     // DATABASE NAMES
-    inline constexpr std::string_view room_db =     "../database/room_database.json";
-    inline constexpr std::string_view resource_db = "../database/resource_database.json";
-    inline constexpr std::string_view patient_db =  "../database/patient_database.json";
-    inline constexpr std::string_view staff_db =    "../database/staff_database.json";
+    inline constexpr std::string_view room_db_file     = "database/room_database.json";
+    inline constexpr std::string_view resource_db_file = "database/resource_database.json";
+    inline constexpr std::string_view patient_db_file  = "database/patient_database.json";
+    inline constexpr std::string_view staff_db_file    = "database/staff_database.json";
+
+    // ABSOLUTE PATH TO DB
+    inline std::string room_db     = (room_root     / room_db_file).string();
+    inline std::string resource_db = (resource_root / resource_db_file).string();
+    inline std::string patient_db  = (patient_root  / patient_db_file).string();
+    inline std::string staff_db    = (staff_root    / staff_db_file).string();
 
 }
 
@@ -111,7 +126,7 @@ namespace core {
 /* ******************************************************************** */
 
 namespace room {
-    
+
     inline constexpr bool get_patients = true;
     inline constexpr bool get_staff = false;
 
@@ -129,7 +144,9 @@ namespace room {
         General,
         Operating,
         IntesiveCare,
-        Emergency
+        Emergency,
+        Administrative,
+        Staff
     };
 
     inline std::string roomTypeToString(RoomType t) {
@@ -138,6 +155,8 @@ namespace room {
             case RoomType::Operating:       return "Operating";
             case RoomType::IntesiveCare:    return "IntesiveCare";
             case RoomType::Emergency:       return "Emergency";
+            case RoomType::Administrative:  return "Administrative";
+            case RoomType::Staff:           return "Staff";
             default:                        return "General";
         }
     }
@@ -147,6 +166,8 @@ namespace room {
         else if (s == "Operating")      return RoomType::Operating;
         else if (s == "IntensiveCare")  return RoomType::IntesiveCare;
         else if (s == "Emergency")      return RoomType::Emergency;
+        else if (s == "Administrative") return RoomType::Administrative;
+        else if (s == "Staff")          return RoomType::Staff;
         else                            return RoomType::General;
     }
 

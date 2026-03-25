@@ -474,7 +474,7 @@ namespace patient_front_end {
         std::string input;
 
         /* ---------------- Update Name ---------------- */
-        input = cli::getLine(std::string(ansi::byellow) + "Middle Name (" + p.patient_name.middle + "): " + ansi::reset);
+        input = cli::getLine(std::string(ansi::byellow) + "First Name (" + p.patient_name.first + "): " + ansi::reset);
         if (!input.empty()) p.patient_name.first = input;
 
         input = cli::getLine(std::string(ansi::byellow) + "Middle Name (" + p.patient_name.middle + "): " + ansi::reset);
@@ -493,13 +493,10 @@ namespace patient_front_end {
 
         /* ---------------- Update Room ---------------- */
         input = cli::getLine(std::string(ansi::byellow) + "Room ID (" + std::to_string(p.room_id) + "): " + ansi::reset);
-        if (!input.empty()) {
-            uint32_t room;
-            if (cli::getNumber<uint32_t>("", room)) {
-                p.room_id = room;
-            }
+        if (!input.empty()){
+            p.room_id = static_cast<uint32_t>(std::stoul(input));
         }
-
+        
         /* ---------------- Send Update ---------------- */
         std::cout << "\n"
                   << Utils::timestamp()

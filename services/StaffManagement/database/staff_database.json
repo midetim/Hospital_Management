@@ -1,26 +1,52 @@
 [
     {
-        "name-first": "Kelsey",
-        "name-middle": "Rose",
-        "name-last": "Mcknight",
-        "sex": "Female",
-        "id": 1,
-        "room": 102,
-        "salary": 20.00,
-        "position": "AdministrativeStaff",
-        "clearance": "Admin",
+        "clearance": "Medium",
+        "id": 116290237041927,
+        "name-first": "Dale",
+        "name-last": "Ferguson",
+        "name-middle": "Levi",
+        "position": "PatientTransporter",
+        "room": 0,
+        "salary": 100.0,
         "schedule": [
             {
-                "start": 1774237046,
-                "end": 1774247046,
-                "duration": 10000,
-                "room": 102
-            }, {
-                "start": 1774257046,
-                "end": 1774357046,
-                "duration": 100000,
-                "room": 102
+                "shift-duration": 360,
+                "shift-end": 29875950,
+                "shift-room": 101,
+                "shift-start": 29875590
             }
-        ]
+        ],
+        "sex": "Male"
+    },
+    {
+        "clearance": "Admin",
+        "id": 1,
+        "name-first": "Kelsey",
+        "name-last": "Mcknight",
+        "name-middle": "Rose",
+        "position": "AdministrativeStaff",
+        "room": 0,
+        "salary": 20.0,
+        "schedule": [
+            {
+                "shift-duration": 28845,
+                "shift-end": 29640870,
+                "shift-room": 0,
+                "shift-start": 29612025
+            },
+            {
+                "shift-duration": 10005,
+                "shift-end": 1774247055,
+                "shift-room": 102,
+                "shift-start": 1774237050
+            },
+            {
+                "shift-duration": 99990,
+                "shift-end": 1774357050,
+                "shift-room": 102,
+                "shift-start": 1774257060
+            }
+        ],
+        "sex": "Female"
     }
 ]

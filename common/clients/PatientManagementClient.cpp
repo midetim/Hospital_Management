@@ -217,8 +217,7 @@ bool PatientManagementClient::getPatientsInRoom(uint32_t room_id, std::set<patie
     
     grpc::Status status = stub->GetPatientsInRoom(& context, room_request, & list);
     if (!status.ok()) {
-        printStatusCode(status);
-        return false;
+        std::cout << Utils::timestamp() << ansi::red << "No patients in the room" << ansi::reset << std::endl;
     }
     
     patients.clear();

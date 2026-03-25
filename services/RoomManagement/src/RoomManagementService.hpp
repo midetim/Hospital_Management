@@ -13,8 +13,11 @@
 #include "ResourceManagementClient.hpp"
 #include "StaffManagementClient.hpp"
 
+#include "RoomJSONParser.hpp"
+
 #include <unordered_map>
 #include <memory>
+#include <mutex>
 
 
 class RoomManagementService final : public IService, public RoomManagement::Service, public Common::Service {
@@ -28,7 +31,15 @@ private:
     std::unique_ptr<ResourceManagementClient> resource_client;
     std::unique_ptr<StaffManagementClient> staff_client;
     
+    std::unique_ptr<RoomJSONParser> parser;
+    
     /* Will need a mutex (or a few) */
+    std::mutex room_mutex;
+    std::mutex patient_mutex;
+    std::mutex resource_mutex;
+    std::mutex staff_mutex;
+    std::mutex json_mutex;
+    
     
     
     /* ******************************************************************** */
@@ -54,6 +65,11 @@ private:
     uint32_t findPatient(uint64_t patient_id);
     uint32_t findResource(uint64_t resource_id);
     uint32_t findStaff(uint64_t staff_id);
+    
+    PatientManagementClient * getPatientClient();
+    ResourceManagementClient * getResourceClient();
+    StaffManagementClient * getStaffClient();
+    
     
 public:
     

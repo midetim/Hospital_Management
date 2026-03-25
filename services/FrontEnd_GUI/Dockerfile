@@ -22,3 +22,4 @@ WORKDIR /app/services/FrontEnd_GUI
 EXPOSE 8920
 
 CMD ["uvicorn", "api_translator:app", "--host", "0.0.0.0", "--port", "8920"]
+# Will add the grpc stuff later

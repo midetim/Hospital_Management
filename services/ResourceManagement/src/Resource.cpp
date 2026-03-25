@@ -67,3 +67,18 @@ std::ostream & operator<<(std::ostream & os, const Resource & r) {
 
     return os;
 }
+
+
+std::unique_ptr<Resource> Resource::clone() const {
+    std::unique_ptr<Resource> ptr = std::make_unique<Resource>();
+    ptr->setResourceId(this->getResourceId());
+    ptr->setRoomId(this->getRoomId());
+    ptr->setStock(this->getStock());
+    
+    // Copy schedule
+    for (const time_util::Shift & shift : this->view_schedule()->getFrom(time_util::timestamp_to_date(time_util::times::max))) {
+        ptr->access_schedule()->addToSchedule(shift);
+    }
+    
+    return ptr;
+}

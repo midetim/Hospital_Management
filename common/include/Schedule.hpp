@@ -53,6 +53,8 @@ public:
     /* ********************* Schedule Modification ************************ */
     /* ******************************************************************** */
     
+    void clear() { this->shifts.clear(); }
+    
     /**
      * @brief Adds a time to the schedule
      * @param new_shift The new shift to add

@@ -382,7 +382,7 @@ bool ResourceManagementClient::getAllResourcesInRoom(uint32_t room_id, std::set<
     
     grpc::Status status = stub->GetResourcesInRoom(& context, room, & list);
     if (!status.ok()) {
-        printStatusCode(status);
+        std::cout << Utils::timestamp() << ansi::red << "No resources in the room" << ansi::reset << std::endl;
     }
     
     resource_data data;

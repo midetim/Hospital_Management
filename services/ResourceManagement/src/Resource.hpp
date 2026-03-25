@@ -3,6 +3,8 @@
 
 #include "Schedule.hpp"
 
+#include <memory>
+
 /* ******************************************************************** */
 /* *********************** Resource Class ***************************** */
 /* ******************************************************************** */
@@ -16,9 +18,10 @@ private:
     /* ******************************************************************** */
     /* ********************** Private Variables *************************** */
     /* ******************************************************************** */
-     
+    
     uint64_t resource_id = 0;
     uint32_t room_id = 0;
+    uint32_t stock = 0;
     resource::ResourceType type;
     std::unique_ptr<Schedule> resource_schedule;
     
@@ -82,7 +85,7 @@ public:
      * @note Calls the general constructor
      */
     Resource(resource::ResourceType r, uint64_t resource_id);
-  
+    
     /* ******************************************************************** */
     /* ********************** Getters and Setters ************************* */
     /* ******************************************************************** */
@@ -98,10 +101,13 @@ public:
     void setResourceType(resource::ConsumableType c) { this->type = c; }
     void setResourceType(resource::ResourceType r) { this->type = r; }
     
+    uint32_t getStock() const { return this->stock; }
+    void setStock(uint32_t stock) { this->stock = stock; }
+    
     /* ******************************************************************** */
     /* ************************* Schedule Access ************************** */
     /* ******************************************************************** */
-
+    
     /**
      * @brief Allows access to the resource schedule without giving ownership
      * @return Returns a pointer to the resource schedule
@@ -119,10 +125,31 @@ public:
     /* ******************************************************************** */
     
     /**
-     * @brief Overrides the the stream addition operation to allow for cout printing of the 
+     * @brief Overrides the the stream addition operation to allow for cout printing of the
      */
     friend std::ostream & operator<<(std::ostream& os, const Resource & p);
+    
+    bool operator==(const Resource & other) const { return this->resource_id == other.resource_id; }
+    
+    Resource(const Resource &) = delete;
+    Resource & operator=(const Resource &) = delete;
+
+    Resource(Resource &&) = default;
+    Resource & operator=(Resource &&) = default;
+    
+    std::unique_ptr<Resource> clone() const;
 };
+
+#include <functional>
+
+namespace std {
+    template <>
+    struct hash<Resource> {
+        std::size_t operator()(const Resource& r) const noexcept {
+            return std::hash<uint64_t>{}(r.getResourceId());
+        }
+    };
+}
 
 
 #endif

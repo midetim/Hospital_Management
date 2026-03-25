@@ -37,7 +37,7 @@ std::vector<ReturnCode> Room::addPatients(const std::vector<uint64_t> & patient_
 
 bool Room::hasPatient(uint64_t patient_id) const {
     auto it = assigned_patients.find(patient_id);
-    return !(it == assigned_staff.end()); // Returns false if the person was not found
+    return !(it == assigned_patients.end()); // Returns false if the person was not found
 }
 
 ReturnCode Room::removePatient(uint64_t patient_id) {
@@ -135,4 +135,18 @@ std::ostream & operator<<(std::ostream & os, const Room & room) {
     }
 
     return os;
+}
+
+
+std::unique_ptr<Room> Room::clone() const {
+    std::unique_ptr<Room> ptr = std::make_unique<Room>();
+    ptr->setRoomId(this->getRoomId());
+    ptr->setRoomType(this->getRoomType());
+    ptr->setRoomCapacity(this->getRoomCapacity());
+    ptr->setCurrentCapacity(this->getCurrentCapacity());
+    ptr->setAssignedStaff(this->getAssignedStaff());
+    ptr->setAssignedPatients(this->getAssignedPatients());
+    ptr->setAssignedSResources(this->getAssignedResources());
+    ptr->setQuarantine(this->getQuarantine());
+    return ptr;
 }

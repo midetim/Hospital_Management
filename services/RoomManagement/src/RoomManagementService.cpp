@@ -64,15 +64,36 @@ uint32_t RoomManagementService::findStaff(uint64_t staff_id) {
 }
 
 
+PatientManagementClient * RoomManagementService::getPatientClient() {
+    if (!patient_client) {
+        patient_client = std::make_unique<PatientManagementClient>(service::patient_host);
+        std::cout << Utils::timestamp() << ansi::green << "Instantiated patient client" << ansi::reset << std::endl;
+    }
+    return patient_client.get();
+}
+
+ResourceManagementClient * RoomManagementService::getResourceClient() {
+    if (!resource_client) {
+        resource_client = std::make_unique<ResourceManagementClient>(service::resource_host);
+        std::cout << Utils::timestamp() << ansi::green << "Instantiated resource client" << ansi::reset << std::endl;
+    }
+    return resource_client.get();
+}
+
+StaffManagementClient * RoomManagementService::getStaffClient() {
+    if (!staff_client) {
+        staff_client = std::make_unique<StaffManagementClient>(service::staff_host);
+        std::cout << Utils::timestamp() << ansi::green << "Instantiated staff client" << ansi::reset << std::endl;
+    }
+    return staff_client.get();
+}
+
+
 /* ******************************************************************** */
 /* ************************** Constructor ***************************** */
 /* ******************************************************************** */
 
-RoomManagementService::RoomManagementService() {
-    patient_client = std::make_unique<PatientManagementClient>(service::patient_host);
-    resource_client = std::make_unique<ResourceManagementClient>(service::resource_host);
-    staff_client = std::make_unique<StaffManagementClient>(service::staff_host);
-    
+RoomManagementService::RoomManagementService() : parser(std::make_unique<RoomJSONParser>(service::room_db)) {
     this->name = service::room;
     this->database_name = service::room_db;
 }
@@ -96,7 +117,7 @@ grpc::Status RoomManagementService::print(grpc::ServerContext * context, const N
 
 grpc::Status RoomManagementService::update(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
     readMetadata(* context);
-    loadFromDB();
+    uploadToDB();
     std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
     response->set_error(false);
     return grpc::Status::OK;
@@ -114,6 +135,7 @@ grpc::Status RoomManagementService::AdmitPatient(grpc::ServerContext * context, 
     uint64_t patient_id = patient_dto->patient_id();
     std::string room_type = patient_dto->room_type();
     bool quarantined = patient_dto->is_quarantined();
+    
     
     if (findPatient(patient_id) != 0) {
         success->set_successful(false);
@@ -133,8 +155,15 @@ grpc::Status RoomManagementService::AdmitPatient(grpc::ServerContext * context, 
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "No Available room found");
     }
     
+    std::lock_guard<std::mutex> lock(patient_mutex);
+    
     it->second->addPatient(patient_id); // Add the new patient to the room
     it->second->updateCurrentCapacity(); // Update capacity
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->replace_one(* it->second); // Write change to db
+    }
     
     // Admission success
     success->set_successful(true);
@@ -161,9 +190,16 @@ grpc::Status RoomManagementService::DischargePatient(grpc::ServerContext * conte
         return grpc::Status(grpc::StatusCode::ABORTED, "Cannot discharge a quarantined patient");
     }
     
+    std::lock_guard<std::mutex> lock(patient_mutex);
+    
     // Remove the patient from the room
     it->second->removePatient(patient_id);
     it->second->updateCurrentCapacity();
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->replace_one(* it->second); // Write change to db
+    }
     
     // Discharge success
     success->set_successful(true);
@@ -205,6 +241,7 @@ grpc::Status RoomManagementService::TransferPatient(grpc::ServerContext * contex
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "One of the rooms was not found");
     }
     
+    std::lock_guard<std::mutex> lock(patient_mutex);
     
     // Remove the patient
     old_it->second->removePatient(patient_id);
@@ -213,6 +250,12 @@ grpc::Status RoomManagementService::TransferPatient(grpc::ServerContext * contex
     // Add patient to new room
     new_it->second->addPatient(patient_id);
     new_it->second->updateCurrentCapacity();
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->replace_one(* new_it->second); // Write change to db
+        parser->replace_one(* old_it->second); // Write change to db
+    }
     
     // Transfer success
     success->set_successful(true);
@@ -241,10 +284,25 @@ grpc::Status RoomManagementService::QuarantinePatient(grpc::ServerContext * cont
     }
     
     auto total_iterator = total_rooms.find(room_id); // Get iterator to room
+    
+    std::lock_guard<std::mutex> lock(patient_mutex);
+    
     if (quarantine_entire_room) {
-        auto room_it = hospital_rooms.find(room_id); // Will always return an actual iterator
-        hospital_rooms.erase(room_it);
-        quarantined_rooms.emplace(room_id, total_iterator->second.get());
+        
+        {
+            std::lock_guard<std::mutex> lock(room_mutex);
+            auto room_it = hospital_rooms.find(room_id); // Will always return an actual iterator
+            hospital_rooms.erase(room_it);
+            quarantined_rooms.emplace(room_id, total_iterator->second.get());
+        }
+        
+        total_iterator->second->quarantineRoom();
+        
+        {
+            std::lock_guard<std::mutex> lock(json_mutex);
+            parser->replace_one(* total_iterator->second);
+        }
+        
         success->set_successful(true);
         return grpc::Status::OK;
     } else { // Quarantine just the one patient
@@ -276,16 +334,27 @@ grpc::Status RoomManagementService::QuarantinePatient(grpc::ServerContext * cont
             update_package.patient_id = current_patient_id;
             update_package.room_id = new_room_id;
             
-            bool update_status = patient_client->updatePatientinformation(update_package, this->name);
+            bool update_status = getPatientClient()->updatePatientinformation(update_package, this->name);
             
             if (!update_status) {
                 std::cout << Utils::timestamp() << ansi::yellow << "Unable to update patient records" << ansi::reset << std::endl;
+            }
+            
+            {
+                std::lock_guard<std::mutex> lock(json_mutex);
+                parser->replace_one(* new_room_it->second); // Update db
             }
         }
         // Clear out the patients from the room
         total_iterator->second->clearPatients();
         total_iterator->second->addPatient(patient_id);
+        total_iterator->second->quarantineRoom();
         
+        {
+            std::lock_guard<std::mutex> lock(json_mutex);
+            parser->replace_one(* total_iterator->second);
+        }
+            
         // Returns successful
         success->set_successful(true);
         return grpc::Status::OK;
@@ -300,6 +369,7 @@ grpc::Status RoomManagementService::LiftPatientQuarantine(grpc::ServerContext * 
     uint64_t patient_id = quarantine_request->patient_id();
     bool quarantine_entire_room = quarantine_request->quarantine_room();
     
+    
     // Search through the non-quarantined rooms to find the patients room
     uint32_t room_id = findPatient(patient_id);
     
@@ -313,11 +383,24 @@ grpc::Status RoomManagementService::LiftPatientQuarantine(grpc::ServerContext * 
     }
     
     auto total_iterator = total_rooms.find(room_id); // Get iterator to room
+    
+    std::lock_guard<std::mutex> lock(patient_mutex);
+    
     if (quarantine_entire_room) {
         
-        auto room_it = quarantined_rooms.find(room_id); // Will always return an actual iterator
-        quarantined_rooms.erase(room_it);
-        hospital_rooms.emplace(room_id, total_iterator->second.get());
+        {
+            std::lock_guard<std::mutex> lock(room_mutex);
+            auto room_it = quarantined_rooms.find(room_id); // Will always return an actual iterator
+            quarantined_rooms.erase(room_it);
+            hospital_rooms.emplace(room_id, total_iterator->second.get());
+        }
+        
+        total_iterator->second->liftQuarantine();
+        
+        {
+            std::lock_guard<std::mutex> lock(json_mutex);
+            parser->replace_one(* total_iterator->second);
+        }
         
         success->set_successful(true);
         return grpc::Status::OK;
@@ -336,7 +419,7 @@ grpc::Status RoomManagementService::LiftPatientQuarantine(grpc::ServerContext * 
         update_package.patient_id = patient_id;
         update_package.room_id = new_room_id;
         
-        bool update_status = patient_client->updatePatientinformation(update_package, this->name);
+        bool update_status = getPatientClient()->updatePatientinformation(update_package, this->name);
         if (!update_status) {
             std::cout << Utils::timestamp() << ansi::yellow << "Unable to update patient records" << ansi::reset << std::endl;
             success->set_successful(false);
@@ -356,6 +439,12 @@ grpc::Status RoomManagementService::LiftPatientQuarantine(grpc::ServerContext * 
             return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "Patient did not exist in that room");
         }
         
+        {
+            std::lock_guard<std::mutex> lock(json_mutex);
+            parser->replace_one(* total_iterator->second);
+            parser->replace_one(* new_room_it->second);
+        }
+            
         // Returns successful
         success->set_successful(true);
         return grpc::Status::OK;
@@ -373,16 +462,29 @@ grpc::Status RoomManagementService::RetrieveResource(grpc::ServerContext * conte
         return grpc::Status(grpc::StatusCode::ABORTED, "Missing input parameters");
     }
     
+    uint32_t old_room = findResource(resource_id);
+    if (old_room != 0) { // If it exists in an old room, remove it
+        auto it = total_rooms.find(old_room);
+        it->second->getAssignedResources().erase(resource_id);
+    }
+    
     auto it = total_rooms.find(room_id);
     if (it == total_rooms.end()) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find designated room");
     }
     
+    std::lock_guard<std::mutex> lock(resource_mutex);
+    
     ReturnCode add_success = it->second->addResource(resource_id);
     if (add_success != ReturnCode::SUCCESS) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::ABORTED, "Resource already at room");
+    }
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->replace_one(* it->second); // Write change to db
     }
     
     success->set_successful(true);
@@ -405,10 +507,17 @@ grpc::Status RoomManagementService::ReleaseResource(grpc::ServerContext * contex
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find designated room");
     }
     
+    std::lock_guard<std::mutex> lock(resource_mutex);
+    
     ReturnCode remove_success = it->second->removeResource(resource_id);
     if (remove_success != ReturnCode::SUCCESS) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::ABORTED, "Resource is not in room");
+    }
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->replace_one(* it->second); // Write change to db
     }
     
     success->set_successful(true);
@@ -436,6 +545,8 @@ grpc::Status RoomManagementService::TransferResource(grpc::ServerContext * conte
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find one of the rooms");
     }
     
+    std::lock_guard<std::mutex> lock(resource_mutex);
+    
     ReturnCode add_success = new_it->second->addResource(resource_id);
     if (add_success != ReturnCode::SUCCESS) {
         success->set_successful(false);
@@ -447,6 +558,12 @@ grpc::Status RoomManagementService::TransferResource(grpc::ServerContext * conte
         new_it->second->removeResource(resource_id); // Rollback
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::ABORTED, "Resource is not in room");
+    }
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->replace_one(* new_it->second); // Write change to db
+        parser->replace_one(* old_it->second); // Write change to db
     }
     
     success->set_successful(true);
@@ -469,10 +586,17 @@ grpc::Status RoomManagementService::RetrieveStaff(grpc::ServerContext * context,
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find designated room");
     }
     
+    std::lock_guard<std::mutex> lock(staff_mutex);
+    
     ReturnCode add_success = it->second->addStaff(staff_id);
     if (add_success != ReturnCode::SUCCESS) {
         success->set_successful(false);
-        return grpc::Status(grpc::StatusCode::ABORTED, "Resource already at room");
+        return grpc::Status(grpc::StatusCode::ABORTED, "Staff already at room");
+    }
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->replace_one(* it->second); // Write change to db
     }
     
     success->set_successful(true);
@@ -495,10 +619,17 @@ grpc::Status RoomManagementService::ReleaseStaff(grpc::ServerContext * context, 
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find designated room");
     }
     
+    std::lock_guard<std::mutex> lock(staff_mutex);
+    
     ReturnCode remove_success = it->second->removeStaff(staff_id);
     if (remove_success != ReturnCode::SUCCESS) {
         success->set_successful(false);
-        return grpc::Status(grpc::StatusCode::ABORTED, "Resource is not in room");
+        return grpc::Status(grpc::StatusCode::ABORTED, "Staff is not in room");
+    }
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->replace_one(* it->second); // Write change to db
     }
     
     success->set_successful(true);
@@ -526,6 +657,8 @@ grpc::Status RoomManagementService::TransferStaff(grpc::ServerContext * context,
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find one of the rooms");
     }
     
+    std::lock_guard<std::mutex> lock(staff_mutex);
+    
     ReturnCode add_success = new_it->second->addStaff(staff_id);
     if (add_success != ReturnCode::SUCCESS) {
         success->set_successful(false);
@@ -536,7 +669,13 @@ grpc::Status RoomManagementService::TransferStaff(grpc::ServerContext * context,
     if (remove_success != ReturnCode::SUCCESS) {
         new_it->second->removeResource(staff_id); // Rollback
         success->set_successful(false);
-        return grpc::Status(grpc::StatusCode::ABORTED, "Resource is not in room");
+        return grpc::Status(grpc::StatusCode::ABORTED, "Staff is not in room");
+    }
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->replace_one(* new_it->second); // Write change to db
+        parser->replace_one(* old_it->second);
     }
     
     success->set_successful(true);
@@ -557,6 +696,8 @@ grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find room");
     }
+    
+    std::lock_guard<std::mutex> lock(room_mutex);
     
     // Semantics check
     if (quarantine && quarantined_rooms.contains(room_id)) { // Rooms already quarantined
@@ -592,11 +733,14 @@ grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context
                 return grpc::Status(grpc::StatusCode::ABORTED, "Failed to move patients to a new room");
             }
             
-            // Put the patient into that room
-            ReturnCode successful_move = new_room_it->second->addPatient(patient_id);
-            if (successful_move != ReturnCode::SUCCESS) {
-                success->set_successful(false);
-                return grpc::Status(grpc::StatusCode::ABORTED, "Failed to move the patient into a new room");
+            {
+                std::lock_guard<std::mutex> lock(patient_mutex);
+                // Put the patient into that room
+                ReturnCode successful_move = new_room_it->second->addPatient(patient_id);
+                if (successful_move != ReturnCode::SUCCESS) {
+                    success->set_successful(false);
+                    return grpc::Status(grpc::StatusCode::ABORTED, "Failed to move the patient into a new room");
+                }
             }
             
             // Create update package
@@ -605,7 +749,7 @@ grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context
             update_package.room_id = new_room_id;
             
             // Send it to the client
-            bool update_status = patient_client->updatePatientinformation(update_package, this->name);
+            bool update_status = getPatientClient()->updatePatientinformation(update_package, this->name);
             if (!update_status) {
                 std::cout << Utils::timestamp() << ansi::yellow << "Unable to update patient records" << ansi::reset << std::endl;
             }
@@ -614,6 +758,7 @@ grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context
         // Clear out the room
         it->second->clearPatients();
     }
+    
     // Quarantine all patients
     if (hospital_rooms.contains(room_id)) {
         hospital_rooms.erase(room_id);
@@ -626,6 +771,10 @@ grpc::Status RoomManagementService::QuarantineRoom(grpc::ServerContext * context
         return grpc::Status(grpc::StatusCode::CANCELLED, "Something went critically wrong");
     }
     
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->replace_one(* it->second); // Write change to db
+    }
     
     // Successfully (un) quarantined the room
     success->set_successful(true);
@@ -641,13 +790,13 @@ grpc::Status RoomManagementService::GetRoomInformation(grpc::ServerContext * con
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find desired room");
     }
     
-    std::set<patient_data> patient_set;
+    std::set<patient_data> patient_set; 
     std::set<resource_data> resource_set;
     std::set<staff_data> staff_set;
     
-    bool patient_retrieval_success  = patient_client->getPatientsInRoom(room_id, patient_set, this->name);
-    bool resource_retrieval_success = resource_client->getAllResourcesInRoom(room_id, resource_set, this->name);
-    bool staff_retrieval_success    = staff_client->getStaffInRoom(room_id, staff_set, this->name);
+    bool patient_retrieval_success  = getPatientClient()->getPatientsInRoom(room_id, patient_set, this->name);
+    bool resource_retrieval_success = getResourceClient()->getAllResourcesInRoom(room_id, resource_set, this->name);
+    bool staff_retrieval_success    = getStaffClient()->getStaffInRoom(room_id, staff_set, this->name);
     
     
     // Get all the transfer objects
@@ -732,13 +881,45 @@ grpc::Status RoomManagementService::GetRoomInformation(grpc::ServerContext * con
 /* ******************************************************************** */
 
 ReturnCode RoomManagementService::loadFromDB() {
+    std::vector<std::unique_ptr<Room>> rooms;
     
-    return ReturnCode::NOT_YET_IMPLEMENTED;
+    {
+        std::lock_guard<std::mutex> lock(json_mutex);
+        parser->read_all(rooms);
+    }
+    
+    std::lock_guard<std::mutex> lock(room_mutex);
+    
+    for (std::unique_ptr<Room> & ptr : rooms) {
+        uint32_t id = ptr->getRoomId();
+        
+        total_rooms.emplace(id, std::move(ptr));
+        Room * room_ptr = total_rooms[id].get();
+        if (room_ptr->getQuarantineStatus()) {
+            quarantined_rooms.emplace(id, room_ptr);
+        } else {
+            hospital_rooms.emplace(id, room_ptr);
+        }
+        
+    }
+    
+    return ReturnCode::SUCCESS;
 }
 
 ReturnCode RoomManagementService::uploadToDB() {
+    std::vector<std::unique_ptr<Room>> rooms;
     
-    return ReturnCode::NOT_YET_IMPLEMENTED;
+    {
+        std::lock_guard<std::mutex> lock(room_mutex);
+        
+        for (const auto & [id, ptr] : total_rooms) {
+            rooms.push_back(ptr->clone());
+        }
+    }
+    
+    std::lock_guard<std::mutex> lock(json_mutex);
+    parser->write_all(rooms);
+    return ReturnCode::SUCCESS;
 }
 
 
@@ -750,6 +931,7 @@ ReturnCode RoomManagementService::init() {
 }
 
 void RoomManagementService::print_internal() {
+    std::lock_guard<std::mutex> lock(room_mutex);
     std::cout << ansi::bgreen
               << "==== " << this->name << " STATE ===="
               << ansi::reset << '\n';
@@ -760,7 +942,7 @@ void RoomManagementService::print_internal() {
                   << ansi::reset << '\n';
 
         for (const auto& [_, room] : map)
-            std::cout << room << "\n------------------------\n";;
+            std::cout << * room << "\n------------------------\n";;
     };
 
     print_map(hospital_rooms, "Normal Rooms");

@@ -5,6 +5,7 @@
 
 #include <unordered_set>
 #include <vector>
+#include <memory>
 
 class Room {
 private:
@@ -18,6 +19,9 @@ private:
     
     bool quarantined = false; // unused
      
+    bool getQuarantine() const { return this->quarantined; }
+    void setQuarantine(bool q) { this->quarantined = q;    }
+    
 public:
     /**
      * @brief Instantiate a room object
@@ -163,9 +167,31 @@ public:
     std::unordered_set<uint64_t> & getAssignedPatients()  { return assigned_patients; }
     std::unordered_set<uint64_t> & getAssignedResources() { return assigned_resources; }
     
+    const std::unordered_set<uint64_t> & getAssignedStaff()     const { return assigned_staff; }
+    const std::unordered_set<uint64_t> & getAssignedPatients()  const { return assigned_patients; }
+    const std::unordered_set<uint64_t> & getAssignedResources() const { return assigned_resources; }
     
+    void setAssignedStaff(const std::unordered_set<uint64_t> & set) { this->assigned_staff = set; }
+    void setAssignedPatients(const std::unordered_set<uint64_t> & set) { this->assigned_patients = set; }
+    void setAssignedSResources(const std::unordered_set<uint64_t> & set) { this->assigned_resources = set; }
+    
+    bool operator==(const Room & other) const { return this->room_id == other.room_id;}
     friend std::ostream & operator<<(std::ostream & os, const Room & p);
+    
+    std::unique_ptr<Room> clone() const;
 };
+
+
+#include <functional> 
+
+namespace std {
+    template<>
+    struct hash<Room> {
+        size_t operator()(const Room& r) const noexcept {
+            return std::hash<uint32_t>{}(r.getRoomId());
+        }
+    };
+}
 
 #endif
 

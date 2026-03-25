@@ -4,6 +4,8 @@
 #include "Schedule.hpp"
 #include "utils.hpp"
 
+#include <memory>
+
 class Staff {
 private:
      
@@ -87,7 +89,7 @@ public:
     void removeClearance() { this->staff_clearance = staff::Clearance::None; }
     
     Schedule * access_schedule() { return staff_schedule.get(); }
-    const Schedule * view_schedule() { return staff_schedule.get(); }
+    const Schedule * view_schedule() const { return staff_schedule.get(); }
     
     /* ******************************************************************** */
     /* ***************************** Other ******************************** */
@@ -97,9 +99,19 @@ public:
     
     friend std::ostream & operator<<(std::ostream & os, const Staff & s);
     
+    std::unique_ptr<Staff> clone() const;
     
 };
 
+#include <functional>
 
+namespace std {
+    template <>
+    struct hash<Staff> {
+        std::size_t operator()(const Staff& s) const noexcept {
+            return std::hash<uint64_t>{}(s.getStaffId());
+        }
+    };
+}
 
 #endif

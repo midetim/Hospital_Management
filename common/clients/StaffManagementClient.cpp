@@ -389,8 +389,7 @@ bool StaffManagementClient::getStaffInRoom(uint32_t room_id, std::set<staff_data
     
     grpc::Status status = stub->GetStaffInRoom(& context, room_request, & staff_info);
     if (!status.ok()) {
-        printStatusCode(status);
-        return false;
+        std::cout << Utils::timestamp() << ansi::red << "No staff in the room" << ansi::reset << std::endl;
     }
     
     total_staff.clear();

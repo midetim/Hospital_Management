@@ -77,9 +77,7 @@ bool ResourceManagementService::sendResources() {
         uint32_t new_room = resource_ptr->access_schedule()->check_schedule(); // Will return a room id if the resource needs to go to a new room
         if (new_room == room::idle)                 { continue; }
         if (new_room == resource_ptr->getRoomId())  { continue; }
-        /* TODO: need to complete this part once the room_client is done
-        room_client->update_resource(resource_id, new_room, service::resource);
-        */
+        room_client->retrieveResource(resource_id, new_room, service::resource);
         resource_ptr->setRoomId(new_room);
     }
     return true;
@@ -90,9 +88,7 @@ bool ResourceManagementService::retrieveResources() {
         uint32_t new_room = resource_ptr->access_schedule()->check_schedule();
         if (new_room != room::idle)                  { continue; }
         if (resource_ptr->getRoomId() == room::idle) { continue; }
-        /* TODO: Complete after room_client
-        room_client->update_resource(resource_id, new_room, service::resource);
-        */
+        room_client->releaseResource(resource_id, resource_ptr->getRoomId(), service::resource);
         resource_ptr->setRoomId(new_room);
     }
     return true;
@@ -124,9 +120,9 @@ ReturnCode ResourceManagementService::convertToSchedule(const std::set<time_util
 /* ******************************************************************** */
 
 ResourceManagementService::ResourceManagementService()
-: room_client(std::make_unique<RoomManagementClient>(service::room_host)) {
-    this->name = service::room;
-    this->database_name = service::room_db;
+: room_client(std::make_unique<RoomManagementClient>(service::room_host)), parser(std::make_unique<ResourceJSONParser>(service::resource_db)) {
+    this->name = service::resource;
+    this->database_name = service::resource_db;
 }
 
 /* ******************************************************************** */
@@ -148,9 +144,12 @@ grpc::Status ResourceManagementService::print(grpc::ServerContext * context, con
 
 grpc::Status ResourceManagementService::update(grpc::ServerContext * context, const Nothing * request, Nothing * response) {
     readMetadata(* context);
-    sendResources(); // Send all resources to their respective rooms
-    retrieveResources(); // Retrieve all resources that are done in a room
-    uploadToDB();
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        sendResources(); // Send all resources to their respective rooms
+        retrieveResources(); // Retrieve all resources that are done in a room
+    }
+    uploadToDB(); // Already mutexed
     std::cout << Utils::timestamp() << ansi::yellow << "Successfully backed up to the database" << ansi::reset << std::endl;
     response->set_error(false);
     return grpc::Status::OK;
@@ -172,6 +171,7 @@ grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * c
     std::unique_ptr<Resource> new_resource; // The new resource to add to the system
     
     if (resource_id != 0) { // If an id was provided, use in constructor
+        std::lock_guard<std::mutex> lock(mtx);
         auto it = total_resources.find(resource_id);
         if (it == total_resources.end()) {
             new_resource = std::make_unique<Resource>(resource_type, resource_id);
@@ -193,12 +193,18 @@ grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * c
     }
     
     if (is_consumable) { // If the resource is a consumeable
+        std::lock_guard<std::mutex> lock(stock_mtx);
         resource_stock.emplace(resource_id, stock_amount);
     }
 
-    // Add the resource to the maps
-    available_resources.emplace(resource_id, new_resource.get());
-    total_resources.emplace(resource_id, std::move(new_resource));
+    {
+        // Add the resource to the maps
+        std::lock_guard<std::mutex> lock(mtx);
+        available_resources.emplace(resource_id, new_resource.get());
+        total_resources.emplace(resource_id, std::move(new_resource));
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->write_one(* total_resources[resource_id]);
+    }
     
     success->set_successful(true);
     return grpc::Status::OK;
@@ -210,12 +216,16 @@ grpc::Status ResourceManagementService::DeregisterResource(grpc::ServerContext *
  
     uint64_t resource_id = resource_dto->resource_id(); // Get the resource id
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     // Get an iterator to the resource inside the total_resource map
     auto total_iterator = total_resources.find(resource_id);
     if (total_iterator == total_resources.end()) { // Resource not found in map
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource");
     }
+    
+    uint32_t room_id = total_iterator->second->getRoomId();
     
     // Get an iterator to the resource inside the available_resource map
     auto available_iterator = available_resources.find(resource_id);
@@ -224,17 +234,32 @@ grpc::Status ResourceManagementService::DeregisterResource(grpc::ServerContext *
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot deregister resources that are in use");
     }
     
-    // Try to get an iterator to the stock amount map
-    auto stock_iterator = resource_stock.find(resource_id);
-    if (stock_iterator == resource_stock.end() && isConsumable(total_iterator->second->getResourceType())) { // Consumable without stock
-        success->set_successful(false);
-        return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the consumable stock to deregister");
+    {
+        // Try to get an iterator to the stock amount map
+        std::lock_guard<std::mutex> stock_lock(stock_mtx);
+        auto stock_iterator = resource_stock.find(resource_id);
+        if (stock_iterator == resource_stock.end() && isConsumable(total_iterator->second->getResourceType())) { // Consumable without stock
+            success->set_successful(false);
+            return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the consumable stock to deregister");
+        }
+        
+        // Erase the resources from all maps they are in
+        if (stock_iterator != resource_stock.end()) { resource_stock.erase(stock_iterator); }
     }
     
-    // Erase the resources from all maps they are in
-    if (stock_iterator != resource_stock.end()) { resource_stock.erase(stock_iterator); }
+    bool room_removal = room_client->releaseResource(resource_id, room_id, service::resource);
+    if (!room_removal) {
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::ABORTED, "Unknown error occured");
+    }
+    
     available_resources.erase(available_iterator);
     total_resources.erase(total_iterator);
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->remove_one(resource_id);
+    }
     
     // Returns success
     success->set_successful(true);
@@ -248,6 +273,9 @@ grpc::Status ResourceManagementService::SendForMaintenance(grpc::ServerContext *
     // Extract all relavant data
     uint64_t resource_id = resource_dto->resource_id();
     
+    
+    std::unique_lock<std::mutex> lock(mtx);
+    
     auto it = total_resources.find(resource_id);
     if (it == total_resources.end()) {
         success->set_successful(false);
@@ -257,6 +285,8 @@ grpc::Status ResourceManagementService::SendForMaintenance(grpc::ServerContext *
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot send consumable resources for maintenance");
     }
     
+    lock.unlock();
+    
     // Get the current date
     time_util::Timestamp maintenance_start = time_util::Timestamp::current_time();
     time_util::Timestamp maintenance_end   = maintenance_start + time_util::times::day;
@@ -265,12 +295,19 @@ grpc::Status ResourceManagementService::SendForMaintenance(grpc::ServerContext *
     time_util::Shift maintenance_shift(maintenance_start, maintenance_end, room::maintenance);
     
     // Add the shift to the resources schedule
+    lock.lock();
     bool successful_addition = it->second->access_schedule()->addToSchedule(maintenance_shift);
+    
     success->set_successful(successful_addition);
     
     if (!successful_addition) { // If addition was not successful
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully send the resource for maintenance");
-    } else { return grpc::Status::OK; }
+    } else {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->replace_one(* it->second);
+        
+        return grpc::Status::OK;
+    }
 }
 
 grpc::Status ResourceManagementService::AddToSchedule(grpc::ServerContext * context, const ResourceShift * shift, Success * success) {
@@ -280,12 +317,16 @@ grpc::Status ResourceManagementService::AddToSchedule(grpc::ServerContext * cont
     uint64_t resource_id = shift->resource().resource_id();
     uint32_t room_id     = shift->shift().room_id();
     
+    std::unique_lock<std::mutex> lock(mtx);
+    
     // Find the resource pointer
     auto it = total_resources.find(resource_id);
     if (it == total_resources.end()) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource");
     }
+    
+    lock.unlock();
     
     // Get pointers to the dates
     const DateDTO & start_date_ptr = shift->shift().start();
@@ -301,6 +342,8 @@ grpc::Status ResourceManagementService::AddToSchedule(grpc::ServerContext * cont
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "Must provide a shift start date");
     }
+    
+    lock.lock();
     
     // Create the shifts depending on the information passed in the request
     bool addition_success = false;
@@ -319,12 +362,18 @@ grpc::Status ResourceManagementService::AddToSchedule(grpc::ServerContext * cont
     
     if (!addition_success) {
         return grpc::Status(grpc::StatusCode::UNKNOWN, "Unknown error occurred when adding to schedule");
-    } else { return grpc::Status::OK; }
+    } else {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->replace_one(* it->second);
+        return grpc::Status::OK;
+    }
 }
  
 grpc::Status ResourceManagementService::RemoveFromSchedule(grpc::ServerContext * context, const ResourceShift * shift, Success * success) {
     
     readMetadata(* context); // Read request metadata
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     // Find the resource in the total map
     uint64_t resource_id = shift->resource().resource_id();
@@ -345,7 +394,11 @@ grpc::Status ResourceManagementService::RemoveFromSchedule(grpc::ServerContext *
     
     if (!removal_success) {
         return grpc::Status(grpc::StatusCode::CANCELLED, "Specified shift does not exist");
-    } else { return grpc::Status::OK; }
+    } else {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->replace_one(* it->second);
+        return grpc::Status::OK;
+    }
 }
 
 grpc::Status ResourceManagementService::RemoveResourceFromRoom(grpc::ServerContext * context, const ResourceDTO * resource, Success * success) {
@@ -360,6 +413,8 @@ grpc::Status ResourceManagementService::RemoveResourceFromRoom(grpc::ServerConte
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "No room id provided");
     }
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     auto it = total_resources.find(resource_id);
     if (it == total_resources.end()) {
         success->set_successful(false);
@@ -371,7 +426,11 @@ grpc::Status ResourceManagementService::RemoveResourceFromRoom(grpc::ServerConte
     
     if (!removal_success) {
         return grpc::Status(grpc::StatusCode::CANCELLED, "Selected resource does not have a shift in the designated room");
-    } else { return grpc::Status::OK; }
+    } else {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->replace_one(* it->second);
+        return grpc::Status::OK;
+    }
 }
 
 grpc::Status ResourceManagementService::ChangeSchedule(grpc::ServerContext * context, const ResourceShift * shift, Success * success) {
@@ -387,12 +446,16 @@ grpc::Status ResourceManagementService::ChangeSchedule(grpc::ServerContext * con
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "No room id provided");
     }
     
+    std::unique_lock<std::mutex> lock(mtx);
+    
     // Find the resource
     auto it = total_resources.find(resource_id);
     if (it == total_resources.end()) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource");
     }
+    
+    lock.unlock();
     
     // Extract shift information
     const DateDTO & this_shift_date = shift->shift().other(); // 'This' is the shift to change
@@ -408,6 +471,8 @@ grpc::Status ResourceManagementService::ChangeSchedule(grpc::ServerContext * con
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::CANCELLED, "Missing input arguments");
     }
+    
+    lock.lock();
     
     // Get the shifts
     time_util::Shift this_shift(this_shift_ts, time_util::duration::none, room::idle);
@@ -429,6 +494,11 @@ grpc::Status ResourceManagementService::ChangeSchedule(grpc::ServerContext * con
         success->set_successful(successfully_added);
         return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "New shift conflicts with schedule");
     }
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->replace_one(* it->second);
+    }
 
     // Removal and Addition must succeed
     success->set_successful(successfully_added && removal_success);
@@ -440,6 +510,8 @@ grpc::Status ResourceManagementService::SeeTodaysSchedule(grpc::ServerContext * 
     readMetadata(* context); // Read request metadata
     
     uint64_t resource_id = resource_dto->resource_id(); // Extract the resource id
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     auto it = total_resources.find(resource_id); // Get the iterator to the resource id
     if (it == total_resources.end()) {
@@ -462,6 +534,8 @@ grpc::Status ResourceManagementService::SeeTomorrowsSchedule(grpc::ServerContext
     readMetadata(* context); // Read request metadata
     
     uint64_t resource_id = resource->resource_id(); // Extract the resource id
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     auto it = total_resources.find(resource_id); // Get the iterator to the resource id
     if (it == total_resources.end()) {
@@ -487,6 +561,8 @@ grpc::Status ResourceManagementService::SeeScheduleRange(grpc::ServerContext * c
     uint64_t resource_id = range->resource().resource_id();
     const DateDTO & start_date = range->shift().start();
     const DateDTO & end_date   = range->shift().other();
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     // Find the resource in the map
     auto it = total_resources.find(resource_id);
@@ -519,14 +595,36 @@ grpc::Status ResourceManagementService::AddStock(grpc::ServerContext * context, 
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot add stock for machinery resources");
     }
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
+    const Resource * res;
+    
     // Get an iterator to the resource
-    auto resource_iterator = total_resources.find(stock_id);
-    if (resource_iterator == total_resources.end()) {
+    auto it = total_resources.find(stock_id);
+    if (it == total_resources.end()) { // Stock DNE
         total_resources.emplace(stock_id, std::make_unique<Resource>(stock_type));
+        total_resources[stock_id]->setResourceId(generate_id());
+        res = total_resources[stock_id].get();
+    } else {
+        res = it->second.get();
     }
     
-    // Add the amount to stock -- Creates new <key,value> if it DNE
-    resource_stock[stock_id] += stock_amount;
+    bool exists;
+    
+    {
+        // Add the amount to stock -- Creates new <key,value> if it DNE
+        std::lock_guard<std::mutex> stock_lock(stock_mtx);
+        exists = resource_stock.contains(stock_id);
+        resource_stock[stock_id] += stock_amount;
+        total_resources[stock_id]->setStock(resource_stock[stock_id]);
+    }
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        if (exists) { parser->replace_one(* res); }
+        else        { parser->write_one(* res); }
+    }
+    
     success->set_successful(true);
     return grpc::Status::OK;
 }
@@ -546,12 +644,16 @@ grpc::Status ResourceManagementService::RemoveStock(grpc::ServerContext * contex
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot remove stock for machinery resources");
     }
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     // Get an iterator to the resource
     auto resource_iterator = total_resources.find(stock_id);
     if (resource_iterator == total_resources.end()) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Cannot find the stock to remove amounts from");
     }
+    
+    std::lock_guard<std::mutex> stock_lock(stock_mtx);
     
     // Get iterator to the stock resource
     auto stock_iterator = resource_stock.find(stock_id);
@@ -563,8 +665,19 @@ grpc::Status ResourceManagementService::RemoveStock(grpc::ServerContext * contex
     // If the stock to remove is greater than the current amount
     if (stock_iterator->second < stock_amount) {
         stock_iterator->second = 0;
+        resource_stock.erase(stock_iterator);
+        total_resources.erase(resource_iterator);
+        {
+            std::lock_guard<std::mutex> json_lock(json_mtx);
+            parser->remove_one(stock_id);
+        }
     } else { // The amount to remove is less than the total amount
         stock_iterator->second -= stock_amount;
+        resource_iterator->second->setStock(stock_iterator->second);
+        {
+            std::lock_guard<std::mutex> json_lock(json_mtx);
+            parser->replace_one(* resource_iterator->second);
+        }
     }
     
     // Report success
@@ -587,12 +700,16 @@ grpc::Status ResourceManagementService::UseStock(grpc::ServerContext * context, 
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot remove stock for machinery resources");
     }
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     // Get an iterator to the resource
     auto resource_iterator = total_resources.find(stock_id);
     if (resource_iterator == total_resources.end()) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Cannot find the stock to remove amounts from");
     }
+    
+    std::lock_guard<std::mutex> stock_lock(stock_mtx);
     
     // Get iterator to the stock resource
     auto stock_iterator = resource_stock.find(stock_id);
@@ -604,8 +721,19 @@ grpc::Status ResourceManagementService::UseStock(grpc::ServerContext * context, 
     // If the stock to remove is greater than the current amount
     if (stock_iterator->second < stock_amount) {
         stock_iterator->second = 0;
+        resource_stock.erase(stock_iterator);
+        total_resources.erase(resource_iterator);
+        {
+            std::lock_guard<std::mutex> json_lock(json_mtx);
+            parser->remove_one(stock_id);
+        }
     } else { // The amount to remove is less than the total amount
         stock_iterator->second -= stock_amount;
+        resource_iterator->second->setStock(stock_iterator->second);
+        {
+            std::lock_guard<std::mutex> json_lock(json_mtx);
+            parser->replace_one(* resource_iterator->second);
+        }
     }
     
     // Report success
@@ -627,12 +755,16 @@ grpc::Status ResourceManagementService::EmptyStock(grpc::ServerContext * context
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot remove stock for machinery resources");
     }
     
+    std::lock_guard<std::mutex> lock(mtx);
+    
     // Get an iterator to the resource
     auto resource_iterator = total_resources.find(stock_id);
     if (resource_iterator == total_resources.end()) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Cannot find the stock to remove amounts from");
     }
+    
+    std::lock_guard<std::mutex> stock_lock(stock_mtx);
     
     // Get iterator to the stock resource
     auto stock_iterator = resource_stock.find(stock_id);
@@ -643,6 +775,13 @@ grpc::Status ResourceManagementService::EmptyStock(grpc::ServerContext * context
     
     // Remove all stock
     stock_iterator->second = 0;
+    resource_stock.erase(stock_iterator);
+    total_resources.erase(resource_iterator);
+    
+    {
+        std::lock_guard<std::mutex> json_lock(json_mtx);
+        parser->remove_one(stock_id);
+    }
     
     // Report success
     success->set_successful(true);
@@ -657,6 +796,8 @@ grpc::Status ResourceManagementService::GetResourceInformation(grpc::ServerConte
     // Extract relevant information
     uint64_t resource_id = resource_request->resource_id();
     std::string_view resource_type = resource_request->resource_type();
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     const Resource * resource_ptr; // Read-only resource ptr
     
@@ -697,6 +838,8 @@ grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext *
     readMetadata(* context); // Read request metadata
     
     uint32_t room_id = room->room_id();
+    
+    std::lock_guard<std::mutex> lock(mtx);
     
     if (busy_resources.empty() && (room_id != room::idle)) { // If there are no busy resources exit early
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "There are no resources assigned to any rooms at the moment");
@@ -741,13 +884,59 @@ grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext *
 /* ******************************************************************** */
 
 ReturnCode ResourceManagementService::loadFromDB() {
-    /* Not yet implemented */
-    return ReturnCode::NOT_YET_IMPLEMENTED;
+    std::vector<std::unique_ptr<Resource>> resources;
+    
+    {
+        std::lock_guard<std::mutex> lock(json_mtx);
+        parser->read_all(resources);
+    }
+    
+    std::lock_guard<std::mutex> lock(mtx);
+    
+    for(std::unique_ptr<Resource> & ptr : resources) {
+        uint64_t id = ptr->getResourceId();
+        
+        total_resources.emplace(id, std::move(ptr));
+        Resource * res_ptr = total_resources[id].get();
+        
+        if (res_ptr->getRoomId() != room::none) {
+            busy_resources.emplace(id, res_ptr);
+        } else {
+            available_resources.emplace(id, res_ptr);
+        }
+        
+        if (resource::isConsumable(res_ptr->getResourceType())) {
+            std::lock_guard<std::mutex> stock_lock(stock_mtx);
+            resource_stock.emplace(id, res_ptr->getStock());
+        }
+        
+    }
+    
+    return ReturnCode::SUCCESS;
 }
 
 ReturnCode ResourceManagementService::uploadToDB() {
-    /* Not yet implemented */
-    return ReturnCode::NOT_YET_IMPLEMENTED;
+    std::vector<std::unique_ptr<Resource>> resources;
+    
+    {
+        std::lock_guard<std::mutex> stock_lock(stock_mtx);
+        std::lock_guard<std::mutex> lock(mtx);
+        for (const auto & [id, stock] : resource_stock) {
+            auto it = total_resources.find(id);
+            it->second->setStock(stock);
+        }
+    }
+    
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        for (const auto & [id, ptr] : total_resources) {
+            resources.push_back(ptr->clone());
+        }
+    }
+    
+    std::lock_guard<std::mutex> lock(json_mtx);
+    parser->write_all(resources);
+    return ReturnCode::SUCCESS;
 }
 
 ReturnCode ResourceManagementService::init() {

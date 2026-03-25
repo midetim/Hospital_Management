@@ -88,3 +88,14 @@ std::ostream & operator<<(std::ostream& os, const Patient & p) {
 
     return os;
 }
+
+
+std::unique_ptr<Patient> Patient::clone() const {
+    std::unique_ptr<Patient> ptr = std::make_unique<Patient>();
+    ptr->setPatientName(this->getPatientName());
+    ptr->setPatientSex(this->getPatientSex());
+    ptr->setPatientCondition(this->getPatientCondition());
+    ptr->setPatientId(this->getPatientId());
+    ptr->setRoomId(this->getRoomId());
+    return ptr;
+}
