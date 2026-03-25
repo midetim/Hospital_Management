@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hospital Management System</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      color: #1a202c;
+    }
+
+    header {
+      background: #1a56db;
+      color: white;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    header h1 { font-size: 1.25rem; font-weight: 600; }
+    header span { font-size: 0.85rem; opacity: 0.75; }
+
+    nav {
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0 32px;
+      display: flex;
+      gap: 4px;
+    }
+    nav button {
+      background: none;
+      border: none;
+      padding: 14px 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #4a5568;
+      border-bottom: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    nav button:hover { color: #1a56db; }
+    nav button.active { color: #1a56db; border-bottom-color: #1a56db; font-weight: 600; }
+
+    main { padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
+
+    .tab { display: none; }
+    .tab.active { display: block; }
+
+    h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; color: #2d3748; }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    /* Room grid */
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .room-card {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      border-left: 4px solid #48bb78;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .room-card:hover { transform: translateY(-2px); }
+    .room-card.quarantined { border-left-color: #fc8181; background: #fff5f5; }
+    .room-card.full { border-left-color: #f6ad55; }
+    .room-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+    .room-card .type { font-size: 0.75rem; color: #718096; margin-bottom: 8px; }
+    .room-card .capacity { font-size: 0.85rem; }
+    .room-card .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+    .badge.quarantine { background: #fed7d7; color: #c53030; }
+    .badge.available  { background: #c6f6d5; color: #276749; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    th { text-align: left; padding: 10px 12px; background: #f7fafc; color: #4a5568;
+         font-weight: 600; border-bottom: 1px solid #e2e8f0; }
+    td { padding: 10px 12px; border-bottom: 1px solid #f0f4f8; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f7fafc; }
+
+    /* Forms */
+    .form-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px; }
+    label { font-size: 0.8rem; font-weight: 500; color: #4a5568; }
+    input, select {
+      padding: 8px 10px;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus, select:focus { border-color: #1a56db; }
+
+    /* Buttons */
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary   { background: #1a56db; color: white; }
+    .btn-danger    { background: #e53e3e; color: white; }
+    .btn-warning   { background: #dd6b20; color: white; }
+    .btn-secondary { background: #e2e8f0; color: #2d3748; }
+    .btn-sm        { padding: 5px 10px; font-size: 0.8rem; }
+
+    /* Staff lookup */
+    .lookup-row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 16px; }
+    .lookup-row input { width: 160px; }
+
+    /* Room detail panel */
+    #room-detail { display: none; }
+    #room-detail h3 { font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
+
+    /* Status banner */
+    .banner {
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .banner.success { background: #c6f6d5; color: #276749; }
+    .banner.error   { background: #fed7d7; color: #c53030; }
+
+    .loading { color: #718096; font-style: italic; font-size: 0.875rem; padding: 16px 0; }
+    .empty   { color: #a0aec0; font-size: 0.875rem; padding: 16px 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Hospital Management System</h1>
+  </div>
+</header>
+
+<nav>
+  <button class="active" onclick="switchTab('rooms')">Rooms</button>
+  <button onclick="switchTab('patients')">Patients</button>
+  <button onclick="switchTab('staff')">Staff</button>
+  <button onclick="switchTab('resources')">Resources</button>
+</nav>
+
+<main>
+
+  <!--  ROOMS  -->
+  <div id="tab-rooms" class="tab active">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2>Room Overview</h2>
+        <button class="btn btn-secondary" onclick="loadRooms()">↻ Refresh</button>
+      </div>
+      <div id="room-grid" class="room-grid">
+        <p class="loading">Loading rooms...</p>
+      </div>
+    </div>
+
+    <div id="room-detail" class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 id="room-detail-title">Room Detail</h3>
+        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('room-detail').style.display='none'">✕ Close</button>
+      </div>
+      <div id="room-detail-content"></div>
+      <div style="margin-top:16px; display:flex; gap:10px;">
+        <button class="btn btn-danger btn-sm" id="btn-quarantine" onclick="toggleQuarantine(true)">Quarantine Room</button>
+        <button class="btn btn-secondary btn-sm" id="btn-lift" onclick="toggleQuarantine(false)">Lift Quarantine</button>
+      </div>
+    </div>
+  </div>
+
+  <!--  PATIENTS  -->
+  <div id="tab-patients" class="tab">
+    <div class="card">
+      <h2>Admit Patient</h2>
+      <div id="admit-banner" class="banner"></div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input id="p-first" placeholder="First" /></div>
+        <div class="form-group"><label>Middle</label><input id="p-middle" placeholder="Middle (opt.)" /></div>
+        <div class="form-group"><label>Last Name</label><input id="p-last" placeholder="Last" /></div>
+        <div class="form-group">
+          <label>Sex</label>
+          <select id="p-sex">
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Condition</label><input id="p-condition" placeholder="e.g. Fracture, COVID-19" /></div>
+        <div class="form-group">
+          <label>Room Type</label>
+          <select id="p-room-type">
+            <option value="General">General</option>
+            <option value="ICU">ICU</option>
+            <option value="Operating">Operating Room</option>
+            <option value="Quarantine">Quarantine</option>
+          </select>
+        </div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary" onclick="admitPatient()">Admit Patient</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Patient Lookup</h2>
+      <div class="lookup-row">
+        <div class="form-group"><label>Patient ID</label><input id="lookup-patient-id" type="number" placeholder="Enter ID" /></div>
+        <button class="btn btn-primary" onclick="lookupPatient()">Lookup</button>
+        <button class="btn btn-danger" onclick="dischargePatient()">Discharge</button>
+      </div>
+      <div id="patient-result"></div>
+    </div>
+  </div>
+
+  <!--  STAFF  -->
+  <div id="tab-staff" class="tab">
+    <div class="card">
+      <h2>Add Staff Member</h2>
+      <div id="staff-banner" class="banner"></div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input id="s-first" placeholder="First" /></div>
+        <div class="form-group"><label>Middle</label><input id="s-middle" placeholder="Middle (opt.)" /></div>
+        <div class="form-group"><label>Last Name</label><input id="s-last" placeholder="Last" /></div>
+        <div class="form-group">
+          <label>Position</label>
+          <select id="s-position">
+            <option value="Doctor">Doctor</option>
+            <option value="Nurse">Nurse</option>
+            <option value="Surgeon">Surgeon</option>
+            <option value="Administrator">Administrator</option>
+            <option value="Technician">Technician</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Salary</label><input id="s-salary" type="number" placeholder="e.g. 80000" /></div>
+        <div class="form-group">
+          <label>Clearance Level</label>
+          <select id="s-clearance">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary" onclick="addStaff()">Add Staff</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Staff Lookup</h2>
+      <div class="lookup-row">
+        <div class="form-group"><label>Staff ID</label><input id="lookup-staff-id" type="number" placeholder="Enter ID" /></div>
+        <button class="btn btn-primary" onclick="lookupStaff()">Lookup</button>
+        <button class="btn btn-secondary" onclick="lookupSchedule()">Today's Schedule</button>
+        <button class="btn btn-danger" onclick="removeStaff()">Remove</button>
+      </div>
+      <div id="staff-result"></div>
+    </div>
+  </div>
+
+  <!--  RESOURCES  -->
+  <div id="tab-resources" class="tab">
+
+    <div class="card">
+      <h2>Register Resource</h2>
+      <div id="resource-register-banner" class="banner"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Resource Type</label><input id="r-type" placeholder="e.g. Ventilator, Morphine" /></div>
+        <div class="form-group"><label>Room ID</label><input id="r-room" type="number" placeholder="Room ID" /></div>
+        <div class="form-group"><label>Initial Stock</label><input id="r-stock" type="number" placeholder="0 for equipment" /></div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary" onclick="registerResource()">Register</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Resource Lookup</h2>
+      <div class="lookup-row">
+        <div class="form-group"><label>Resource ID</label><input id="lookup-resource-id" type="number" placeholder="Enter ID" /></div>
+        <button class="btn btn-primary" onclick="lookupResource()">Lookup</button>
+        <button class="btn btn-danger" onclick="deregisterResource()">Deregister</button>
+      </div>
+      <div id="resource-result"></div>
+    </div>
+
+    <div class="card">
+      <h2>Stock Management</h2>
+      <div id="stock-banner" class="banner"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Resource ID</label><input id="stock-id" type="number" placeholder="Resource ID" /></div>
+        <div class="form-group"><label>Resource Type</label><input id="stock-type" placeholder="e.g. Morphine" /></div>
+        <div class="form-group"><label>Amount</label><input id="stock-amount" type="number" placeholder="Units" /></div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <label>&nbsp;</label>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-primary" onclick="updateStock('add')">+ Add</button>
+            <button class="btn btn-warning" onclick="updateStock('use')">- Use</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+  const API = '';  // same origin FastAPI serves this file
+  let selectedRoomId = null;
+
+  //  Tab switching 
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  //  Rooms 
+  async function loadRooms() {
+    const grid = document.getElementById('room-grid');
+    grid.innerHTML = '<p class="loading">Loading rooms...</p>';
+    try {
+      const res = await fetch(`${API}/api/rooms`);
+      const rooms = await res.json();
+      if (!rooms.length) { grid.innerHTML = '<p class="empty">No rooms found.</p>'; return; }
+      grid.innerHTML = rooms.map(r => {
+        const pct = r.room_capacity > 0 ? r.current_capacity / r.room_capacity : 0;
+        const cls = r.quarantined ? 'quarantined' : (pct >= 1 ? 'full' : '');
+        return `
+          <div class="room-card ${cls}" onclick="selectRoom(${r.room_id})">
+            <h3>Room ${r.room_id}</h3>
+            <div class="type">${r.room_type}</div>
+            <div class="capacity">${r.current_capacity} / ${r.room_capacity} patients</div>
+            <span class="badge ${r.quarantined ? 'quarantine' : 'available'}">
+              ${r.quarantined ? '⚠ Quarantined' : '✓ Available'}
+            </span>
+          </div>`;
+      }).join('');
+    } catch (e) {
+      grid.innerHTML = '<p class="empty">Could not reach Room service.</p>';
+    }
+  }
+
+  async function selectRoom(roomId) {
+    selectedRoomId = roomId;
+    const panel = document.getElementById('room-detail');
+    const content = document.getElementById('room-detail-content');
+    const title = document.getElementById('room-detail-title');
+    panel.style.display = 'block';
+    content.innerHTML = '<p class="loading">Loading...</p>';
+    try {
+      const res = await fetch(`${API}/api/rooms/${roomId}`);
+      const r = await res.json();
+      title.textContent = `Room ${r.room_id} - ${r.room_type} ${r.quarantined ? '⚠ QUARANTINED' : ''}`;
+      content.innerHTML = `
+        <p style="margin-bottom:12px; font-size:0.875rem;">
+          Capacity: <strong>${r.current_capacity} / ${r.room_capacity}</strong>
+        </p>
+        <h4 style="font-size:0.85rem; margin-bottom:8px; color:#4a5568;">Patients</h4>
+        ${r.patients.length ? `
+          <table><thead><tr><th>ID</th><th>Name</th><th>Sex</th><th>Condition</th></tr></thead>
+          <tbody>${r.patients.map(p =>
+            `<tr><td>${p.patient_id}</td><td>${p.name}</td><td>${p.sex}</td><td>${p.condition}</td></tr>`
+          ).join('')}</tbody></table>` : '<p class="empty">No patients in this room.</p>'}
+        <h4 style="font-size:0.85rem; margin:12px 0 8px; color:#4a5568;">Staff on Duty</h4>
+        ${r.staff.length ? `
+          <table><thead><tr><th>ID</th><th>Name</th><th>Position</th></tr></thead>
+          <tbody>${r.staff.map(s =>
+            `<tr><td>${s.staff_id}</td><td>${s.name}</td><td>${s.position}</td></tr>`
+          ).join('')}</tbody></table>` : '<p class="empty">No staff assigned.</p>'}
+        <h4 style="font-size:0.85rem; margin:12px 0 8px; color:#4a5568;">Resources</h4>
+        ${r.resources.length ? `
+          <table><thead><tr><th>ID</th><th>Type</th><th>Stock</th></tr></thead>
+          <tbody>${r.resources.map(res =>
+            `<tr><td>${res.resource_id}</td><td>${res.type}</td><td>${res.stock}</td></tr>`
+          ).join('')}</tbody></table>` : '<p class="empty">No resources tracked.</p>'}
+      `;
+    } catch (e) {
+      content.innerHTML = '<p class="empty">Could not load room details.</p>';
+    }
+  }
+
+  async function toggleQuarantine(quarantine) {
+    if (!selectedRoomId) return;
+    const res = await fetch(`${API}/api/rooms/quarantine`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ room_id: selectedRoomId, quarantine, move_patients: true })
+    });
+    const data = await res.json();
+    if (res.ok) { loadRooms(); selectRoom(selectedRoomId); }
+    else alert('Error: ' + (data.detail || 'Operation failed'));
+  }
+
+  //  Patients ─
+  async function admitPatient() {
+    const body = {
+      first: document.getElementById('p-first').value,
+      middle: document.getElementById('p-middle').value,
+      last: document.getElementById('p-last').value,
+      sex: document.getElementById('p-sex').value,
+      condition: document.getElementById('p-condition').value,
+      room_type: document.getElementById('p-room-type').value,
+    };
+    showBanner('admit-banner', 'loading', 'Admitting patient...');
+    const res = await fetch(`${API}/api/patients/admit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (res.ok) showBanner('admit-banner', 'success', 'Patient admitted successfully.');
+    else showBanner('admit-banner', 'error', data.message || data.detail || 'Error admitting patient.');
+  }
+
+  async function lookupPatient() {
+    const id = document.getElementById('lookup-patient-id').value;
+    if (!id) return;
+    const res = await fetch(`${API}/api/patients/${id}`);
+    const data = await res.json();
+    const el = document.getElementById('patient-result');
+    if (res.ok) {
+      el.innerHTML = `<table><thead><tr><th>ID</th><th>Name</th><th>Sex</th><th>Condition</th><th>Room</th></tr></thead>
+        <tbody><tr><td>${data.patient_id}</td><td>${data.patient_name?.first} ${data.patient_name?.last}</td>
+        <td>${data.patient_sex}</td><td>${data.patient_cond}</td><td>${data.patient_room}</td></tr></tbody></table>`;
+    } else {
+      el.innerHTML = `<p class="empty">${data.message || data.detail}</p>`;
+    }
+  }
+
+  async function dischargePatient() {
+    const id = document.getElementById('lookup-patient-id').value;
+    if (!id) return;
+    const res = await fetch(`${API}/api/patients/discharge`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patient_id: parseInt(id) })
+    });
+    const data = await res.json();
+    const el = document.getElementById('patient-result');
+    el.innerHTML = `<p class="empty">${data.message || data.detail || 'Discharged.'}</p>`;
+    if (res.ok) loadRooms();
+  }
+
+  //  Staff ─
+  async function addStaff() {
+    const body = {
+      first: document.getElementById('s-first').value,
+      middle: document.getElementById('s-middle').value,
+      last: document.getElementById('s-last').value,
+      position: document.getElementById('s-position').value,
+      salary: parseFloat(document.getElementById('s-salary').value) || 0,
+      clearance: document.getElementById('s-clearance').value,
+    };
+    showBanner('staff-banner', 'loading', 'Adding staff member...');
+    const res = await fetch(`${API}/api/staff/add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (res.ok) showBanner('staff-banner', 'success', 'Staff member added successfully.');
+    else showBanner('staff-banner', 'error', data.detail || 'Error adding staff.');
+  }
+
+  async function lookupStaff() {
+    const id = document.getElementById('lookup-staff-id').value;
+    if (!id) return;
+    const res = await fetch(`${API}/api/staff/${id}`);
+    const data = await res.json();
+    const el = document.getElementById('staff-result');
+    if (res.ok) {
+      el.innerHTML = `<table><thead><tr><th>ID</th><th>Name</th><th>Position</th><th>Clearance</th><th>Salary</th><th>Room</th></tr></thead>
+        <tbody><tr><td>${data.staff_id}</td><td>${data.name}</td><td>${data.position}</td>
+        <td>${data.clearance}</td><td>$${data.salary?.toLocaleString()}</td><td>${data.room}</td></tr></tbody></table>`;
+    } else {
+      el.innerHTML = `<p class="empty">${data.message || data.detail}</p>`;
+    }
+  }
+
+  async function lookupSchedule() {
+    const id = document.getElementById('lookup-staff-id').value;
+    if (!id) return;
+    const res = await fetch(`${API}/api/staff/${id}/schedule/today`);
+    const data = await res.json();
+    const el = document.getElementById('staff-result');
+    if (!data.shifts?.length) { el.innerHTML = '<p class="empty">No shifts scheduled today.</p>'; return; }
+    el.innerHTML = `<table><thead><tr><th>Staff ID</th><th>Room</th><th>Start</th><th>Duration (hrs)</th></tr></thead>
+      <tbody>${data.shifts.map(s =>
+        `<tr><td>${s.staff_id}</td><td>${s.room_id}</td><td>${s.start}</td><td>${s.duration_hrs}</td></tr>`
+      ).join('')}</tbody></table>`;
+  }
+
+  async function removeStaff() {
+    const id = document.getElementById('lookup-staff-id').value;
+    if (!id) return;
+    const res = await fetch(`${API}/api/staff/${id}`, { method: 'DELETE' });
+    const data = await res.json();
+    document.getElementById('staff-result').innerHTML =
+      `<p class="empty">${data.detail || 'Staff member removed.'}</p>`;
+  }
+
+  //  Resources ─
+  async function registerResource() {
+    const body = {
+      resource_type: document.getElementById('r-type').value,
+      room_id: parseInt(document.getElementById('r-room').value) || 0,
+      stock: parseInt(document.getElementById('r-stock').value) || 0,
+    };
+    showBanner('resource-register-banner', 'loading', 'Registering resource...');
+    const res = await fetch(`${API}/api/resources/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (res.ok) showBanner('resource-register-banner', 'success', 'Resource registered.');
+    else showBanner('resource-register-banner', 'error', data.detail || 'Error registering resource.');
+  }
+
+  async function lookupResource() {
+    const id = document.getElementById('lookup-resource-id').value;
+    if (!id) return;
+    const res = await fetch(`${API}/api/resources/${id}`);
+    const data = await res.json();
+    const el = document.getElementById('resource-result');
+    if (res.ok) {
+      el.innerHTML = `<table><thead><tr><th>ID</th><th>Type</th><th>Room</th><th>Stock</th></tr></thead>
+        <tbody><tr><td>${data.resource_id}</td><td>${data.resource_type}</td>
+        <td>${data.room_id}</td><td>${data.stock ?? '—'}</td></tr></tbody></table>`;
+    } else {
+      el.innerHTML = `<p class="empty">${data.detail || 'Not found.'}</p>`;
+    }
+  }
+
+  async function deregisterResource() {
+    const id = document.getElementById('lookup-resource-id').value;
+    if (!id) return;
+    const res = await fetch(`${API}/api/resources/${id}`, { method: 'DELETE' });
+    const data = await res.json();
+    document.getElementById('resource-result').innerHTML =
+      `<p class="empty">${data.detail || 'Resource deregistered.'}</p>`;
+  }
+
+  async function updateStock(action) {
+    const body = {
+      resource_id: parseInt(document.getElementById('stock-id').value) || 0,
+      resource_type: document.getElementById('stock-type').value,
+      amount: parseInt(document.getElementById('stock-amount').value) || 0,
+    };
+    const endpoint = action === 'add' ? '/api/resources/stock/add' : '/api/resources/stock/use';
+    showBanner('stock-banner', 'loading', action === 'add' ? 'Adding stock...' : 'Using stock...');
+    const res = await fetch(`${API}${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (res.ok) showBanner('stock-banner', 'success', `Stock ${action === 'add' ? 'added' : 'used'} successfully.`);
+    else showBanner('stock-banner', 'error', data.detail || 'Stock update failed.');
+  }
+
+  //  Helpers ─
+  function showBanner(id, type, msg) {
+    const el = document.getElementById(id);
+    el.className = `banner ${type}`;
+    el.textContent = msg;
+    el.style.display = 'block';
+    if (type !== 'loading') setTimeout(() => el.style.display = 'none', 4000);
+  }
+
+  // Init
+  loadRooms();
+</script>
+</body>
+</html>
