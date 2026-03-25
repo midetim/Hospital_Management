@@ -116,7 +116,7 @@ class PatientManagementClient:
         self.target_hostport = target
         self.channel = grpc.insecure_channel(self.target_hostport)
         self.stub = ppgrpc.PatientManagementStub(self.channel)
-        self.common = cpb.CommonStub(self.channel)
+        self.common = cgrpc.CommonStub(self.channel)
         self.name = "patient_client"
 
     # Common service calls (ping, print, update)
@@ -153,17 +153,15 @@ class PatientManagementClient:
             return False
 
     def admit_patient(self, patient: Patient, room_type: str, quarantined: bool, service_name: str) -> bool:
-        patient_dto = ppb.PatientDTO()
-        name = patient_dto.mutable_patient_name()
-        name.first = patient.first
-        name.middle = patient.middle
-        name.last = patient.last
-        patient_dto.patient_id = patient.patient_id
-        patient_dto.patient_sex = patient.sex
-        patient_dto.patient_cond = patient.condition
-        patient_dto.patient_room = patient.room_id
-        patient_dto.room_type = room_type
-        patient_dto.is_quarantined = quarantined
+        patient_dto = ppb.PatientDTO(
+            patient_name=cpb.NameDTO(first=patient.first, middle=patient.middle, last=patient.last),
+            patient_id=patient.patient_id,
+            patient_sex=patient.sex,
+            patient_cond=patient.condition,
+            patient_room=patient.room_id,
+            room_type=room_type,
+            is_quarantined=quarantined
+        )
         try:
             success = self.stub.AdmitPatient(patient_dto, metadata=[('service-name', service_name)])
             return success.successful
@@ -172,15 +170,13 @@ class PatientManagementClient:
             return False
 
     def discharge_patient(self, patient: Patient, service_name: str) -> bool:
-        patient_dto = ppb.PatientDTO()
-        name = patient_dto.mutable_patient_name()
-        name.first = patient.first
-        name.middle = patient.middle
-        name.last = patient.last
-        patient_dto.patient_id = patient.patient_id
-        patient_dto.patient_sex = patient.sex
-        patient_dto.patient_cond = patient.condition
-        patient_dto.patient_room = patient.room_id
+        patient_dto = ppb.PatientDTO(
+            patient_name=cpb.NameDTO(first=patient.first, middle=patient.middle, last=patient.last),
+            patient_id=patient.patient_id,
+            patient_sex=patient.sex,
+            patient_cond=patient.condition,
+            patient_room=patient.room_id
+        )
         try:
             success = self.stub.DischargePatient(patient_dto, metadata=[('service-name', service_name)])
             return success.successful
@@ -227,23 +223,46 @@ class PatientManagementClient:
             return Patient(0, "", "", "", "", "", 0, "", False)
 
     def update_patient_information(self, patient: Patient, service_name: str) -> bool:
-        patient_dto = ppb.PatientDTO()
-        name = patient_dto.mutable_patient_name()
-        name.first = patient.first
-        name.middle = patient.middle
-        name.last = patient.last
-        patient_dto.patient_id = patient.patient_id
-        patient_dto.patient_sex = patient.sex
-        patient_dto.patient_cond = patient.condition
-        patient_dto.patient_room = patient.room_id
-        patient_dto.room_type = patient.room_type
-        patient_dto.is_quarantined = patient.is_quarantined
+        patient_dto = ppb.PatientDTO(
+            patient_name=cpb.NameDTO(first=patient.first, middle=patient.middle, last=patient.last),
+            patient_id=patient.patient_id,
+            patient_sex=patient.sex,
+            patient_cond=patient.condition,
+            patient_room=patient.room_id,
+            room_type=patient.room_type,
+            is_quarantined=patient.is_quarantined
+        )
         try:
             success = self.stub.UpdatePatientInformation(patient_dto, metadata=[('service-name', service_name)])
             return success.successful
         except grpc.RpcError as e:
             print_status_code(e)
             return False
+
+    # --- api_translator.py-compatible wrappers ---
+
+    def admitPatient(self, first: str, middle: str, last: str, sex: str, condition: str, room_type: str, service_name: str) -> bool:
+        p = Patient(0, first, middle, last, sex, condition)
+        return self.admit_patient(p, room_type, False, service_name)
+
+    def dischargePatient(self, patient_id: int, service_name: str) -> bool:
+        p = Patient(patient_id, "", "", "", "", "")
+        return self.discharge_patient(p, service_name)
+
+    def transferPatient(self, patient_id: int, old_room_id: int, new_room_id: int, room_type: str, service_name: str) -> bool:
+        return self.transfer_patient(patient_id, old_room_id, new_room_id, room_type, False, service_name)
+
+    def getInfo(self, patient_id: int, service_name: str):
+        p = self.get_patient_information(patient_id, service_name)
+        if p.patient_id == 0:
+            return None
+        return {
+            "patient_id"  : p.patient_id,
+            "patient_name": {"first": p.first, "last": p.last},
+            "patient_sex" : p.sex,
+            "patient_cond": p.condition,
+            "patient_room": p.room_id,
+        }
 
     def get_patients_in_room(self, room_id: int, service_name: str) -> List[Patient]:
         # Assuming RoomRequest is defined in Common.proto or generated
