@@ -17,11 +17,11 @@ from resource_client import ResourceManagementClient
 
 app = FastAPI(title="Hospital Management System API")
 
-# Service connections
-ROOM_HOST     = "127.0.0.1:8921"
-PATIENT_HOST  = "127.0.0.1:8922"
-RESOURCE_HOST = "127.0.0.1:8923"
-STAFF_HOST    = "127.0.0.1:8924"
+# Service connections (env vars override for Docker; defaults to localhost for local dev)
+ROOM_HOST     = os.getenv("ROOM_HOST",     "127.0.0.1:8921")  # container: room:8921
+PATIENT_HOST  = os.getenv("PATIENT_HOST",  "127.0.0.1:8922")  # container: patient:8922
+RESOURCE_HOST = os.getenv("RESOURCE_HOST", "127.0.0.1:8923")  # container: resource:8923
+STAFF_HOST    = os.getenv("STAFF_HOST",    "127.0.0.1:8924")  # container: staff:8924
 SERVICE_NAME  = "frontend"
 
 room_client     = RoomManagementClient(ROOM_HOST)
