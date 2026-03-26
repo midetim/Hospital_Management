@@ -60,7 +60,7 @@ ReturnCode StaffManagementService::convertToSchedule(const std::set<time_util::S
         ShiftDTO * shift_dto = staff_shift->mutable_shift();
         time_util::shift_to_dto(shift, * shift_dto);
     }
-    
+    return ReturnCode::SUCCESS;
 }
 
 bool StaffManagementService::sendStaff() {
@@ -237,7 +237,7 @@ grpc::Status StaffManagementService::ChangePosition(grpc::ServerContext * contex
     
     {
         std::lock_guard<std::mutex> json_lock(json_mtx);
-        parser->write_one(* it->second);
+        parser->replace_one(* it->second);
     }
     
     success->set_successful(true);
@@ -268,7 +268,7 @@ grpc::Status StaffManagementService::ChangeClearance(grpc::ServerContext * conte
     
     {
         std::lock_guard<std::mutex> json_lock(json_mtx);
-        parser->write_one(* it->second);
+        parser->replace_one(* it->second);
     }
     
     success->set_successful(true);
@@ -298,7 +298,7 @@ grpc::Status StaffManagementService::UpdateStaffInformation(grpc::ServerContext 
     
     {
         std::lock_guard<std::mutex> json_lock(json_mtx);
-        parser->write_one(* it->second);
+        parser->replace_one(* it->second);
     }
     
     success->set_successful(true);
@@ -347,7 +347,7 @@ grpc::Status StaffManagementService::AddShift(grpc::ServerContext * context, con
     } else {
         {
             std::lock_guard<std::mutex> json_lock(json_mtx);
-            parser->write_one(* it->second);
+            parser->replace_one(* it->second);
         }
         return grpc::Status::OK;
     }
@@ -380,7 +380,7 @@ grpc::Status StaffManagementService::RemoveShift(grpc::ServerContext * context, 
     } else {
         {
             std::lock_guard<std::mutex> json_lock(json_mtx);
-            parser->write_one(* it->second);
+            parser->replace_one(* it->second);
         }
         return grpc::Status::OK;
     }
@@ -450,7 +450,7 @@ grpc::Status StaffManagementService::TransferShift(grpc::ServerContext * context
     
     {
         std::lock_guard<std::mutex> json_lock(json_mtx);
-        parser->write_one(* it->second);
+        parser->replace_one(* it->second);
     }
     
     success->set_successful(successfully_added && removal_success);
@@ -504,7 +504,7 @@ grpc::Status StaffManagementService::BookTimeOff(grpc::ServerContext * context, 
     } else {
         {
             std::lock_guard<std::mutex> json_lock(json_mtx);
-            parser->write_one(* it->second);
+            parser->replace_one(* it->second);
         }
         return grpc::Status::OK;
     }
