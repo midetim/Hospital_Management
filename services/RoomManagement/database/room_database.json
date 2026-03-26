@@ -30,34 +30,16 @@
         "type": "Emergency"
     },
     {
-        "assigned-patients": [],
+        "assigned-patients": [
+            116291584323991
+        ],
         "assigned-resources": [],
         "assigned-staff": [],
-        "current-capacity": 0,
+        "current-capacity": 1,
         "id": 106,
         "maximum-capacity": 10,
         "room-quarantined": false,
         "type": "General"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 305,
-        "maximum-capacity": 2,
-        "room-quarantined": false,
-        "type": "General"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 604,
-        "maximum-capacity": 8,
-        "room-quarantined": false,
-        "type": "Staff"
     },
     {
         "assigned-patients": [],
@@ -84,7 +66,17 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 303,
+        "id": 604,
+        "maximum-capacity": 8,
+        "room-quarantined": false,
+        "type": "Staff"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 305,
         "maximum-capacity": 2,
         "room-quarantined": false,
         "type": "General"
@@ -98,6 +90,16 @@
         "maximum-capacity": 8,
         "room-quarantined": false,
         "type": "Staff"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 303,
+        "maximum-capacity": 2,
+        "room-quarantined": false,
+        "type": "General"
     },
     {
         "assigned-patients": [],
@@ -153,9 +155,7 @@
     },
     {
         "assigned-patients": [],
-        "assigned-resources": [
-            116291404383854
-        ],
+        "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
         "id": 105,
@@ -186,9 +186,7 @@
         "type": "Operating"
     },
     {
-        "assigned-patients": [
-            2
-        ],
+        "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
@@ -199,9 +197,7 @@
     },
     {
         "assigned-patients": [],
-        "assigned-resources": [
-            1
-        ],
+        "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
         "id": 403,
@@ -254,20 +250,10 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 301,
-        "maximum-capacity": 2,
+        "id": 201,
+        "maximum-capacity": 3,
         "room-quarantined": false,
-        "type": "General"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 401,
-        "maximum-capacity": 4,
-        "room-quarantined": false,
-        "type": "Emergency"
+        "type": "Operating"
     },
     {
         "assigned-patients": [
@@ -286,15 +272,23 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 201,
-        "maximum-capacity": 3,
+        "id": 401,
+        "maximum-capacity": 4,
         "room-quarantined": false,
-        "type": "Operating"
+        "type": "Emergency"
     },
     {
-        "assigned-patients": [
-            1
-        ],
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 301,
+        "maximum-capacity": 2,
+        "room-quarantined": false,
+        "type": "General"
+    },
+    {
+        "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 1,

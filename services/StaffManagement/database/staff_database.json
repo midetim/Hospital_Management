@@ -1,24 +1,5 @@
 [
     {
-        "clearance": "Medium",
-        "id": 116290237041927,
-        "name-first": "Dale",
-        "name-last": "Ferguson",
-        "name-middle": "Levi",
-        "position": "PatientTransporter",
-        "room": 0,
-        "salary": 100.0,
-        "schedule": [
-            {
-                "shift-duration": 360,
-                "shift-end": 29875950,
-                "shift-room": 101,
-                "shift-start": 29875590
-            }
-        ],
-        "sex": "Male"
-    },
-    {
         "clearance": "Admin",
         "id": 1,
         "name-first": "Kelsey",
@@ -26,7 +7,7 @@
         "name-middle": "Rose",
         "position": "AdministrativeStaff",
         "room": 0,
-        "salary": 20.0,
+        "salary": 2000000.0,
         "schedule": [
             {
                 "shift-duration": 28845,
@@ -48,5 +29,36 @@
             }
         ],
         "sex": "Female"
+    },
+    {
+        "clearance": "Medium",
+        "id": 116297201368423,
+        "name-first": "Matthew",
+        "name-last": "Hvizdos",
+        "name-middle": "Elliott",
+        "position": "LabTechnician",
+        "room": 0,
+        "salary": 100000.0,
+        "schedule": [
+            {
+                "shift-duration": 48960,
+                "shift-end": 29625420,
+                "shift-room": 0,
+                "shift-start": 29576460
+            }
+        ],
+        "sex": "Male"
+    },
+    {
+        "clearance": "Low",
+        "id": 116297296353630,
+        "name-first": "Rohan",
+        "name-last": "Clark",
+        "name-middle": "James",
+        "position": "SecurityGuard",
+        "room": 0,
+        "salary": 10000.0,
+        "schedule": [],
+        "sex": "Male"
     }
 ]

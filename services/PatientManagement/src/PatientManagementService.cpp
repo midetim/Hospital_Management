@@ -157,6 +157,7 @@ grpc::Status PatientManagementService::DischargePatient(grpc::ServerContext * co
         parser->remove_one(patient_id);
     }
     
+    hospital_patients.erase(it);
     success->set_successful(room_discharge);
     
     if (!room_discharge) {
