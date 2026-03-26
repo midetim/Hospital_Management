@@ -26,7 +26,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Environment variables
 set(SERVICE_DIR ${PROJECT_SOURCE_DIR}/services)
 set(COMMON_DIR ${PROJECT_SOURCE_DIR}/common)
-set(GRPC_INSTALL_DIR ${PROJECT_SOURCE_DIR}/external/grpc/local)
+set(GRPC_INSTALL_DIR /usr/local)
 
 # Proto output directory
 set(PROTO_BINARY_DIR ${CMAKE_BINARY_DIR}/generated_proto)

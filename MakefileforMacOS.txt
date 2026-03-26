@@ -3,10 +3,10 @@
 # ------------------------------------------------------------------
 
 # Build directory
-BUILD_DIR := build
+BUILD_DIR := xcode-build
 
 # CMake generator
-CMAKE_GEN := Unix Makefiles
+CMAKE_GEN := Xcode
 
 # Default target
 all: build
@@ -15,7 +15,7 @@ all: build
 # Build the project (Release by default)
 # ------------------------------------------------------------------
 build:
-	cmake -S . -B $(BUILD_DIR) -G "$(CMAKE_GEN)" -DCMAKE_BUILD_TYPE=Release
+	cmake -S . -B $(BUILD_DIR) -G $(CMAKE_GEN) -DCMAKE_BUILD_TYPE=Release
 	cmake --build $(BUILD_DIR) --config Release
 
 # ------------------------------------------------------------------
@@ -26,10 +26,11 @@ ref:
 	$(MAKE) build
 
 # ------------------------------------------------------------------
-# Open project without building
+# Open Xcode project without building
 # ------------------------------------------------------------------
 open:
-	cmake -S . -B $(BUILD_DIR) -G "$(CMAKE_GEN)"
+	cmake -S . -B $(BUILD_DIR) -G $(CMAKE_GEN)
+	open $(BUILD_DIR)/Hospital_Management.xcodeproj
 
 # ------------------------------------------------------------------
 # Clean build directory
