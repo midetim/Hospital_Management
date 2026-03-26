@@ -182,7 +182,7 @@ class RoomManagementClient:
         )
 
         try:
-            success = self.stub.quarantine(quarantine_request, metadata=[('service-name', service_name)])
+            success = self.stub.QuarantineRoom(quarantine_request, metadata=[('service-name', service_name)])
             return success.successful
         except grpc.RpcError as e:
             print_status_code(e)
@@ -192,7 +192,7 @@ class RoomManagementClient:
         info_request = rpb.RoomDTO(room_id=room_id)
 
         try:
-            response = self.stub.getInfo(info_request, metadata=[('service-name', service_name)])
+            response = self.stub.GetRoomInformation(info_request, metadata=[('service-name', service_name)])
             return room_from_room_info(response)
         except grpc.RpcError as e:
             print_status_code(e)
