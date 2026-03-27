@@ -95,12 +95,13 @@ grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * contex
     // Generate a patient id
     patient_id = generate_id();
     new_patient.setPatientId(patient_id);
+    uint32_t room_id = room::none;
     
     // Attempt to admit patient to the room service
-    uint32_t success_code = room_client->admitPatient(patient_id, room_type, is_quarantined, this->name);
+    bool success_code = room_client->admitPatient(patient_id, room_id, room_type, is_quarantined, this->name);
     
     // If the admission failed
-    if (success_code == room::none) {
+    if (!success_code || room_id == room::none) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not admit patient");
     }
@@ -108,7 +109,7 @@ grpc::Status PatientManagementService::AdmitPatient(grpc::ServerContext * contex
     lock.lock();
     
     // If admission succeeded does it add the patient to the hospital system
-    new_patient.setRoomId(success_code);
+    new_patient.setRoomId(room_id);
     hospital_patients.emplace(patient_id, std::make_unique<Patient>(std::move(new_patient)));
     lock.unlock();
     
@@ -157,6 +158,7 @@ grpc::Status PatientManagementService::DischargePatient(grpc::ServerContext * co
         parser->remove_one(patient_id);
     }
     
+    hospital_patients.erase(it);
     success->set_successful(room_discharge);
     
     if (!room_discharge) {
@@ -187,15 +189,15 @@ grpc::Status PatientManagementService::TransferPatient(grpc::ServerContext * con
     uint32_t old_room_id = it->second->getRoomId();
     
     // Get the new room id of the patient
-    uint32_t room_transfer = room_client->transferPatient(patient_id, new_room_id, old_room_id, room_type, is_quarantined, this->name);
+    bool room_transfer = room_client->transferPatient(patient_id, new_room_id, old_room_id, room_type, is_quarantined, this->name);
     
-    if (room_transfer == room::none) { // If the room service could not put the patient into a new room
+    if (!room_transfer) { // If the room service could not put the patient into a new room
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not admit patient to new room");
     }
     
     // Change the patients room id to their new room id
-    it->second->setRoomId(room_transfer);
+    it->second->setRoomId(new_room_id);
     
     {
         std::lock_guard<std::mutex> json_lock(json_mtx);
@@ -224,8 +226,6 @@ grpc::Status PatientManagementService::QuarantinePatient(grpc::ServerContext * c
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the patient to quarantine");
     }
     
-    uint32_t old_room_id = it->second->getRoomId(); // Store old room id
-    
     lock.unlock(); // Unlock mutex before quarantine
     
     // Attempt to quarantine the patient
@@ -233,7 +233,7 @@ grpc::Status PatientManagementService::QuarantinePatient(grpc::ServerContext * c
     
     lock.lock();
     
-    if (!quarantined || old_room_id == it->second->getRoomId()) { // Patient could not be quarantined
+    if (!quarantined) { // Patient could not be quarantined
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
@@ -264,8 +264,9 @@ grpc::Status PatientManagementService::LiftPatientQuarantine(grpc::ServerContext
     lock.unlock();
     
     // Attempt to quarantine the patient
-    uint32_t quarantined = room_client->quarantinePatient(patient_id, quarantine_entire_room, this->name);
-    if (quarantined == room::none) { // Patient could not be quarantined
+    bool quarantined = room_client->liftPatientQuarantine(patient_id, quarantine_entire_room, this->name);
+    if (quarantined) { // Patient could not be quarantined
+        success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Could not successfully quarantine the patient");
     }
     

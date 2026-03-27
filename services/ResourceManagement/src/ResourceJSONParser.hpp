@@ -22,6 +22,7 @@ namespace label {
     }
 }
 
+// expr printf("%s\n", j.dump(4, ' ', true, nlohmann::detail::error_handler_t::strict).c_str())
 
 class ResourceJSONParser : public JSONParser<Resource> {
 private:
@@ -32,7 +33,7 @@ private:
         s = time_util::Shift(start_ts, end_ts, j.at(label::shift::room).get<uint32_t>());
     }
     
-    inline void to_json(const time_util::Shift & s, json & j) {
+    inline void to_json(json & j, const time_util::Shift & s) {
         j = json{
             {label::shift::start, s.shift_start.time},
             {label::shift::end,   s.shift_end.time},
@@ -43,10 +44,20 @@ private:
     
     inline void from_json(const json & j, Resource & r) {
         r.setResourceId(j.at(label::id).get<uint64_t>());
-        r.setStock(j.at(label::stock).get<uint32_t>());
-        r.setResourceType(resource::stringToResourceType(j.at(label::type).get<std::string>()));
+        r.setType(j.at(label::type).get<std::string>());
         
-        if (resource::isConsumable(r.getResourceType())) {
+        auto it = resource::types.find(r.getType());
+        if (it == resource::types.end()) {
+            return; // Idk
+        } else if (it->second == resource::machine) {
+            r.setMachine(true);
+        } else if (it->second == resource::consumable) {
+            r.setConsumable(true);
+        } else {
+            return;
+        }
+        
+        if (r.getConsumable()) {
             r.setStock(j.at(label::stock).get<uint32_t>());
             r.setRoomId(room::none);
         } else {
@@ -64,15 +75,13 @@ private:
         }
     }
     
-    inline void to_json(const Resource & r, json & j) {
-        j = json{
-            {label::id, r.getResourceId()},
-            {label::room, r.getRoomId()},
-            {label::type, resource::resourceTypeToString(r.getResourceType())},
-            {label::stock, r.getStock()}
-        };
-        
-        if (resource::isConsumable(r.getResourceType())) {
+    inline void to_json(json & j, const Resource & r) {
+        j[label::id]    = r.getResourceId();
+        j[label::room]  = r.getRoomId();
+        j[label::stock] = r.getStock();
+        j[label::type] = r.getType();
+    
+        if (r.getConsumable()) {
             j[label::sched] = json::array();
         } else {
             json schedule = json::array();
@@ -81,7 +90,7 @@ private:
             
             for (const auto& shift : shifts) {
                 json shift_json;
-                to_json(shift, shift_json);
+                to_json(shift_json, shift);
                 schedule.push_back(shift_json);
             }
             
@@ -103,10 +112,10 @@ public:
             return;
         }
         
-        Resource temp;
         for (const json & obj : j) {
+            Resource temp;
             from_json(obj, temp);
-            if (temp == r) {
+            if (temp.getResourceId() == r.getResourceId()) {
                 r = std::move(temp);
                 return;
             } else { continue; }
@@ -125,7 +134,7 @@ public:
         }
         
         json new_r;
-        to_json(r, new_r);
+        to_json(new_r, r);
         j.push_back(new_r);
         
         std::ofstream file(filename.data());
@@ -153,7 +162,7 @@ public:
             Resource temp;
             from_json(obj, temp);
             if (r == temp) {
-                to_json(r, obj);
+                to_json(obj, r);
                 found = true;
                 break;
             }
@@ -252,7 +261,7 @@ public:
         
         for (const std::unique_ptr<Resource> & ptr : v) {
             json obj;
-            to_json(* ptr, obj);
+            to_json(obj, * ptr);
             j.push_back(obj);
         }
         

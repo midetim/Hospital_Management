@@ -11,6 +11,7 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <unordered_map>
 #include <variant>
 
 
@@ -320,6 +321,40 @@ namespace resource {
 
     inline constexpr uint64_t none = 0;
 
+    inline constexpr char consumable = 'C';
+    inline constexpr char machine = 'M';
+
+    inline const std::unordered_map<std::string, char> types = {
+        // Machinery
+        {"XRay", machine},
+        {"Ultrasound", machine},
+        {"MRI", machine},
+        {"CTScanner", machine},
+        {"Ventilator", machine},
+        {"ECGMachine", machine},
+        {"Defibrillator", machine},
+        {"AnesthesiaMachine", machine},
+        {"DialysisMachine", machine},
+        {"InfusionPump", machine},
+        {"SurgicalRobot", machine},
+        {"PatientMonitor", machine},
+        {"OxygenGenerator", machine},
+
+        // Consumables
+        {"PPE", consumable},
+        {"Medication", consumable},
+        {"Syringes", consumable},
+        {"IVFluids", consumable},
+        {"Bandages", consumable},
+        {"Gloves", consumable},
+        {"Masks", consumable},
+        {"TestKits", consumable},
+        {"BloodBags", consumable},
+        {"Saline", consumable},
+        {"Disinfectant", consumable},
+        {"Sutures", consumable}
+    };
+
     /**
      * @brief Hospital Machinery Types
      */
@@ -364,11 +399,13 @@ namespace resource {
 
     inline constexpr bool isMachinery (const ResourceType & t) { return std::holds_alternative<MachineryType>(t); }
     inline constexpr bool isConsumable(const ResourceType & t) { return std::holds_alternative<ConsumableType>(t); }
+
+
     inline constexpr std::string_view unknown = "Unknown";
 
     inline std::string machineryToString(MachineryType m) {
         switch (m) {
-            case MachineryType::Unknown:             return "Unknown";
+            case MachineryType::Unknown:             return std::string{unknown};
             case MachineryType::XRay:                return "XRay";
             case MachineryType::Ultrasound:          return "Ultrasound";
             case MachineryType::MRI:                 return "MRI";
@@ -388,7 +425,7 @@ namespace resource {
 
     inline std::string consumableToString(ConsumableType c) {
         switch (c) {
-            case ConsumableType::Unknown:            return "Unknown";
+            case ConsumableType::Unknown:            return std::string{unknown};
             case ConsumableType::PPE:                return "PPE";
             case ConsumableType::Medication:         return "Medication";
             case ConsumableType::Syringes:           return "Syringes";
@@ -406,13 +443,16 @@ namespace resource {
     }
 
     inline std::string resourceTypeToString(const ResourceType & r) {
-        if (isMachinery(r)) {
-            return machineryToString(std::get<MachineryType>(r));
-        } else if (isConsumable(r)) {
-            return consumableToString(std::get<ConsumableType>(r));
-        } else {
-             return std::string(unknown);
-        }
+        return std::visit([](auto && arg) -> std::string {
+            using T = std::decay_t<decltype(arg)>;
+
+            if constexpr (std::is_same_v<T, MachineryType>)
+                return machineryToString(arg);
+            else if constexpr (std::is_same_v<T, ConsumableType>)
+                return consumableToString(arg);
+            else
+                return "Unknown";
+        }, r);
     }
 
     inline MachineryType stringToMachinery(std::string_view s) {
@@ -447,20 +487,21 @@ namespace resource {
         else if (s == "Saline")                      return ConsumableType::Saline;
         else if (s == "Disinfectant")                return ConsumableType::Disinfectant;
         else if (s == "Sutures")                     return ConsumableType::Sutures;
-        else                                         return ConsumableType::PPE;
+        else                                         return ConsumableType::Unknown;
     }
 
     inline ResourceType stringToResourceType(std::string_view s) {
         MachineryType m = stringToMachinery(s);
-        if (m != MachineryType::Unknown) {
+        if (m != MachineryType::Unknown)
             return m;
-        }
-        
+
         ConsumableType c = stringToConsumable(s);
-        if (c != ConsumableType::Unknown) {
+        if (c != ConsumableType::Unknown)
             return c;
-        }
-        
+
+        if (s == unknown)
+            return MachineryType::Unknown;
+
         return std::monostate{};
     }
     

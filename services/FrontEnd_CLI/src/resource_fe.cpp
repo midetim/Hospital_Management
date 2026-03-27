@@ -15,6 +15,7 @@ namespace resource_front_end {
         return time_util::Date(year, month, day, hour, minute);
     }
 
+
     void registerResource(const ResourceManagementClient & client) {
         std::cout << Utils::timestamp()
                   << ansi::bold << ansi::bcyan
@@ -25,7 +26,6 @@ namespace resource_front_end {
         uint64_t resource_id = 0;
         std::string resource_type;
         uint32_t stock_amount = 0;
-        std::string service_name;
 
         /* ---------------- Resource ID ---------------- */
         input = cli::getLine(std::string(ansi::byellow) + "Resource ID (0 for auto-assignment): " + ansi::reset);
@@ -42,14 +42,70 @@ namespace resource_front_end {
         }
 
         /* ---------------- Resource Type ---------------- */
-        resource_type = cli::getLine(std::string(ansi::byellow) + "Resource Type (e.g., Machinery, Consumable): " + ansi::reset);
-        if (resource_type.empty()) {
+        std::cout << Utils::timestamp()
+                  << ansi::bblue
+                  << "Select Resource Type:"
+                  << ansi::reset << "\n";
+
+        const std::vector<std::string> types = {
+            "XRay",
+            "Ultrasound",
+            "MRI",
+            "CTScanner",
+            "Ventilator",
+            "ECGMachine",
+            "Defibrillator",
+            "AnesthesiaMachine",
+            "DialysisMachine",
+            "InfusionPump",
+            "SurgicalRobot",
+            "PatientMonitor",
+            "OxygenGenerator",
+            "PPE",
+            "Medication",
+            "Syringes",
+            "IVFluids",
+            "Bandages",
+            "Gloves",
+            "Masks",
+            "TestKits",
+            "BloodBags",
+            "Saline",
+            "Disinfectant",
+            "Sutures"
+        };
+
+        for (size_t i = 0; i < types.size(); ++i) {
+            std::cout << ansi::byellow
+                      << (i + 1)
+                      << ") "
+                      << ansi::reset
+                      << types[i]
+                      << "\n";
+        }
+
+        input = cli::getLine(std::string(ansi::byellow) + "Selection: " + ansi::reset);
+
+        size_t choice = 0;
+        try {
+            choice = std::stoul(input);
+        } catch (...) {
             std::cout << Utils::timestamp()
                       << ansi::bold << ansi::bred
-                      << "Resource type cannot be empty."
+                      << "Invalid selection."
                       << ansi::reset << "\n";
             return;
         }
+
+        if (choice == 0 || choice > types.size()) {
+            std::cout << Utils::timestamp()
+                      << ansi::bold << ansi::bred
+                      << "Selection out of range."
+                      << ansi::reset << "\n";
+            return;
+        }
+
+        resource_type = types[choice - 1];
 
         /* ---------------- Stock Amount ---------------- */
         input = cli::getLine(std::string(ansi::byellow) + "Stock Amount (0 if N/A): " + ansi::reset);
@@ -64,7 +120,7 @@ namespace resource_front_end {
                 return;
             }
         }
-        
+
         /* ---------------- Send Request ---------------- */
         std::cout << "\n" << Utils::timestamp()
                   << ansi::bblue
@@ -220,24 +276,24 @@ namespace resource_front_end {
         time_util::Date start_date = parseDate(start_str);
 
         // Shift end date or duration
-        std::string end_or_dur = cli::getLine(std::string(ansi::byellow) + "Shift End Date (or leave empty to specify duration in seconds): " + ansi::reset);
+        std::string end_or_dur = cli::getLine(std::string(ansi::byellow) + "Shift End Date (or leave empty to specify duration in hours): " + ansi::reset);
         time_util::Timestamp end_ts = end_or_dur.empty() ? time_util::times::zero : time_util::date_to_timestamp(parseDate(end_or_dur));
 
-        uint64_t duration = 0;
+        float duration = 0;
         if (end_ts == time_util::times::zero) {
             input = cli::getLine(std::string(ansi::byellow) + "Shift Duration (seconds): " + ansi::reset);
-            try { duration = std::stoull(input); }
+            try { duration = std::stof(input); }
             catch (...) { std::cout << "Invalid duration.\n"; return; }
         }
 
         // Build shift
-        time_util::Shift shift(time_util::date_to_timestamp(start_date), end_ts != time_util::times::zero ? end_ts : duration, room_id);
+        time_util::Shift shift(time_util::date_to_timestamp(start_date), end_ts != time_util::times::zero ? end_ts : static_cast<uint64_t>(duration *= 60), room_id);
 
         // Send request
         bool success = client.addToSchedule(resource_id, shift, service::front);
         std::cout << Utils::timestamp()
-                  << (success ? std::string(ansi::bold) + std::string(ansi::bgreen) + "✓ Shift added successfully."
-                              : std::string(ansi::bold) + std::string(ansi::bred) + "✗ Failed to add shift.")
+                  << (success ? std::string(ansi::bold) + std::string(ansi::bgreen) + "Shift added successfully."
+                              : std::string(ansi::bold) + std::string(ansi::bred) + "Failed to add shift.")
                   << ansi::reset << "\n";
     }
 
@@ -255,12 +311,10 @@ namespace resource_front_end {
         std::string date_str = cli::getLine(std::string(ansi::byellow) + "Shift Start Date (YYYY-MM-DD HH:MM): " + ansi::reset);
         time_util::Date shift_start = parseDate(date_str);
 
-        std::string service_name = cli::getLine(std::string(ansi::byellow) + "Service Name: " + ansi::reset);
-
-        bool success = client.removeFromSchedule(resource_id, shift_start, service_name);
+        bool success = client.removeFromSchedule(resource_id, shift_start, service::front);
         std::cout << Utils::timestamp()
-                  << (success ? std::string(ansi::bold) + std::string(ansi::bgreen) + "✓ Shift removed successfully."
-                              : std::string(ansi::bold) + std::string(ansi::bred) + "✗ Failed to remove shift.")
+                  << (success ? std::string(ansi::bold) + std::string(ansi::bgreen) + "Shift removed successfully."
+                              : std::string(ansi::bold) + std::string(ansi::bred) + "Failed to remove shift.")
                   << ansi::reset << "\n";
     }
 
@@ -286,15 +340,17 @@ namespace resource_front_end {
         std::string new_shift_str = cli::getLine(std::string(ansi::byellow) + "New Shift Start Date (YYYY-MM-DD HH:MM): " + ansi::reset);
         time_util::Date new_shift = parseDate(new_shift_str);
 
-        input = cli::getLine(std::string(ansi::byellow) + "New Shift Duration (seconds): " + ansi::reset);
-        uint64_t new_duration = 0;
-        try { new_duration = std::stoull(input); }
+        input = cli::getLine(std::string(ansi::byellow) + "New Shift Duration (hours): " + ansi::reset);
+        float new_duration = 0;
+        try { new_duration = std::stof(input); }
         catch (...) { std::cout << "Invalid duration.\n"; return; }
 
+        uint64_t duration = static_cast<uint64_t>(new_duration *= 60);
+        
         bool success = client.changeSchedule(resource_id, new_room_id, old_shift, new_duration, new_shift, service::front);
         std::cout << Utils::timestamp()
-                  << (success ? std::string(ansi::bold) + std::string(ansi::bgreen) + "✓ Schedule changed successfully."
-                              : std::string(ansi::bold) + std::string(ansi::bred) + "✗ Failed to change schedule.")
+                  << (success ? std::string(ansi::bold) + std::string(ansi::bgreen) + "Schedule changed successfully."
+                              : std::string(ansi::bold) + std::string(ansi::bred) + "Failed to change schedule.")
                   << ansi::reset << "\n";
     }
 
@@ -417,12 +473,12 @@ namespace resource_front_end {
 
         std::string start_input, end_input;
         std::cout << ansi::byellow
-                  << "Start Date (YYYY-MM-DD or YYYY-MM-DD HH:MM): "
+                  << "Start Date (YYYY-MM-DD HH:MM): "
                   << ansi::reset;
         std::getline(std::cin, start_input);
 
         std::cout << ansi::byellow
-                  << "End Date   (YYYY-MM-DD or YYYY-MM-DD HH:MM): "
+                  << "End Date   (YYYY-MM-DD HH:MM): "
                   << ansi::reset;
         std::getline(std::cin, end_input);
 
@@ -466,6 +522,18 @@ namespace resource_front_end {
                   << "=== Resource Stock Management ==="
                   << ansi::reset << "\n\n";
 
+        std::cout << ansi::bmagenta
+                  << "Action:\n"
+                  << ansi::reset
+                  << "  1. Add Stock\n"
+                  << "  2. Remove Stock\n"
+                  << "  3. Use Stock\n"
+                  << "  4. Empty Stock\n\n";
+
+        std::string action;
+        std::cout << ansi::byellow << "Selection: " << ansi::reset;
+        std::getline(std::cin, action);
+
         std::string resource_id_input;
         std::cout << ansi::byellow << "Resource ID: " << ansi::reset;
         std::getline(std::cin, resource_id_input);
@@ -485,18 +553,7 @@ namespace resource_front_end {
         std::cout << ansi::byellow << "Resource Type: " << ansi::reset;
         std::getline(std::cin, resource_type);
 
-        std::cout << ansi::bmagenta
-                  << "Action:\n"
-                  << ansi::reset
-                  << "  1. Add Stock\n"
-                  << "  2. Remove Stock\n"
-                  << "  3. Use Stock\n"
-                  << "  4. Empty Stock\n\n";
-
-        std::string action;
-        std::cout << ansi::byellow << "Selection: " << ansi::reset;
-        std::getline(std::cin, action);
-
+        
         uint32_t amount = 0;
         bool need_amount = (action == "1" || action == "2" || action == "3");
         if (need_amount) {
@@ -532,8 +589,8 @@ namespace resource_front_end {
         }
 
         std::cout << Utils::timestamp()
-                  << (success ? (std::string(ansi::bold) + std::string(ansi::bgreen) + "✓ Operation successful." + std::string(ansi::reset))
-                              : (std::string(ansi::bold) + std::string(ansi::bred) + "✗ Operation failed." + std::string(ansi::reset)))
+                  << (success ? (std::string(ansi::bold) + std::string(ansi::bgreen) + "Operation successful." + std::string(ansi::reset))
+                              : (std::string(ansi::bold) + std::string(ansi::bred) + "Operation failed." + std::string(ansi::reset)))
                   << "\n";
     }
 
@@ -579,7 +636,8 @@ namespace resource_front_end {
         std::cout << "ID           : " << data.resource_id << "\n";
         std::cout << "Type         : " << data.resource_type << "\n";
         std::cout << "Room ID      : " << data.room_id << "\n";
-        if (resource::isConsumable(resource::stringToResourceType(data.resource_type))) {
+        auto it = resource::types.find(resource_type);
+        if (it != resource::types.end() && it->second == resource::consumable) {
             std::cout << "Stock Amount : " << data.resource_stock << "\n";
         }
     }

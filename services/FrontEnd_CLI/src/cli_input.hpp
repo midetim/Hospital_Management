@@ -18,7 +18,7 @@ namespace cli {
         std::string s = cli::getLine(prompt + " (y/n): ");
         return (s == "y" || s == "Y" || s == "yes" || s == "YES" || s == "Yes");
     }
-
+ 
     template<typename T>
     T parseNumber(const std::string & s) {
         if constexpr (std::is_same_v<T, uint64_t>)

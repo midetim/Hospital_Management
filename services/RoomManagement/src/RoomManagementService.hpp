@@ -52,7 +52,7 @@ private:
      * @param quarantined Determines whether to search the quarantined rooms set or not
      * @return Returns the room id of type ``type``
      */
-    uint32_t findAvailableRoom(const room::RoomType type, bool quarantined) const;
+    uint32_t findAvailableRoom(const room::RoomType type, bool quarantined);
     
     /**
      * @brief Finds the room with the largest number of available beds
@@ -60,7 +60,7 @@ private:
      * @param quarantined Determines whether to search the quarantined rooms set or not
      * @return Returns the room id of type ``Type``
      */
-    uint32_t findAvailableRoom(const std::string type, bool quarantined) const;
+    uint32_t findAvailableRoom(const std::string type, bool quarantined);
     
     uint32_t findPatient(uint64_t patient_id);
     uint32_t findResource(uint64_t resource_id);
@@ -105,7 +105,7 @@ public:
     /**
      * @brief Admits a patient to the desired room type with the most availability
      */
-    grpc::Status AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) override;
+    grpc::Status AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient_dto, RoomRequest * success) override;
     
     /**
      * @brief Attempts to discharge a patient from the hospital
@@ -117,7 +117,7 @@ public:
      * @brief Transfers a patient from one room to another
      * @note Will either put the patient into the most available room, or the room with the provided id
      */
-    grpc::Status TransferPatient(grpc::ServerContext * context, const PatientTransfer * transfer_request, Success * success) override;
+    grpc::Status TransferPatient(grpc::ServerContext * context, const PatientTransfer * transfer_request, RoomRequest * success) override;
     
     /**
      * @brief Quarantines a patient in their room. Can either quarantine the entire room, or just the one patient

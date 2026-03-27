@@ -24,6 +24,9 @@ private:
     uint32_t stock = 0;
     resource::ResourceType type;
     std::unique_ptr<Schedule> resource_schedule;
+    std::string rtype;
+    bool consumable = false;
+    bool machine = false;
     
     /* ******************************************************************** */
     /* ********************** Private Functions *************************** */
@@ -40,6 +43,10 @@ public:
      * @note All other constructors call this one
      */
     Resource();
+    
+    Resource(std::string type);
+    
+    Resource(std::string type, uint64_t id);
     
     /**
      * @brief Machinery type resource constructor
@@ -103,6 +110,16 @@ public:
     
     uint32_t getStock() const { return this->stock; }
     void setStock(uint32_t stock) { this->stock = stock; }
+    
+    const std::string & getType() const { return this->rtype; }
+    void setType(const std::string & t) { this->rtype = t; }
+    
+    bool getConsumable() const { return this->consumable; }
+    void setConsumable(bool b) { this->consumable = b; }
+    
+    bool getMachine() const { return this->machine; }
+    void setMachine(bool b) { this->machine = b; }
+
     
     /* ******************************************************************** */
     /* ************************* Schedule Access ************************** */

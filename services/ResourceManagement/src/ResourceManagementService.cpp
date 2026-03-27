@@ -27,9 +27,12 @@ Resource * ResourceManagementService::findResource(uint64_t & resource_id, std::
         return it->second.get(); // Return a raw pointer to the resource
         
     } else if (!resource_type.empty()) { // If resource type is provided
-        ResourceType r = stringToResourceType(resource_type);
+        if (resource::types.find(std::string{resource_type}) == resource::types.end()) {
+            return nullptr;
+        }
+        
         for (auto & [rid, res] : total_resources) { // Search for resource by type
-            if (res->getResourceType() == r) {
+            if (res->getType() == resource_type) {
                 resource_id = rid; // Sets the resource id to the resource's id
                 return res.get(); // Return raw ptr
             }
@@ -79,6 +82,7 @@ bool ResourceManagementService::sendResources() {
         if (new_room == resource_ptr->getRoomId())  { continue; }
         room_client->retrieveResource(resource_id, new_room, service::resource);
         resource_ptr->setRoomId(new_room);
+        parser->replace_one(* resource_ptr);
     }
     return true;
 }
@@ -90,6 +94,7 @@ bool ResourceManagementService::retrieveResources() {
         if (resource_ptr->getRoomId() == room::idle) { continue; }
         room_client->releaseResource(resource_id, resource_ptr->getRoomId(), service::resource);
         resource_ptr->setRoomId(new_room);
+        parser->replace_one(* resource_ptr);
     }
     return true;
 }
@@ -146,6 +151,7 @@ grpc::Status ResourceManagementService::update(grpc::ServerContext * context, co
     readMetadata(* context);
     {
         std::lock_guard<std::mutex> lock(mtx);
+        std::lock_guard<std::mutex> json_lock(json_mtx);
         sendResources(); // Send all resources to their respective rooms
         retrieveResources(); // Retrieve all resources that are done in a room
     }
@@ -163,9 +169,10 @@ grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * c
     
     readMetadata(* context); // Read request metadata
  
+    
     // Extract information from request
-    uint64_t resource_id = resource_dto->resource_id();
-    ResourceType resource_type = stringToResourceType(resource_dto->resource_type());
+    uint64_t resource_id = resource_dto->resource_id();\
+    std::string rtype = resource_dto->resource_type();
     uint32_t stock_amount = resource_dto->resource_stock();
     
     std::unique_ptr<Resource> new_resource; // The new resource to add to the system
@@ -174,22 +181,37 @@ grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * c
         std::lock_guard<std::mutex> lock(mtx);
         auto it = total_resources.find(resource_id);
         if (it == total_resources.end()) {
-            new_resource = std::make_unique<Resource>(resource_type, resource_id);
+            new_resource = std::make_unique<Resource>(rtype, resource_id);
         } else {
             success->set_successful(false);
             return grpc::Status(grpc::StatusCode::ABORTED, "Resource id already in use");
         }
     } else { // Otherwise make normally
-        new_resource = std::make_unique<Resource>(resource_type);
+        new_resource = std::make_unique<Resource>(rtype);
         resource_id = generate_id(); // Make a unique resource id
         new_resource->setResourceId(resource_id); // Assign the resource that id
     }
     
+    auto t_it = resource::types.find(rtype); // no type
+    if (t_it == resource::types.end()) {
+        new_resource->setType(std::string(resource::unknown));
+        success->set_successful(false);
+        return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "Attempting to use (" + rtype + ") as type");
+    }
+    
     // Check if the resource is a consumable
-    bool is_consumable = isConsumable(new_resource->getResourceType());
-    if (!(isMachinery(new_resource->getResourceType()) || is_consumable)) { // If the resource has no type
+    bool is_consumable = t_it->second == resource::consumable;
+    if (!(t_it->second == resource::machine || is_consumable)) { // If the resource has no type
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not determine resource type");
+    }
+    
+    new_resource->setType(t_it->first);
+    
+    if (is_consumable) {
+        new_resource->setConsumable(true);
+    } else {
+        new_resource->setMachine(true);
     }
     
     if (is_consumable) { // If the resource is a consumeable
@@ -203,7 +225,9 @@ grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * c
         available_resources.emplace(resource_id, new_resource.get());
         total_resources.emplace(resource_id, std::move(new_resource));
         std::lock_guard<std::mutex> json_lock(json_mtx);
+        std::cout << ansi::bcyan << "Before write" << ansi::reset << std::endl;
         parser->write_one(* total_resources[resource_id]);
+        std::cout << ansi::bcyan << "After write" << ansi::reset << std::endl;
     }
     
     success->set_successful(true);
@@ -238,7 +262,7 @@ grpc::Status ResourceManagementService::DeregisterResource(grpc::ServerContext *
         // Try to get an iterator to the stock amount map
         std::lock_guard<std::mutex> stock_lock(stock_mtx);
         auto stock_iterator = resource_stock.find(resource_id);
-        if (stock_iterator == resource_stock.end() && isConsumable(total_iterator->second->getResourceType())) { // Consumable without stock
+        if (stock_iterator == resource_stock.end() && total_iterator->second->getConsumable()) { // Consumable without stock
             success->set_successful(false);
             return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the consumable stock to deregister");
         }
@@ -247,10 +271,12 @@ grpc::Status ResourceManagementService::DeregisterResource(grpc::ServerContext *
         if (stock_iterator != resource_stock.end()) { resource_stock.erase(stock_iterator); }
     }
     
-    bool room_removal = room_client->releaseResource(resource_id, room_id, service::resource);
-    if (!room_removal) {
-        success->set_successful(false);
-        return grpc::Status(grpc::StatusCode::ABORTED, "Unknown error occured");
+    if (room_id != 0) {
+        bool room_removal = room_client->releaseResource(resource_id, room_id, service::resource);
+        if (!room_removal) {
+            success->set_successful(false);
+            return grpc::Status(grpc::StatusCode::ABORTED, "Unknown error occured");
+        }
     }
     
     available_resources.erase(available_iterator);
@@ -280,7 +306,7 @@ grpc::Status ResourceManagementService::SendForMaintenance(grpc::ServerContext *
     if (it == total_resources.end()) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the resource to send for maintenance");
-    } else if (isConsumable(it->second->getResourceType())) {
+    } else if (it->second->getConsumable()) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot send consumable resources for maintenance");
     }
@@ -585,12 +611,15 @@ grpc::Status ResourceManagementService::AddStock(grpc::ServerContext * context, 
     
     readMetadata(* context); // Read request metadata
     
+    // Extract relevant information
     uint64_t stock_id = stock->resource_id();
-    ResourceType stock_type = stringToResourceType(stock->resource_type());
+    std::string stype = stock->resource_type();
     uint32_t stock_amount = stock->stock_amount();
     
+    bool consumable = resource::types.find(stype)->second == resource::consumable;
+    
     // If the resource type is not a consumable
-    if (!isConsumable(stock_type)) {
+    if (!consumable) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot add stock for machinery resources");
     }
@@ -602,8 +631,9 @@ grpc::Status ResourceManagementService::AddStock(grpc::ServerContext * context, 
     // Get an iterator to the resource
     auto it = total_resources.find(stock_id);
     if (it == total_resources.end()) { // Stock DNE
-        total_resources.emplace(stock_id, std::make_unique<Resource>(stock_type));
-        total_resources[stock_id]->setResourceId(generate_id());
+        if (stock_id == 0) { stock_id = generate_id(); }
+        total_resources.emplace(stock_id, std::make_unique<Resource>(stype));
+        total_resources[stock_id]->setResourceId(stock_id);
         res = total_resources[stock_id].get();
     } else {
         res = it->second.get();
@@ -635,11 +665,13 @@ grpc::Status ResourceManagementService::RemoveStock(grpc::ServerContext * contex
     
     // Extract relevant information
     uint64_t stock_id = stock->resource_id();
-    ResourceType stock_type = stringToResourceType(stock->resource_type());
+    std::string stype = stock->resource_type();
     uint32_t stock_amount = stock->stock_amount();
     
+    bool consumable = resource::types.find(stype)->second == resource::consumable;
+    
     // If the resource type is not a consumable
-    if (!isConsumable(stock_type)) {
+    if (!consumable) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot remove stock for machinery resources");
     }
@@ -691,11 +723,13 @@ grpc::Status ResourceManagementService::UseStock(grpc::ServerContext * context, 
     
     // Extract relevant information
     uint64_t stock_id = stock->resource_id();
-    ResourceType stock_type = stringToResourceType(stock->resource_type());
+    std::string stype = stock->resource_type();
     uint32_t stock_amount = stock->stock_amount();
     
+    bool consumable = resource::types.find(stype)->second == resource::consumable;
+    
     // If the resource type is not a consumable
-    if (!isConsumable(stock_type)) {
+    if (!consumable) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot remove stock for machinery resources");
     }
@@ -747,10 +781,12 @@ grpc::Status ResourceManagementService::EmptyStock(grpc::ServerContext * context
     
     // Extract relevant information
     uint64_t stock_id = stock->resource_id();
-    ResourceType stock_type = stringToResourceType(stock->resource_type());
+    std::string stype = stock->resource_type();
+    
+    bool consumable = resource::types.find(stype)->second == resource::consumable;
     
     // If the resource type is not a consumable
-    if (!isConsumable(stock_type)) {
+    if (!consumable) {
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::UNAVAILABLE, "Cannot remove stock for machinery resources");
     }
@@ -815,14 +851,14 @@ grpc::Status ResourceManagementService::GetResourceInformation(grpc::ServerConte
     }
     
     // Get the resources type
-    resource_type = resourceTypeToString(resource_ptr->getResourceType());
+    resource_type = resource_ptr->getType();
     
     // Fill out the response
     resource_response->set_resource_id(resource_ptr->getResourceId());
     resource_response->set_room_id(resource_ptr->getRoomId());
     resource_response->set_resource_type(resource_type);
     
-    if (isConsumable(resource_ptr->getResourceType())) {
+    if (resource_ptr->getConsumable()) {
         auto it = resource_stock.find(resource_id);
         if (it == resource_stock.end()) {
             return grpc::Status(grpc::StatusCode::ABORTED, "Something went wrong when trying to get stock amounts");
@@ -858,7 +894,7 @@ grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext *
             // Add resource information
             new_resource->set_room_id(room_id);
             new_resource->set_resource_id(resource_id);
-            new_resource->set_resource_type(resourceTypeToString(resource_ptr->getResourceType()));
+            new_resource->set_resource_type(resource_ptr->getType());
         }
     } else if (room_id == room::maintenance) {
         for (const auto & [resource_id, resource_ptr] : total_resources) {
@@ -871,7 +907,7 @@ grpc::Status ResourceManagementService::GetResourcesInRoom(grpc::ServerContext *
             // Add resource information
             new_resource->set_room_id(room_id);
             new_resource->set_resource_id(resource_id);
-            new_resource->set_resource_type(resourceTypeToString(resource_ptr->getResourceType()));
+            new_resource->set_resource_type(resource_ptr->getType());
         }
     } else {
         return grpc::Status(grpc::StatusCode::UNKNOWN, "An unknown error occurred");
@@ -905,7 +941,7 @@ ReturnCode ResourceManagementService::loadFromDB() {
             available_resources.emplace(id, res_ptr);
         }
         
-        if (resource::isConsumable(res_ptr->getResourceType())) {
+        if (res_ptr->getConsumable()) {
             std::lock_guard<std::mutex> stock_lock(stock_mtx);
             resource_stock.emplace(id, res_ptr->getStock());
         }

@@ -1,57 +1,37 @@
 [
     {
-        "id": 116291408497013,
+        "id": 116298089632987,
         "room": 0,
         "schedule": [],
-        "stock": 10000,
-        "type": "Unknown"
+        "stock": 1345678,
+        "type": "TestKits"
     },
     {
-        "id": 116291404383854,
-        "room": 105,
-        "schedule": [
-            {
-                "shift-duration": 1200,
-                "shift-end": 29952120,
-                "shift-room": 104,
-                "shift-start": 29950920
-            }
-        ],
+        "id": 116298022789990,
+        "room": 0,
+        "schedule": [],
         "stock": 0,
-        "type": "Unknown"
+        "type": "ECGMachine"
     },
     {
-        "id": 116291424451566,
+        "id": 116298931995195,
         "room": 0,
         "schedule": [],
-        "stock": 1290,
-        "type": "Unknown"
+        "stock": 1000,
+        "type": "Sutures"
     },
     {
-        "id": 1,
+        "id": 116298965400126,
         "room": 0,
         "schedule": [
             {
-                "shift-duration": 60000,
-                "shift-end": 1774496880,
-                "shift-room": 101,
-                "shift-start": 1774436880
-            },
-            {
-                "shift-duration": 1005,
-                "shift-end": 1775497875,
-                "shift-room": 102,
-                "shift-start": 1775496870
+                "shift-duration": 1440,
+                "shift-end": 29577810,
+                "shift-room": 1,
+                "shift-start": 29576370
             }
         ],
         "stock": 0,
-        "type": "Unknown"
-    },
-    {
-        "id": 2,
-        "room": 0,
-        "schedule": [],
-        "stock": 0,
-        "type": "Unknown"
+        "type": "CTScanner"
     }
 ]
