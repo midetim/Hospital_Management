@@ -8,10 +8,25 @@ using namespace room;
 /* ********************** Private Functions *************************** */
 /* ******************************************************************** */
 
-uint32_t RoomManagementService::findAvailableRoom(const RoomType type, bool quarantined) const {
+uint32_t RoomManagementService::findAvailableRoom(const RoomType type, bool quarantined) {
     uint32_t best_room_id = 0;
     uint32_t max_available = 0;
-    const std::unordered_map<uint32_t, Room *> & room_map = quarantined ? quarantined_rooms : hospital_rooms;
+    std::unordered_map<uint32_t, Room *> & room_map = quarantined ? quarantined_rooms : hospital_rooms;
+    
+    if (room_map.empty()) {
+        uint32_t new_room_id = findAvailableRoom(type, !quarantined);
+        if (total_rooms.find(new_room_id)->second->getCurrentCapacity() == 0) {
+            std::unordered_map<uint32_t, Room *> & other_map = !quarantined ? quarantined_rooms : hospital_rooms;
+            if (other_map.erase(new_room_id) >= 1) {
+                room_map.emplace(new_room_id, total_rooms.find(new_room_id)->second.get());
+                if (quarantined) { total_rooms.find(new_room_id)->second->quarantineRoom(); }
+                else { total_rooms.find(new_room_id)->second->liftQuarantine(); }
+            } else { return room::none; }
+            return new_room_id;
+        } else {
+            return room::none;
+        }
+    }
     
     for (const auto& [room_id, room] : room_map) {
         if (room->getRoomType() != type) { // If types dont match
@@ -32,7 +47,7 @@ uint32_t RoomManagementService::findAvailableRoom(const RoomType type, bool quar
     return max_available > 0 ? best_room_id : room::none;
 }
 
-uint32_t RoomManagementService::findAvailableRoom(const std::string type, bool quarantined) const {
+uint32_t RoomManagementService::findAvailableRoom(const std::string type, bool quarantined) {
     return findAvailableRoom(stringToRoomType(type), quarantined);
 }
 
@@ -127,7 +142,7 @@ grpc::Status RoomManagementService::update(grpc::ServerContext * context, const 
 /* ********************** PatientManagement gRPC ********************** */
 /* ******************************************************************** */
 
-grpc::Status RoomManagementService::AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient_dto, Success * success) {
+grpc::Status RoomManagementService::AdmitPatient(grpc::ServerContext * context, const PatientDTO * patient_dto, RoomRequest * success) {
     
     readMetadata(* context); // Read request metadata
     
@@ -138,7 +153,7 @@ grpc::Status RoomManagementService::AdmitPatient(grpc::ServerContext * context, 
     
     
     if (findPatient(patient_id) != 0) {
-        success->set_successful(false);
+        success->set_room_id(room::none);
         return grpc::Status(grpc::StatusCode::ABORTED, "Patient already exists in the system");
     }
     
@@ -151,7 +166,7 @@ grpc::Status RoomManagementService::AdmitPatient(grpc::ServerContext * context, 
     auto it = room_map.find(room_id); // Find the available room
     if (it == room_map.end()) { // Check that the room exists
         // Admission failure
-        success->set_successful(false);
+        success->set_room_id(room::none);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "No Available room found");
     }
     
@@ -166,7 +181,7 @@ grpc::Status RoomManagementService::AdmitPatient(grpc::ServerContext * context, 
     }
     
     // Admission success
-    success->set_successful(true);
+    success->set_room_id(room_id);
     return grpc::Status::OK;
 }
 
@@ -206,7 +221,7 @@ grpc::Status RoomManagementService::DischargePatient(grpc::ServerContext * conte
     return grpc::Status::OK;
 }
 
-grpc::Status RoomManagementService::TransferPatient(grpc::ServerContext * context, const PatientTransfer * transfer_request, Success * success) {
+grpc::Status RoomManagementService::TransferPatient(grpc::ServerContext * context, const PatientTransfer * transfer_request, RoomRequest * success) {
     
     readMetadata(* context); // Read request metadata
     
@@ -218,13 +233,13 @@ grpc::Status RoomManagementService::TransferPatient(grpc::ServerContext * contex
     bool to_quarantine = transfer_request->is_quarantined();
     
     if (old_room_id == room::none) { // Make sure a source rooms id is provided
-        success->set_successful(false);
+        success->set_room_id(room::none);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Original room id is missing");
     }
     
     old_room_id = findPatient(patient_id); // Find the room the patient is in
-    if (old_room_id == 0) { // Patient wasnt found
-        success->set_successful(false);
+    if (old_room_id == room::none) { // Patient wasnt found
+        success->set_room_id(room::none);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not find the patient");
     }
     
@@ -237,7 +252,7 @@ grpc::Status RoomManagementService::TransferPatient(grpc::ServerContext * contex
     auto new_it = total_rooms.find(new_room_id);
     
     if (old_it == total_rooms.end() || new_it == total_rooms.end()) { // If either room could not be found
-        success->set_successful(false);
+        success->set_room_id(room::none);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "One of the rooms was not found");
     }
     
@@ -258,7 +273,7 @@ grpc::Status RoomManagementService::TransferPatient(grpc::ServerContext * contex
     }
     
     // Transfer success
-    success->set_successful(true);
+    success->set_room_id(new_it->first);
     return grpc::Status::OK;
     
 }

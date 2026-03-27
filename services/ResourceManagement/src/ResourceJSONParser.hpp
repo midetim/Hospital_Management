@@ -22,6 +22,7 @@ namespace label {
     }
 }
 
+// expr printf("%s\n", j.dump(4, ' ', true, nlohmann::detail::error_handler_t::strict).c_str())
 
 class ResourceJSONParser : public JSONParser<Resource> {
 private:
@@ -42,10 +43,7 @@ private:
     }
     
     inline void from_json(const json & j, Resource & r) {
-        auto type_str = j.at(label::type).get<std::string>();
-
-        std::cout << "TYPE RAW: '" << type_str << "'" << std::endl;
-
+        r.setResourceId(j.at(label::id).get<uint64_t>());
         r.setType(j.at(label::type).get<std::string>());
         
         auto it = resource::types.find(r.getType());
@@ -99,9 +97,6 @@ private:
             j[label::sched] = schedule;
             
         }
-        
-        std::cout << "TYPE STRING: " << j.at(label::type).get<std::string>() << std::endl;
-        
     }
     
 public:

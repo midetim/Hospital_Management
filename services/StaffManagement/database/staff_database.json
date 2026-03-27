@@ -1,55 +1,5 @@
 [
     {
-        "clearance": "Admin",
-        "id": 1,
-        "name-first": "Kelsey",
-        "name-last": "Mcknight",
-        "name-middle": "Rose",
-        "position": "AdministrativeStaff",
-        "room": 0,
-        "salary": 2000000.0,
-        "schedule": [
-            {
-                "shift-duration": 28845,
-                "shift-end": 29640870,
-                "shift-room": 0,
-                "shift-start": 29612025
-            },
-            {
-                "shift-duration": 10005,
-                "shift-end": 1774247055,
-                "shift-room": 102,
-                "shift-start": 1774237050
-            },
-            {
-                "shift-duration": 99990,
-                "shift-end": 1774357050,
-                "shift-room": 102,
-                "shift-start": 1774257060
-            }
-        ],
-        "sex": "Female"
-    },
-    {
-        "clearance": "Medium",
-        "id": 116297201368423,
-        "name-first": "Matthew",
-        "name-last": "Hvizdos",
-        "name-middle": "Elliott",
-        "position": "LabTechnician",
-        "room": 0,
-        "salary": 100000.0,
-        "schedule": [
-            {
-                "shift-duration": 48960,
-                "shift-end": 29625420,
-                "shift-room": 0,
-                "shift-start": 29576460
-            }
-        ],
-        "sex": "Male"
-    },
-    {
         "clearance": "Low",
         "id": 116297296353630,
         "name-first": "Rohan",
@@ -60,5 +10,48 @@
         "salary": 10000.0,
         "schedule": [],
         "sex": "Male"
+    },
+    {
+        "clearance": "Medium",
+        "id": 116297201368423,
+        "name-first": "Matthew",
+        "name-last": "Hvizdos",
+        "name-middle": "Elliott",
+        "position": "LabTechnician",
+        "room": 0,
+        "salary": 100000.0,
+        "schedule": [],
+        "sex": "Male"
+    },
+    {
+        "clearance": "Admin",
+        "id": 1,
+        "name-first": "Kelsey",
+        "name-last": "Mcknight",
+        "name-middle": "Rose",
+        "position": "AdministrativeStaff",
+        "room": 0,
+        "salary": 2000000.0,
+        "schedule": [],
+        "sex": "Female"
+    },
+    {
+        "clearance": "Low",
+        "id": 116298815159342,
+        "name-first": "Jesse",
+        "name-last": "Roberts",
+        "name-middle": "Whitney",
+        "position": "Paramedic",
+        "room": 0,
+        "salary": 235789.0,
+        "schedule": [
+            {
+                "shift-duration": 480,
+                "shift-end": 29576820,
+                "shift-room": 102,
+                "shift-start": 29576340
+            }
+        ],
+        "sex": "Female"
     }
 ]

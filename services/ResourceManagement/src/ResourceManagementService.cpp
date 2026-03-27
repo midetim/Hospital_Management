@@ -201,7 +201,7 @@ grpc::Status ResourceManagementService::RegisterResource(grpc::ServerContext * c
     
     // Check if the resource is a consumable
     bool is_consumable = t_it->second == resource::consumable;
-    if (!(t_it->second == resource::machine) || is_consumable) { // If the resource has no type
+    if (!(t_it->second == resource::machine || is_consumable)) { // If the resource has no type
         success->set_successful(false);
         return grpc::Status(grpc::StatusCode::NOT_FOUND, "Could not determine resource type");
     }
@@ -631,8 +631,9 @@ grpc::Status ResourceManagementService::AddStock(grpc::ServerContext * context, 
     // Get an iterator to the resource
     auto it = total_resources.find(stock_id);
     if (it == total_resources.end()) { // Stock DNE
+        if (stock_id == 0) { stock_id = generate_id(); }
         total_resources.emplace(stock_id, std::make_unique<Resource>(stype));
-        total_resources[stock_id]->setResourceId(generate_id());
+        total_resources[stock_id]->setResourceId(stock_id);
         res = total_resources[stock_id].get();
     } else {
         res = it->second.get();
