@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  patientmanagement:
+    build: .
+    container_name: patientmanagement
+    command: /app/build/services/PatientManagement/PatientManagement
+
+  resourcemanagement:
+    build: .
+    container_name: resourcemanagement
+    command: /app/build/services/ResourceManagement/ResourceManagement
+
+  roommanagement:
+    build: .
+    container_name: roommanagement
+    command: /app/build/services/RoomManagement/RoomManagement
+
+  staffmanagement:
+    build: .
+    container_name: staffmanagement
+    command: /app/build/services/StaffManagement/StaffManagement
+
+  scheduler:
+    build: .
+    container_name: scheduler
+    command: /app/build/services/Scheduler/Scheduler
+
+  frontend_gui:
+    build: .
+    container_name: frontend_gui
+    working_dir: /app/services/FrontEnd_GUI
+    command: python3 api_translator.py
+    ports:
+      - "8920:8920"

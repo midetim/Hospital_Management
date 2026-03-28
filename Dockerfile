@@ -37,6 +37,9 @@ WORKDIR /app
 
 COPY . /app
 
+# install GUI dependencies
+RUN pip3 install -r /app/services/FrontEnd_GUI/requirements.txt
+
 # Fix hardcoded gRPC tool paths expected by the project
 RUN mkdir -p /app/external/grpc/local/bin && \
     ln -sf /usr/local/bin/grpc_python_plugin /app/external/grpc/local/bin/grpc_python_plugin && \

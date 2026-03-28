@@ -23,12 +23,12 @@ namespace fs = std::filesystem;
 /* DEBUG / LOCAL TESTING COMPILER MACROS*/
 namespace service {
     // HOST NAMES --> Host names will be changed for containerization
-    inline constexpr std::string_view front_host        = "127.0.0.1:8920"; // -> front:8920
-    inline constexpr std::string_view room_host         = "127.0.0.1:8921"; // -> room:8921
-    inline constexpr std::string_view patient_host      = "127.0.0.1:8922"; // -> patient:8922
-    inline constexpr std::string_view resource_host     = "127.0.0.1:8923"; // -> resource:8923
-    inline constexpr std::string_view staff_host        = "127.0.0.1:8924"; // -> staff:8924
-    inline constexpr std::string_view scheduler_host    = "127.0.0.1:8925"; // -> scheduler:8925
+    inline constexpr std::string_view front_host        = "frontend_gui:8920";
+    inline constexpr std::string_view room_host         = "roommanagement:8921";
+    inline constexpr std::string_view patient_host      = "patientmanagement:8922";
+    inline constexpr std::string_view resource_host     = "resourcemanagement:8923";
+    inline constexpr std::string_view staff_host        = "staffmanagement:8924";
+    inline constexpr std::string_view scheduler_host    = "scheduler:8925";
 
     // PORT NAMES
     inline constexpr uint32_t front_port        = 8920;

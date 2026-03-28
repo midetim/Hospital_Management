@@ -10,6 +10,6 @@ int main() {
     StaffManagement::Service & staff_base = staff_service;
     Common::Service & common_base = staff_service;
     
-    ServiceRunner::Run(service::staff_host, service::staff, staff_base, common_base);
+    ServiceRunner::Run("0.0.0.0:8924", service::staff, staff_base, common_base);
     return (int) core::ReturnCode::SUCCESS;
 }
