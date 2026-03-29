@@ -1,20 +1,12 @@
 [
     {
-        "assigned-patients": [],
+        "assigned-patients": [
+            116298551999874
+        ],
         "assigned-resources": [],
         "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 101,
-        "maximum-capacity": 10,
-        "room-quarantined": false,
-        "type": "General"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 301,
+        "current-capacity": 1,
+        "id": 705,
         "maximum-capacity": 2,
         "room-quarantined": false,
         "type": "General"
@@ -24,157 +16,47 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 201,
-        "maximum-capacity": 3,
+        "id": 704,
+        "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "Operating"
+        "type": "IntesiveCare"
     },
     {
         "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 102,
-        "maximum-capacity": 10,
+        "id": 703,
+        "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "General"
+        "type": "IntesiveCare"
     },
     {
         "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 401,
-        "maximum-capacity": 4,
+        "id": 702,
+        "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "Emergency"
+        "type": "IntesiveCare"
     },
     {
         "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 402,
-        "maximum-capacity": 4,
+        "id": 701,
+        "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "Emergency"
+        "type": "IntesiveCare"
     },
     {
         "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 103,
-        "maximum-capacity": 10,
-        "room-quarantined": false,
-        "type": "General"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 501,
-        "maximum-capacity": 6,
-        "room-quarantined": false,
-        "type": "Administrative"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 202,
-        "maximum-capacity": 3,
-        "room-quarantined": false,
-        "type": "Operating"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 403,
-        "maximum-capacity": 4,
-        "room-quarantined": false,
-        "type": "Emergency"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 1,
-        "id": 104,
-        "maximum-capacity": 10,
-        "room-quarantined": false,
-        "type": "General"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 1,
-        "id": 203,
-        "maximum-capacity": 3,
-        "room-quarantined": false,
-        "type": "Operating"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 502,
-        "maximum-capacity": 6,
-        "room-quarantined": false,
-        "type": "Administrative"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 1,
-        "id": 105,
-        "maximum-capacity": 10,
-        "room-quarantined": false,
-        "type": "General"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 404,
-        "maximum-capacity": 4,
-        "room-quarantined": false,
-        "type": "Emergency"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 1,
-        "id": 204,
-        "maximum-capacity": 3,
-        "room-quarantined": false,
-        "type": "Operating"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 503,
-        "maximum-capacity": 6,
-        "room-quarantined": false,
-        "type": "Administrative"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 601,
+        "id": 605,
         "maximum-capacity": 8,
         "room-quarantined": false,
         "type": "Staff"
@@ -184,7 +66,39 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 302,
+        "id": 504,
+        "maximum-capacity": 6,
+        "room-quarantined": false,
+        "type": "Administrative"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 405,
+        "maximum-capacity": 4,
+        "room-quarantined": false,
+        "type": "Emergency"
+    },
+    {
+        "assigned-patients": [
+            116298526768358
+        ],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 2,
+        "id": 106,
+        "maximum-capacity": 10,
+        "room-quarantined": false,
+        "type": "General"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 304,
         "maximum-capacity": 2,
         "room-quarantined": false,
         "type": "General"
@@ -194,17 +108,17 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 303,
-        "maximum-capacity": 2,
+        "id": 603,
+        "maximum-capacity": 8,
         "room-quarantined": false,
-        "type": "General"
+        "type": "Staff"
     },
     {
         "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 602,
+        "id": 604,
         "maximum-capacity": 8,
         "room-quarantined": false,
         "type": "Staff"
@@ -224,7 +138,7 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 604,
+        "id": 602,
         "maximum-capacity": 8,
         "room-quarantined": false,
         "type": "Staff"
@@ -234,29 +148,67 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 603,
-        "maximum-capacity": 8,
-        "room-quarantined": false,
-        "type": "Staff"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 304,
+        "id": 303,
         "maximum-capacity": 2,
         "room-quarantined": false,
         "type": "General"
     },
     {
-        "assigned-patients": [
-            116298526768358
-        ],
+        "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
-        "current-capacity": 2,
-        "id": 106,
+        "current-capacity": 0,
+        "id": 302,
+        "maximum-capacity": 2,
+        "room-quarantined": false,
+        "type": "General"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 601,
+        "maximum-capacity": 8,
+        "room-quarantined": false,
+        "type": "Staff"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 503,
+        "maximum-capacity": 6,
+        "room-quarantined": false,
+        "type": "Administrative"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 1,
+        "id": 204,
+        "maximum-capacity": 3,
+        "room-quarantined": false,
+        "type": "Operating"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 404,
+        "maximum-capacity": 4,
+        "room-quarantined": false,
+        "type": "Emergency"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 1,
+        "id": 105,
         "maximum-capacity": 10,
         "room-quarantined": false,
         "type": "General"
@@ -266,7 +218,37 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 405,
+        "id": 502,
+        "maximum-capacity": 6,
+        "room-quarantined": false,
+        "type": "Administrative"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 1,
+        "id": 203,
+        "maximum-capacity": 3,
+        "room-quarantined": false,
+        "type": "Operating"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 1,
+        "id": 104,
+        "maximum-capacity": 10,
+        "room-quarantined": false,
+        "type": "General"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 403,
         "maximum-capacity": 4,
         "room-quarantined": false,
         "type": "Emergency"
@@ -276,7 +258,17 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 504,
+        "id": 202,
+        "maximum-capacity": 3,
+        "room-quarantined": false,
+        "type": "Operating"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 501,
         "maximum-capacity": 6,
         "room-quarantined": false,
         "type": "Administrative"
@@ -286,61 +278,73 @@
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 605,
-        "maximum-capacity": 8,
+        "id": 103,
+        "maximum-capacity": 10,
         "room-quarantined": false,
-        "type": "Staff"
+        "type": "General"
     },
     {
         "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 701,
-        "maximum-capacity": 2,
+        "id": 402,
+        "maximum-capacity": 4,
         "room-quarantined": false,
-        "type": "IntensiveCare"
+        "type": "Emergency"
     },
     {
         "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
         "current-capacity": 0,
-        "id": 702,
-        "maximum-capacity": 2,
+        "id": 201,
+        "maximum-capacity": 3,
         "room-quarantined": false,
-        "type": "IntensiveCare"
+        "type": "Operating"
     },
     {
         "assigned-patients": [],
         "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 703,
-        "maximum-capacity": 2,
-        "room-quarantined": false,
-        "type": "IntensiveCare"
-    },
-    {
-        "assigned-patients": [],
-        "assigned-resources": [],
-        "assigned-staff": [],
-        "current-capacity": 0,
-        "id": 704,
-        "maximum-capacity": 2,
-        "room-quarantined": false,
-        "type": "IntensiveCare"
-    },
-    {
-        "assigned-patients": [
-            116298551999874
+        "assigned-staff": [
+            116298815159342
         ],
+        "current-capacity": 0,
+        "id": 102,
+        "maximum-capacity": 10,
+        "room-quarantined": false,
+        "type": "General"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [
+            116299021954123
+        ],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 401,
+        "maximum-capacity": 4,
+        "room-quarantined": false,
+        "type": "Emergency"
+    },
+    {
+        "assigned-patients": [],
         "assigned-resources": [],
         "assigned-staff": [],
-        "current-capacity": 1,
-        "id": 705,
+        "current-capacity": 0,
+        "id": 301,
         "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "IntesiveCare"
+        "type": "General"
+    },
+    {
+        "assigned-patients": [],
+        "assigned-resources": [],
+        "assigned-staff": [],
+        "current-capacity": 0,
+        "id": 101,
+        "maximum-capacity": 10,
+        "room-quarantined": false,
+        "type": "General"
     }
 ]

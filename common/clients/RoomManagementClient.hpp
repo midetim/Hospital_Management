@@ -45,11 +45,11 @@ public:
     /* ********************** PatientManagement gRPC ********************** */
     /* ******************************************************************** */
     
-    bool admitPatient(uint64_t patient_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const;
+    bool admitPatient(uint64_t patient_id, uint32_t & room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const;
     
     bool dischargePatient(uint64_t patient_id, std::string_view service_name) const;
     
-    bool transferPatient(uint64_t patient_id, uint32_t new_room_id, uint32_t old_room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const;
+    bool transferPatient(uint64_t patient_id, uint32_t & new_room_id, uint32_t old_room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const;
     
     bool quarantinePatient(uint64_t patient_id, bool full_quarantine, std::string_view service_name) const;
     

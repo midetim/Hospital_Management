@@ -1,14 +1,5 @@
 [
     {
-        "condition": "Fair",
-        "id": 116298551999874,
-        "name-first": "Meredith",
-        "name-last": "Doyle",
-        "name-middle": "Levy",
-        "room": 705,
-        "sex": "Female"
-    },
-    {
         "condition": "Good",
         "id": 116298526768358,
         "name-first": "Matthew",
@@ -16,5 +7,14 @@
         "name-middle": "Elliott",
         "room": 106,
         "sex": "Male"
+    },
+    {
+        "condition": "Fair",
+        "id": 116298551999874,
+        "name-first": "Meredith",
+        "name-last": "Doyle",
+        "name-middle": "Levy",
+        "room": 705,
+        "sex": "Female"
     }
 ]

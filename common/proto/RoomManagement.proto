@@ -9,9 +9,9 @@ service RoomManagement {
     /* These calls will not be accessible to the front end */
     
     // Patient Management Requests
-    rpc AdmitPatient(PatientDTO)                    returns (Success);
+    rpc AdmitPatient(PatientDTO)                    returns (RoomRequest);
     rpc DischargePatient(PatientDTO)                returns (Success);
-    rpc TransferPatient(PatientTransfer)            returns (Success);
+    rpc TransferPatient(PatientTransfer)            returns (RoomRequest);
     rpc QuarantinePatient(PatientQuarantine)        returns (Success);
     rpc LiftPatientQuarantine(PatientQuarantine)    returns (Success);
     

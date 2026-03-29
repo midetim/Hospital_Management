@@ -205,16 +205,16 @@ namespace time_util {
      */
     inline Date timestamp_to_date(const Timestamp & ts) {
         std::time_t tt = ts.time * 60;
-        
-        std::tm local_tm{};
-        localtime_r(&tt, &local_tm);  // thread-safe
-        
+
+        std::tm utc_tm{};
+        gmtime_r(&tt, &utc_tm);  // UTC conversion
+
         Date d;
-        d.year   = local_tm.tm_year + 1900;
-        d.month  = local_tm.tm_mon + 1;
-        d.day    = local_tm.tm_mday;
-        d.hour   = local_tm.tm_hour;
-        d.minute = local_tm.tm_min;
+        d.year   = utc_tm.tm_year + 1900;
+        d.month  = utc_tm.tm_mon + 1;
+        d.day    = utc_tm.tm_mday;
+        d.hour   = utc_tm.tm_hour;
+        d.minute = utc_tm.tm_min;
         return d;
     }
 
@@ -230,9 +230,10 @@ namespace time_util {
         t.tm_hour = d.hour;
         t.tm_min  = d.minute;
         t.tm_sec  = 0;
-        
-        std::time_t tt = std::mktime(&t);
-        return Timestamp{ static_cast<uint64_t>(tt / 60) }; // Minutes since epoch
+
+        std::time_t tt = timegm(&t); // interpret as UTC
+
+        return Timestamp{ static_cast<uint64_t>(tt / 60) };
     }
 
     /* ******************************************************************** */

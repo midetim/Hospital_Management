@@ -30,7 +30,7 @@ namespace time_util {
 
     void Date::to_start_of_day(Date & d) {
         d.hour = 0;
-        d.minute = 0;
+        d.minute = 0; 
     }
 
     void Date::print() {
@@ -103,9 +103,43 @@ namespace time_util {
     }
 
     void Timestamp::to_next_interval(Timestamp & ts) {
-        uint64_t amt = ts.time % 15;
-        if (amt == 0) { return; }
-        ts.time += (15 - amt);
+        Date d = timestamp_to_date(ts);
+
+        // Round minutes up to next 15-minute interval
+        int rem = d.minute % 15;
+        if (rem != 0) {
+            d.minute += (15 - rem);
+        }
+
+        // Handle minute overflow
+        if (d.minute >= 60) {
+            d.minute -= 60;
+            d.hour += 1;
+        }
+
+        // Handle hour overflow
+        if (d.hour >= 24) {
+            d.hour -= 24;
+            d.day += 1;
+        }
+
+        // Days per month (ignoring Feb 29th)
+        static const int days_in_month[12] = {
+            31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+        };
+
+        // Handle day overflow into next month/year
+        while (d.day > days_in_month[d.month - 1]) {
+            d.day -= days_in_month[d.month - 1];
+            d.month += 1;
+            if (d.month > 12) {
+                d.month = 1;
+                d.year += 1;
+            }
+        }
+
+        // Convert back to Timestamp
+        ts = date_to_timestamp(d);
     }
 
     void Timestamp::to_prev_interval(Timestamp & ts) {
@@ -123,7 +157,7 @@ namespace time_util {
     }
 
     Timestamp & Timestamp::operator+=(const Timestamp & ts) {
-        return (* this -= ts.time);
+        return (* this += ts.time);
     }
 
     Timestamp Timestamp::operator+(uint64_t amt) const {
@@ -133,7 +167,7 @@ namespace time_util {
     }
 
     Timestamp Timestamp::operator+(const Timestamp & ts) const {
-        return (* this - ts.time);
+        return (* this + ts.time);
     }
 
     Timestamp & Timestamp::operator-=(uint64_t amt) {

@@ -1,27 +1,15 @@
 [
     {
         "clearance": "Low",
-        "id": 116297296353630,
-        "name-first": "Rohan",
-        "name-last": "Clark",
-        "name-middle": "James",
-        "position": "SecurityGuard",
+        "id": 116298815159342,
+        "name-first": "Jesse",
+        "name-last": "Roberts",
+        "name-middle": "Whitney",
+        "position": "Paramedic",
         "room": 0,
-        "salary": 10000.0,
+        "salary": 235789.0,
         "schedule": [],
-        "sex": "Male"
-    },
-    {
-        "clearance": "Medium",
-        "id": 116297201368423,
-        "name-first": "Matthew",
-        "name-last": "Hvizdos",
-        "name-middle": "Elliott",
-        "position": "LabTechnician",
-        "room": 0,
-        "salary": 100000.0,
-        "schedule": [],
-        "sex": "Male"
+        "sex": "Female"
     },
     {
         "clearance": "Admin",
@@ -36,22 +24,27 @@
         "sex": "Female"
     },
     {
-        "clearance": "Low",
-        "id": 116298815159342,
-        "name-first": "Jesse",
-        "name-last": "Roberts",
-        "name-middle": "Whitney",
-        "position": "Paramedic",
+        "clearance": "Medium",
+        "id": 116297201368423,
+        "name-first": "Matthew",
+        "name-last": "Hvizdos",
+        "name-middle": "Elliott",
+        "position": "LabTechnician",
         "room": 0,
-        "salary": 235789.0,
-        "schedule": [
-            {
-                "shift-duration": 480,
-                "shift-end": 29576820,
-                "shift-room": 102,
-                "shift-start": 29576340
-            }
-        ],
-        "sex": "Female"
+        "salary": 100000.0,
+        "schedule": [],
+        "sex": "Male"
+    },
+    {
+        "clearance": "Low",
+        "id": 116297296353630,
+        "name-first": "Rohan",
+        "name-last": "Clark",
+        "name-middle": "James",
+        "position": "SecurityGuard",
+        "room": 0,
+        "salary": 10000.0,
+        "schedule": [],
+        "sex": "Male"
     }
 ]

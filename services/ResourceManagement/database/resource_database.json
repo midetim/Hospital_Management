@@ -1,17 +1,17 @@
 [
     {
-        "id": 116298089632987,
-        "room": 0,
-        "schedule": [],
-        "stock": 1345678,
-        "type": "TestKits"
-    },
-    {
-        "id": 116298022789990,
-        "room": 0,
+        "id": 116299021954123,
+        "room": 401,
         "schedule": [],
         "stock": 0,
-        "type": "ECGMachine"
+        "type": "Defibrillator"
+    },
+    {
+        "id": 116298965400126,
+        "room": 1,
+        "schedule": [],
+        "stock": 0,
+        "type": "CTScanner"
     },
     {
         "id": 116298931995195,
@@ -21,17 +21,17 @@
         "type": "Sutures"
     },
     {
-        "id": 116298965400126,
+        "id": 116298022789990,
         "room": 0,
-        "schedule": [
-            {
-                "shift-duration": 1440,
-                "shift-end": 29577810,
-                "shift-room": 1,
-                "shift-start": 29576370
-            }
-        ],
+        "schedule": [],
         "stock": 0,
-        "type": "CTScanner"
+        "type": "ECGMachine"
+    },
+    {
+        "id": 116298089632987,
+        "room": 0,
+        "schedule": [],
+        "stock": 1345678,
+        "type": "TestKits"
     }
 ]

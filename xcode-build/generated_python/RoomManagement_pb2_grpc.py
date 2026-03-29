@@ -22,7 +22,7 @@ class RoomManagementStub(object):
         self.AdmitPatient = channel.unary_unary(
                 '/RoomManagement/AdmitPatient',
                 request_serializer=PatientManagement__pb2.PatientDTO.SerializeToString,
-                response_deserializer=Common__pb2.Success.FromString,
+                response_deserializer=Common__pb2.RoomRequest.FromString,
                 _registered_method=True)
         self.DischargePatient = channel.unary_unary(
                 '/RoomManagement/DischargePatient',
@@ -32,7 +32,7 @@ class RoomManagementStub(object):
         self.TransferPatient = channel.unary_unary(
                 '/RoomManagement/TransferPatient',
                 request_serializer=PatientManagement__pb2.PatientTransfer.SerializeToString,
-                response_deserializer=Common__pb2.Success.FromString,
+                response_deserializer=Common__pb2.RoomRequest.FromString,
                 _registered_method=True)
         self.QuarantinePatient = channel.unary_unary(
                 '/RoomManagement/QuarantinePatient',
@@ -181,7 +181,7 @@ def add_RoomManagementServicer_to_server(servicer, server):
             'AdmitPatient': grpc.unary_unary_rpc_method_handler(
                     servicer.AdmitPatient,
                     request_deserializer=PatientManagement__pb2.PatientDTO.FromString,
-                    response_serializer=Common__pb2.Success.SerializeToString,
+                    response_serializer=Common__pb2.RoomRequest.SerializeToString,
             ),
             'DischargePatient': grpc.unary_unary_rpc_method_handler(
                     servicer.DischargePatient,
@@ -191,7 +191,7 @@ def add_RoomManagementServicer_to_server(servicer, server):
             'TransferPatient': grpc.unary_unary_rpc_method_handler(
                     servicer.TransferPatient,
                     request_deserializer=PatientManagement__pb2.PatientTransfer.FromString,
-                    response_serializer=Common__pb2.Success.SerializeToString,
+                    response_serializer=Common__pb2.RoomRequest.SerializeToString,
             ),
             'QuarantinePatient': grpc.unary_unary_rpc_method_handler(
                     servicer.QuarantinePatient,
@@ -271,7 +271,7 @@ class RoomManagement(object):
             target,
             '/RoomManagement/AdmitPatient',
             PatientManagement__pb2.PatientDTO.SerializeToString,
-            Common__pb2.Success.FromString,
+            Common__pb2.RoomRequest.FromString,
             options,
             channel_credentials,
             insecure,
@@ -325,7 +325,7 @@ class RoomManagement(object):
             target,
             '/RoomManagement/TransferPatient',
             PatientManagement__pb2.PatientTransfer.SerializeToString,
-            Common__pb2.Success.FromString,
+            Common__pb2.RoomRequest.FromString,
             options,
             channel_credentials,
             insecure,

@@ -129,7 +129,7 @@ bool RoomManagementClient::update(std::string_view service_name) const {
 /* ********************** PatientManagement gRPC ********************** */
 /* ******************************************************************** */
 
-bool RoomManagementClient::admitPatient(uint64_t patient_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const { // make dto , fill dto grpc response, meta
+bool RoomManagementClient::admitPatient(uint64_t patient_id, uint32_t & room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const { // make dto , fill dto grpc response, meta
     
     // Make DTO
     PatientDTO patient_dto;
@@ -141,7 +141,7 @@ bool RoomManagementClient::admitPatient(uint64_t patient_id, std::string_view ro
     
     // Set up gRPC response
     grpc::ClientContext context;
-    Success success;
+    RoomRequest success;
     addMetadata(context, service_name, target_hostport);
     
     // Send request
@@ -150,7 +150,8 @@ bool RoomManagementClient::admitPatient(uint64_t patient_id, std::string_view ro
     if (!status.ok()) {
         printStatusCode(status);
     }
-    return success.successful();
+    room_id = success.room_id();
+    return status.ok();
 }
 
 bool RoomManagementClient::dischargePatient(uint64_t patient_id, std::string_view service_name) const {
@@ -174,7 +175,7 @@ bool RoomManagementClient::dischargePatient(uint64_t patient_id, std::string_vie
     return success.successful();
 }
 
-bool RoomManagementClient::transferPatient(uint64_t patient_id, uint32_t new_room_id, uint32_t old_room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const {
+bool RoomManagementClient::transferPatient(uint64_t patient_id, uint32_t & new_room_id, uint32_t old_room_id, std::string_view room_type, bool is_quarantined, std::string_view service_name) const {
     // Make DTO
     PatientTransfer transfer_dto;
     
@@ -187,7 +188,7 @@ bool RoomManagementClient::transferPatient(uint64_t patient_id, uint32_t new_roo
     
     // Set up gRPC response
     grpc::ClientContext context;
-    Success success;
+    RoomRequest success;
     addMetadata(context, service_name, target_hostport);
     
     // Send request
@@ -195,8 +196,10 @@ bool RoomManagementClient::transferPatient(uint64_t patient_id, uint32_t new_roo
     
     if (!status.ok()) {
         printStatusCode(status);
+        return false;
     }
-    return success.successful();
+    new_room_id = success.room_id();
+    return status.ok();
 }
 
 bool RoomManagementClient::quarantinePatient(uint64_t patient_id, bool full_quarantine, std::string_view service_name) const {

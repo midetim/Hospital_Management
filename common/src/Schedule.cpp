@@ -113,7 +113,16 @@ uint32_t Schedule::check_schedule() {
     
     if (timeUntilEnd() <= times::zero) { // If the current shift needs to end
         shifts.erase(it); // Erase that shift from the set
+        
+        if (shifts.empty()) {
+            return room::idle;
+        }
+        
         it = shifts.begin(); // Get an iterator to the new shift
+        
+        if (timeUntilNext() <= times::zero) {
+            return it->room_id;
+        } else { return room::idle; }
     }
     
     // If it == shifts.end(), timeUntilNext() will return times::max --> returns 0
@@ -142,20 +151,22 @@ Shift Schedule::copyShift(const Shift & shift) const {
 
 
 std::set<Shift> Schedule::getBetween(const Date & start, const Date & end) const {
-    Timestamp start_ts = date_to_timestamp(start); // Convert the first date into a timestamp
-    Timestamp end_ts = date_to_timestamp(end); // Convert the last date into a timestamp
-    
-    if (start_ts > end_ts) { // Swaps the timestamps if the end is earlier than the start
+    Timestamp start_ts = date_to_timestamp(start);
+    Timestamp end_ts   = date_to_timestamp(end);
+
+    if (start_ts > end_ts) {
         std::swap(start_ts, end_ts);
     }
-    
-    Shift start_shift(start_ts, duration::none, room::idle);
-    Shift end_shift(end_ts, duration::none, room::idle);
-    
-    auto begin = shifts.lower_bound(start_shift); // Get an iterator to the first date
-    auto finish = shifts.upper_bound(end_shift); // Get an iterator to the last date
-    
-    return std::set<Shift>(begin, finish); // Create a submap using the iterators
+
+    std::set<Shift> result;
+    for (const auto & shift : shifts) {
+        // Include any shift that overlaps the interval
+        if (shift.shift_end >= start_ts && shift.shift_start <= end_ts) {
+            result.insert(shift);
+        }
+    }
+
+    return result;
 }
 
 std::set<Shift> Schedule::getFrom(const Date & d) const {
