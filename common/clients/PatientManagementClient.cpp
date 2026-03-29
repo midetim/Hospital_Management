@@ -51,7 +51,11 @@ PatientDTO PatientManagementClient::to_dto(const patient_data & pd) const {
 
 
 PatientManagementClient::PatientManagementClient(std::string_view target)
-: stub(PatientManagement::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), common(Common::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), target_hostport(target) {
+: target_hostport(target) {
+    auto channel = grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials());
+    stub = PatientManagement::NewStub(channel);
+    common = Common::NewStub(channel);
+    
     this->name = service::patient_client;
 }
 

@@ -90,7 +90,10 @@ std::ostream & operator<<(std::ostream & os, const RoomInformation & info) {
 /* ******************************************************************** */
 
 RoomManagementClient::RoomManagementClient(std::string_view target)
-: stub(RoomManagement::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), common(Common::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), target_hostport(target) {
+: target_hostport(target) {
+    auto channel = grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials());
+    stub = RoomManagement::NewStub(channel);
+    common = Common::NewStub(channel);
     this->name = service::room_client;
 }
 

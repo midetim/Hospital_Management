@@ -7,8 +7,11 @@
 /* ******************************************************************** */
 
 ResourceManagementClient::ResourceManagementClient(std::string_view target)
-: stub(ResourceManagement::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), target_hostport(target),
-    common(Common::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))) {
+: grpc::InsecureChannelCredentials()))), target_hostport(target) {
+        auto channel = grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials());
+        stub = ResourceManagement::NewStub(channel);
+        common = Common::NewStub(channel);
+        
         this->name = service::resource_client;
     }
 

@@ -65,8 +65,10 @@ void StaffManagementClient::fill_schedule(const StaffSchedule & schedule, std::s
 /* ******************************************************************** */
 
 StaffManagementClient::StaffManagementClient(std::string_view target)
-: stub(StaffManagement::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))), target_hostport(target),
-common(Common::NewStub(grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials()))){
+: target_hostport(target) {
+    auto channel = grpc::CreateChannel(std::string(target), grpc::InsecureChannelCredentials());
+    stub = StaffManagement::NewStub(channel);
+    common = Common::NewStub(channel);
     this->name = service::staff_client;
 }
 
