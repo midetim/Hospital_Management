@@ -32,20 +32,20 @@ namespace service {
     inline constexpr std::string_view scheduler_host    = "scheduler:8925";
 
     // PORT NAMES
-    inline constexpr uint32_t front_port        = 8920;
-    inline constexpr uint32_t room_port         = 8921;
-    inline constexpr uint32_t patient_port      = 8922;
-    inline constexpr uint32_t resource_port     = 8923;
-    inline constexpr uint32_t staff_port        = 8924;
-    inline constexpr uint32_t scheduler_port    = 8925;
+    inline constexpr std::string_view front_port        = "0.0.0.0:8920";
+    inline constexpr std::string_view room_port         = "0.0.0.0:8921";
+    inline constexpr std::string_view patient_port      = "0.0.0.0:8922";
+    inline constexpr std::string_view resource_port     = "0.0.0.0:8923";
+    inline constexpr std::string_view staff_port        = "0.0.0.0:8924";
+    inline constexpr std::string_view scheduler_port    = "0.0.0.0:8925";
 
     // SERVICE NAMES
-    inline constexpr std::string_view room      = "Room Management Service";
-    inline constexpr std::string_view resource  = "Resource Management Service";
-    inline constexpr std::string_view patient   = "Patient Management Service";
-    inline constexpr std::string_view staff     = "Staff Management Service";
-    inline constexpr std::string_view scheduler = "Scheduler Management Service";
-    inline constexpr std::string_view front     = "Front End Service";
+    inline constexpr std::string_view room              = "Room Management Service";
+    inline constexpr std::string_view resource          = "Resource Management Service";
+    inline constexpr std::string_view patient           = "Patient Management Service";
+    inline constexpr std::string_view staff             = "Staff Management Service";
+    inline constexpr std::string_view scheduler         = "Scheduler Management Service";
+    inline constexpr std::string_view front             = "Front End Service";
 
     // CLIENT NAMES
     inline constexpr std::string_view room_client       = "Room Management Client";
@@ -54,16 +54,16 @@ namespace service {
     inline constexpr std::string_view staff_client      = "Staff Management Client";
     
     // SERVICE ROOT PATH
-    inline const fs::path patient_root  = "./services/PatientManagement/";
-    inline const fs::path resource_root = "./services/ResourceManagement/";
-    inline const fs::path room_root     = "./services/RoomManagement/";
-    inline const fs::path staff_root    = "./services/StaffManagement/";
+    inline const fs::path patient_root                  = "./services/PatientManagement/";
+    inline const fs::path resource_root                 = "./services/ResourceManagement/";
+    inline const fs::path room_root                     = "./services/RoomManagement/";
+    inline const fs::path staff_root                    = "./services/StaffManagement/";
 
     // DATABASE NAMES
-    inline constexpr std::string_view room_db_file     = "database/room_database.json";
-    inline constexpr std::string_view resource_db_file = "database/resource_database.json";
-    inline constexpr std::string_view patient_db_file  = "database/patient_database.json";
-    inline constexpr std::string_view staff_db_file    = "database/staff_database.json";
+    inline constexpr std::string_view room_db_file      = "database/room_database.json";
+    inline constexpr std::string_view resource_db_file  = "database/resource_database.json";
+    inline constexpr std::string_view patient_db_file   = "database/patient_database.json";
+    inline constexpr std::string_view staff_db_file     = "database/staff_database.json";
 
     // ABSOLUTE PATH TO DB
     inline std::string room_db     = (room_root     / room_db_file).string();
