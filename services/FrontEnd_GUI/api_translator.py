@@ -19,6 +19,15 @@ from patient_client import PatientManagementClient
 from resource_client import ResourceManagementClient
 
 app = FastAPI(title="Hospital Management System API")
+ROOM_IDS = [
+    101, 102, 103, 104, 105, 106,
+    201, 202, 203, 204, 205, 206,
+    301, 302, 303, 304, 305, 306,
+    401, 402, 403, 404, 405, 406,
+    501, 502, 503, 504, 505, 506,
+    601, 602, 603, 604, 605, 606,
+    701, 702, 703, 704, 705, 706
+]
 
 # Service connections (env vars override for Docker; defaults to localhost for local dev)
 ROOM_HOST     = os.getenv("ROOM_HOST",     "roommanagement:8921")
@@ -90,7 +99,7 @@ def serve_frontend():
 def list_rooms():
     """Probe room IDs 1-20 and return all that respond."""
     rooms = []
-    for room_id in range(1, 21):
+    for room_id in ROOM_IDS:
         room = room_client.getInfo(room_id, SERVICE_NAME)
         if not (room.room_type == "Unknown" and room.room_capacity == 0):
             rooms.append({
