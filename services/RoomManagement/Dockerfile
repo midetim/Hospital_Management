@@ -1,4 +1,4 @@
-FROM m4tt905/hospital-management-coe892:latest
+FROM --platform=linux/arm64 m4tt905/hospital-management-coe892:latest
 
 WORKDIR /app
 
