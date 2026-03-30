@@ -9,7 +9,7 @@
         "id": 705,
         "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "IntesiveCare"
+        "type": "IntensiveCare"
     },
     {
         "assigned-patients": [],
@@ -19,7 +19,7 @@
         "id": 706,
         "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "IntesiveCare"
+        "type": "IntensiveCare"
     },
     {
         "assigned-patients": [],
@@ -29,7 +29,7 @@
         "id": 704,
         "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "IntesiveCare"
+        "type": "IntensiveCare"
     },
     {
         "assigned-patients": [],
@@ -39,7 +39,7 @@
         "id": 703,
         "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "IntesiveCare"
+        "type": "IntensiveCare"
     },
     {
         "assigned-patients": [],
@@ -49,7 +49,7 @@
         "id": 702,
         "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "IntesiveCare"
+        "type": "IntensiveCare"
     },
     {
         "assigned-patients": [],
@@ -59,7 +59,7 @@
         "id": 701,
         "maximum-capacity": 2,
         "room-quarantined": false,
-        "type": "IntesiveCare"
+        "type": "IntensiveCare"
     },
     {
         "assigned-patients": [],

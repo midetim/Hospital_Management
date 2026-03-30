@@ -144,7 +144,7 @@ namespace room {
     enum class RoomType {
         General,
         Operating,
-        IntesiveCare,
+        IntensiveCare,
         Emergency,
         Administrative,
         Staff
@@ -154,7 +154,7 @@ namespace room {
         switch (t) {
             case RoomType::General:         return "General";
             case RoomType::Operating:       return "Operating";
-            case RoomType::IntesiveCare:    return "IntesiveCare";
+            case RoomType::IntensiveCare:    return "IntensiveCare";
             case RoomType::Emergency:       return "Emergency";
             case RoomType::Administrative:  return "Administrative";
             case RoomType::Staff:           return "Staff";
@@ -165,7 +165,7 @@ namespace room {
     inline RoomType stringToRoomType(const std::string & s) {
         if      (s == "General")        return RoomType::General;
         else if (s == "Operating")      return RoomType::Operating;
-        else if (s == "IntensiveCare")  return RoomType::IntesiveCare;
+        else if (s == "IntensiveCare")  return RoomType::IntensiveCare;
         else if (s == "Emergency")      return RoomType::Emergency;
         else if (s == "Administrative") return RoomType::Administrative;
         else if (s == "Staff")          return RoomType::Staff;

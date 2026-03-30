@@ -9,6 +9,6 @@ COPY ./CMakeLists.txt ./
 
 # Build ms
 RUN mkdir -p build && cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release && make -j$(nproc)
+    cmake .. -DCMAKE_BUILD_TYPE=Release && make -j2
 
 CMD ["./build/ResourceManagement"]
