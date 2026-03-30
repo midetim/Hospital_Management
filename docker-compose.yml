@@ -1,10 +1,4 @@
 services:
-  hospital-base:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: hospital-base:latest
-        
   roommanagement:
     build:
       context: .
@@ -66,3 +60,19 @@ services:
     command: python3 api_translator.py
     ports:
       - "8920:8920"
+
+  frontend_cli:
+    build:
+      context: .
+      dockerfile: services/FrontEnd_CLI/Dockerfile
+    container_name: frontend_cli
+    depends_on:
+      - roommanagement
+      - patientmanagement
+      - resourcemanagement
+      - staffmanagement
+      - scheduler
+    command: /app/build/services/FrontEnd_CLI/FrontEnd_CLI
+    stdin_open: true
+    tty: true
+        

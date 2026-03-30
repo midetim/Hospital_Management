@@ -1,4 +1,4 @@
-FROM hospital-base:latest
+FROM m4tt905/hospital-management-coe892:latest
 
 WORKDIR /app
 

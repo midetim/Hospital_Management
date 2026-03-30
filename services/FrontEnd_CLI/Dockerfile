@@ -1,9 +1,11 @@
-FROM base
+FROM m4tt905/hospital-management-coe892:latest
 
 WORKDIR /app
 
 # Copy sources
-COPY . .
+COPY ./common ./common
+COPY ./services/FrontEnd_CLI ./services/FrontEnd_CLI
+COPY ./CMakeLists.txt ./
 
 # Build ms
 RUN mkdir -p build && cd build && \
