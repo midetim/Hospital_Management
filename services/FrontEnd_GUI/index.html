@@ -218,14 +218,23 @@
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label>Condition</label><input id="p-condition" placeholder="e.g. Fracture, COVID-19" /></div>
+        <div class="form-group">
+            <label>Condition</label>
+            <select id="p-condition">
+                <option value="Unknown">Unknown</option>
+                <option value="Good">Good</option>
+                <option value="Fair">Fair</option>
+                <option value="Serious">Serious</option>
+                <option value="Critical">Critical</option>
+            </select>
+        </div>
         <div class="form-group">
           <label>Room Type</label>
           <select id="p-room-type">
-            <option value="General">General</option>
-            <option value="ICU">ICU</option>
+            <option value="General">General Room</option>
+            <option value="IntesiveCare">ICU</option>
             <option value="Operating">Operating Room</option>
-            <option value="Quarantine">Quarantine</option>
+            <option value="Emergency">Emergency Room</option>
           </select>
         </div>
         <div class="form-group" style="justify-content:flex-end;">
@@ -258,11 +267,22 @@
         <div class="form-group">
           <label>Position</label>
           <select id="s-position">
-            <option value="Doctor">Doctor</option>
-            <option value="Nurse">Nurse</option>
-            <option value="Surgeon">Surgeon</option>
-            <option value="Administrator">Administrator</option>
-            <option value="Technician">Technician</option>
+              <option value="None">None</option>
+              <option value="Doctor">Doctor</option>
+              <option value="Nurse">Nurse</option>
+              <option value="Surgeon">Surgeon</option>
+              <option value="Pharmacist">Pharmacist</option>
+              <option value="LabTechnician">Lab Technician</option>
+              <option value="Radiologist">Radiologist</option>
+              <option value="Receptionist">Receptionist</option>
+              <option value="Janitor">Janitor</option>
+              <option value="SecurityGuard">Security Guard</option>
+              <option value="PatientTransporter">Patient Transporter</option>
+              <option value="Therapist">Therapist</option>
+              <option value="Dietitian">Dietitian</option>
+              <option value="Paramedic">Paramedic</option>
+              <option value="AdministrativeStaff">Administrative Staff</option>
+              <option value="Volunteer">Volunteer</option>
           </select>
         </div>
       </div>
@@ -271,6 +291,7 @@
         <div class="form-group">
           <label>Clearance Level</label>
           <select id="s-clearance">
+            <option value="None">None</option>
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
@@ -303,7 +324,48 @@
       <h2>Register Resource</h2>
       <div id="resource-register-banner" class="banner"></div>
       <div class="form-row">
-        <div class="form-group"><label>Resource Type</label><input id="r-type" placeholder="e.g. Ventilator, Morphine" /></div>
+        <div class="form-group"><label>Resource Type</label>
+            <select id="r-type">
+                <option value="Unknown">Unknown</option>
+
+                <optgroup label="Imaging Machines">
+                    <option value="XRay">X-Ray</option>
+                    <option value="Ultrasound">Ultrasound</option>
+                    <option value="MRI">MRI</option>
+                    <option value="CTScanner">CT Scanner</option>
+                </optgroup>
+
+                <optgroup label="Life Support & Monitoring">
+                    <option value="Ventilator">Ventilator</option>
+                    <option value="ECGMachine">ECG Machine</option>
+                    <option value="Defibrillator">Defibrillator</option>
+                    <option value="PatientMonitor">Patient Monitor</option>
+                    <option value="OxygenGenerator">Oxygen Generator</option>
+                </optgroup>
+
+                <optgroup label="Surgery & Treatment">
+                    <option value="AnesthesiaMachine">Anesthesia Machine</option>
+                    <option value="DialysisMachine">Dialysis Machine</option>
+                    <option value="InfusionPump">Infusion Pump</option>
+                    <option value="SurgicalRobot">Surgical Robot</option>
+                </optgroup>
+
+                <optgroup label="Consumables">
+                    <option value="PPE">PPE</option>
+                    <option value="Medication">Medication</option>
+                    <option value="Syringes">Syringes</option>
+                    <option value="IVFluids">IV Fluids</option>
+                    <option value="Bandages">Bandages</option>
+                    <option value="Gloves">Gloves</option>
+                    <option value="Masks">Masks</option>
+                    <option value="TestKits">Test Kits</option>
+                    <option value="BloodBags">Blood Bags</option>
+                    <option value="Saline">Saline</option>
+                    <option value="Disinfectant">Disinfectant</option>
+                    <option value="Sutures">Sutures</option>
+                </optgroup>
+            </select>
+        </div>
         <div class="form-group"><label>Room ID</label><input id="r-room" type="number" placeholder="Room ID" /></div>
         <div class="form-group"><label>Initial Stock</label><input id="r-stock" type="number" placeholder="0 for equipment" /></div>
         <div class="form-group" style="justify-content:flex-end;">
@@ -328,7 +390,23 @@
       <div id="stock-banner" class="banner"></div>
       <div class="form-row">
         <div class="form-group"><label>Resource ID</label><input id="stock-id" type="number" placeholder="Resource ID" /></div>
-        <div class="form-group"><label>Resource Type</label><input id="stock-type" placeholder="e.g. Morphine" /></div>
+        <div class="form-group">
+            <label>Resource Type</label>
+            <select id="stock-type">
+                <option value="PPE">PPE</option>
+                <option value="Medication">Medication</option>
+                <option value="Syringes">Syringes</option>
+                <option value="IVFluids">IV Fluids</option>
+                <option value="Bandages">Bandages</option>
+                <option value="Gloves">Gloves</option>
+                <option value="Masks">Masks</option>
+                <option value="TestKits">Test Kits</option>
+                <option value="BloodBags">Blood Bags</option>
+                <option value="Saline">Saline</option>
+                <option value="Disinfectant">Disinfectant</option>
+                <option value="Sutures">Sutures</option>
+            </select>
+        </div>
         <div class="form-group"><label>Amount</label><input id="stock-amount" type="number" placeholder="Units" /></div>
         <div class="form-group" style="justify-content:flex-end;">
           <label>&nbsp;</label>
