@@ -1,35 +1,68 @@
-version: "3.9"
-
 services:
+  hospital-base:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hospital-base:latest
+        
+  roommanagement:
+    build:
+      context: .
+      dockerfile: services/RoomManagement/Dockerfile
+    container_name: roommanagement
+    command: /app/build/services/RoomManagement/RoomManagement
+    
   patientmanagement:
-    build: .
+    build:
+      context: .
+      dockerfile: services/PatientManagement/Dockerfile
     container_name: patientmanagement
+    depends_on:
+      - roommanagement
     command: /app/build/services/PatientManagement/PatientManagement
 
   resourcemanagement:
-    build: .
+    build:
+      context: .
+      dockerfile: services/ResourceManagement/Dockerfile
     container_name: resourcemanagement
+    depends_on:
+      - roommanagement
     command: /app/build/services/ResourceManagement/ResourceManagement
 
-  roommanagement:
-    build: .
-    container_name: roommanagement
-    command: /app/build/services/RoomManagement/RoomManagement
-
   staffmanagement:
-    build: .
+    build:
+      context: .
+      dockerfile: services/StaffManagement/Dockerfile
     container_name: staffmanagement
+    depends_on:
+      - roommanagement
     command: /app/build/services/StaffManagement/StaffManagement
 
   scheduler:
-    build: .
+    build:
+      context: .
+      dockerfile: services/Scheduler/Dockerfile
     container_name: scheduler
+    depends_on:
+      - roommanagement
+      - patientmanagement
+      - resourcemanagement
+      - staffmanagement
     command: /app/build/services/Scheduler/Scheduler
 
   frontend_gui:
-    build: .
+    build:
+      context: .
+      dockerfile: services/FrontEnd_GUI/Dockerfile
     container_name: frontend_gui
     working_dir: /app/services/FrontEnd_GUI
+    depends_on:
+      - roommanagement
+      - patientmanagement
+      - resourcemanagement
+      - staffmanagement
+      - scheduler
     command: python3 api_translator.py
     ports:
       - "8920:8920"

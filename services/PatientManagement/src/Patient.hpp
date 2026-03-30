@@ -116,9 +116,8 @@ public:
     /**
      * @brief Change the patients condition
      * @param c The Condition enumeration value to set the patients condtion to
-     * @return Returns a return code
      */
-    core::ReturnCode updateCondition(patient::Condition c) { this->patient_condition = c; }
+    void updateCondition(patient::Condition c) { this->patient_condition = c; }
     
     
     friend std::ostream & operator<<(std::ostream & os, const Patient & p);
